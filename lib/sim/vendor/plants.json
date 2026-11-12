@@ -53,9 +53,16 @@
       "preferred_temp_c": 25,
       "temp_tolerance_c": 4.0
     },
+    "visual": {
+      "leafShape": "ovate",
+      "arrangement": "alternate",
+      "leafLengthCm": 12,
+      "leafWidthCm": 6,
+      "leafDensity": 0.3
+    },
     "notes": "Bury the rhizome and it rots; tie to hardscape. Extremely forgiving of low light and low-CO2 tanks. Prone to black-beard algae on old leaves in high-flow spots.",
     "images": [],
-    "citations": ["tropica-anubias-barteri", "dennerle-anubias-barteri", "crusio-1987-anubias"]
+    "citations": ["tropica-anubias-barteri", "dennerle-anubias-barteri", "crusio-1987-anubias", "visual-estimate-2026"]
   },
   {
     "id": "anubias-barteri-nana-petite",
@@ -112,9 +119,16 @@
       "preferred_temp_c": 25,
       "temp_tolerance_c": 3.5
     },
+    "visual": {
+      "leafShape": "ovate",
+      "arrangement": "alternate",
+      "leafLengthCm": 2.7,
+      "leafWidthCm": 1.5,
+      "leafDensity": 0.35
+    },
     "notes": "Trademarked cultivar by Oriental Aquarium; leaves ~1-2 cm. Slower and smaller than Nana — lifetime of a single leaf can exceed a year. Excellent for nano and shrimp tanks.",
     "images": [],
-    "citations": ["tropica-anubias-nana-petite", "oriental-aquarium-petite"]
+    "citations": ["tropica-anubias-nana-petite", "oriental-aquarium-petite", "visual-flowgrow-anubias-petite"]
   },
   {
     "id": "bacopa-caroliniana",
@@ -170,9 +184,16 @@
       "preferred_temp_c": 24,
       "temp_tolerance_c": 4.5
     },
+    "visual": {
+      "leafShape": "ovate",
+      "arrangement": "opposite",
+      "leafLengthCm": 3,
+      "leafWidthCm": 1.8,
+      "leafDensity": 0.6
+    },
     "notes": "Thick succulent stems emit a lemon scent when crushed. Tolerates hard water and low CO2 but colors brighter copper under 50+ µmol/m²/s PAR.",
     "images": [],
-    "citations": ["tropica-bacopa-caroliniana", "kasselmann-2003-aquariumplants"]
+    "citations": ["tropica-bacopa-caroliniana", "kasselmann-2003-aquariumplants", "visual-estimate-2026"]
   },
   {
     "id": "bacopa-monnieri",
@@ -228,9 +249,16 @@
       "preferred_temp_c": 24,
       "temp_tolerance_c": 5.0
     },
+    "visual": {
+      "leafShape": "ovate",
+      "arrangement": "opposite",
+      "leafLengthCm": 1.5,
+      "leafWidthCm": 0.7,
+      "leafDensity": 0.6
+    },
     "notes": "One of the most cosmopolitan aquatic plants; sold in virtually every fish store worldwide under the name 'moneywort'. Adapts readily to hard or soft water. Emersed-to-submersed conversion is smooth — no melting phase. Tiny round leaves are brighter green than B. caroliniana and lack the lemon scent.",
     "images": [],
-    "citations": ["tropica-bacopa-monnieri", "flowgrow-bacopa-monnieri", "kasselmann-2003-aquariumplants"]
+    "citations": ["tropica-bacopa-monnieri", "flowgrow-bacopa-monnieri", "kasselmann-2003-aquariumplants", "visual-estimate-2026"]
   },
   {
     "id": "bucephalandra-kedagang",
@@ -287,9 +315,16 @@
       "preferred_temp_c": 25,
       "temp_tolerance_c": 2.5
     },
+    "visual": {
+      "leafShape": "lanceolate",
+      "arrangement": "alternate",
+      "leafLengthCm": 5,
+      "leafWidthCm": 2,
+      "leafDensity": 0.4
+    },
     "notes": "Like Anubias, rhizome must stay above substrate. Kedagang shows deep green leaves with red undersides and occasional white flowers. Melting is common for 4-6 weeks after import from emersed — trim melting leaves, new growth follows.",
     "images": [],
-    "citations": ["wongso-2013-bucephalandra", "buceplant-kedagang", "kurniawan-2020-bucephalandra-taxonomy"]
+    "citations": ["wongso-2013-bucephalandra", "buceplant-kedagang", "kurniawan-2020-bucephalandra-taxonomy", "visual-estimate-2026"]
   },
   {
     "id": "cabomba-caroliniana",
@@ -345,9 +380,16 @@
       "preferred_temp_c": 22,
       "temp_tolerance_c": 3.0
     },
+    "visual": {
+      "leafShape": "linear",
+      "arrangement": "opposite",
+      "leafLengthCm": 4,
+      "leafWidthCm": 2.5,
+      "leafDensity": 0.8
+    },
     "notes": "Fan-shaped finely divided leaves make it a classic shoaling-fish background. Dislikes hard alkaline water — KH above 6 causes leaf disintegration at the tips. Invasive in several regions outside its native range; do not release into open water. Cool-water plant — below 26°C is preferable.",
     "images": [],
-    "citations": ["tropica-cabomba-caroliniana", "dennerle-cabomba-caroliniana", "kasselmann-2003-aquariumplants"]
+    "citations": ["tropica-cabomba-caroliniana", "dennerle-cabomba-caroliniana", "kasselmann-2003-aquariumplants", "visual-estimate-2026"]
   },
   {
     "id": "cryptocoryne-wendtii",
@@ -403,9 +445,16 @@
       "preferred_temp_c": 25,
       "temp_tolerance_c": 3.5
     },
+    "visual": {
+      "leafShape": "lanceolate",
+      "arrangement": "rosette",
+      "leafLengthCm": 12,
+      "leafWidthCm": 3,
+      "leafDensity": 0.5
+    },
     "notes": "Expect 'crypt melt' after any major water-parameter change — leaves dissolve, rhizome survives, new growth follows in 2-3 weeks. Nutrient-rich substrate strongly recommended.",
     "images": [],
-    "citations": ["tropica-cryptocoryne-wendtii", "jacobsen-1980-cryptocoryne-srilanka", "kasselmann-2003-aquariumplants"]
+    "citations": ["tropica-cryptocoryne-wendtii", "jacobsen-1980-cryptocoryne-srilanka", "kasselmann-2003-aquariumplants", "visual-estimate-2026"]
   },
   {
     "id": "echinodorus-red-flame",
@@ -462,9 +511,17 @@
       "preferred_temp_c": 26,
       "temp_tolerance_c": 3.0
     },
+    "visual": {
+      "leafShape": "lanceolate",
+      "arrangement": "rosette",
+      "leafLengthCm": 25,
+      "leafWidthCm": 5,
+      "leafDensity": 0.5,
+      "tipColorHex": "#a8452f"
+    },
     "notes": "Leaves start olive-green then develop crimson speckles under strong light and iron-rich substrate. Heavy root feeder — root tabs every 2-3 months accelerate color expression. Often sold as E. 'Ozelot Red' relative.",
     "images": [],
-    "citations": ["barth-hybrid-echinodorus", "tropica-echinodorus-red-flame", "lehtonen-2008-echinodorus-revision"]
+    "citations": ["barth-hybrid-echinodorus", "tropica-echinodorus-red-flame", "lehtonen-2008-echinodorus-revision", "visual-estimate-2026"]
   },
   {
     "id": "eleocharis-parvula",
@@ -520,9 +577,16 @@
       "preferred_temp_c": 24,
       "temp_tolerance_c": 3.0
     },
+    "visual": {
+      "leafShape": "needle",
+      "arrangement": "rosette",
+      "leafLengthCm": 8,
+      "leafWidthCm": 0.1,
+      "leafDensity": 0.95
+    },
     "notes": "True E. parvula tops out at ~6-10 cm; E. acicularis sold as 'mini' is often taller. Dense carpet needs trimming at 2-3 cm to prevent lower-layer melting. CO2 injection dramatically shortens runner spread time.",
     "images": [],
-    "citations": ["tropica-eleocharis-parvula", "kasselmann-2003-aquariumplants", "svensson-2016-carpeting-plants"]
+    "citations": ["tropica-eleocharis-parvula", "kasselmann-2003-aquariumplants", "svensson-2016-carpeting-plants", "visual-estimate-2026"]
   },
   {
     "id": "glossostigma-elatinoides",
@@ -579,9 +643,16 @@
       "preferred_temp_c": 23,
       "temp_tolerance_c": 3.0
     },
+    "visual": {
+      "leafShape": "round",
+      "arrangement": "mat",
+      "leafLengthCm": 0.6,
+      "leafWidthCm": 0.4,
+      "leafDensity": 0.95
+    },
     "notes": "Grows upward and loses carpet form below ~100 µmol/m²/s PAR — ADA Nature Aquarium classic precisely because it demands Solar-I-grade light. Heat above 27°C stresses it quickly.",
     "images": [],
-    "citations": ["amano-1994-nature-aquarium", "tropica-glossostigma-elatinoides", "barrett-2013-phrymaceae"]
+    "citations": ["amano-1994-nature-aquarium", "tropica-glossostigma-elatinoides", "barrett-2013-phrymaceae", "visual-estimate-2026"]
   },
   {
     "id": "hygrophila-corymbosa",
@@ -637,9 +708,16 @@
       "preferred_temp_c": 25,
       "temp_tolerance_c": 5.0
     },
+    "visual": {
+      "leafShape": "lanceolate",
+      "arrangement": "opposite",
+      "leafLengthCm": 12,
+      "leafWidthCm": 3,
+      "leafDensity": 0.6
+    },
     "notes": "Large-leaved workhorse for background planting in low-tech and high-tech tanks alike. Multiple cultivars exist: 'Kompakt' stays compact at 20 cm; 'Siamensis' has narrower leaves. Emersed form develops bronze-purple leaves and large corymbs of purple flowers. Robust nitrogen uptake makes it an excellent tank cycling assistant.",
     "images": [],
-    "citations": ["tropica-hygrophila-corymbosa", "flowgrow-hygrophila-corymbosa", "cook-1996-aquatic-plant-book"]
+    "citations": ["tropica-hygrophila-corymbosa", "flowgrow-hygrophila-corymbosa", "cook-1996-aquatic-plant-book", "visual-estimate-2026"]
   },
   {
     "id": "hygrophila-polysperma",
@@ -695,9 +773,16 @@
       "preferred_temp_c": 24,
       "temp_tolerance_c": 5.0
     },
+    "visual": {
+      "leafShape": "ovate",
+      "arrangement": "opposite",
+      "leafLengthCm": 4,
+      "leafWidthCm": 1.5,
+      "leafDensity": 0.7
+    },
     "notes": "Federally prohibited in the US (USDA noxious weed) — do NOT ship to US customers. Extremely fast starter plant; tolerates low tech. Trim aggressively to avoid shading neighbors.",
     "images": [],
-    "citations": ["tropica-hygrophila-polysperma", "usda-hygrophila-polysperma-noxious", "cook-1996-aquatic-plant-book"]
+    "citations": ["tropica-hygrophila-polysperma", "usda-hygrophila-polysperma-noxious", "cook-1996-aquatic-plant-book", "visual-estimate-2026"]
   },
   {
     "id": "limnobium-laevigatum",
@@ -753,9 +838,16 @@
       "preferred_temp_c": 25,
       "temp_tolerance_c": 4.0
     },
+    "visual": {
+      "leafShape": "round",
+      "arrangement": "rosette",
+      "leafLengthCm": 2.5,
+      "leafWidthCm": 2.5,
+      "leafDensity": 0.6
+    },
     "notes": "Gets atmospheric CO2 directly from air — k_co2 is low by design; do not interpret as CO2-injection-required. Keep leaves dry by running surface skimmer off during photoperiod. Excellent nitrate sponge; thin weekly.",
     "images": [],
-    "citations": ["cook-1982-limnobium", "tropica-limnobium-laevigatum", "lowe-mcconnell-1987-amazon-fishery"]
+    "citations": ["cook-1982-limnobium", "tropica-limnobium-laevigatum", "lowe-mcconnell-1987-amazon-fishery", "visual-estimate-2026"]
   },
   {
     "id": "limnophila-sessiliflora",
@@ -811,9 +903,16 @@
       "preferred_temp_c": 24,
       "temp_tolerance_c": 4.5
     },
+    "visual": {
+      "leafShape": "linear",
+      "arrangement": "whorled",
+      "leafLengthCm": 2.5,
+      "leafWidthCm": 1,
+      "leafDensity": 0.8
+    },
     "notes": "Feathery whorled leaves create a soft, delicate texture in the midground/background. Closely resembles Limnophila aquatica but is notably smaller. Very forgiving of low-tech conditions; a classic beginner stem plant. Often confused with Cabomba due to similar leaf shape — distinction is simple: Limnophila has whorled leaves on a single axis, Cabomba has fan-branched leaves.",
     "images": [],
-    "citations": ["tropica-limnophila-sessiliflora", "flowgrow-limnophila-sessiliflora", "kasselmann-2003-aquariumplants"]
+    "citations": ["tropica-limnophila-sessiliflora", "flowgrow-limnophila-sessiliflora", "kasselmann-2003-aquariumplants", "visual-estimate-2026"]
   },
   {
     "id": "ludwigia-palustris",
@@ -869,9 +968,17 @@
       "preferred_temp_c": 22,
       "temp_tolerance_c": 4.5
     },
+    "visual": {
+      "leafShape": "ovate",
+      "arrangement": "opposite",
+      "leafLengthCm": 3,
+      "leafWidthCm": 1.5,
+      "leafDensity": 0.65,
+      "tipColorHex": "#c0504a"
+    },
     "notes": "Compact companion to L. repens; smaller leaf size (0.5–2 cm) makes it suit midground placement better. Red underside develops reliably without CO2 injection under moderate to high PAR. The cosmopolitan distribution is unusually broad for a Ludwigia — native on six continents. Tolerates cooler water better than most tropical stem plants.",
     "images": [],
-    "citations": ["tropica-ludwigia-palustris", "dennerle-ludwigia-palustris", "peng-1989-ludwigia-revision"]
+    "citations": ["tropica-ludwigia-palustris", "dennerle-ludwigia-palustris", "peng-1989-ludwigia-revision", "visual-estimate-2026"]
   },
   {
     "id": "ludwigia-pantanal",
@@ -928,9 +1035,17 @@
       "preferred_temp_c": 25,
       "temp_tolerance_c": 1.5
     },
+    "visual": {
+      "leafShape": "lanceolate",
+      "arrangement": "opposite",
+      "leafLengthCm": 3.5,
+      "leafWidthCm": 1.2,
+      "leafDensity": 0.65,
+      "tipColorHex": "#e07aa6"
+    },
     "notes": "Considered one of the most demanding stem plants in the hobby. Needs aggressive fertilization (EI-level Fe, PO4, NO3) and pristine water. Melts under kH > 3 or temperature shifts — calibration note: narrow temp_tolerance_c reflects this. Ludwigia sp. 'Pantanal' is taxonomically unresolved.",
     "images": [],
-    "citations": ["kasselmann-2003-aquariumplants", "tropica-ludwigia-pantanal", "buceplant-ludwigia-pantanal"]
+    "citations": ["kasselmann-2003-aquariumplants", "tropica-ludwigia-pantanal", "buceplant-ludwigia-pantanal", "visual-estimate-2026"]
   },
   {
     "id": "ludwigia-repens",
@@ -986,9 +1101,17 @@
       "preferred_temp_c": 24,
       "temp_tolerance_c": 4.0
     },
+    "visual": {
+      "leafShape": "ovate",
+      "arrangement": "opposite",
+      "leafLengthCm": 3,
+      "leafWidthCm": 1.2,
+      "leafDensity": 0.65,
+      "tipColorHex": "#c0514a"
+    },
     "notes": "Classic beginner red stem. Under medium light and no CO2 stays olive-green; red color requires Fe dosing + PAR > 60 µmol/m²/s. Frequently confused with L. glandulosa ('Perennis').",
     "images": [],
-    "citations": ["tropica-ludwigia-repens", "kasselmann-2003-aquariumplants", "peng-1989-ludwigia-revision"]
+    "citations": ["tropica-ludwigia-repens", "kasselmann-2003-aquariumplants", "peng-1989-ludwigia-revision", "visual-tamu-ludwigia-repens"]
   },
   {
     "id": "marsilea-hirsuta",
@@ -1044,9 +1167,16 @@
       "preferred_temp_c": 24,
       "temp_tolerance_c": 3.5
     },
+    "visual": {
+      "leafShape": "round",
+      "arrangement": "creeping",
+      "leafLengthCm": 0.8,
+      "leafWidthCm": 0.8,
+      "leafDensity": 0.9
+    },
     "notes": "Produces single-lobe leaves under high light/CO2, classic 4-leaf clover under moderate conditions. Slower carpet than Monte Carlo but more forgiving of low-tech tanks. Aquatic fern — propagates via stolons not seeds.",
     "images": [],
-    "citations": ["tropica-marsilea-hirsuta", "nagalingum-2008-marsilea-phylogeny", "kasselmann-2003-aquariumplants"]
+    "citations": ["tropica-marsilea-hirsuta", "nagalingum-2008-marsilea-phylogeny", "kasselmann-2003-aquariumplants", "visual-estimate-2026"]
   },
   {
     "id": "micranthemum-tweediei-monte-carlo",
@@ -1103,9 +1233,16 @@
       "preferred_temp_c": 24,
       "temp_tolerance_c": 3.0
     },
+    "visual": {
+      "leafShape": "round",
+      "arrangement": "mat",
+      "leafLengthCm": 0.6,
+      "leafWidthCm": 0.5,
+      "leafDensity": 0.95
+    },
     "notes": "Larger leaf and more forgiving than HC Cuba. Commonly misidentified as Hemianthus in the trade. Pearls vigorously at 25+ ppm CO2. Trim early and often — lower layers yellow if shaded.",
     "images": [],
-    "citations": ["tropica-micranthemum-monte-carlo", "rahmatullah-2013-micranthemum", "buceplant-monte-carlo"]
+    "citations": ["tropica-micranthemum-monte-carlo", "rahmatullah-2013-micranthemum", "buceplant-monte-carlo", "visual-estimate-2026"]
   },
   {
     "id": "microsorum-pteropus-narrow",
@@ -1162,9 +1299,16 @@
       "preferred_temp_c": 24,
       "temp_tolerance_c": 4.0
     },
+    "visual": {
+      "leafShape": "strap",
+      "arrangement": "alternate",
+      "leafLengthCm": 15,
+      "leafWidthCm": 1.5,
+      "leafDensity": 0.4
+    },
     "notes": "Like standard Java fern but leaves 0.5-1 cm wide × 15-20 cm long. Rhizome must stay above substrate. 'Java fern melt' (blackening leaf edges) indicates nutrient deficiency, often K or N, not disease.",
     "images": [],
-    "citations": ["tropica-microsorum-pteropus-narrow", "bosman-2003-microsorum-pteropus", "kasselmann-2003-aquariumplants"]
+    "citations": ["tropica-microsorum-pteropus-narrow", "bosman-2003-microsorum-pteropus", "kasselmann-2003-aquariumplants", "visual-estimate-2026"]
   },
   {
     "id": "myriophyllum-matogrossense",
@@ -1220,9 +1364,17 @@
       "preferred_temp_c": 25,
       "temp_tolerance_c": 3.5
     },
+    "visual": {
+      "leafShape": "linear",
+      "arrangement": "whorled",
+      "leafLengthCm": 3,
+      "leafWidthCm": 1.5,
+      "leafDensity": 0.85,
+      "tipColorHex": "#c97a5a"
+    },
     "notes": "Finely pinnate leaves arranged in whorls of 4–6; very similar in appearance to M. pinnatum. Under CO2 injection and strong light, stems pearl profusely and take on a reddish tint at the growing tip. Requires soft, slightly acidic water for best colour — performs poorly in hard tap water above KH 8. Trim regularly to prevent lower leaf drop.",
     "images": [],
-    "citations": ["tropica-myriophyllum-matogrossense", "flowgrow-myriophyllum-matogrossense", "kasselmann-2003-aquariumplants"]
+    "citations": ["tropica-myriophyllum-matogrossense", "flowgrow-myriophyllum-matogrossense", "kasselmann-2003-aquariumplants", "visual-estimate-2026"]
   },
   {
     "id": "rotala-macrandra",
@@ -1278,9 +1430,17 @@
       "preferred_temp_c": 26,
       "temp_tolerance_c": 2.0
     },
+    "visual": {
+      "leafShape": "lanceolate",
+      "arrangement": "opposite",
+      "leafLengthCm": 5,
+      "leafWidthCm": 1.5,
+      "leafDensity": 0.7,
+      "tipColorHex": "#d8334a"
+    },
     "notes": "True litmus test of a high-tech tank. Shade intolerance is severe — anything above it melts the lower leaves. Drops leaves with any CO2 interruption > 2 hours. Consider lean nitrogen (< 10 ppm NO3) for deepest red.",
     "images": [],
-    "citations": ["cook-1996-aquatic-plant-book", "tropica-rotala-macrandra", "graham-wain-2005-rotala"]
+    "citations": ["cook-1996-aquatic-plant-book", "tropica-rotala-macrandra", "graham-wain-2005-rotala", "visual-estimate-2026"]
   },
   {
     "id": "rotala-rotundifolia",
@@ -1336,9 +1496,17 @@
       "preferred_temp_c": 25,
       "temp_tolerance_c": 3.5
     },
+    "visual": {
+      "leafShape": "linear",
+      "arrangement": "whorled",
+      "leafLengthCm": 1.5,
+      "leafWidthCm": 0.4,
+      "leafDensity": 0.8,
+      "tipColorHex": "#e58aa5"
+    },
     "notes": "Calibration reference species (k_photosynthesis = 1.00). Pink flush under high light + lean NO3 (5-10 ppm). Melts during submersed transition then re-emerges. R. indica is a distinct species sometimes mis-traded as this.",
     "images": [],
-    "citations": ["tropica-rotala-rotundifolia", "dennerle-rotala-rotundifolia", "graham-wain-2005-rotala", "cook-1996-aquatic-plant-book"]
+    "citations": ["tropica-rotala-rotundifolia", "dennerle-rotala-rotundifolia", "graham-wain-2005-rotala", "cook-1996-aquatic-plant-book", "visual-rotala-rotundifolia-trade"]
   },
   {
     "id": "staurogyne-repens",
@@ -1394,9 +1562,16 @@
       "preferred_temp_c": 25,
       "temp_tolerance_c": 3.5
     },
+    "visual": {
+      "leafShape": "ovate",
+      "arrangement": "opposite",
+      "leafLengthCm": 2.5,
+      "leafWidthCm": 1,
+      "leafDensity": 0.8
+    },
     "notes": "Short bushy stem — frequently shelved as a rosette in retail, hence group = 'rosette' while growthForm = 'stem'. Top and re-plant to create a dense low hedge; side shoots multiply quickly under CO2.",
     "images": [],
-    "citations": ["tropica-staurogyne-repens", "chayamarit-2010-staurogyne", "kasselmann-2010-aquariumplants-2e"]
+    "citations": ["tropica-staurogyne-repens", "chayamarit-2010-staurogyne", "kasselmann-2010-aquariumplants-2e", "visual-estimate-2026"]
   },
   {
     "id": "taxiphyllum-barbieri",
@@ -1452,9 +1627,16 @@
       "preferred_temp_c": 23,
       "temp_tolerance_c": 5.0
     },
+    "visual": {
+      "leafShape": "moss",
+      "arrangement": "mat",
+      "leafLengthCm": 0.3,
+      "leafWidthCm": 0.1,
+      "leafDensity": 1
+    },
     "notes": "Historically mislabeled as Vesicularia dubyana. Tolerates anything short of scalding temperatures; growth becomes stringy above 27°C. Trim on a schedule to prevent detritus traps.",
     "images": [],
-    "citations": ["tan-2003-taxiphyllum-barbieri", "tropica-taxiphyllum-barbieri", "kasselmann-2003-aquariumplants"]
+    "citations": ["tan-2003-taxiphyllum-barbieri", "tropica-taxiphyllum-barbieri", "kasselmann-2003-aquariumplants", "visual-estimate-2026"]
   },
   {
     "id": "vesicularia-montagnei",
@@ -1510,9 +1692,16 @@
       "preferred_temp_c": 23,
       "temp_tolerance_c": 3.0
     },
+    "visual": {
+      "leafShape": "moss",
+      "arrangement": "mat",
+      "leafLengthCm": 0.25,
+      "leafWidthCm": 0.1,
+      "leafDensity": 1
+    },
     "notes": "Named for triangular pinnate branching that resembles a fir tree. More temperature-sensitive than Java moss — melts above 27°C. Best attached to driftwood or mesh; CO2 accelerates the characteristic compact form.",
     "images": [],
-    "citations": ["tan-2003-vesicularia-taxonomy", "tropica-vesicularia-montagnei", "buceplant-christmas-moss"]
+    "citations": ["tan-2003-vesicularia-taxonomy", "tropica-vesicularia-montagnei", "buceplant-christmas-moss", "visual-estimate-2026"]
   },
   {
     "id": "cryptocoryne-parva",
@@ -1568,9 +1757,16 @@
       "preferred_temp_c": 25,
       "temp_tolerance_c": 3.0
     },
+    "visual": {
+      "leafShape": "linear",
+      "arrangement": "rosette",
+      "leafLengthCm": 5,
+      "leafWidthCm": 0.6,
+      "leafDensity": 0.7
+    },
     "notes": "The smallest Cryptocoryne species — leaves rarely exceed 5 cm even under ideal conditions. Unlike other crypts it does not substantially change leaf shape between emersed and submersed forms, so 'crypt melt' is mild. Excellent foreground carpeting in low to medium light with CO2.",
     "images": [],
-    "citations": ["jacobsen-1980-cryptocoryne-srilanka", "tropica-cryptocoryne-parva", "kasselmann-2003-aquariumplants"]
+    "citations": ["jacobsen-1980-cryptocoryne-srilanka", "tropica-cryptocoryne-parva", "kasselmann-2003-aquariumplants", "visual-estimate-2026"]
   },
   {
     "id": "cryptocoryne-balansae",
@@ -1627,9 +1823,16 @@
       "preferred_temp_c": 26,
       "temp_tolerance_c": 3.5
     },
+    "visual": {
+      "leafShape": "strap",
+      "arrangement": "rosette",
+      "leafLengthCm": 30,
+      "leafWidthCm": 1.5,
+      "leafDensity": 0.5
+    },
     "notes": "Produces dramatically long, narrow leaves with strongly crinkled margins — a distinctive background plant. Tolerates moderate currents. Like most crypts it is a heavy root feeder; root tabs significantly improve growth rate and leaf texture.",
     "images": [],
-    "citations": ["jacobsen-1980-cryptocoryne-srilanka", "tropica-cryptocoryne-balansae", "kasselmann-2003-aquariumplants"]
+    "citations": ["jacobsen-1980-cryptocoryne-srilanka", "tropica-cryptocoryne-balansae", "kasselmann-2003-aquariumplants", "visual-estimate-2026"]
   },
   {
     "id": "echinodorus-tenellus",
@@ -1685,9 +1888,16 @@
       "preferred_temp_c": 24,
       "temp_tolerance_c": 3.5
     },
+    "visual": {
+      "leafShape": "linear",
+      "arrangement": "rosette",
+      "leafLengthCm": 6,
+      "leafWidthCm": 0.4,
+      "leafDensity": 0.9
+    },
     "notes": "Spreads via stolons to form dense foreground carpets. Under intense light and CO2 the narrow leaves develop reddish coloration. Avoid alkaline hard water — leaves become chlorotic above pH 7.5. A smaller, carpeting alternative to larger Amazon sword species.",
     "images": [],
-    "citations": ["lehtonen-2008-echinodorus-revision", "tropica-echinodorus-tenellus", "kasselmann-2003-aquariumplants"]
+    "citations": ["lehtonen-2008-echinodorus-revision", "tropica-echinodorus-tenellus", "kasselmann-2003-aquariumplants", "visual-estimate-2026"]
   },
   {
     "id": "microsorum-pteropus-windelov",
@@ -1744,9 +1954,16 @@
       "preferred_temp_c": 24,
       "temp_tolerance_c": 4.0
     },
+    "visual": {
+      "leafShape": "lanceolate",
+      "arrangement": "alternate",
+      "leafLengthCm": 15,
+      "leafWidthCm": 3,
+      "leafDensity": 0.4
+    },
     "notes": "Trademarked Tropica cultivar with finely forked leaf tips giving a lace-like appearance. Attach to rock or driftwood — burying the rhizome causes rot. Adventitious plantlets form on older leaves. Extremely tolerant and beginner-friendly despite its delicate appearance.",
     "images": [],
-    "citations": ["tropica-microsorum-windelov", "kasselmann-2003-aquariumplants"]
+    "citations": ["tropica-microsorum-windelov", "kasselmann-2003-aquariumplants", "visual-estimate-2026"]
   },
   {
     "id": "bolbitis-heudelotii",
@@ -1802,9 +2019,16 @@
       "preferred_temp_c": 26,
       "temp_tolerance_c": 2.5
     },
+    "visual": {
+      "leafShape": "lanceolate",
+      "arrangement": "alternate",
+      "leafLengthCm": 18,
+      "leafWidthCm": 5,
+      "leafDensity": 0.4
+    },
     "notes": "Pinnate semi-transparent leaves with a brilliant emerald sheen under good current. Requires CO2 and moderate light — stagnant soft water is the key requirement. Attach to rocks or wood with thread or glue; do not bury the rhizome. Hard water causes rapid deterioration.",
     "images": [],
-    "citations": ["tropica-bolbitis-heudelotii", "kasselmann-2003-aquariumplants", "dennerle-bolbitis"]
+    "citations": ["tropica-bolbitis-heudelotii", "kasselmann-2003-aquariumplants", "dennerle-bolbitis", "visual-estimate-2026"]
   },
   {
     "id": "riccardia-chamedryfolia",
@@ -1860,9 +2084,16 @@
       "preferred_temp_c": 22,
       "temp_tolerance_c": 3.0
     },
+    "visual": {
+      "leafShape": "moss",
+      "arrangement": "mat",
+      "leafLengthCm": 0.5,
+      "leafWidthCm": 0.2,
+      "leafDensity": 1
+    },
     "notes": "A liverwort, not a true moss — classified as a hepatic bryophyte. Forms dense, coral-like cushions highly valued in Nature aquascape compositions. Requires CO2 and good flow; stagnant conditions lead to algae smothering. Sensitive to temperature above 26°C.",
     "images": [],
-    "citations": ["tropica-riccardia-chamedryfolia", "buceplant-mini-pellia", "maberly-1994-aquatic-macrophytes"]
+    "citations": ["tropica-riccardia-chamedryfolia", "buceplant-mini-pellia", "maberly-1994-aquatic-macrophytes", "visual-estimate-2026"]
   },
   {
     "id": "fissidens-fontanus",
@@ -1918,9 +2149,16 @@
       "preferred_temp_c": 21,
       "temp_tolerance_c": 3.5
     },
+    "visual": {
+      "leafShape": "moss",
+      "arrangement": "mat",
+      "leafLengthCm": 0.3,
+      "leafWidthCm": 0.08,
+      "leafDensity": 0.95
+    },
     "notes": "Distinctive two-ranked 'pocket' leaf arrangement differentiates it from all other aquatic mosses. Prefers cooler water — above 24°C growth stalls. Attach to hardscape with glue; anchoring thread works but is tedious given its fine structure. In aquascaping often sold as 'Phoenix Moss'.",
     "images": [],
-    "citations": ["tropica-fissidens-fontanus", "maberly-1994-aquatic-macrophytes", "kasselmann-2003-aquariumplants"]
+    "citations": ["tropica-fissidens-fontanus", "maberly-1994-aquatic-macrophytes", "kasselmann-2003-aquariumplants", "visual-estimate-2026"]
   },
   {
     "id": "leptodictyum-riparium",
@@ -1976,9 +2214,16 @@
       "preferred_temp_c": 20,
       "temp_tolerance_c": 5.5
     },
+    "visual": {
+      "leafShape": "moss",
+      "arrangement": "mat",
+      "leafLengthCm": 0.4,
+      "leafWidthCm": 0.15,
+      "leafDensity": 0.9
+    },
     "notes": "One of the fastest-growing and hardiest aquatic mosses. Long, wispy strands drape beautifully over hardscape or attach loosely to mesh. Excellent refuge for fry and shrimp. Requires regular pruning to prevent light-blocking mat formation.",
     "images": [],
-    "citations": ["tropica-leptodictyum-riparium", "maberly-1994-aquatic-macrophytes"]
+    "citations": ["tropica-leptodictyum-riparium", "maberly-1994-aquatic-macrophytes", "visual-estimate-2026"]
   },
   {
     "id": "pistia-stratiotes",
@@ -2034,9 +2279,16 @@
       "preferred_temp_c": 27,
       "temp_tolerance_c": 4.0
     },
+    "visual": {
+      "leafShape": "round",
+      "arrangement": "rosette",
+      "leafLengthCm": 6,
+      "leafWidthCm": 5,
+      "leafDensity": 0.7
+    },
     "notes": "Rosette-shaped floating plant that aggressively exports nitrogen and phosphorus via its extensive dangling root system — a popular biological filter. Sensitive to water splashing on leaves which causes rot. Invasive in tropical open water; never release outdoors. Long roots serve as spawning substrate and fry cover.",
     "images": [],
-    "citations": ["tropica-pistia-stratiotes", "kasselmann-2003-aquariumplants", "cook-1974-pistia"]
+    "citations": ["tropica-pistia-stratiotes", "kasselmann-2003-aquariumplants", "cook-1974-pistia", "visual-estimate-2026"]
   },
   {
     "id": "salvinia-natans",
@@ -2092,9 +2344,16 @@
       "preferred_temp_c": 24,
       "temp_tolerance_c": 5.0
     },
+    "visual": {
+      "leafShape": "ovate",
+      "arrangement": "opposite",
+      "leafLengthCm": 1.2,
+      "leafWidthCm": 0.8,
+      "leafDensity": 0.7
+    },
     "notes": "A true aquatic fern with two oval floating leaves covered in water-repelling hairs and one submerged root-like leaf. Naturalised across Eurasia but also widely cultivated. Provides shade for lower-light plants and excellent diffused light effect. Can double in biomass within a week under strong light — thin regularly.",
     "images": [],
-    "citations": ["tropica-salvinia-natans", "maberly-1994-aquatic-macrophytes", "kasselmann-2003-aquariumplants"]
+    "citations": ["tropica-salvinia-natans", "maberly-1994-aquatic-macrophytes", "kasselmann-2003-aquariumplants", "visual-estimate-2026"]
   },
   {
     "id": "hemianthus-callitrichoides-cuba",
@@ -2151,9 +2410,16 @@
       "preferred_temp_c": 23,
       "temp_tolerance_c": 3.0
     },
+    "visual": {
+      "leafShape": "round",
+      "arrangement": "mat",
+      "leafLengthCm": 0.3,
+      "leafWidthCm": 0.25,
+      "leafDensity": 1
+    },
     "notes": "The classic Iwagumi carpet: tiny rounded leaves on creeping stems, stays 3-5 cm. Tropica rates both light and CO2 as high; hobby sources give roughly 80+ PAR at substrate and injected CO2. Plant in very small portions, keep flow gentle but present, and expect it to lift and float if the substrate is not firm. Fails quickly under CO2 gaps or algae. Species is sometimes filed as Micranthemum callitrichoides; family placement (Linderniaceae) follows the existing Micranthemum entry.",
     "images": [],
-    "citations": ["buceplant-hc-cuba", "practicalfishkeeping-hc-cuba", "svensson-2016-carpeting-plants"]
+    "citations": ["buceplant-hc-cuba", "practicalfishkeeping-hc-cuba", "svensson-2016-carpeting-plants", "visual-hc-cuba-trade"]
   },
   {
     "id": "utricularia-graminifolia",
@@ -2209,9 +2475,16 @@
       "preferred_temp_c": 23,
       "temp_tolerance_c": 3.0
     },
+    "visual": {
+      "leafShape": "linear",
+      "arrangement": "creeping",
+      "leafLengthCm": 3,
+      "leafWidthCm": 0.1,
+      "leafDensity": 0.9
+    },
     "notes": "Carnivorous bladderwort whose grass-like leaves form a dense lawn; bladders trap micro-organisms and do not harm fish or shrimp. Tropica lists medium growth, 3-10+ cm height and a high-CO2 range of about 15-25 mg/L; Dennerle notes a highland Sri Lankan origin (about 2000 m, cool fast water), so keep temperature moderate. Has no true roots, so it anchors poorly and mats lift as they thicken - pin down with small stones and trim often. Tropica calls it rather demanding.",
     "images": [],
-    "citations": ["tropica-utricularia-graminifolia", "dennerle-utricularia-graminifolia", "taylor-1989-utricularia"]
+    "citations": ["tropica-utricularia-graminifolia", "dennerle-utricularia-graminifolia", "taylor-1989-utricularia", "visual-estimate-2026"]
   },
   {
     "id": "eleocharis-acicularis-mini",
@@ -2268,9 +2541,16 @@
       "preferred_temp_c": 24,
       "temp_tolerance_c": 3.0
     },
+    "visual": {
+      "leafShape": "needle",
+      "arrangement": "rosette",
+      "leafLengthCm": 5,
+      "leafWidthCm": 0.05,
+      "leafDensity": 0.95
+    },
     "notes": "An even finer, shorter form of dwarf hairgrass; Tropica lists medium difficulty, slow growth, 3-5+ cm and medium light/CO2. Plant in many small portions to cover an area and let it thicken by runners. Sold as Eleocharis sp. 'Mini' / E. pusilla by some vendors - naming is inconsistent. Note existing eleocharis-parvula already carries the zh name 迷你牛毛毡 as a trade name, so search will return both.",
     "images": [],
-    "citations": ["tropica-eleocharis-acicularis-mini", "aquasabi-eleocharis-mini", "svensson-2016-carpeting-plants"]
+    "citations": ["tropica-eleocharis-acicularis-mini", "aquasabi-eleocharis-mini", "svensson-2016-carpeting-plants", "visual-estimate-2026"]
   },
   {
     "id": "rotala-sp-hra",
@@ -2327,9 +2607,17 @@
       "preferred_temp_c": 25,
       "temp_tolerance_c": 3.0
     },
+    "visual": {
+      "leafShape": "lanceolate",
+      "arrangement": "opposite",
+      "leafLengthCm": 2.5,
+      "leafWidthCm": 0.4,
+      "leafDensity": 0.7,
+      "tipColorHex": "#e8803a"
+    },
     "notes": "Vietnamese Rotala collected near the H'Ra hamlet; fiery orange-red tips under high light, low nitrate and CO2 around 20-30 ppm, mostly green and gold in dim tanks. Fast, needs frequent trimming. Flowgrow lists tolerance 4-32 C (optimum 22-28), pH 4.5-7.5; light figures (about 80-120 PAR) come from hobby care guides. Treated by Flowgrow as a Rotala rotundifolia variant; unresolved taxonomically.",
     "images": [],
-    "citations": ["aquasabi-rotala-hra", "flowgrow-rotala-hra", "buceplant-rotala-hra", "graham-wain-2005-rotala"]
+    "citations": ["aquasabi-rotala-hra", "flowgrow-rotala-hra", "buceplant-rotala-hra", "graham-wain-2005-rotala", "visual-estimate-2026"]
   },
   {
     "id": "rotala-wallichii",
@@ -2385,9 +2673,17 @@
       "preferred_temp_c": 24,
       "temp_tolerance_c": 3.0
     },
+    "visual": {
+      "leafShape": "linear",
+      "arrangement": "whorled",
+      "leafLengthCm": 3,
+      "leafWidthCm": 0.25,
+      "leafDensity": 0.8,
+      "tipColorHex": "#d96b80"
+    },
     "notes": "Fine, whorled, feather-like foliage with rose-to-red tips. Tropica rates it advanced: strong light, added CO2 and soft slightly acidic water; 10-30+ cm, moderate growth. Melts quickly if hardness or CO2 swings. Looks best in groups of several stems in the background.",
     "images": [],
-    "citations": ["tropica-rotala-wallichii", "graham-wain-2005-rotala", "kasselmann-2003-aquariumplants"]
+    "citations": ["tropica-rotala-wallichii", "graham-wain-2005-rotala", "kasselmann-2003-aquariumplants", "visual-estimate-2026"]
   },
   {
     "id": "ludwigia-palustris-super-red",
@@ -2444,9 +2740,17 @@
       "preferred_temp_c": 24,
       "temp_tolerance_c": 3.5
     },
+    "visual": {
+      "leafShape": "ovate",
+      "arrangement": "opposite",
+      "leafLengthCm": 3,
+      "leafWidthCm": 1.2,
+      "leafDensity": 0.65,
+      "tipColorHex": "#b0293a"
+    },
     "notes": "Colours up more readily and stays smaller than L. repens 'Rubin'; Tropica lists 10-30 cm stems 2-4 cm wide and an easy category, but strong light and CO2 give the best colour and density. Nitrogen-hungry, so dose regularly in high-energy tanks. Dennerle describes the red as intense even under standard lighting.",
     "images": [],
-    "citations": ["tropica-ludwigia-palustris-super-red", "dennerle-ludwigia-super-red", "peng-1989-ludwigia-revision"]
+    "citations": ["tropica-ludwigia-palustris-super-red", "dennerle-ludwigia-super-red", "peng-1989-ludwigia-revision", "visual-estimate-2026"]
   },
   {
     "id": "alternanthera-reineckii-mini",
@@ -2503,9 +2807,17 @@
       "preferred_temp_c": 24,
       "temp_tolerance_c": 3.0
     },
+    "visual": {
+      "leafShape": "lanceolate",
+      "arrangement": "opposite",
+      "leafLengthCm": 2,
+      "leafWidthCm": 0.5,
+      "leafDensity": 0.7,
+      "tipColorHex": "#9a3b5c"
+    },
     "notes": "Miniature, compact form of A. reineckii; Tropica describes slower growth and, with careful trimming, a dense red-violet carpet of about 5-10 cm. Medium light/CO2 per retailer data quoting Tropica; stronger light and CO2 improve colour. Colour fades to olive in shade.",
     "images": [],
-    "citations": ["tropica-alternanthera-reineckii-mini", "kasselmann-2003-aquariumplants"]
+    "citations": ["tropica-alternanthera-reineckii-mini", "kasselmann-2003-aquariumplants", "visual-estimate-2026"]
   },
   {
     "id": "pogostemon-erectus",
@@ -2561,9 +2873,16 @@
       "preferred_temp_c": 25,
       "temp_tolerance_c": 3.5
     },
+    "visual": {
+      "leafShape": "needle",
+      "arrangement": "whorled",
+      "leafLengthCm": 2,
+      "leafWidthCm": 0.15,
+      "leafDensity": 0.8
+    },
     "notes": "Compact groups of bright green, conifer-like stems 15-40 cm tall and 1-3 cm wide; Tropica lists medium growth and medium light/CO2, with intense light keeping it compact. Cut shoots root readily when replanted. Now often sold as P. deccanensis; older trade stock was labelled 'Rotala verticillaris'.",
     "images": [],
-    "citations": ["plantedaquaria-pogostemon-erectus", "kasselmann-2003-aquariumplants"]
+    "citations": ["plantedaquaria-pogostemon-erectus", "kasselmann-2003-aquariumplants", "visual-estimate-2026"]
   },
   {
     "id": "pogostemon-helferi",
@@ -2619,9 +2938,16 @@
       "preferred_temp_c": 26,
       "temp_tolerance_c": 3.5
     },
+    "visual": {
+      "leafShape": "lanceolate",
+      "arrangement": "rosette",
+      "leafLengthCm": 4,
+      "leafWidthCm": 1,
+      "leafDensity": 0.7
+    },
     "notes": "Curly-leaved foreground plant closely related to Pogostemon stellatus. Tropica: under low light up to ~15 cm, under intense light compact 5-8 cm; less light-demanding than most carpeters, CO2 optional (slower without), thrives at 23-30 C and, being fairly fast, needs extra nutrients. Prone to leaf melt when moved.",
     "images": [],
-    "citations": ["tropica-pogostemon-helferi", "kasselmann-2003-aquariumplants"]
+    "citations": ["tropica-pogostemon-helferi", "kasselmann-2003-aquariumplants", "visual-estimate-2026"]
   },
   {
     "id": "cryptocoryne-lutea",
@@ -2677,9 +3003,16 @@
       "preferred_temp_c": 25,
       "temp_tolerance_c": 3.0
     },
+    "visual": {
+      "leafShape": "lanceolate",
+      "arrangement": "rosette",
+      "leafLengthCm": 10,
+      "leafWidthCm": 2,
+      "leafDensity": 0.5
+    },
     "notes": "Small Sri Lankan crypt with narrow, slightly wavy green-to-brownish leaves; 12-15 cm tall, 8-12 cm wide, slow. Sold under both lutea and walkeri names. Prone to 'crypt melt' after relocation - leave undisturbed once rooted and use root tabs.",
     "images": [],
-    "citations": ["dennerle-cryptocoryne-lutea", "jacobsen-1980-cryptocoryne-srilanka", "kasselmann-2003-aquariumplants"]
+    "citations": ["dennerle-cryptocoryne-lutea", "jacobsen-1980-cryptocoryne-srilanka", "kasselmann-2003-aquariumplants", "visual-estimate-2026"]
   },
   {
     "id": "cryptocoryne-undulata",
@@ -2735,9 +3068,16 @@
       "preferred_temp_c": 25,
       "temp_tolerance_c": 3.5
     },
+    "visual": {
+      "leafShape": "lanceolate",
+      "arrangement": "rosette",
+      "leafLengthCm": 14,
+      "leafWidthCm": 2.5,
+      "leafDensity": 0.5
+    },
     "notes": "Hardy, adaptable crypt with wavy brown-green leaves; the Tropica 'Broad Leaves' form is a triploid. Retail sources give 15-30 cm, medium growth, low light/CO2. Boundaries between C. undulata, C. wendtii and C. beckettii are debated and trade stock is often mislabelled.",
     "images": [],
-    "citations": ["birstall-cryptocoryne-undulata", "jacobsen-1980-cryptocoryne-srilanka", "kasselmann-2003-aquariumplants"]
+    "citations": ["birstall-cryptocoryne-undulata", "jacobsen-1980-cryptocoryne-srilanka", "kasselmann-2003-aquariumplants", "visual-estimate-2026"]
   },
   {
     "id": "cryptocoryne-spiralis",
@@ -2793,9 +3133,16 @@
       "preferred_temp_c": 25,
       "temp_tolerance_c": 3.5
     },
+    "visual": {
+      "leafShape": "strap",
+      "arrangement": "rosette",
+      "leafLengthCm": 30,
+      "leafWidthCm": 1,
+      "leafDensity": 0.45
+    },
     "notes": "Tall Indian crypt with long, loosely corkscrewed leaves (to ~34 cm or more); the 'Red' form wants more light for brown-red colour. Retail data: 20-30+ cm, medium growth, medium light and CO2. Good background clusters; heavy root feeder.",
     "images": [],
-    "citations": ["aquasabi-cryptocoryne-spiralis-red", "aquariumcoop-crypt-spiralis", "kasselmann-2003-aquariumplants"]
+    "citations": ["aquasabi-cryptocoryne-spiralis-red", "aquariumcoop-crypt-spiralis", "kasselmann-2003-aquariumplants", "visual-estimate-2026"]
   },
   {
     "id": "bucephalandra-sp-mini",
@@ -2852,9 +3199,16 @@
       "preferred_temp_c": 25,
       "temp_tolerance_c": 2.5
     },
+    "visual": {
+      "leafShape": "lanceolate",
+      "arrangement": "alternate",
+      "leafLengthCm": 2.5,
+      "leafWidthCm": 1,
+      "leafDensity": 0.45
+    },
     "notes": "Small rheophytic Bornean aroid grown attached to rock or wood; low to moderate light (excess light invites algae), stable temperatures (swings cause leaf loss). Hundreds of unnamed local forms are sold as Bucephalandra sp.; values are genus-level and not specific to one locality. Complements the existing 'Kedagang' entry.",
     "images": [],
-    "citations": ["aquasabi-bucephalandra-mini", "buceplant-bucephalandra-lighting", "wongso-2013-bucephalandra"]
+    "citations": ["aquasabi-bucephalandra-mini", "buceplant-bucephalandra-lighting", "wongso-2013-bucephalandra", "visual-estimate-2026"]
   },
   {
     "id": "anubias-barteri-coffeefolia",
@@ -2911,9 +3265,17 @@
       "preferred_temp_c": 25,
       "temp_tolerance_c": 4.0
     },
+    "visual": {
+      "leafShape": "ovate",
+      "arrangement": "alternate",
+      "leafLengthCm": 10,
+      "leafWidthCm": 4,
+      "leafDensity": 0.3,
+      "tipColorHex": "#8b5a3a"
+    },
     "notes": "Leaves arch noticeably between the ribs and emerge red-brown. Tropica lists 15-25 cm height, a 10-15+ cm rhizome and very hard leaves not eaten by herbivorous fish. Do not bury the rhizome; tie to wood or stone and divide with at least two leaves per piece.",
     "images": [],
-    "citations": ["tropica-anubias-coffeifolia", "crusio-1987-anubias", "kasselmann-2003-aquariumplants"]
+    "citations": ["tropica-anubias-coffeifolia", "crusio-1987-anubias", "kasselmann-2003-aquariumplants", "visual-estimate-2026"]
   },
   {
     "id": "microsorum-pteropus-trident",
@@ -2970,9 +3332,16 @@
       "preferred_temp_c": 25,
       "temp_tolerance_c": 4.0
     },
+    "visual": {
+      "leafShape": "lanceolate",
+      "arrangement": "alternate",
+      "leafLengthCm": 15,
+      "leafWidthCm": 3,
+      "leafDensity": 0.4
+    },
     "notes": "Narrow-leaved, smaller Java fern whose leaves are typically three-lobed (tripartite) to multipartite; Tropica lists slow growth, 15-20+ cm, medium light (~0.5 W/L). Attach to hardscape; the rhizome rots if buried. Black spots on leaf undersides are sporangia, not disease.",
     "images": [],
-    "citations": ["tropica-microsorum-trident", "bosman-2003-microsorum-pteropus", "kasselmann-2003-aquariumplants"]
+    "citations": ["tropica-microsorum-trident", "bosman-2003-microsorum-pteropus", "kasselmann-2003-aquariumplants", "visual-estimate-2026"]
   },
   {
     "id": "taxiphyllum-sp-flame",
@@ -3029,9 +3398,16 @@
       "preferred_temp_c": 23,
       "temp_tolerance_c": 3.0
     },
+    "visual": {
+      "leafShape": "moss",
+      "arrangement": "mat",
+      "leafLengthCm": 0.3,
+      "leafWidthCm": 0.1,
+      "leafDensity": 1
+    },
     "notes": "Upright, softly undulating shoots resembling flickering flames, 5-15 cm. Species is not formally identified (genus Taxiphyllum). Retailers disagree on difficulty (easy vs medium); Flowgrow lists medium and slow. Tie or glue to hardscape; low-to-moderate light, shrimp-safe.",
     "images": [],
-    "citations": ["aquasabi-flame-moss", "flowgrow-flame-moss", "tan-2003-taxiphyllum-barbieri"]
+    "citations": ["aquasabi-flame-moss", "flowgrow-flame-moss", "tan-2003-taxiphyllum-barbieri", "visual-estimate-2026"]
   },
   {
     "id": "riccia-fluitans",
@@ -3087,9 +3463,16 @@
       "preferred_temp_c": 24,
       "temp_tolerance_c": 3.5
     },
+    "visual": {
+      "leafShape": "moss",
+      "arrangement": "mat",
+      "leafLengthCm": 1,
+      "leafWidthCm": 0.1,
+      "leafDensity": 0.95
+    },
     "notes": "Floating liverwort that can be tied down with mesh or thread to form a submerged carpet ('Riccia wall' / lawn). Tropica 1-2-Grow lists medium growth/light/CO2 and 3-5 cm; Dennerle notes CO2 supplementation speeds growth. Needs regular trimming or it traps gas and floats. zh 鹿角苔 is also a trade misnomer for Glossostigma in existing data.",
     "images": [],
-    "citations": ["dennerle-riccia-fluitans", "plantedaquaria-riccia-fluitans", "kasselmann-2003-aquariumplants"]
+    "citations": ["dennerle-riccia-fluitans", "plantedaquaria-riccia-fluitans", "kasselmann-2003-aquariumplants", "visual-estimate-2026"]
   },
   {
     "id": "hygrophila-pinnatifida",
@@ -3145,9 +3528,16 @@
       "preferred_temp_c": 25,
       "temp_tolerance_c": 3.0
     },
+    "visual": {
+      "leafShape": "ovate",
+      "arrangement": "rosette",
+      "leafLengthCm": 8,
+      "leafWidthCm": 4,
+      "leafDensity": 0.5
+    },
     "notes": "Slow rhizomatous plant with deeply lobed, brown-green leaves; grows well tied to wood or rock like an epiphyte. Do not bury the rhizome. Frequently used for Dutch-style and nature layouts as a textured accent.",
     "images": [],
-    "citations": ["kasselmann-2003-aquariumplants", "cook-1996-aquatic-plant-book"]
+    "citations": ["kasselmann-2003-aquariumplants", "cook-1996-aquatic-plant-book", "visual-estimate-2026"]
   },
   {
     "id": "limnophila-aromatica",
@@ -3203,9 +3593,16 @@
       "preferred_temp_c": 25,
       "temp_tolerance_c": 3.5
     },
+    "visual": {
+      "leafShape": "lanceolate",
+      "arrangement": "whorled",
+      "leafLengthCm": 4,
+      "leafWidthCm": 1,
+      "leafDensity": 0.75
+    },
     "notes": "Easy, fast stem with whorled leaves that turn purple-red underside and upper leaves under high light. Aromatic when crushed. Related to L. sessiliflora but broader-leaved and taller.",
     "images": [],
-    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants"]
+    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants", "visual-estimate-2026"]
   },
   {
     "id": "eriocaulon-cinereum",
@@ -3261,9 +3658,16 @@
       "preferred_temp_c": 24,
       "temp_tolerance_c": 2.5
     },
+    "visual": {
+      "leafShape": "needle",
+      "arrangement": "rosette",
+      "leafLengthCm": 5,
+      "leafWidthCm": 0.15,
+      "leafDensity": 0.8
+    },
     "notes": "Grass-like rosettes (stiff, upright) valued in Iwagumi/ADA layouts; notoriously hard - needs very soft, acidic, low-KH water, high light, CO2 and clean substrate. Represents the Eriocaulon spp. group (E. cinereum, E. sp. 'Vietnam', E. setaceum); trade identification is unreliable. Zero-to-low gh/kh envelope is hobbyist consensus rather than a measured value.",
     "images": [],
-    "citations": ["kasselmann-2003-aquariumplants", "amano-1994-nature-aquarium"]
+    "citations": ["kasselmann-2003-aquariumplants", "amano-1994-nature-aquarium", "visual-estimate-2026"]
   },
   {
     "id": "sagittaria-subulata",
@@ -3319,9 +3723,16 @@
       "preferred_temp_c": 23,
       "temp_tolerance_c": 4.0
     },
+    "visual": {
+      "leafShape": "strap",
+      "arrangement": "rosette",
+      "leafLengthCm": 15,
+      "leafWidthCm": 0.6,
+      "leafDensity": 0.7
+    },
     "notes": "Hardy ribbon-leaved plant that spreads by runners into a lawn; stays 5-10 cm in strong light but reaches 20+ cm in dim tanks. Tolerates cool water and hard water. Root feeder - benefits from enriched substrate.",
     "images": [],
-    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants"]
+    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants", "visual-estimate-2026"]
   },
   {
     "id": "lilaeopsis-brasiliensis",
@@ -3377,9 +3788,16 @@
       "preferred_temp_c": 23,
       "temp_tolerance_c": 3.0
     },
+    "visual": {
+      "leafShape": "needle",
+      "arrangement": "rosette",
+      "leafLengthCm": 3,
+      "leafWidthCm": 0.15,
+      "leafDensity": 0.95
+    },
     "notes": "Fine tubular, grass-like blades forming a lawn under strong light and CO2 (stays 3-6 cm); stretches and thins in dim tanks. Prefers moderate temperature and an enriched substrate. Sometimes confused with Lilaeopsis novae-zelandiae.",
     "images": [],
-    "citations": ["amano-1994-nature-aquarium", "svensson-2016-carpeting-plants", "kasselmann-2003-aquariumplants"]
+    "citations": ["amano-1994-nature-aquarium", "svensson-2016-carpeting-plants", "kasselmann-2003-aquariumplants", "visual-estimate-2026"]
   },
   {
     "id": "hydrocotyle-tripartita-japan",
@@ -3436,9 +3854,16 @@
       "preferred_temp_c": 23,
       "temp_tolerance_c": 3.0
     },
+    "visual": {
+      "leafShape": "round",
+      "arrangement": "creeping",
+      "leafLengthCm": 1,
+      "leafWidthCm": 1,
+      "leafDensity": 0.85
+    },
     "notes": "Creeping pennywort with small clover-like, bright green leaves; forms a lush carpet or climbs as a short stem under strong light with CO2. Without enough light it grows tall and leggy. Frequently sold as H. sp. 'Japan' - botanical identity (H. tripartita) is the usual trade attribution and not confirmed.",
     "images": [],
-    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants"]
+    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants", "visual-estimate-2026"]
   },
   {
     "id": "ammannia-gracilis",
@@ -3494,9 +3919,17 @@
       "preferred_temp_c": 25,
       "temp_tolerance_c": 3.0
     },
+    "visual": {
+      "leafShape": "lanceolate",
+      "arrangement": "opposite",
+      "leafLengthCm": 4,
+      "leafWidthCm": 0.8,
+      "leafDensity": 0.7,
+      "tipColorHex": "#e0583a"
+    },
     "notes": "Delicate lance-shaped leaves on straight stems; turns orange to red under intense light with CO2 and low nitrate. Sensitive to unstable CO2, hard water and nutrient deficiency (leaf drop from the bottom). Aquarium requirements follow common hobbyist consensus.",
     "images": [],
-    "citations": ["kasselmann-2003-aquariumplants", "graham-wain-2005-rotala"]
+    "citations": ["kasselmann-2003-aquariumplants", "graham-wain-2005-rotala", "visual-estimate-2026"]
   },
   {
     "id": "proserpinaca-palustris",
@@ -3552,9 +3985,16 @@
       "preferred_temp_c": 23,
       "temp_tolerance_c": 3.5
     },
+    "visual": {
+      "leafShape": "lanceolate",
+      "arrangement": "alternate",
+      "leafLengthCm": 4,
+      "leafWidthCm": 1.2,
+      "leafDensity": 0.7
+    },
     "notes": "Submerged form has fine, feathery serrated leaves; bronzes to reddish-brown under strong light. Prefers cooler, soft to moderately hard water and regular trimming. Emersed leaves are quite different (serrated, lance-shaped).",
     "images": [],
-    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants"]
+    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants", "visual-estimate-2026"]
   },
   {
     "id": "didiplis-diandra",
@@ -3610,9 +4050,17 @@
       "preferred_temp_c": 24,
       "temp_tolerance_c": 3.5
     },
+    "visual": {
+      "leafShape": "lanceolate",
+      "arrangement": "opposite",
+      "leafLengthCm": 2,
+      "leafWidthCm": 0.4,
+      "leafDensity": 0.8,
+      "tipColorHex": "#c0553f"
+    },
     "notes": "Fine pine-needle-like whorls on thin stems; reddish tips in strong light. Fast but fragile - loses lower leaves without steady CO2 and nutrients. Sometimes classed as Rotala diandra (Lythraceae); zh 水松 is a trade name that also denotes a conifer.",
     "images": [],
-    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants"]
+    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants", "visual-estimate-2026"]
   },
   {
     "id": "nymphaea-lotus",
@@ -3668,9 +4116,17 @@
       "preferred_temp_c": 26,
       "temp_tolerance_c": 3.5
     },
+    "visual": {
+      "leafShape": "cordate",
+      "arrangement": "rosette",
+      "leafLengthCm": 15,
+      "leafWidthCm": 12,
+      "leafDensity": 0.3,
+      "tipColorHex": "#8a3b3b"
+    },
     "notes": "Bulbous tuber with large submerged leaves (red/maroon with tiger-stripe mottling in the 'Red' form); sends floating leaves and flowers if allowed. Keep submerged by trimming floating leaves. Large - suited to 60 cm+ tanks as a focal point.",
     "images": [],
-    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants"]
+    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants", "visual-estimate-2026"]
   },
   {
     "id": "echinodorus-red-diamond",
@@ -3727,9 +4183,17 @@
       "preferred_temp_c": 24,
       "temp_tolerance_c": 3.5
     },
+    "visual": {
+      "leafShape": "ovate",
+      "arrangement": "rosette",
+      "leafLengthCm": 20,
+      "leafWidthCm": 6,
+      "leafDensity": 0.5,
+      "tipColorHex": "#8e3a30"
+    },
     "notes": "Hybrid sword with large, broad leaves flushed deep red under good light (greener in dim, nutrient-rich water). Heavy root feeder - use root tabs. Originator and parentage are not documented in the sources used here; values follow other red-leaved Echinodorus hybrids (see echinodorus-red-flame).",
     "images": [],
-    "citations": ["lehtonen-2008-echinodorus-revision", "kasselmann-2003-aquariumplants"]
+    "citations": ["lehtonen-2008-echinodorus-revision", "kasselmann-2003-aquariumplants", "visual-estimate-2026"]
   },
   {
     "id": "vallisneria-spiralis",
@@ -3785,9 +4249,16 @@
       "preferred_temp_c": 24,
       "temp_tolerance_c": 5.0
     },
+    "visual": {
+      "leafShape": "strap",
+      "arrangement": "rosette",
+      "leafLengthCm": 45,
+      "leafWidthCm": 1,
+      "leafDensity": 0.5
+    },
     "notes": "Tall ribbon leaves for the back or sides of a tank; spreads quickly by runners. Prefers harder, alkaline water; may melt in very soft acidic tanks. Taxonomy is complex (V. spiralis / V. americana / V. natans are often confused in trade).",
     "images": [],
-    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants"]
+    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants", "visual-vallisneria-trade"]
   },
   {
     "id": "cryptocoryne-beckettii",
@@ -3843,9 +4314,16 @@
       "preferred_temp_c": 25,
       "temp_tolerance_c": 3.5
     },
+    "visual": {
+      "leafShape": "lanceolate",
+      "arrangement": "rosette",
+      "leafLengthCm": 10,
+      "leafWidthCm": 2.5,
+      "leafDensity": 0.5
+    },
     "notes": "Easy, compact crypt with olive-brown crinkled leaves; adapts to low light and low CO2 but melts after being moved. Often confused with C. wendtii and C. undulata.",
     "images": [],
-    "citations": ["jacobsen-1980-cryptocoryne-srilanka", "kasselmann-2003-aquariumplants"]
+    "citations": ["jacobsen-1980-cryptocoryne-srilanka", "kasselmann-2003-aquariumplants", "visual-estimate-2026"]
   },
   {
     "id": "echinodorus-bleheri",
@@ -3901,9 +4379,16 @@
       "preferred_temp_c": 24,
       "temp_tolerance_c": 3.5
     },
+    "visual": {
+      "leafShape": "lanceolate",
+      "arrangement": "rosette",
+      "leafLengthCm": 40,
+      "leafWidthCm": 4,
+      "leafDensity": 0.55
+    },
     "notes": "The classic Amazon sword: large, bright green leaves, vigorous root feeder that needs substrate fertiliser. Grows large - back of tanks 60 cm+. Plantlets form on emersed flower stalks.",
     "images": [],
-    "citations": ["lehtonen-2008-echinodorus-revision", "kasselmann-2003-aquariumplants"]
+    "citations": ["lehtonen-2008-echinodorus-revision", "kasselmann-2003-aquariumplants", "visual-echinodorus-bleherae-trade"]
   },
   {
     "id": "alternanthera-reineckii",
@@ -3959,9 +4444,17 @@
       "preferred_temp_c": 24,
       "temp_tolerance_c": 3.5
     },
+    "visual": {
+      "leafShape": "lanceolate",
+      "arrangement": "opposite",
+      "leafLengthCm": 5,
+      "leafWidthCm": 1.5,
+      "leafDensity": 0.65,
+      "tipColorHex": "#8a3050"
+    },
     "notes": "Hardy red-violet stem plant; colour intensifies with strong light and iron. Green-olive in shade. Parent species of the 'Mini' cultivar.",
     "images": [],
-    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants"]
+    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants", "visual-estimate-2026"]
   },
   {
     "id": "hygrophila-difformis",
@@ -4017,9 +4510,16 @@
       "preferred_temp_c": 25,
       "temp_tolerance_c": 4.0
     },
+    "visual": {
+      "leafShape": "ovate",
+      "arrangement": "opposite",
+      "leafLengthCm": 10,
+      "leafWidthCm": 6,
+      "leafDensity": 0.5
+    },
     "notes": "Fast, easy stem with deeply lobed, maple-like submerged leaves (emersed leaves are entire). Needs regular trimming and nitrogen to avoid leaf melt.",
     "images": [],
-    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants"]
+    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants", "visual-estimate-2026"]
   },
   {
     "id": "rotala-indica",
@@ -4075,9 +4575,17 @@
       "preferred_temp_c": 25,
       "temp_tolerance_c": 3.5
     },
+    "visual": {
+      "leafShape": "linear",
+      "arrangement": "opposite",
+      "leafLengthCm": 1.5,
+      "leafWidthCm": 0.3,
+      "leafDensity": 0.8,
+      "tipColorHex": "#e8a0b4"
+    },
     "notes": "Distinct from R. rotundifolia though trade names overlap (see rotala-rotundifolia). Fast, easy, pink tips under strong light. Genus-level data from Graham & Wain and hobbyist consensus.",
     "images": [],
-    "citations": ["graham-wain-2005-rotala", "kasselmann-2003-aquariumplants"]
+    "citations": ["graham-wain-2005-rotala", "kasselmann-2003-aquariumplants", "visual-estimate-2026"]
   },
   {
     "id": "heteranthera-zosterifolia",
@@ -4133,9 +4641,16 @@
       "preferred_temp_c": 25,
       "temp_tolerance_c": 3.5
     },
+    "visual": {
+      "leafShape": "lanceolate",
+      "arrangement": "alternate",
+      "leafLengthCm": 3,
+      "leafWidthCm": 0.8,
+      "leafDensity": 0.7
+    },
     "notes": "Bushy light-green stem with narrow translucent leaves; fast and easy. Pale green flowers if emersed. Stems get leggy with insufficient light.",
     "images": [],
-    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants"]
+    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants", "visual-estimate-2026"]
   },
   {
     "id": "egeria-densa",
@@ -4191,9 +4706,16 @@
       "preferred_temp_c": 22,
       "temp_tolerance_c": 5.0
     },
+    "visual": {
+      "leafShape": "linear",
+      "arrangement": "whorled",
+      "leafLengthCm": 2.5,
+      "leafWidthCm": 0.35,
+      "leafDensity": 0.8
+    },
     "notes": "Very fast nutrient sponge; good for new tanks and goldfish. Tolerates cool water. Invasive in many regions - never release into the wild; check local regulation before purchase.",
     "images": [],
-    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants"]
+    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants", "visual-egeria-weedscan"]
   },
   {
     "id": "ceratophyllum-demersum",
@@ -4249,9 +4771,16 @@
       "preferred_temp_c": 22,
       "temp_tolerance_c": 5.0
     },
+    "visual": {
+      "leafShape": "needle",
+      "arrangement": "whorled",
+      "leafLengthCm": 2.5,
+      "leafWidthCm": 0.1,
+      "leafDensity": 0.85
+    },
     "notes": "Rootless, free-floating or loosely anchored; extremely fast water-column feeder that suppresses algae. Sheds needles in dim or very warm water.",
     "images": [],
-    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants"]
+    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants", "visual-estimate-2026"]
   },
   {
     "id": "ceratopteris-thalictroides",
@@ -4307,9 +4836,16 @@
       "preferred_temp_c": 25,
       "temp_tolerance_c": 4.0
     },
+    "visual": {
+      "leafShape": "lanceolate",
+      "arrangement": "rosette",
+      "leafLengthCm": 15,
+      "leafWidthCm": 4,
+      "leafDensity": 0.5
+    },
     "notes": "Fast fern with finely divided submerged fronds; plantlets form on leaf margins. Can be planted or left floating (floating fronds are broader). Absorbs nutrients strongly - useful for new tanks.",
     "images": [],
-    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants"]
+    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants", "visual-estimate-2026"]
   },
   {
     "id": "anubias-barteri-nana",
@@ -4366,9 +4902,16 @@
       "preferred_temp_c": 25,
       "temp_tolerance_c": 4.0
     },
+    "visual": {
+      "leafShape": "ovate",
+      "arrangement": "alternate",
+      "leafLengthCm": 6,
+      "leafWidthCm": 3,
+      "leafDensity": 0.3
+    },
     "notes": "Bomb-proof dwarf anubias for low-light tanks; rhizome must not be buried. Slow growth makes it prone to algae on leaves in high light - keep light moderate. The 'Petite' cultivar is listed separately.",
     "images": [],
-    "citations": ["crusio-1987-anubias", "kasselmann-2003-aquariumplants"]
+    "citations": ["crusio-1987-anubias", "kasselmann-2003-aquariumplants", "visual-cate-anubias-nana"]
   },
   {
     "id": "lemna-minor",
@@ -4424,9 +4967,16 @@
       "preferred_temp_c": 22,
       "temp_tolerance_c": 6.0
     },
+    "visual": {
+      "leafShape": "round",
+      "arrangement": "mat",
+      "leafLengthCm": 0.4,
+      "leafWidthCm": 0.3,
+      "leafDensity": 0.9
+    },
     "notes": "Tiny floating plant that doubles rapidly and can shade out the whole tank; maxHeightCm is a 1 cm placeholder (frond thickness plus roots). Absorbs nitrate and phosphate aggressively; control by regular removal.",
     "images": [],
-    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants"]
+    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants", "visual-estimate-2026"]
   },
   {
     "id": "monosolenium-tenerum",
@@ -4482,9 +5032,16 @@
       "preferred_temp_c": 24,
       "temp_tolerance_c": 3.5
     },
+    "visual": {
+      "leafShape": "moss",
+      "arrangement": "mat",
+      "leafLengthCm": 0.4,
+      "leafWidthCm": 0.2,
+      "leafDensity": 0.9
+    },
     "notes": "Thalloid liverwort that forms lush cushions when attached to stone or wood; low-to-moderate light and stable conditions. Traps debris, so keep flow gentle but clean. Vendors often label it 'Pellia'.",
     "images": [],
-    "citations": ["kasselmann-2003-aquariumplants", "svensson-2016-carpeting-plants"]
+    "citations": ["kasselmann-2003-aquariumplants", "svensson-2016-carpeting-plants", "visual-estimate-2026"]
   },
   {
     "id": "hydrocotyle-leucocephala",
@@ -4540,8 +5097,15 @@
       "preferred_temp_c": 24,
       "temp_tolerance_c": 3.5
     },
+    "visual": {
+      "leafShape": "round",
+      "arrangement": "alternate",
+      "leafLengthCm": 3,
+      "leafWidthCm": 3,
+      "leafDensity": 0.6
+    },
     "notes": "Creeping pennywort with rounded, scalloped leaves on long internodes; can be pinned as a loose mat or grown as a bushy mid-ground plant. Spreads fast under high light.",
     "images": [],
-    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants"]
+    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants", "visual-estimate-2026"]
   }
 ]

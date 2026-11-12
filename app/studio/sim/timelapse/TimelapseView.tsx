@@ -1,8 +1,10 @@
 "use client"
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react"
 import { useSearchParams } from "next/navigation"
 import Link from "next/link"
+import dynamic from "next/dynamic"
+import { flags } from "@/lib/flags"
 import plantsJson from "@/lib/sim/vendor/plants.json"
 import vendorInfo from "@/lib/sim/vendor/VENDOR.json"
 import { buildInput, type BotanyRecord } from "@/lib/sim/buildInput"
@@ -25,6 +27,9 @@ const LEGACY_NAMES: Record<string, string> = {
   "aponogeton-ulvaceus": "Aponogeton",
 }
 const PLAY_MS_PER_DAY = 110
+
+/** Stylized 3D tank — only referenced (and its chunk only requested) when the flag is on. */
+const FrontalHero = flags.stylizedTank ? dynamic(() => import("./FrontalHero"), { ssr: false }) : null
 
 function clampDay(raw: string | null, days: number): number {
   const n = raw === null ? NaN : Math.round(Number(raw))
@@ -135,18 +140,28 @@ export default function TimelapseView() {
   const lowFrac = lowLightFraction(frame, lowLightPar)
   const eventTotals = EVENT_ORDER.map((t) => ({ t, n: [...events.values()].flat().filter((e) => e.type === t).length }))
   const { tank } = input
+  const breadcrumb = (
+    <nav className="mb-8 flex items-center gap-2 text-[13px]" aria-label="Breadcrumb">
+      <Link href="/studio" className="inline-flex min-h-11 items-center hover:underline" style={{ color: c("accent") }}>
+        工作室 Studio
+      </Link>
+      <span style={{ color: c("muted") }}>/</span>
+      <span className="truncate" style={{ color: c("muted") }}>{built.name}</span>
+    </nav>
+  )
 
   return (
     <main className="mx-auto max-w-[1080px] px-4 pb-10 sm:px-6">
+      {FrontalHero && <div className="pt-4 [&>nav]:mb-0">{breadcrumb}</div>}
+      {FrontalHero && (
+        <StylizedTankHero tank={tank} day={day}>
+          {(onReady) => <FrontalHero input={input} frame={frame} byId={BY_ID} onReady={onReady} />}
+        </StylizedTankHero>
+      )}
+
       {/* hero */}
-      <section className="pb-14 pt-14 sm:pb-20 sm:pt-24">
-        <nav className="mb-8 flex items-center gap-2 text-[13px]" aria-label="Breadcrumb">
-          <Link href="/studio" className="inline-flex min-h-11 items-center hover:underline" style={{ color: c("accent") }}>
-            工作室 Studio
-          </Link>
-          <span style={{ color: c("muted") }}>/</span>
-          <span className="truncate" style={{ color: c("muted") }}>{built.name}</span>
-        </nav>
+      <section className={FrontalHero ? "pb-14 pt-10 sm:pb-20 sm:pt-16" : "pb-14 pt-14 sm:pb-20 sm:pt-24"}>
+        {!FrontalHero && breadcrumb}
         <p className="mb-4 text-[15px] font-semibold tracking-tight sm:text-[17px]" style={{ color: c("accent") }}>
           生长模拟 · Growth time-lapse
         </p>
@@ -319,6 +334,39 @@ export default function TimelapseView() {
         />
       </div>
     </main>
+  )
+}
+
+/** Layout box for the stylized tank: full content width, tank aspect, white, no border; caption below. */
+function StylizedTankHero({
+  tank,
+  day,
+  children,
+}: {
+  tank: { widthCm: number; heightCm: number }
+  day: number
+  children: (onReady: () => void) => ReactNode
+}) {
+  const [ready, setReady] = useState(false)
+  const onReady = useCallback(() => setReady(true), [])
+  return (
+    <figure className="-mx-4 pt-4 sm:mx-0 sm:pt-6" data-frontal-ready={ready ? "1" : "0"}>
+      <div
+        className="relative mx-auto w-full overflow-hidden sm:max-h-[62vh]"
+        style={{
+          aspectRatio: `${tank.widthCm} / ${tank.heightCm}`,
+          background: c("bg"),
+          // soften the renderer's floor shadow where the canvas edge would cut it off
+          maskImage: "linear-gradient(to bottom, black 94%, transparent)",
+          WebkitMaskImage: "linear-gradient(to bottom, black 94%, transparent)",
+        }}
+      >
+        {children(onReady)}
+      </div>
+      <figcaption className="mt-3 px-4 text-center text-[13px] tl-num sm:px-0" style={{ color: c("muted") }}>
+        第 {day} 天 · 风格化预览 (stylized preview)
+      </figcaption>
+    </figure>
   )
 }
 

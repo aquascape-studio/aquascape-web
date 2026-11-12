@@ -9,4 +9,6 @@ export function parseFlag(value: string | undefined): boolean {
 export const flags = {
   /** /studio/sim growth time-lapse driven by @aquascape/sim-core */
   growthTimelapse: parseFlag(process.env.NEXT_PUBLIC_FF_GROWTH_TIMELAPSE),
+  /** stylized front-view 3D tank (@aquascape-studio/render FrontalTank) on the time-lapse */
+  stylizedTank: parseFlag(process.env.NEXT_PUBLIC_FF_STYLIZED_TANK),
 } as const

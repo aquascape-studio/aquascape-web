@@ -137,6 +137,8 @@ jobs:
         run: pnpm build
         env:
           NEXT_TELEMETRY_DISABLED: "1"
+          # Xiaopu approved the v3 time-lapse visuals on 2026-11-12 → flag on in prod
+          NEXT_PUBLIC_FF_GROWTH_TIMELAPSE: "1"
 
       - name: Prune dev dependencies
         working-directory: web

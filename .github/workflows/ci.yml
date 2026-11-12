@@ -139,6 +139,8 @@ jobs:
           NEXT_TELEMETRY_DISABLED: "1"
           # Xiaopu approved the v3 time-lapse visuals on 2026-11-12 → flag on in prod
           NEXT_PUBLIC_FF_GROWTH_TIMELAPSE: "1"
+          # Xiaopu waived visual sign-off on 2026-11-12 ("不用等我approve") → stylized tank on
+          NEXT_PUBLIC_FF_STYLIZED_TANK: "1"
 
       - name: Prune dev dependencies
         working-directory: web

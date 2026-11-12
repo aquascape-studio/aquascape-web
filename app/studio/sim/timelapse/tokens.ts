@@ -51,7 +51,8 @@ function hexToRgb(h: string): [number, number, number] {
 
 /** t in 0..1 → colour along GREEN_RAMP */
 export function rampColor(t: number): string {
-  const x = Math.min(1, Math.max(0, t)) * (GREEN_RAMP.length - 1)
+  // cap at 75% of the ramp: the brightest floor reads as a fresh mid-green, not a heavy dark block
+  const x = Math.min(1, Math.max(0, t)) * 0.75 * (GREEN_RAMP.length - 1)
   const i = Math.min(GREEN_RAMP.length - 2, Math.floor(x))
   const f = x - i
   const a = hexToRgb(GREEN_RAMP[i]!)

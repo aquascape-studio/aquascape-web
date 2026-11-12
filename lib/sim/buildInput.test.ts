@@ -61,9 +61,9 @@ describe("buildInput", () => {
   })
 
   it("maps light level and CO2 toggle", () => {
-    expect(buildInput(params({ light: "Low" }), plants).input.light.surfacePar).toBe(40)
-    expect(buildInput(params({ light: "High" }), plants).input.light.surfacePar).toBe(150)
-    expect(buildInput(params({ light: "bogus" }), plants).input.light.surfacePar).toBe(80)
+    expect(buildInput(params({ light: "Low" }), plants).input.light.surfacePar).toBe(100)
+    expect(buildInput(params({ light: "High" }), plants).input.light.surfacePar).toBe(320)
+    expect(buildInput(params({ light: "bogus" }), plants).input.light.surfacePar).toBe(200)
     expect(buildInput(params({ co2: "true" }), plants).input.water.co2Ppm).toBe(25)
     expect(buildInput(params({ co2: "false" }), plants).input.water.co2Ppm).toBe(5)
   })

@@ -32,7 +32,9 @@ export const LEGACY_PLANT_MAP: Record<string, { speciesId: string; zone: Zone; e
   "aponogeton-ulvaceus":  { speciesId: "cryptocoryne-balansae",             zone: "background", exact: false },
 }
 
-export const LIGHT_PAR: Record<LightLevel, number> = { Low: 40, Medium: 80, High: 150 }
+// Surface PAR under the fixture. Beer-Lambert (k=0.03/cm) leaves ~34/68/109 PAR at the substrate of a 36 cm tank,
+// i.e. typical low / medium / high planted-tank lighting at substrate level.
+export const LIGHT_PAR: Record<LightLevel, number> = { Low: 100, Medium: 200, High: 320 }
 export const CO2_PPM = { on: 25, off: 5 } as const
 export const DEFAULT_PLANTS: Record<string, number> = { "rotala-rotundifolia": 5, "java-fern": 2, "amazon-sword": 1 }
 export const DEFAULT_TANK = { widthCm: 60, depthCm: 30, heightCm: 36 } as const

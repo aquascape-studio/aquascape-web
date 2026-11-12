@@ -27,3 +27,36 @@ describe("flags.growthTimelapse", () => {
     expect(flags.growthTimelapse).toBe(true)
   })
 })
+
+describe("flags.stylizedTank", () => {
+  afterEach(() => {
+    vi.unstubAllEnvs()
+    vi.resetModules()
+  })
+
+  it("defaults to off", async () => {
+    vi.stubEnv("NEXT_PUBLIC_FF_STYLIZED_TANK", undefined as unknown as string)
+    const { flags } = await import("./flags")
+    expect(flags.stylizedTank).toBe(false)
+  })
+
+  it.each(["0", "false", ""])("is off for %j", async (v) => {
+    vi.stubEnv("NEXT_PUBLIC_FF_STYLIZED_TANK", v)
+    const { flags } = await import("./flags")
+    expect(flags.stylizedTank).toBe(false)
+  })
+
+  it.each(["1", "true"])("is on for %s", async (v) => {
+    vi.stubEnv("NEXT_PUBLIC_FF_STYLIZED_TANK", v)
+    const { flags } = await import("./flags")
+    expect(flags.stylizedTank).toBe(true)
+  })
+
+  it("is independent of growthTimelapse", async () => {
+    vi.stubEnv("NEXT_PUBLIC_FF_GROWTH_TIMELAPSE", "1")
+    vi.stubEnv("NEXT_PUBLIC_FF_STYLIZED_TANK", undefined as unknown as string)
+    const { flags } = await import("./flags")
+    expect(flags.growthTimelapse).toBe(true)
+    expect(flags.stylizedTank).toBe(false)
+  })
+})

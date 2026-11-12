@@ -66,8 +66,10 @@ export function useGrowthSim(input: SimInput | null, key: string): GrowthSimStat
         raf = 0
         pending = []
         setState({ frames: msg.result.frames, result: msg.result, status: "done", error: null, elapsedMs: msg.elapsedMs })
+      } else if (msg.type === "cancelled") {
+        // 1.1: acknowledgement of our own `cancel` — nothing to do
       } else if (msg.message !== "cancelled") {
-        // sim-core acknowledges `cancel` with error("cancelled") — a silent cancel, not a failure
+        // pre-1.1 engines acknowledged `cancel` with error("cancelled") — a silent cancel, not a failure
         setState((s) => ({ ...s, status: "error", error: msg.message }))
       }
     }

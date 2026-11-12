@@ -1,0 +1,32 @@
+{
+  "syncedAt": "2026-11-12T02:23:58.732Z",
+  "script": "scripts/sync-sim-core.sh",
+  "simCore": {
+    "repo": "aquascape-studio/aquascape-sim",
+    "path": "ts/src",
+    "ref": "origin/main",
+    "commit": "7b344f639094d7b1c1ed3e0ef994e2982e34ff3d",
+    "dirty": false,
+    "placeholder": false,
+    "files": [
+      "algo/envelope.ts",
+      "algo/index.ts",
+      "algo/light.ts",
+      "algo/nutrients.ts",
+      "algo/photosynthesis.ts",
+      "algo/tick.ts",
+      "contract.ts",
+      "engine.ts",
+      "index.ts",
+      "prng.ts",
+      "worker.ts"
+    ]
+  },
+  "plants": {
+    "repo": "aquascape-studio/aquascape-botany",
+    "path": "data/plants.json",
+    "ref": "origin/main",
+    "commit": "0a07d752e8573897eff6c48e0cf53b9f6ba43d89",
+    "dirty": false
+  }
+}

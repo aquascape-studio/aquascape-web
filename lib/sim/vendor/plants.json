@@ -1,0 +1,4547 @@
+[
+  {
+    "id": "anubias-barteri",
+    "scientificName": "Anubias barteri",
+    "family": "Araceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Liliopsida",
+      "order": "Alismatales",
+      "family": "Araceae",
+      "genus": "Anubias",
+      "species": "barteri"
+    },
+    "commonNames": {
+      "en": ["Anubias barteri", "Broadleaf anubias"],
+      "zh": ["大榕", "大叶榕"]
+    },
+    "pinyin": ["da rong", "da ye rong"],
+    "group": "epiphyte",
+    "growthForm": "epiphyte",
+    "origin": ["West Africa"],
+    "difficulty": 1,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 15, "opt": 40,  "max": 100, "unit": "µmol/m²/s" },
+      "co2":          { "min": 0,  "opt": 10,  "max": 30,  "unit": "ppm" },
+      "temperatureC": { "min": 20, "opt": 25,  "max": 30 },
+      "pH":           { "min": 5.5,"opt": 6.8, "max": 8.0 },
+      "gh":           { "min": 2,  "opt": 8,   "max": 18 },
+      "kh":           { "min": 1,  "opt": 5,   "max": 14 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "low",    "phosphorusDemand": "low",    "potassiumDemand": "low" },
+      "micros": { "ironDemand": "low",        "traceDemand": "low" },
+      "rootFeeder": false,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "slow",
+      "maxHeightCm": 25,
+      "maxSpreadCm": 25,
+      "internodeCm": null,
+      "propagation": ["rhizome-division"]
+    },
+    "placement": ["midground", "attached"],
+    "colorRange": ["dark-green"],
+    "colorHex": "#2f5d34",
+    "sim": {
+      "k_photosynthesis": 0.35,
+      "k_light": 25,
+      "k_co2": 6,
+      "preferred_temp_c": 25,
+      "temp_tolerance_c": 4.0
+    },
+    "notes": "Bury the rhizome and it rots; tie to hardscape. Extremely forgiving of low light and low-CO2 tanks. Prone to black-beard algae on old leaves in high-flow spots.",
+    "images": [],
+    "citations": ["tropica-anubias-barteri", "dennerle-anubias-barteri", "crusio-1987-anubias"]
+  },
+  {
+    "id": "anubias-barteri-nana-petite",
+    "scientificName": "Anubias barteri var. nana 'Petite'",
+    "family": "Araceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Liliopsida",
+      "order": "Alismatales",
+      "family": "Araceae",
+      "genus": "Anubias",
+      "species": "barteri",
+      "cultivar": "var. nana 'Petite'"
+    },
+    "commonNames": {
+      "en": ["Anubias nana Petite", "Dwarf anubias"],
+      "zh": ["迷你小榕", "小榕Petite"]
+    },
+    "pinyin": ["mi ni xiao rong", "xiao rong petite"],
+    "group": "epiphyte",
+    "growthForm": "epiphyte",
+    "origin": ["Cultivar — Oriental Aquarium Singapore (from Cameroon parent)"],
+    "difficulty": 1,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 15, "opt": 40,  "max": 100, "unit": "µmol/m²/s" },
+      "co2":          { "min": 0,  "opt": 10,  "max": 30,  "unit": "ppm" },
+      "temperatureC": { "min": 20, "opt": 25,  "max": 28 },
+      "pH":           { "min": 5.5,"opt": 6.8, "max": 8.0 },
+      "gh":           { "min": 2,  "opt": 8,   "max": 18 },
+      "kh":           { "min": 1,  "opt": 5,   "max": 14 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "low",    "phosphorusDemand": "low",    "potassiumDemand": "low" },
+      "micros": { "ironDemand": "low",        "traceDemand": "low" },
+      "rootFeeder": false,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "slow",
+      "maxHeightCm": 5,
+      "maxSpreadCm": 8,
+      "internodeCm": null,
+      "propagation": ["rhizome-division"]
+    },
+    "placement": ["foreground", "midground", "attached"],
+    "colorRange": ["dark-green"],
+    "colorHex": "#2d5a32",
+    "sim": {
+      "k_photosynthesis": 0.28,
+      "k_light": 22,
+      "k_co2": 5,
+      "preferred_temp_c": 25,
+      "temp_tolerance_c": 3.5
+    },
+    "notes": "Trademarked cultivar by Oriental Aquarium; leaves ~1-2 cm. Slower and smaller than Nana — lifetime of a single leaf can exceed a year. Excellent for nano and shrimp tanks.",
+    "images": [],
+    "citations": ["tropica-anubias-nana-petite", "oriental-aquarium-petite"]
+  },
+  {
+    "id": "bacopa-caroliniana",
+    "scientificName": "Bacopa caroliniana",
+    "family": "Plantaginaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Magnoliopsida",
+      "order": "Lamiales",
+      "family": "Plantaginaceae",
+      "genus": "Bacopa",
+      "species": "caroliniana"
+    },
+    "commonNames": {
+      "en": ["Lemon bacopa", "Blue waterhyssop", "Giant bacopa"],
+      "zh": ["过长沙", "卡罗来纳过长沙"]
+    },
+    "pinyin": ["guo chang sha", "ka luo lai na guo chang sha"],
+    "group": "stem",
+    "growthForm": "stem",
+    "origin": ["Southeastern United States"],
+    "difficulty": 1,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 30, "opt": 60,  "max": 120, "unit": "µmol/m²/s" },
+      "co2":          { "min": 0,  "opt": 20,  "max": 35,  "unit": "ppm" },
+      "temperatureC": { "min": 18, "opt": 24,  "max": 28 },
+      "pH":           { "min": 6.0,"opt": 6.8, "max": 7.8 },
+      "gh":           { "min": 2,  "opt": 8,   "max": 20 },
+      "kh":           { "min": 2,  "opt": 6,   "max": 14 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "medium", "phosphorusDemand": "medium", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "medium",     "traceDemand": "medium" },
+      "rootFeeder": false,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "medium",
+      "maxHeightCm": 30,
+      "maxSpreadCm": 5,
+      "internodeCm": 1.5,
+      "propagation": ["topping", "side-shoots"]
+    },
+    "placement": ["midground", "background"],
+    "colorRange": ["green", "copper-high-light"],
+    "colorHex": "#7aa56a",
+    "sim": {
+      "k_photosynthesis": 0.85,
+      "k_light": 55,
+      "k_co2": 18,
+      "preferred_temp_c": 24,
+      "temp_tolerance_c": 4.5
+    },
+    "notes": "Thick succulent stems emit a lemon scent when crushed. Tolerates hard water and low CO2 but colors brighter copper under 50+ µmol/m²/s PAR.",
+    "images": [],
+    "citations": ["tropica-bacopa-caroliniana", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "bacopa-monnieri",
+    "scientificName": "Bacopa monnieri",
+    "family": "Plantaginaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Magnoliopsida",
+      "order": "Lamiales",
+      "family": "Plantaginaceae",
+      "genus": "Bacopa",
+      "species": "monnieri"
+    },
+    "commonNames": {
+      "en": ["Moneywort", "Water hyssop", "Brahmi"],
+      "zh": ["过长沙（正名）", "钱草", "婆罗米"]
+    },
+    "pinyin": ["guo chang sha", "qian cao", "po luo mi"],
+    "group": "stem",
+    "growthForm": "stem",
+    "origin": ["Pantropical — Asia, Americas, Africa, Australia"],
+    "difficulty": 1,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 20, "opt": 50,  "max": 120, "unit": "µmol/m²/s" },
+      "co2":          { "min": 0,  "opt": 15,  "max": 30,  "unit": "ppm" },
+      "temperatureC": { "min": 18, "opt": 24,  "max": 30 },
+      "pH":           { "min": 5.5,"opt": 6.8, "max": 8.0 },
+      "gh":           { "min": 2,  "opt": 8,   "max": 20 },
+      "kh":           { "min": 1,  "opt": 5,   "max": 15 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "low",    "phosphorusDemand": "low",    "potassiumDemand": "low" },
+      "micros": { "ironDemand": "low",        "traceDemand": "low" },
+      "rootFeeder": false,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "medium",
+      "maxHeightCm": 30,
+      "maxSpreadCm": 4,
+      "internodeCm": 1.0,
+      "propagation": ["topping", "side-shoots"]
+    },
+    "placement": ["midground", "background"],
+    "colorRange": ["light-green"],
+    "colorHex": "#8cc05a",
+    "sim": {
+      "k_photosynthesis": 0.75,
+      "k_light": 40,
+      "k_co2": 12,
+      "preferred_temp_c": 24,
+      "temp_tolerance_c": 5.0
+    },
+    "notes": "One of the most cosmopolitan aquatic plants; sold in virtually every fish store worldwide under the name 'moneywort'. Adapts readily to hard or soft water. Emersed-to-submersed conversion is smooth — no melting phase. Tiny round leaves are brighter green than B. caroliniana and lack the lemon scent.",
+    "images": [],
+    "citations": ["tropica-bacopa-monnieri", "flowgrow-bacopa-monnieri", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "bucephalandra-kedagang",
+    "scientificName": "Bucephalandra sp. 'Kedagang'",
+    "family": "Araceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Liliopsida",
+      "order": "Alismatales",
+      "family": "Araceae",
+      "genus": "Bucephalandra",
+      "species": "sp.",
+      "cultivar": "Kedagang"
+    },
+    "commonNames": {
+      "en": ["Bucephalandra Kedagang", "Buce Kedagang"],
+      "zh": ["辣椒榕·克达岗", "红火焰辣椒榕"]
+    },
+    "pinyin": ["la jiao rong ke da gang", "hong huo yan la jiao rong"],
+    "group": "epiphyte",
+    "growthForm": "epiphyte",
+    "origin": ["Borneo (Kalimantan), Indonesia"],
+    "difficulty": 2,
+    "difficultyLabel": "medium",
+    "envelope": {
+      "light":        { "min": 20, "opt": 50,  "max": 120, "unit": "µmol/m²/s" },
+      "co2":          { "min": 0,  "opt": 20,  "max": 35,  "unit": "ppm" },
+      "temperatureC": { "min": 22, "opt": 25,  "max": 28 },
+      "pH":           { "min": 5.0,"opt": 6.5, "max": 7.5 },
+      "gh":           { "min": 1,  "opt": 5,   "max": 12 },
+      "kh":           { "min": 0,  "opt": 3,   "max": 8 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "low",    "phosphorusDemand": "low",    "potassiumDemand": "low" },
+      "micros": { "ironDemand": "medium",     "traceDemand": "medium" },
+      "rootFeeder": false,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "slow",
+      "maxHeightCm": 8,
+      "maxSpreadCm": 12,
+      "internodeCm": null,
+      "propagation": ["rhizome-division"]
+    },
+    "placement": ["foreground", "midground", "attached"],
+    "colorRange": ["dark-green", "bronze-submersed", "red-veined"],
+    "colorHex": "#4a5c3a",
+    "sim": {
+      "k_photosynthesis": 0.32,
+      "k_light": 28,
+      "k_co2": 10,
+      "preferred_temp_c": 25,
+      "temp_tolerance_c": 2.5
+    },
+    "notes": "Like Anubias, rhizome must stay above substrate. Kedagang shows deep green leaves with red undersides and occasional white flowers. Melting is common for 4-6 weeks after import from emersed — trim melting leaves, new growth follows.",
+    "images": [],
+    "citations": ["wongso-2013-bucephalandra", "buceplant-kedagang", "kurniawan-2020-bucephalandra-taxonomy"]
+  },
+  {
+    "id": "cabomba-caroliniana",
+    "scientificName": "Cabomba caroliniana",
+    "family": "Cabombaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Magnoliopsida",
+      "order": "Nymphaeales",
+      "family": "Cabombaceae",
+      "genus": "Cabomba",
+      "species": "caroliniana"
+    },
+    "commonNames": {
+      "en": ["Green cabomba", "Carolina fanwort", "Washington grass"],
+      "zh": ["卡布汶", "绿卡布汶", "绿鱼草"]
+    },
+    "pinyin": ["ka bu wen", "lv ka bu wen", "lv yu cao"],
+    "group": "stem",
+    "growthForm": "stem",
+    "origin": ["Eastern North America, Central America, South America"],
+    "difficulty": 2,
+    "difficultyLabel": "medium",
+    "envelope": {
+      "light":        { "min": 50, "opt": 100, "max": 180, "unit": "µmol/m²/s" },
+      "co2":          { "min": 10, "opt": 25,  "max": 40,  "unit": "ppm" },
+      "temperatureC": { "min": 18, "opt": 22,  "max": 26 },
+      "pH":           { "min": 5.5,"opt": 6.5, "max": 7.5 },
+      "gh":           { "min": 1,  "opt": 5,   "max": 12 },
+      "kh":           { "min": 0,  "opt": 2,   "max": 6 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "medium", "phosphorusDemand": "medium", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "medium",     "traceDemand": "medium" },
+      "rootFeeder": false,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "fast",
+      "maxHeightCm": 50,
+      "maxSpreadCm": 6,
+      "internodeCm": 2.0,
+      "propagation": ["topping", "side-shoots"]
+    },
+    "placement": ["midground", "background"],
+    "colorRange": ["bright-green"],
+    "colorHex": "#5fbf3a",
+    "sim": {
+      "k_photosynthesis": 1.05,
+      "k_light": 70,
+      "k_co2": 18,
+      "preferred_temp_c": 22,
+      "temp_tolerance_c": 3.0
+    },
+    "notes": "Fan-shaped finely divided leaves make it a classic shoaling-fish background. Dislikes hard alkaline water — KH above 6 causes leaf disintegration at the tips. Invasive in several regions outside its native range; do not release into open water. Cool-water plant — below 26°C is preferable.",
+    "images": [],
+    "citations": ["tropica-cabomba-caroliniana", "dennerle-cabomba-caroliniana", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "cryptocoryne-wendtii",
+    "scientificName": "Cryptocoryne wendtii",
+    "family": "Araceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Liliopsida",
+      "order": "Alismatales",
+      "family": "Araceae",
+      "genus": "Cryptocoryne",
+      "species": "wendtii"
+    },
+    "commonNames": {
+      "en": ["Wendt's cryptocoryne", "Crypt wendtii"],
+      "zh": ["温蒂椒草", "温氏椒草"]
+    },
+    "pinyin": ["wen di jiao cao", "wen shi jiao cao"],
+    "group": "rosette",
+    "growthForm": "rosette",
+    "origin": ["Sri Lanka"],
+    "difficulty": 1,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 20, "opt": 50,  "max": 120, "unit": "µmol/m²/s" },
+      "co2":          { "min": 0,  "opt": 15,  "max": 35,  "unit": "ppm" },
+      "temperatureC": { "min": 20, "opt": 25,  "max": 29 },
+      "pH":           { "min": 5.5,"opt": 6.8, "max": 8.0 },
+      "gh":           { "min": 2,  "opt": 8,   "max": 18 },
+      "kh":           { "min": 1,  "opt": 5,   "max": 14 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "medium", "phosphorusDemand": "medium", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "medium",     "traceDemand": "medium" },
+      "rootFeeder": true,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "medium",
+      "maxHeightCm": 20,
+      "maxSpreadCm": 20,
+      "internodeCm": null,
+      "propagation": ["runners"]
+    },
+    "placement": ["midground"],
+    "colorRange": ["green", "brown", "bronze"],
+    "colorHex": "#6b6b2e",
+    "sim": {
+      "k_photosynthesis": 0.55,
+      "k_light": 35,
+      "k_co2": 12,
+      "preferred_temp_c": 25,
+      "temp_tolerance_c": 3.5
+    },
+    "notes": "Expect 'crypt melt' after any major water-parameter change — leaves dissolve, rhizome survives, new growth follows in 2-3 weeks. Nutrient-rich substrate strongly recommended.",
+    "images": [],
+    "citations": ["tropica-cryptocoryne-wendtii", "jacobsen-1980-cryptocoryne-srilanka", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "echinodorus-red-flame",
+    "scientificName": "Echinodorus 'Red Flame'",
+    "family": "Alismataceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Liliopsida",
+      "order": "Alismatales",
+      "family": "Alismataceae",
+      "genus": "Echinodorus",
+      "species": "hybrid",
+      "cultivar": "Red Flame"
+    },
+    "commonNames": {
+      "en": ["Red Flame sword", "Echinodorus Red Flame"],
+      "zh": ["红火焰皇冠", "红焰皇冠"]
+    },
+    "pinyin": ["hong huo yan huang guan", "hong yan huang guan"],
+    "group": "rosette",
+    "growthForm": "rosette",
+    "origin": ["Cultivar — Tomey Plants / Hans Barth (Germany)"],
+    "difficulty": 2,
+    "difficultyLabel": "medium",
+    "envelope": {
+      "light":        { "min": 40, "opt": 80,  "max": 150, "unit": "µmol/m²/s" },
+      "co2":          { "min": 10, "opt": 25,  "max": 40,  "unit": "ppm" },
+      "temperatureC": { "min": 22, "opt": 26,  "max": 29 },
+      "pH":           { "min": 6.0,"opt": 6.8, "max": 7.5 },
+      "gh":           { "min": 3,  "opt": 8,   "max": 16 },
+      "kh":           { "min": 2,  "opt": 5,   "max": 12 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "high",   "phosphorusDemand": "high",   "potassiumDemand": "high" },
+      "micros": { "ironDemand": "high",       "traceDemand": "medium" },
+      "rootFeeder": true,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "medium",
+      "maxHeightCm": 30,
+      "maxSpreadCm": 25,
+      "internodeCm": null,
+      "propagation": ["adventitious-plantlets"]
+    },
+    "placement": ["midground", "background"],
+    "colorRange": ["olive-green", "red-speckled", "red-high-light"],
+    "colorHex": "#8b3a2a",
+    "sim": {
+      "k_photosynthesis": 0.70,
+      "k_light": 60,
+      "k_co2": 18,
+      "preferred_temp_c": 26,
+      "temp_tolerance_c": 3.0
+    },
+    "notes": "Leaves start olive-green then develop crimson speckles under strong light and iron-rich substrate. Heavy root feeder — root tabs every 2-3 months accelerate color expression. Often sold as E. 'Ozelot Red' relative.",
+    "images": [],
+    "citations": ["barth-hybrid-echinodorus", "tropica-echinodorus-red-flame", "lehtonen-2008-echinodorus-revision"]
+  },
+  {
+    "id": "eleocharis-parvula",
+    "scientificName": "Eleocharis parvula",
+    "family": "Cyperaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Liliopsida",
+      "order": "Poales",
+      "family": "Cyperaceae",
+      "genus": "Eleocharis",
+      "species": "parvula"
+    },
+    "commonNames": {
+      "en": ["Dwarf hairgrass", "Least spikerush"],
+      "zh": ["迷你矮珍珠（误用）", "迷你牛毛毡", "矮牛毛毡"]
+    },
+    "pinyin": ["mi ni ai zhen zhu", "mi ni niu mao zhan", "ai niu mao zhan"],
+    "group": "carpeting",
+    "growthForm": "carpeting",
+    "origin": ["Cosmopolitan — Europe, Americas, Asia"],
+    "difficulty": 2,
+    "difficultyLabel": "medium",
+    "envelope": {
+      "light":        { "min": 50, "opt": 90,  "max": 180, "unit": "µmol/m²/s" },
+      "co2":          { "min": 15, "opt": 25,  "max": 35,  "unit": "ppm" },
+      "temperatureC": { "min": 18, "opt": 24,  "max": 28 },
+      "pH":           { "min": 6.0,"opt": 6.8, "max": 7.5 },
+      "gh":           { "min": 2,  "opt": 6,   "max": 14 },
+      "kh":           { "min": 1,  "opt": 4,   "max": 10 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "medium", "phosphorusDemand": "medium", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "medium",     "traceDemand": "medium" },
+      "rootFeeder": true,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "medium",
+      "maxHeightCm": 10,
+      "maxSpreadCm": 15,
+      "internodeCm": null,
+      "propagation": ["runners"]
+    },
+    "placement": ["foreground"],
+    "colorRange": ["green"],
+    "colorHex": "#5ea03b",
+    "sim": {
+      "k_photosynthesis": 0.60,
+      "k_light": 70,
+      "k_co2": 15,
+      "preferred_temp_c": 24,
+      "temp_tolerance_c": 3.0
+    },
+    "notes": "True E. parvula tops out at ~6-10 cm; E. acicularis sold as 'mini' is often taller. Dense carpet needs trimming at 2-3 cm to prevent lower-layer melting. CO2 injection dramatically shortens runner spread time.",
+    "images": [],
+    "citations": ["tropica-eleocharis-parvula", "kasselmann-2003-aquariumplants", "svensson-2016-carpeting-plants"]
+  },
+  {
+    "id": "glossostigma-elatinoides",
+    "scientificName": "Glossostigma elatinoides",
+    "family": "Phrymaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Magnoliopsida",
+      "order": "Lamiales",
+      "family": "Phrymaceae",
+      "genus": "Glossostigma",
+      "species": "elatinoides"
+    },
+    "commonNames": {
+      "en": ["Glosso", "Glossostigma"],
+      "zh": ["牛顿草", "鹿角苔（误用）"]
+    },
+    "pinyin": ["niu dun cao", "lu jiao tai"],
+    "group": "carpeting",
+    "growthForm": "carpeting",
+    "origin": ["Australia, New Zealand"],
+    "difficulty": 3,
+    "difficultyLabel": "medium",
+    "envelope": {
+      "light":        { "min": 80, "opt": 140, "max": 220, "unit": "µmol/m²/s" },
+      "co2":          { "min": 20, "opt": 30,  "max": 40,  "unit": "ppm" },
+      "temperatureC": { "min": 18, "opt": 23,  "max": 28 },
+      "pH":           { "min": 6.0,"opt": 6.5, "max": 7.2 },
+      "gh":           { "min": 2,  "opt": 5,   "max": 12 },
+      "kh":           { "min": 1,  "opt": 3,   "max": 8 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "medium", "phosphorusDemand": "medium", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "high",       "traceDemand": "medium" },
+      "rootFeeder": true,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "fast",
+      "maxHeightCm": 4,
+      "maxSpreadCm": 10,
+      "internodeCm": 1.0,
+      "propagation": ["runners"]
+    },
+    "placement": ["foreground"],
+    "colorRange": ["light-green"],
+    "colorHex": "#7cc35a"
+,
+    "sim": {
+      "k_photosynthesis": 1.10,
+      "k_light": 110,
+      "k_co2": 20,
+      "preferred_temp_c": 23,
+      "temp_tolerance_c": 3.0
+    },
+    "notes": "Grows upward and loses carpet form below ~100 µmol/m²/s PAR — ADA Nature Aquarium classic precisely because it demands Solar-I-grade light. Heat above 27°C stresses it quickly.",
+    "images": [],
+    "citations": ["amano-1994-nature-aquarium", "tropica-glossostigma-elatinoides", "barrett-2013-phrymaceae"]
+  },
+  {
+    "id": "hygrophila-corymbosa",
+    "scientificName": "Hygrophila corymbosa",
+    "family": "Acanthaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Magnoliopsida",
+      "order": "Lamiales",
+      "family": "Acanthaceae",
+      "genus": "Hygrophila",
+      "species": "corymbosa"
+    },
+    "commonNames": {
+      "en": ["Temple plant", "Giant hygro", "Starhorn"],
+      "zh": ["大水蓑衣", "大叶水蓑衣", "神庙草"]
+    },
+    "pinyin": ["da shui suo yi", "da ye shui suo yi", "shen miao cao"],
+    "group": "stem",
+    "growthForm": "stem",
+    "origin": ["Southeast Asia — Malaysia, Indonesia, India"],
+    "difficulty": 1,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 30, "opt": 70,  "max": 150, "unit": "µmol/m²/s" },
+      "co2":          { "min": 0,  "opt": 15,  "max": 30,  "unit": "ppm" },
+      "temperatureC": { "min": 20, "opt": 25,  "max": 30 },
+      "pH":           { "min": 5.5,"opt": 6.8, "max": 8.0 },
+      "gh":           { "min": 2,  "opt": 8,   "max": 20 },
+      "kh":           { "min": 1,  "opt": 5,   "max": 14 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "high",   "phosphorusDemand": "medium", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "medium",     "traceDemand": "medium" },
+      "rootFeeder": false,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "fast",
+      "maxHeightCm": 60,
+      "maxSpreadCm": 10,
+      "internodeCm": 3.0,
+      "propagation": ["topping", "side-shoots"]
+    },
+    "placement": ["background"],
+    "colorRange": ["dark-green", "bronze-emersed"],
+    "colorHex": "#4a7a35",
+    "sim": {
+      "k_photosynthesis": 1.10,
+      "k_light": 50,
+      "k_co2": 12,
+      "preferred_temp_c": 25,
+      "temp_tolerance_c": 5.0
+    },
+    "notes": "Large-leaved workhorse for background planting in low-tech and high-tech tanks alike. Multiple cultivars exist: 'Kompakt' stays compact at 20 cm; 'Siamensis' has narrower leaves. Emersed form develops bronze-purple leaves and large corymbs of purple flowers. Robust nitrogen uptake makes it an excellent tank cycling assistant.",
+    "images": [],
+    "citations": ["tropica-hygrophila-corymbosa", "flowgrow-hygrophila-corymbosa", "cook-1996-aquatic-plant-book"]
+  },
+  {
+    "id": "hygrophila-polysperma",
+    "scientificName": "Hygrophila polysperma",
+    "family": "Acanthaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Magnoliopsida",
+      "order": "Lamiales",
+      "family": "Acanthaceae",
+      "genus": "Hygrophila",
+      "species": "polysperma"
+    },
+    "commonNames": {
+      "en": ["Dwarf hygro", "Indian waterweed", "Miramar weed"],
+      "zh": ["小水兰（误用）", "印度小圆叶", "多子水蓑衣"]
+    },
+    "pinyin": ["xiao shui lan", "yin du xiao yuan ye", "duo zi shui suo yi"],
+    "group": "stem",
+    "growthForm": "stem",
+    "origin": ["India, Bhutan, Bangladesh"],
+    "difficulty": 1,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 20, "opt": 50,  "max": 120, "unit": "µmol/m²/s" },
+      "co2":          { "min": 0,  "opt": 15,  "max": 35,  "unit": "ppm" },
+      "temperatureC": { "min": 18, "opt": 24,  "max": 30 },
+      "pH":           { "min": 5.5,"opt": 6.8, "max": 8.0 },
+      "gh":           { "min": 2,  "opt": 8,   "max": 20 },
+      "kh":           { "min": 1,  "opt": 5,   "max": 14 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "medium", "phosphorusDemand": "medium", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "medium",     "traceDemand": "medium" },
+      "rootFeeder": false,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "fast",
+      "maxHeightCm": 40,
+      "maxSpreadCm": 8,
+      "internodeCm": 2.0,
+      "propagation": ["topping", "side-shoots"]
+    },
+    "placement": ["midground", "background"],
+    "colorRange": ["light-green", "copper-high-light"],
+    "colorHex": "#92b65a",
+    "sim": {
+      "k_photosynthesis": 1.20,
+      "k_light": 45,
+      "k_co2": 15,
+      "preferred_temp_c": 24,
+      "temp_tolerance_c": 5.0
+    },
+    "notes": "Federally prohibited in the US (USDA noxious weed) — do NOT ship to US customers. Extremely fast starter plant; tolerates low tech. Trim aggressively to avoid shading neighbors.",
+    "images": [],
+    "citations": ["tropica-hygrophila-polysperma", "usda-hygrophila-polysperma-noxious", "cook-1996-aquatic-plant-book"]
+  },
+  {
+    "id": "limnobium-laevigatum",
+    "scientificName": "Limnobium laevigatum",
+    "family": "Hydrocharitaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Liliopsida",
+      "order": "Alismatales",
+      "family": "Hydrocharitaceae",
+      "genus": "Limnobium",
+      "species": "laevigatum"
+    },
+    "commonNames": {
+      "en": ["Amazon frogbit", "South American spongeplant"],
+      "zh": ["亚马逊浮萍（俗称）", "南美蛙蹼", "拉美水鳖"]
+    },
+    "pinyin": ["ya ma xun fu ping", "nan mei wa pu", "la mei shui bie"],
+    "group": "floating",
+    "growthForm": "floating",
+    "origin": ["Central and South America"],
+    "difficulty": 1,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 30, "opt": 80,  "max": 250, "unit": "µmol/m²/s" },
+      "co2":          { "min": 0,  "opt": 0,   "max": 0,   "unit": "ppm" },
+      "temperatureC": { "min": 18, "opt": 25,  "max": 30 },
+      "pH":           { "min": 5.5,"opt": 6.8, "max": 7.8 },
+      "gh":           { "min": 2,  "opt": 6,   "max": 15 },
+      "kh":           { "min": 1,  "opt": 4,   "max": 12 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "high",   "phosphorusDemand": "high",   "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "medium",     "traceDemand": "medium" },
+      "rootFeeder": false,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "fast",
+      "maxHeightCm": 3,
+      "maxSpreadCm": 5,
+      "internodeCm": null,
+      "propagation": ["runners", "fragmentation"]
+    },
+    "placement": ["floating"],
+    "colorRange": ["light-green"],
+    "colorHex": "#9fd060",
+    "sim": {
+      "k_photosynthesis": 1.40,
+      "k_light": 90,
+      "k_co2": 2,
+      "preferred_temp_c": 25,
+      "temp_tolerance_c": 4.0
+    },
+    "notes": "Gets atmospheric CO2 directly from air — k_co2 is low by design; do not interpret as CO2-injection-required. Keep leaves dry by running surface skimmer off during photoperiod. Excellent nitrate sponge; thin weekly.",
+    "images": [],
+    "citations": ["cook-1982-limnobium", "tropica-limnobium-laevigatum", "lowe-mcconnell-1987-amazon-fishery"]
+  },
+  {
+    "id": "limnophila-sessiliflora",
+    "scientificName": "Limnophila sessiliflora",
+    "family": "Plantaginaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Magnoliopsida",
+      "order": "Lamiales",
+      "family": "Plantaginaceae",
+      "genus": "Limnophila",
+      "species": "sessiliflora"
+    },
+    "commonNames": {
+      "en": ["Ambulia", "Asian marshweed", "Dwarf ambulia"],
+      "zh": ["水虎尾", "石龙尾", "安布利亚"]
+    },
+    "pinyin": ["shui hu wei", "shi long wei", "an bu li ya"],
+    "group": "stem",
+    "growthForm": "stem",
+    "origin": ["South and Southeast Asia — India, Japan, China, Philippines"],
+    "difficulty": 1,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 30, "opt": 70,  "max": 150, "unit": "µmol/m²/s" },
+      "co2":          { "min": 0,  "opt": 15,  "max": 30,  "unit": "ppm" },
+      "temperatureC": { "min": 18, "opt": 24,  "max": 28 },
+      "pH":           { "min": 5.5,"opt": 6.8, "max": 7.8 },
+      "gh":           { "min": 2,  "opt": 7,   "max": 18 },
+      "kh":           { "min": 1,  "opt": 4,   "max": 12 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "medium", "phosphorusDemand": "medium", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "medium",     "traceDemand": "medium" },
+      "rootFeeder": false,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "fast",
+      "maxHeightCm": 40,
+      "maxSpreadCm": 6,
+      "internodeCm": 2.0,
+      "propagation": ["topping", "side-shoots"]
+    },
+    "placement": ["midground", "background"],
+    "colorRange": ["light-green", "bright-green"],
+    "colorHex": "#7ab84a",
+    "sim": {
+      "k_photosynthesis": 1.05,
+      "k_light": 52,
+      "k_co2": 14,
+      "preferred_temp_c": 24,
+      "temp_tolerance_c": 4.5
+    },
+    "notes": "Feathery whorled leaves create a soft, delicate texture in the midground/background. Closely resembles Limnophila aquatica but is notably smaller. Very forgiving of low-tech conditions; a classic beginner stem plant. Often confused with Cabomba due to similar leaf shape — distinction is simple: Limnophila has whorled leaves on a single axis, Cabomba has fan-branched leaves.",
+    "images": [],
+    "citations": ["tropica-limnophila-sessiliflora", "flowgrow-limnophila-sessiliflora", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "ludwigia-palustris",
+    "scientificName": "Ludwigia palustris",
+    "family": "Onagraceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Magnoliopsida",
+      "order": "Myrtales",
+      "family": "Onagraceae",
+      "genus": "Ludwigia",
+      "species": "palustris"
+    },
+    "commonNames": {
+      "en": ["Marsh seedbox", "Water purslane"],
+      "zh": ["水丁香（误用）", "沼地丁香", "小叶红蝴蝶"]
+    },
+    "pinyin": ["shui ding xiang", "zhao di ding xiang", "xiao ye hong hu die"],
+    "group": "stem",
+    "growthForm": "stem",
+    "origin": ["Cosmopolitan — Europe, Asia, Americas, Africa"],
+    "difficulty": 1,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 30, "opt": 70,  "max": 150, "unit": "µmol/m²/s" },
+      "co2":          { "min": 0,  "opt": 15,  "max": 30,  "unit": "ppm" },
+      "temperatureC": { "min": 15, "opt": 22,  "max": 28 },
+      "pH":           { "min": 5.5,"opt": 6.8, "max": 7.8 },
+      "gh":           { "min": 2,  "opt": 7,   "max": 20 },
+      "kh":           { "min": 1,  "opt": 4,   "max": 14 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "medium", "phosphorusDemand": "medium", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "high",       "traceDemand": "medium" },
+      "rootFeeder": false,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "medium",
+      "maxHeightCm": 30,
+      "maxSpreadCm": 5,
+      "internodeCm": 1.5,
+      "propagation": ["topping", "side-shoots"]
+    },
+    "placement": ["midground", "background"],
+    "colorRange": ["green-top", "red-underside", "red-high-light"],
+    "colorHex": "#a03e3e",
+    "sim": {
+      "k_photosynthesis": 0.90,
+      "k_light": 52,
+      "k_co2": 14,
+      "preferred_temp_c": 22,
+      "temp_tolerance_c": 4.5
+    },
+    "notes": "Compact companion to L. repens; smaller leaf size (0.5–2 cm) makes it suit midground placement better. Red underside develops reliably without CO2 injection under moderate to high PAR. The cosmopolitan distribution is unusually broad for a Ludwigia — native on six continents. Tolerates cooler water better than most tropical stem plants.",
+    "images": [],
+    "citations": ["tropica-ludwigia-palustris", "dennerle-ludwigia-palustris", "peng-1989-ludwigia-revision"]
+  },
+  {
+    "id": "ludwigia-pantanal",
+    "scientificName": "Ludwigia sp. 'Pantanal'",
+    "family": "Onagraceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Magnoliopsida",
+      "order": "Myrtales",
+      "family": "Onagraceae",
+      "genus": "Ludwigia",
+      "species": "sp.",
+      "cultivar": "Pantanal"
+    },
+    "commonNames": {
+      "en": ["Ludwigia Pantanal", "Pantanal ludwigia"],
+      "zh": ["潘塔纳尔红蝴蝶", "潘塔纳尔丁香"]
+    },
+    "pinyin": ["pan ta na er hong hu die", "pan ta na er ding xiang"],
+    "group": "stem",
+    "growthForm": "stem",
+    "origin": ["Pantanal wetland, Brazil/Paraguay"],
+    "difficulty": 5,
+    "difficultyLabel": "expert",
+    "envelope": {
+      "light":        { "min": 120,"opt": 180, "max": 260, "unit": "µmol/m²/s" },
+      "co2":          { "min": 25, "opt": 35,  "max": 45,  "unit": "ppm" },
+      "temperatureC": { "min": 22, "opt": 25,  "max": 27 },
+      "pH":           { "min": 5.0,"opt": 6.0, "max": 6.8 },
+      "gh":           { "min": 1,  "opt": 4,   "max": 8 },
+      "kh":           { "min": 0,  "opt": 1,   "max": 3 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "high",   "phosphorusDemand": "high",   "potassiumDemand": "high" },
+      "micros": { "ironDemand": "high",       "traceDemand": "high" },
+      "rootFeeder": true,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "slow",
+      "maxHeightCm": 35,
+      "maxSpreadCm": 6,
+      "internodeCm": 0.8,
+      "propagation": ["topping", "side-shoots"]
+    },
+    "placement": ["background"],
+    "colorRange": ["pink", "magenta-high-light"],
+    "colorHex": "#e07aa6",
+    "sim": {
+      "k_photosynthesis": 0.50,
+      "k_light": 150,
+      "k_co2": 28,
+      "preferred_temp_c": 25,
+      "temp_tolerance_c": 1.5
+    },
+    "notes": "Considered one of the most demanding stem plants in the hobby. Needs aggressive fertilization (EI-level Fe, PO4, NO3) and pristine water. Melts under kH > 3 or temperature shifts — calibration note: narrow temp_tolerance_c reflects this. Ludwigia sp. 'Pantanal' is taxonomically unresolved.",
+    "images": [],
+    "citations": ["kasselmann-2003-aquariumplants", "tropica-ludwigia-pantanal", "buceplant-ludwigia-pantanal"]
+  },
+  {
+    "id": "ludwigia-repens",
+    "scientificName": "Ludwigia repens",
+    "family": "Onagraceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Magnoliopsida",
+      "order": "Myrtales",
+      "family": "Onagraceae",
+      "genus": "Ludwigia",
+      "species": "repens"
+    },
+    "commonNames": {
+      "en": ["Creeping primrose-willow", "Red ludwigia"],
+      "zh": ["红丁香", "爬地丁香"]
+    },
+    "pinyin": ["hong ding xiang", "pa di ding xiang"],
+    "group": "stem",
+    "growthForm": "stem",
+    "origin": ["Southern United States, Mexico, Central America"],
+    "difficulty": 2,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 40, "opt": 80,  "max": 160, "unit": "µmol/m²/s" },
+      "co2":          { "min": 0,  "opt": 20,  "max": 35,  "unit": "ppm" },
+      "temperatureC": { "min": 18, "opt": 24,  "max": 28 },
+      "pH":           { "min": 5.5,"opt": 6.8, "max": 7.8 },
+      "gh":           { "min": 2,  "opt": 6,   "max": 18 },
+      "kh":           { "min": 1,  "opt": 4,   "max": 12 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "medium", "phosphorusDemand": "medium", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "high",       "traceDemand": "medium" },
+      "rootFeeder": false,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "fast",
+      "maxHeightCm": 50,
+      "maxSpreadCm": 8,
+      "internodeCm": 1.5,
+      "propagation": ["topping", "side-shoots"]
+    },
+    "placement": ["midground", "background"],
+    "colorRange": ["green-top", "red-underside", "copper-high-light"],
+    "colorHex": "#c0514a",
+    "sim": {
+      "k_photosynthesis": 1.00,
+      "k_light": 55,
+      "k_co2": 15,
+      "preferred_temp_c": 24,
+      "temp_tolerance_c": 4.0
+    },
+    "notes": "Classic beginner red stem. Under medium light and no CO2 stays olive-green; red color requires Fe dosing + PAR > 60 µmol/m²/s. Frequently confused with L. glandulosa ('Perennis').",
+    "images": [],
+    "citations": ["tropica-ludwigia-repens", "kasselmann-2003-aquariumplants", "peng-1989-ludwigia-revision"]
+  },
+  {
+    "id": "marsilea-hirsuta",
+    "scientificName": "Marsilea hirsuta",
+    "family": "Marsileaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Polypodiophyta",
+      "class": "Polypodiopsida",
+      "order": "Salviniales",
+      "family": "Marsileaceae",
+      "genus": "Marsilea",
+      "species": "hirsuta"
+    },
+    "commonNames": {
+      "en": ["Four-leaf clover", "Hairy water clover"],
+      "zh": ["四叶草", "毛叶田字草"]
+    },
+    "pinyin": ["si ye cao", "mao ye tian zi cao"],
+    "group": "carpeting",
+    "growthForm": "carpeting",
+    "origin": ["Australia"],
+    "difficulty": 2,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 30, "opt": 60,  "max": 150, "unit": "µmol/m²/s" },
+      "co2":          { "min": 0,  "opt": 20,  "max": 35,  "unit": "ppm" },
+      "temperatureC": { "min": 20, "opt": 24,  "max": 28 },
+      "pH":           { "min": 5.5,"opt": 6.8, "max": 7.5 },
+      "gh":           { "min": 2,  "opt": 6,   "max": 15 },
+      "kh":           { "min": 1,  "opt": 4,   "max": 10 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "medium", "phosphorusDemand": "medium", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "medium",     "traceDemand": "medium" },
+      "rootFeeder": true,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "medium",
+      "maxHeightCm": 5,
+      "maxSpreadCm": 10,
+      "internodeCm": 1.5,
+      "propagation": ["runners"]
+    },
+    "placement": ["foreground"],
+    "colorRange": ["green"],
+    "colorHex": "#6ba34a",
+    "sim": {
+      "k_photosynthesis": 0.55,
+      "k_light": 45,
+      "k_co2": 12,
+      "preferred_temp_c": 24,
+      "temp_tolerance_c": 3.5
+    },
+    "notes": "Produces single-lobe leaves under high light/CO2, classic 4-leaf clover under moderate conditions. Slower carpet than Monte Carlo but more forgiving of low-tech tanks. Aquatic fern — propagates via stolons not seeds.",
+    "images": [],
+    "citations": ["tropica-marsilea-hirsuta", "nagalingum-2008-marsilea-phylogeny", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "micranthemum-tweediei-monte-carlo",
+    "scientificName": "Micranthemum tweediei 'Monte Carlo'",
+    "family": "Linderniaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Magnoliopsida",
+      "order": "Lamiales",
+      "family": "Linderniaceae",
+      "genus": "Micranthemum",
+      "species": "tweediei",
+      "cultivar": "Monte Carlo"
+    },
+    "commonNames": {
+      "en": ["Monte Carlo", "Bacopa sp. 'Monte Carlo' (trade)"],
+      "zh": ["蒙特卡罗", "蒙特卡洛珍珠草"]
+    },
+    "pinyin": ["meng te ka luo", "meng te ka luo zhen zhu cao"],
+    "group": "carpeting",
+    "growthForm": "carpeting",
+    "origin": ["Argentina"],
+    "difficulty": 2,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 40, "opt": 90,  "max": 180, "unit": "µmol/m²/s" },
+      "co2":          { "min": 10, "opt": 25,  "max": 35,  "unit": "ppm" },
+      "temperatureC": { "min": 20, "opt": 24,  "max": 28 },
+      "pH":           { "min": 5.5,"opt": 6.5, "max": 7.5 },
+      "gh":           { "min": 2,  "opt": 5,   "max": 12 },
+      "kh":           { "min": 1,  "opt": 3,   "max": 8 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "medium", "phosphorusDemand": "medium", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "medium",     "traceDemand": "medium" },
+      "rootFeeder": true,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "medium",
+      "maxHeightCm": 5,
+      "maxSpreadCm": 12,
+      "internodeCm": 1.0,
+      "propagation": ["topping", "runners"]
+    },
+    "placement": ["foreground"],
+    "colorRange": ["light-green"],
+    "colorHex": "#8fc25a",
+    "sim": {
+      "k_photosynthesis": 0.80,
+      "k_light": 70,
+      "k_co2": 18,
+      "preferred_temp_c": 24,
+      "temp_tolerance_c": 3.0
+    },
+    "notes": "Larger leaf and more forgiving than HC Cuba. Commonly misidentified as Hemianthus in the trade. Pearls vigorously at 25+ ppm CO2. Trim early and often — lower layers yellow if shaded.",
+    "images": [],
+    "citations": ["tropica-micranthemum-monte-carlo", "rahmatullah-2013-micranthemum", "buceplant-monte-carlo"]
+  },
+  {
+    "id": "microsorum-pteropus-narrow",
+    "scientificName": "Microsorum pteropus 'Narrow'",
+    "family": "Polypodiaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Polypodiophyta",
+      "class": "Polypodiopsida",
+      "order": "Polypodiales",
+      "family": "Polypodiaceae",
+      "genus": "Microsorum",
+      "species": "pteropus",
+      "cultivar": "Narrow"
+    },
+    "commonNames": {
+      "en": ["Narrow-leaf Java fern", "Java fern Narrow"],
+      "zh": ["细叶铁皇冠", "窄叶铁皇冠"]
+    },
+    "pinyin": ["xi ye tie huang guan", "zhai ye tie huang guan"],
+    "group": "epiphyte",
+    "growthForm": "epiphyte",
+    "origin": ["Southeast Asia"],
+    "difficulty": 1,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 15, "opt": 45,  "max": 120, "unit": "µmol/m²/s" },
+      "co2":          { "min": 0,  "opt": 15,  "max": 35,  "unit": "ppm" },
+      "temperatureC": { "min": 18, "opt": 24,  "max": 28 },
+      "pH":           { "min": 5.5,"opt": 6.8, "max": 7.8 },
+      "gh":           { "min": 2,  "opt": 8,   "max": 16 },
+      "kh":           { "min": 1,  "opt": 5,   "max": 12 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "low",    "phosphorusDemand": "low",    "potassiumDemand": "low" },
+      "micros": { "ironDemand": "low",        "traceDemand": "low" },
+      "rootFeeder": false,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "slow",
+      "maxHeightCm": 20,
+      "maxSpreadCm": 15,
+      "internodeCm": null,
+      "propagation": ["rhizome-division", "adventitious-plantlets"]
+    },
+    "placement": ["midground", "background", "attached"],
+    "colorRange": ["dark-green"],
+    "colorHex": "#3d6b3a",
+    "sim": {
+      "k_photosynthesis": 0.35,
+      "k_light": 28,
+      "k_co2": 8,
+      "preferred_temp_c": 24,
+      "temp_tolerance_c": 4.0
+    },
+    "notes": "Like standard Java fern but leaves 0.5-1 cm wide × 15-20 cm long. Rhizome must stay above substrate. 'Java fern melt' (blackening leaf edges) indicates nutrient deficiency, often K or N, not disease.",
+    "images": [],
+    "citations": ["tropica-microsorum-pteropus-narrow", "bosman-2003-microsorum-pteropus", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "myriophyllum-matogrossense",
+    "scientificName": "Myriophyllum matogrossense",
+    "family": "Haloragaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Magnoliopsida",
+      "order": "Saxifragales",
+      "family": "Haloragaceae",
+      "genus": "Myriophyllum",
+      "species": "matogrossense"
+    },
+    "commonNames": {
+      "en": ["Red Myriophyllum", "Mato Grosso parrot's feather", "Brazilian milfoil"],
+      "zh": ["红狐尾（俗称）", "马托格罗索狐尾", "巴西羽毛草"]
+    },
+    "pinyin": ["hong hu wei", "ma tuo ge luo suo hu wei", "ba xi yu mao cao"],
+    "group": "stem",
+    "growthForm": "stem",
+    "origin": ["Mato Grosso state, Brazil"],
+    "difficulty": 2,
+    "difficultyLabel": "medium",
+    "envelope": {
+      "light":        { "min": 50, "opt": 100, "max": 180, "unit": "µmol/m²/s" },
+      "co2":          { "min": 10, "opt": 25,  "max": 40,  "unit": "ppm" },
+      "temperatureC": { "min": 20, "opt": 25,  "max": 28 },
+      "pH":           { "min": 5.5,"opt": 6.5, "max": 7.2 },
+      "gh":           { "min": 1,  "opt": 5,   "max": 12 },
+      "kh":           { "min": 0,  "opt": 2,   "max": 8 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "medium", "phosphorusDemand": "medium", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "high",       "traceDemand": "medium" },
+      "rootFeeder": false,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "fast",
+      "maxHeightCm": 50,
+      "maxSpreadCm": 6,
+      "internodeCm": 2.5,
+      "propagation": ["topping", "side-shoots"]
+    },
+    "placement": ["midground", "background"],
+    "colorRange": ["bright-green", "reddish-green"],
+    "colorHex": "#6fb040",
+    "sim": {
+      "k_photosynthesis": 1.00,
+      "k_light": 75,
+      "k_co2": 18,
+      "preferred_temp_c": 25,
+      "temp_tolerance_c": 3.5
+    },
+    "notes": "Finely pinnate leaves arranged in whorls of 4–6; very similar in appearance to M. pinnatum. Under CO2 injection and strong light, stems pearl profusely and take on a reddish tint at the growing tip. Requires soft, slightly acidic water for best colour — performs poorly in hard tap water above KH 8. Trim regularly to prevent lower leaf drop.",
+    "images": [],
+    "citations": ["tropica-myriophyllum-matogrossense", "flowgrow-myriophyllum-matogrossense", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "rotala-macrandra",
+    "scientificName": "Rotala macrandra",
+    "family": "Lythraceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Magnoliopsida",
+      "order": "Myrtales",
+      "family": "Lythraceae",
+      "genus": "Rotala",
+      "species": "macrandra"
+    },
+    "commonNames": {
+      "en": ["Giant red rotala", "Macrandra"],
+      "zh": ["大红叶", "大叶红蝴蝶"]
+    },
+    "pinyin": ["da hong ye", "da ye hong hu die"],
+    "group": "stem",
+    "growthForm": "stem",
+    "origin": ["India"],
+    "difficulty": 4,
+    "difficultyLabel": "hard",
+    "envelope": {
+      "light":        { "min": 100,"opt": 160, "max": 240, "unit": "µmol/m²/s" },
+      "co2":          { "min": 25, "opt": 35,  "max": 45,  "unit": "ppm" },
+      "temperatureC": { "min": 22, "opt": 26,  "max": 28 },
+      "pH":           { "min": 5.5,"opt": 6.2, "max": 7.0 },
+      "gh":           { "min": 2,  "opt": 5,   "max": 10 },
+      "kh":           { "min": 0,  "opt": 2,   "max": 5 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "medium", "phosphorusDemand": "medium", "potassiumDemand": "high" },
+      "micros": { "ironDemand": "high",       "traceDemand": "high" },
+      "rootFeeder": false,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "medium",
+      "maxHeightCm": 40,
+      "maxSpreadCm": 8,
+      "internodeCm": 1.2,
+      "propagation": ["topping", "side-shoots"]
+    },
+    "placement": ["midground", "background"],
+    "colorRange": ["blood-red", "pink-underside"],
+    "colorHex": "#b03246",
+    "sim": {
+      "k_photosynthesis": 0.70,
+      "k_light": 130,
+      "k_co2": 28,
+      "preferred_temp_c": 26,
+      "temp_tolerance_c": 2.0
+    },
+    "notes": "True litmus test of a high-tech tank. Shade intolerance is severe — anything above it melts the lower leaves. Drops leaves with any CO2 interruption > 2 hours. Consider lean nitrogen (< 10 ppm NO3) for deepest red.",
+    "images": [],
+    "citations": ["cook-1996-aquatic-plant-book", "tropica-rotala-macrandra", "graham-wain-2005-rotala"]
+  },
+  {
+    "id": "rotala-rotundifolia",
+    "scientificName": "Rotala rotundifolia",
+    "family": "Lythraceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Magnoliopsida",
+      "order": "Myrtales",
+      "family": "Lythraceae",
+      "genus": "Rotala",
+      "species": "rotundifolia"
+    },
+    "commonNames": {
+      "en": ["Roundleaf toothcup", "Dwarf rotala", "Rotala indica (trade)"],
+      "zh": ["小圆叶", "绿菊", "印度小圆叶（误用）"]
+    },
+    "pinyin": ["xiao yuan ye", "lv ju", "yin du xiao yuan ye"],
+    "group": "stem",
+    "growthForm": "stem",
+    "origin": ["Southeast Asia"],
+    "difficulty": 2,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 40, "opt": 80,  "max": 150, "unit": "µmol/m²/s" },
+      "co2":          { "min": 15, "opt": 30,  "max": 40,  "unit": "ppm" },
+      "temperatureC": { "min": 20, "opt": 25,  "max": 28 },
+      "pH":           { "min": 5.5,"opt": 6.5, "max": 7.5 },
+      "gh":           { "min": 2,  "opt": 6,   "max": 15 },
+      "kh":           { "min": 0,  "opt": 3,   "max": 10 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "medium", "phosphorusDemand": "medium", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "medium",     "traceDemand": "medium" },
+      "rootFeeder": false,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "fast",
+      "maxHeightCm": 40,
+      "maxSpreadCm": 5,
+      "internodeCm": 1.5,
+      "propagation": ["topping", "side-shoots"]
+    },
+    "placement": ["midground", "background"],
+    "colorRange": ["green", "pink-high-light", "red-low-nitrate"],
+    "colorHex": "#d37a9a",
+    "sim": {
+      "k_photosynthesis": 1.00,
+      "k_light": 60,
+      "k_co2": 20,
+      "preferred_temp_c": 25,
+      "temp_tolerance_c": 3.5
+    },
+    "notes": "Calibration reference species (k_photosynthesis = 1.00). Pink flush under high light + lean NO3 (5-10 ppm). Melts during submersed transition then re-emerges. R. indica is a distinct species sometimes mis-traded as this.",
+    "images": [],
+    "citations": ["tropica-rotala-rotundifolia", "dennerle-rotala-rotundifolia", "graham-wain-2005-rotala", "cook-1996-aquatic-plant-book"]
+  },
+  {
+    "id": "staurogyne-repens",
+    "scientificName": "Staurogyne repens",
+    "family": "Acanthaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Magnoliopsida",
+      "order": "Lamiales",
+      "family": "Acanthaceae",
+      "genus": "Staurogyne",
+      "species": "repens"
+    },
+    "commonNames": {
+      "en": ["Staurogyne repens", "Creeping staurogyne"],
+      "zh": ["斯塔罗椒草（误用）", "爬地水蓑衣", "矮生蛇尾草"]
+    },
+    "pinyin": ["si ta luo jiao cao", "pa di shui suo yi", "ai sheng she wei cao"],
+    "group": "rosette",
+    "growthForm": "stem",
+    "origin": ["Rio Cristalino, Brazil"],
+    "difficulty": 2,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 40, "opt": 80,  "max": 160, "unit": "µmol/m²/s" },
+      "co2":          { "min": 10, "opt": 25,  "max": 35,  "unit": "ppm" },
+      "temperatureC": { "min": 20, "opt": 25,  "max": 28 },
+      "pH":           { "min": 5.5,"opt": 6.5, "max": 7.5 },
+      "gh":           { "min": 2,  "opt": 6,   "max": 14 },
+      "kh":           { "min": 1,  "opt": 3,   "max": 10 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "medium", "phosphorusDemand": "medium", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "medium",     "traceDemand": "medium" },
+      "rootFeeder": true,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "medium",
+      "maxHeightCm": 10,
+      "maxSpreadCm": 10,
+      "internodeCm": 0.7,
+      "propagation": ["topping", "side-shoots"]
+    },
+    "placement": ["foreground", "midground"],
+    "colorRange": ["green"],
+    "colorHex": "#5ea341",
+    "sim": {
+      "k_photosynthesis": 0.70,
+      "k_light": 55,
+      "k_co2": 18,
+      "preferred_temp_c": 25,
+      "temp_tolerance_c": 3.5
+    },
+    "notes": "Short bushy stem — frequently shelved as a rosette in retail, hence group = 'rosette' while growthForm = 'stem'. Top and re-plant to create a dense low hedge; side shoots multiply quickly under CO2.",
+    "images": [],
+    "citations": ["tropica-staurogyne-repens", "chayamarit-2010-staurogyne", "kasselmann-2010-aquariumplants-2e"]
+  },
+  {
+    "id": "taxiphyllum-barbieri",
+    "scientificName": "Taxiphyllum barbieri",
+    "family": "Hypnaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Bryophyta",
+      "class": "Bryopsida",
+      "order": "Hypnales",
+      "family": "Hypnaceae",
+      "genus": "Taxiphyllum",
+      "species": "barbieri"
+    },
+    "commonNames": {
+      "en": ["Java moss", "Bogor moss"],
+      "zh": ["爪哇莫斯", "爪哇苔"]
+    },
+    "pinyin": ["zhua wa mo si", "zhua wa tai"],
+    "group": "moss",
+    "growthForm": "moss",
+    "origin": ["Southeast Asia"],
+    "difficulty": 1,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 10, "opt": 40,  "max": 120, "unit": "µmol/m²/s" },
+      "co2":          { "min": 0,  "opt": 15,  "max": 35,  "unit": "ppm" },
+      "temperatureC": { "min": 15, "opt": 23,  "max": 28 },
+      "pH":           { "min": 5.0,"opt": 6.8, "max": 8.0 },
+      "gh":           { "min": 1,  "opt": 6,   "max": 16 },
+      "kh":           { "min": 0,  "opt": 4,   "max": 12 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "low",    "phosphorusDemand": "low",    "potassiumDemand": "low" },
+      "micros": { "ironDemand": "low",        "traceDemand": "low" },
+      "rootFeeder": false,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "medium",
+      "maxHeightCm": 4,
+      "maxSpreadCm": 30,
+      "internodeCm": null,
+      "propagation": ["fragmentation"]
+    },
+    "placement": ["attached", "midground", "foreground"],
+    "colorRange": ["medium-green"],
+    "colorHex": "#5a8a3c",
+    "sim": {
+      "k_photosynthesis": 0.40,
+      "k_light": 30,
+      "k_co2": 10,
+      "preferred_temp_c": 23,
+      "temp_tolerance_c": 5.0
+    },
+    "notes": "Historically mislabeled as Vesicularia dubyana. Tolerates anything short of scalding temperatures; growth becomes stringy above 27°C. Trim on a schedule to prevent detritus traps.",
+    "images": [],
+    "citations": ["tan-2003-taxiphyllum-barbieri", "tropica-taxiphyllum-barbieri", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "vesicularia-montagnei",
+    "scientificName": "Vesicularia montagnei",
+    "family": "Hypnaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Bryophyta",
+      "class": "Bryopsida",
+      "order": "Hypnales",
+      "family": "Hypnaceae",
+      "genus": "Vesicularia",
+      "species": "montagnei"
+    },
+    "commonNames": {
+      "en": ["Christmas moss", "Xmas moss"],
+      "zh": ["圣诞莫斯", "圣诞莫丝"]
+    },
+    "pinyin": ["sheng dan mo si", "sheng dan mo si"],
+    "group": "moss",
+    "growthForm": "moss",
+    "origin": ["India, Southeast Asia"],
+    "difficulty": 2,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 20, "opt": 50,  "max": 120, "unit": "µmol/m²/s" },
+      "co2":          { "min": 0,  "opt": 20,  "max": 35,  "unit": "ppm" },
+      "temperatureC": { "min": 18, "opt": 23,  "max": 26 },
+      "pH":           { "min": 5.5,"opt": 6.5, "max": 7.5 },
+      "gh":           { "min": 2,  "opt": 6,   "max": 14 },
+      "kh":           { "min": 1,  "opt": 4,   "max": 10 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "low",    "phosphorusDemand": "low",    "potassiumDemand": "low" },
+      "micros": { "ironDemand": "low",        "traceDemand": "medium" },
+      "rootFeeder": false,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "slow",
+      "maxHeightCm": 3,
+      "maxSpreadCm": 20,
+      "internodeCm": null,
+      "propagation": ["fragmentation"]
+    },
+    "placement": ["attached", "midground", "foreground"],
+    "colorRange": ["medium-green"],
+    "colorHex": "#4e8c3c",
+    "sim": {
+      "k_photosynthesis": 0.35,
+      "k_light": 38,
+      "k_co2": 14,
+      "preferred_temp_c": 23,
+      "temp_tolerance_c": 3.0
+    },
+    "notes": "Named for triangular pinnate branching that resembles a fir tree. More temperature-sensitive than Java moss — melts above 27°C. Best attached to driftwood or mesh; CO2 accelerates the characteristic compact form.",
+    "images": [],
+    "citations": ["tan-2003-vesicularia-taxonomy", "tropica-vesicularia-montagnei", "buceplant-christmas-moss"]
+  },
+  {
+    "id": "cryptocoryne-parva",
+    "scientificName": "Cryptocoryne parva",
+    "family": "Araceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Liliopsida",
+      "order": "Alismatales",
+      "family": "Araceae",
+      "genus": "Cryptocoryne",
+      "species": "parva"
+    },
+    "commonNames": {
+      "en": ["Dwarf crypt", "Cryptocoryne parva"],
+      "zh": ["矮椒草", "小椒草"]
+    },
+    "pinyin": ["ai jiao cao", "xiao jiao cao"],
+    "group": "rosette",
+    "growthForm": "rosette",
+    "origin": ["Sri Lanka"],
+    "difficulty": 2,
+    "difficultyLabel": "medium",
+    "envelope": {
+      "light":        { "min": 30, "opt": 60,  "max": 120, "unit": "µmol/m²/s" },
+      "co2":          { "min": 5,  "opt": 20,  "max": 35,  "unit": "ppm" },
+      "temperatureC": { "min": 20, "opt": 25,  "max": 28 },
+      "pH":           { "min": 5.5,"opt": 6.8, "max": 7.5 },
+      "gh":           { "min": 2,  "opt": 7,   "max": 16 },
+      "kh":           { "min": 1,  "opt": 4,   "max": 10 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "low",    "phosphorusDemand": "low",    "potassiumDemand": "low" },
+      "micros": { "ironDemand": "low",        "traceDemand": "low" },
+      "rootFeeder": true,
+      "waterColumnFeeder": false
+    },
+    "growth": {
+      "rate": "slow",
+      "maxHeightCm": 6,
+      "maxSpreadCm": 5,
+      "internodeCm": null,
+      "propagation": ["runners"]
+    },
+    "placement": ["foreground"],
+    "colorRange": ["bright-green"],
+    "colorHex": "#6aad3a",
+    "sim": {
+      "k_photosynthesis": 0.38,
+      "k_light": 42,
+      "k_co2": 14,
+      "preferred_temp_c": 25,
+      "temp_tolerance_c": 3.0
+    },
+    "notes": "The smallest Cryptocoryne species — leaves rarely exceed 5 cm even under ideal conditions. Unlike other crypts it does not substantially change leaf shape between emersed and submersed forms, so 'crypt melt' is mild. Excellent foreground carpeting in low to medium light with CO2.",
+    "images": [],
+    "citations": ["jacobsen-1980-cryptocoryne-srilanka", "tropica-cryptocoryne-parva", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "cryptocoryne-balansae",
+    "scientificName": "Cryptocoryne crispatula var. balansae",
+    "family": "Araceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Liliopsida",
+      "order": "Alismatales",
+      "family": "Araceae",
+      "genus": "Cryptocoryne",
+      "species": "crispatula",
+      "cultivar": "var. balansae"
+    },
+    "commonNames": {
+      "en": ["Balansae crypt", "Ruffled cryptocoryne"],
+      "zh": ["波浪椒草", "巴兰萨椒草"]
+    },
+    "pinyin": ["bo lang jiao cao", "ba lan sa jiao cao"],
+    "group": "rosette",
+    "growthForm": "rosette",
+    "origin": ["Thailand, Laos, Vietnam"],
+    "difficulty": 2,
+    "difficultyLabel": "medium",
+    "envelope": {
+      "light":        { "min": 30, "opt": 60,  "max": 130, "unit": "µmol/m²/s" },
+      "co2":          { "min": 5,  "opt": 20,  "max": 35,  "unit": "ppm" },
+      "temperatureC": { "min": 22, "opt": 26,  "max": 30 },
+      "pH":           { "min": 5.5,"opt": 6.8, "max": 7.8 },
+      "gh":           { "min": 2,  "opt": 8,   "max": 18 },
+      "kh":           { "min": 1,  "opt": 5,   "max": 12 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "medium", "phosphorusDemand": "medium", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "medium",     "traceDemand": "low" },
+      "rootFeeder": true,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "medium",
+      "maxHeightCm": 50,
+      "maxSpreadCm": 10,
+      "internodeCm": null,
+      "propagation": ["runners"]
+    },
+    "placement": ["midground", "background"],
+    "colorRange": ["dark-green", "ruffled-green"],
+    "colorHex": "#3d6e2a",
+    "sim": {
+      "k_photosynthesis": 0.55,
+      "k_light": 45,
+      "k_co2": 15,
+      "preferred_temp_c": 26,
+      "temp_tolerance_c": 3.5
+    },
+    "notes": "Produces dramatically long, narrow leaves with strongly crinkled margins — a distinctive background plant. Tolerates moderate currents. Like most crypts it is a heavy root feeder; root tabs significantly improve growth rate and leaf texture.",
+    "images": [],
+    "citations": ["jacobsen-1980-cryptocoryne-srilanka", "tropica-cryptocoryne-balansae", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "echinodorus-tenellus",
+    "scientificName": "Echinodorus tenellus",
+    "family": "Alismataceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Liliopsida",
+      "order": "Alismatales",
+      "family": "Alismataceae",
+      "genus": "Echinodorus",
+      "species": "tenellus"
+    },
+    "commonNames": {
+      "en": ["Pygmy chain sword", "Dwarf Amazon sword"],
+      "zh": ["迷你皇冠草", "矮皇冠"]
+    },
+    "pinyin": ["mi ni huang guan cao", "ai huang guan"],
+    "group": "rosette",
+    "growthForm": "rosette",
+    "origin": ["North and Central America, South America"],
+    "difficulty": 2,
+    "difficultyLabel": "medium",
+    "envelope": {
+      "light":        { "min": 40, "opt": 80,  "max": 160, "unit": "µmol/m²/s" },
+      "co2":          { "min": 10, "opt": 25,  "max": 40,  "unit": "ppm" },
+      "temperatureC": { "min": 18, "opt": 24,  "max": 28 },
+      "pH":           { "min": 6.0,"opt": 6.8, "max": 7.5 },
+      "gh":           { "min": 2,  "opt": 6,   "max": 14 },
+      "kh":           { "min": 1,  "opt": 4,   "max": 8 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "medium", "phosphorusDemand": "medium", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "medium",     "traceDemand": "low" },
+      "rootFeeder": true,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "medium",
+      "maxHeightCm": 10,
+      "maxSpreadCm": 15,
+      "internodeCm": null,
+      "propagation": ["runners"]
+    },
+    "placement": ["foreground"],
+    "colorRange": ["light-green", "red-high-light"],
+    "colorHex": "#8ac45e",
+    "sim": {
+      "k_photosynthesis": 0.60,
+      "k_light": 58,
+      "k_co2": 18,
+      "preferred_temp_c": 24,
+      "temp_tolerance_c": 3.5
+    },
+    "notes": "Spreads via stolons to form dense foreground carpets. Under intense light and CO2 the narrow leaves develop reddish coloration. Avoid alkaline hard water — leaves become chlorotic above pH 7.5. A smaller, carpeting alternative to larger Amazon sword species.",
+    "images": [],
+    "citations": ["lehtonen-2008-echinodorus-revision", "tropica-echinodorus-tenellus", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "microsorum-pteropus-windelov",
+    "scientificName": "Microsorum pteropus 'Windelov'",
+    "family": "Polypodiaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Polypodiopsida",
+      "order": "Polypodiales",
+      "family": "Polypodiaceae",
+      "genus": "Microsorum",
+      "species": "pteropus",
+      "cultivar": "Windelov"
+    },
+    "commonNames": {
+      "en": ["Windelov Java fern", "Lace Java fern"],
+      "zh": ["细叶铁皇冠", "温德洛夫铁皇冠"]
+    },
+    "pinyin": ["xi ye tie huang guan", "wen de luo fu tie huang guan"],
+    "group": "epiphyte",
+    "growthForm": "epiphyte",
+    "origin": ["Cultivar — Tropica, Denmark (from Southeast Asian parent)"],
+    "difficulty": 1,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 20, "opt": 50,  "max": 120, "unit": "µmol/m²/s" },
+      "co2":          { "min": 0,  "opt": 15,  "max": 35,  "unit": "ppm" },
+      "temperatureC": { "min": 18, "opt": 24,  "max": 28 },
+      "pH":           { "min": 5.0,"opt": 6.5, "max": 7.5 },
+      "gh":           { "min": 1,  "opt": 6,   "max": 16 },
+      "kh":           { "min": 0,  "opt": 4,   "max": 12 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "low",    "phosphorusDemand": "low",    "potassiumDemand": "low" },
+      "micros": { "ironDemand": "low",        "traceDemand": "low" },
+      "rootFeeder": false,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "slow",
+      "maxHeightCm": 20,
+      "maxSpreadCm": 20,
+      "internodeCm": null,
+      "propagation": ["rhizome-division", "adventitious-plantlets"]
+    },
+    "placement": ["midground", "attached"],
+    "colorRange": ["dark-green"],
+    "colorHex": "#2f5a30",
+    "sim": {
+      "k_photosynthesis": 0.33,
+      "k_light": 30,
+      "k_co2": 8,
+      "preferred_temp_c": 24,
+      "temp_tolerance_c": 4.0
+    },
+    "notes": "Trademarked Tropica cultivar with finely forked leaf tips giving a lace-like appearance. Attach to rock or driftwood — burying the rhizome causes rot. Adventitious plantlets form on older leaves. Extremely tolerant and beginner-friendly despite its delicate appearance.",
+    "images": [],
+    "citations": ["tropica-microsorum-windelov", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "bolbitis-heudelotii",
+    "scientificName": "Bolbitis heudelotii",
+    "family": "Lomariopsidaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Polypodiopsida",
+      "order": "Polypodiales",
+      "family": "Lomariopsidaceae",
+      "genus": "Bolbitis",
+      "species": "heudelotii"
+    },
+    "commonNames": {
+      "en": ["African water fern", "Congo fern"],
+      "zh": ["非洲水蕨", "刚果水蕨"]
+    },
+    "pinyin": ["fei zhou shui jue", "gang guo shui jue"],
+    "group": "epiphyte",
+    "growthForm": "epiphyte",
+    "origin": ["Tropical Africa"],
+    "difficulty": 3,
+    "difficultyLabel": "medium",
+    "envelope": {
+      "light":        { "min": 30, "opt": 60,  "max": 120, "unit": "µmol/m²/s" },
+      "co2":          { "min": 10, "opt": 25,  "max": 40,  "unit": "ppm" },
+      "temperatureC": { "min": 22, "opt": 26,  "max": 28 },
+      "pH":           { "min": 5.5,"opt": 6.5, "max": 7.0 },
+      "gh":           { "min": 1,  "opt": 4,   "max": 10 },
+      "kh":           { "min": 0,  "opt": 2,   "max": 6 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "low",    "phosphorusDemand": "low",    "potassiumDemand": "low" },
+      "micros": { "ironDemand": "medium",     "traceDemand": "medium" },
+      "rootFeeder": false,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "slow",
+      "maxHeightCm": 30,
+      "maxSpreadCm": 25,
+      "internodeCm": null,
+      "propagation": ["rhizome-division", "spores"]
+    },
+    "placement": ["midground", "background", "attached"],
+    "colorRange": ["translucent-green", "dark-green"],
+    "colorHex": "#1e6b3c",
+    "sim": {
+      "k_photosynthesis": 0.42,
+      "k_light": 45,
+      "k_co2": 18,
+      "preferred_temp_c": 26,
+      "temp_tolerance_c": 2.5
+    },
+    "notes": "Pinnate semi-transparent leaves with a brilliant emerald sheen under good current. Requires CO2 and moderate light — stagnant soft water is the key requirement. Attach to rocks or wood with thread or glue; do not bury the rhizome. Hard water causes rapid deterioration.",
+    "images": [],
+    "citations": ["tropica-bolbitis-heudelotii", "kasselmann-2003-aquariumplants", "dennerle-bolbitis"]
+  },
+  {
+    "id": "riccardia-chamedryfolia",
+    "scientificName": "Riccardia chamedryfolia",
+    "family": "Aneuraceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Marchantiophyta",
+      "class": "Jungermanniopsida",
+      "order": "Pelliales",
+      "family": "Aneuraceae",
+      "genus": "Riccardia",
+      "species": "chamedryfolia"
+    },
+    "commonNames": {
+      "en": ["Mini pellia", "Coral moss", "Riccardia moss"],
+      "zh": ["迷你珊瑚莫斯", "迷你派莉亚"]
+    },
+    "pinyin": ["mi ni shan hu mo si", "mi ni pai li ya"],
+    "group": "moss",
+    "growthForm": "moss",
+    "origin": ["Widespread — Asia, Europe, Americas"],
+    "difficulty": 3,
+    "difficultyLabel": "medium",
+    "envelope": {
+      "light":        { "min": 30, "opt": 60,  "max": 120, "unit": "µmol/m²/s" },
+      "co2":          { "min": 10, "opt": 25,  "max": 40,  "unit": "ppm" },
+      "temperatureC": { "min": 18, "opt": 22,  "max": 26 },
+      "pH":           { "min": 5.5,"opt": 6.5, "max": 7.5 },
+      "gh":           { "min": 1,  "opt": 5,   "max": 12 },
+      "kh":           { "min": 0,  "opt": 3,   "max": 8 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "low",    "phosphorusDemand": "low",    "potassiumDemand": "low" },
+      "micros": { "ironDemand": "low",        "traceDemand": "medium" },
+      "rootFeeder": false,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "slow",
+      "maxHeightCm": 2,
+      "maxSpreadCm": 15,
+      "internodeCm": null,
+      "propagation": ["fragmentation"]
+    },
+    "placement": ["foreground", "attached"],
+    "colorRange": ["deep-green"],
+    "colorHex": "#2e5e28",
+    "sim": {
+      "k_photosynthesis": 0.30,
+      "k_light": 45,
+      "k_co2": 18,
+      "preferred_temp_c": 22,
+      "temp_tolerance_c": 3.0
+    },
+    "notes": "A liverwort, not a true moss — classified as a hepatic bryophyte. Forms dense, coral-like cushions highly valued in Nature aquascape compositions. Requires CO2 and good flow; stagnant conditions lead to algae smothering. Sensitive to temperature above 26°C.",
+    "images": [],
+    "citations": ["tropica-riccardia-chamedryfolia", "buceplant-mini-pellia", "maberly-1994-aquatic-macrophytes"]
+  },
+  {
+    "id": "fissidens-fontanus",
+    "scientificName": "Fissidens fontanus",
+    "family": "Fissidentaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Bryophyta",
+      "class": "Bryopsida",
+      "order": "Fissidentales",
+      "family": "Fissidentaceae",
+      "genus": "Fissidens",
+      "species": "fontanus"
+    },
+    "commonNames": {
+      "en": ["Phoenix moss", "Pocket moss", "Water pocket moss"],
+      "zh": ["凤凰莫斯", "袋形莫斯"]
+    },
+    "pinyin": ["feng huang mo si", "dai xing mo si"],
+    "group": "moss",
+    "growthForm": "moss",
+    "origin": ["North America, Europe"],
+    "difficulty": 3,
+    "difficultyLabel": "medium",
+    "envelope": {
+      "light":        { "min": 20, "opt": 50,  "max": 120, "unit": "µmol/m²/s" },
+      "co2":          { "min": 5,  "opt": 20,  "max": 35,  "unit": "ppm" },
+      "temperatureC": { "min": 15, "opt": 21,  "max": 24 },
+      "pH":           { "min": 6.0,"opt": 6.8, "max": 7.5 },
+      "gh":           { "min": 2,  "opt": 6,   "max": 14 },
+      "kh":           { "min": 1,  "opt": 4,   "max": 8 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "low",    "phosphorusDemand": "low",    "potassiumDemand": "low" },
+      "micros": { "ironDemand": "low",        "traceDemand": "low" },
+      "rootFeeder": false,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "slow",
+      "maxHeightCm": 5,
+      "maxSpreadCm": 20,
+      "internodeCm": null,
+      "propagation": ["fragmentation"]
+    },
+    "placement": ["foreground", "attached", "midground"],
+    "colorRange": ["medium-green"],
+    "colorHex": "#4d7c32",
+    "sim": {
+      "k_photosynthesis": 0.33,
+      "k_light": 35,
+      "k_co2": 14,
+      "preferred_temp_c": 21,
+      "temp_tolerance_c": 3.5
+    },
+    "notes": "Distinctive two-ranked 'pocket' leaf arrangement differentiates it from all other aquatic mosses. Prefers cooler water — above 24°C growth stalls. Attach to hardscape with glue; anchoring thread works but is tedious given its fine structure. In aquascaping often sold as 'Phoenix Moss'.",
+    "images": [],
+    "citations": ["tropica-fissidens-fontanus", "maberly-1994-aquatic-macrophytes", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "leptodictyum-riparium",
+    "scientificName": "Leptodictyum riparium",
+    "family": "Amblystegiaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Bryophyta",
+      "class": "Bryopsida",
+      "order": "Hypnales",
+      "family": "Amblystegiaceae",
+      "genus": "Leptodictyum",
+      "species": "riparium"
+    },
+    "commonNames": {
+      "en": ["Stringy moss", "Creeping feather moss"],
+      "zh": ["细丝莫斯", "溪岸细网藓"]
+    },
+    "pinyin": ["xi si mo si", "xi an xi wang xian"],
+    "group": "moss",
+    "growthForm": "moss",
+    "origin": ["Cosmopolitan — Europe, Asia, North America"],
+    "difficulty": 1,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 10, "opt": 35,  "max": 100, "unit": "µmol/m²/s" },
+      "co2":          { "min": 0,  "opt": 10,  "max": 25,  "unit": "ppm" },
+      "temperatureC": { "min": 10, "opt": 20,  "max": 26 },
+      "pH":           { "min": 5.5,"opt": 6.5, "max": 7.8 },
+      "gh":           { "min": 2,  "opt": 6,   "max": 18 },
+      "kh":           { "min": 1,  "opt": 4,   "max": 12 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "low",    "phosphorusDemand": "low",    "potassiumDemand": "low" },
+      "micros": { "ironDemand": "low",        "traceDemand": "low" },
+      "rootFeeder": false,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "fast",
+      "maxHeightCm": 10,
+      "maxSpreadCm": 30,
+      "internodeCm": null,
+      "propagation": ["fragmentation"]
+    },
+    "placement": ["attached", "midground", "foreground"],
+    "colorRange": ["light-green"],
+    "colorHex": "#78b84a",
+    "sim": {
+      "k_photosynthesis": 0.45,
+      "k_light": 22,
+      "k_co2": 7,
+      "preferred_temp_c": 20,
+      "temp_tolerance_c": 5.5
+    },
+    "notes": "One of the fastest-growing and hardiest aquatic mosses. Long, wispy strands drape beautifully over hardscape or attach loosely to mesh. Excellent refuge for fry and shrimp. Requires regular pruning to prevent light-blocking mat formation.",
+    "images": [],
+    "citations": ["tropica-leptodictyum-riparium", "maberly-1994-aquatic-macrophytes"]
+  },
+  {
+    "id": "pistia-stratiotes",
+    "scientificName": "Pistia stratiotes",
+    "family": "Araceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Liliopsida",
+      "order": "Alismatales",
+      "family": "Araceae",
+      "genus": "Pistia",
+      "species": "stratiotes"
+    },
+    "commonNames": {
+      "en": ["Water lettuce", "Tropical duckweed", "Nile cabbage"],
+      "zh": ["大薸", "水莲花", "水白菜"]
+    },
+    "pinyin": ["da piao", "shui lian hua", "shui bai cai"],
+    "group": "floating",
+    "growthForm": "floating",
+    "origin": ["Pantropical — Africa (origin), now worldwide"],
+    "difficulty": 1,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 60, "opt": 120, "max": 250, "unit": "µmol/m²/s" },
+      "co2":          { "min": 0,  "opt": 0,   "max": 5,   "unit": "ppm" },
+      "temperatureC": { "min": 20, "opt": 27,  "max": 32 },
+      "pH":           { "min": 6.0,"opt": 7.0, "max": 8.0 },
+      "gh":           { "min": 2,  "opt": 8,   "max": 20 },
+      "kh":           { "min": 1,  "opt": 5,   "max": 14 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "high",   "phosphorusDemand": "high",   "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "low",        "traceDemand": "low" },
+      "rootFeeder": false,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "fast",
+      "maxHeightCm": 10,
+      "maxSpreadCm": 15,
+      "internodeCm": null,
+      "propagation": ["runners"]
+    },
+    "placement": ["floating"],
+    "colorRange": ["light-green", "velvety-green"],
+    "colorHex": "#90c855",
+    "sim": {
+      "k_photosynthesis": 1.20,
+      "k_light": 85,
+      "k_co2": 3,
+      "preferred_temp_c": 27,
+      "temp_tolerance_c": 4.0
+    },
+    "notes": "Rosette-shaped floating plant that aggressively exports nitrogen and phosphorus via its extensive dangling root system — a popular biological filter. Sensitive to water splashing on leaves which causes rot. Invasive in tropical open water; never release outdoors. Long roots serve as spawning substrate and fry cover.",
+    "images": [],
+    "citations": ["tropica-pistia-stratiotes", "kasselmann-2003-aquariumplants", "cook-1974-pistia"]
+  },
+  {
+    "id": "salvinia-natans",
+    "scientificName": "Salvinia natans",
+    "family": "Salviniaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Polypodiopsida",
+      "order": "Salviniales",
+      "family": "Salviniaceae",
+      "genus": "Salvinia",
+      "species": "natans"
+    },
+    "commonNames": {
+      "en": ["Floating fern", "Water butterfly wings"],
+      "zh": ["槐叶苹", "浮萍蕨"]
+    },
+    "pinyin": ["huai ye ping", "fu ping jue"],
+    "group": "floating",
+    "growthForm": "floating",
+    "origin": ["Europe, Asia — temperate and subtropical"],
+    "difficulty": 1,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 40, "opt": 100, "max": 200, "unit": "µmol/m²/s" },
+      "co2":          { "min": 0,  "opt": 0,   "max": 5,   "unit": "ppm" },
+      "temperatureC": { "min": 15, "opt": 24,  "max": 28 },
+      "pH":           { "min": 5.5,"opt": 6.8, "max": 8.0 },
+      "gh":           { "min": 1,  "opt": 6,   "max": 18 },
+      "kh":           { "min": 0,  "opt": 4,   "max": 12 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "high",   "phosphorusDemand": "medium", "potassiumDemand": "low" },
+      "micros": { "ironDemand": "low",        "traceDemand": "low" },
+      "rootFeeder": false,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "fast",
+      "maxHeightCm": 2,
+      "maxSpreadCm": 3,
+      "internodeCm": null,
+      "propagation": ["fragmentation"]
+    },
+    "placement": ["floating"],
+    "colorRange": ["bright-green"],
+    "colorHex": "#8fce4c",
+    "sim": {
+      "k_photosynthesis": 1.10,
+      "k_light": 70,
+      "k_co2": 2,
+      "preferred_temp_c": 24,
+      "temp_tolerance_c": 5.0
+    },
+    "notes": "A true aquatic fern with two oval floating leaves covered in water-repelling hairs and one submerged root-like leaf. Naturalised across Eurasia but also widely cultivated. Provides shade for lower-light plants and excellent diffused light effect. Can double in biomass within a week under strong light — thin regularly.",
+    "images": [],
+    "citations": ["tropica-salvinia-natans", "maberly-1994-aquatic-macrophytes", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "hemianthus-callitrichoides-cuba",
+    "scientificName": "Hemianthus callitrichoides 'Cuba'",
+    "family": "Linderniaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Magnoliopsida",
+      "order": "Lamiales",
+      "family": "Linderniaceae",
+      "genus": "Hemianthus",
+      "species": "callitrichoides",
+      "cultivar": "Cuba"
+    },
+    "commonNames": {
+      "en": ["HC Cuba", "Dwarf baby tears", "Cuban baby tears"],
+      "zh": ["古巴珍珠草", "古巴珍珠", "HC珍珠草"]
+    },
+    "pinyin": ["gu ba zhen zhu cao", "gu ba zhen zhu", "hc zhen zhu cao"],
+    "group": "carpeting",
+    "growthForm": "carpeting",
+    "origin": ["Cuba"],
+    "difficulty": 4,
+    "difficultyLabel": "hard",
+    "envelope": {
+      "light":        { "min": 50, "opt": 90, "max": 150, "unit": "µmol/m²/s" },
+      "co2":          { "min": 20, "opt": 30, "max": 40, "unit": "ppm" },
+      "temperatureC": { "min": 18, "opt": 23, "max": 27 },
+      "pH":           { "min": 5.5, "opt": 6.5, "max": 7.5 },
+      "gh":           { "min": 2, "opt": 5, "max": 12 },
+      "kh":           { "min": 0, "opt": 3, "max": 8 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "medium", "phosphorusDemand": "medium", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "high", "traceDemand": "medium" },
+      "rootFeeder": true,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "medium",
+      "maxHeightCm": 4,
+      "maxSpreadCm": 20,
+      "internodeCm": 0.5,
+      "propagation": ["topping", "runners"]
+    },
+    "placement": ["foreground"],
+    "colorRange": ["light-green"],
+    "colorHex": "#7fc24f",
+    "sim": {
+      "k_photosynthesis": 0.9,
+      "k_light": 80,
+      "k_co2": 25,
+      "preferred_temp_c": 23,
+      "temp_tolerance_c": 3.0
+    },
+    "notes": "The classic Iwagumi carpet: tiny rounded leaves on creeping stems, stays 3-5 cm. Tropica rates both light and CO2 as high; hobby sources give roughly 80+ PAR at substrate and injected CO2. Plant in very small portions, keep flow gentle but present, and expect it to lift and float if the substrate is not firm. Fails quickly under CO2 gaps or algae. Species is sometimes filed as Micranthemum callitrichoides; family placement (Linderniaceae) follows the existing Micranthemum entry.",
+    "images": [],
+    "citations": ["buceplant-hc-cuba", "practicalfishkeeping-hc-cuba", "svensson-2016-carpeting-plants"]
+  },
+  {
+    "id": "utricularia-graminifolia",
+    "scientificName": "Utricularia graminifolia",
+    "family": "Lentibulariaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Magnoliopsida",
+      "order": "Lamiales",
+      "family": "Lentibulariaceae",
+      "genus": "Utricularia",
+      "species": "graminifolia"
+    },
+    "commonNames": {
+      "en": ["Utricularia graminifolia", "UG", "Grass-leaved bladderwort"],
+      "zh": ["狸藻", "禾叶狸藻", "叉柱狸藻（俗称）"]
+    },
+    "pinyin": ["li zao", "he ye li zao", "cha zhu li zao"],
+    "group": "carpeting",
+    "growthForm": "carpeting",
+    "origin": ["India, Sri Lanka, Southeast Asia (highland streams)"],
+    "difficulty": 4,
+    "difficultyLabel": "hard",
+    "envelope": {
+      "light":        { "min": 40, "opt": 80, "max": 130, "unit": "µmol/m²/s" },
+      "co2":          { "min": 15, "opt": 25, "max": 35, "unit": "ppm" },
+      "temperatureC": { "min": 18, "opt": 23, "max": 27 },
+      "pH":           { "min": 5.0, "opt": 6.0, "max": 7.0 },
+      "gh":           { "min": 1, "opt": 4, "max": 10 },
+      "kh":           { "min": 0, "opt": 2, "max": 6 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "low", "phosphorusDemand": "low", "potassiumDemand": "low" },
+      "micros": { "ironDemand": "medium", "traceDemand": "medium" },
+      "rootFeeder": false,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "medium",
+      "maxHeightCm": 8,
+      "maxSpreadCm": 20,
+      "internodeCm": null,
+      "propagation": ["runners", "fragmentation"]
+    },
+    "placement": ["foreground"],
+    "colorRange": ["light-green"],
+    "colorHex": "#8cc26b",
+    "sim": {
+      "k_photosynthesis": 0.7,
+      "k_light": 65,
+      "k_co2": 20,
+      "preferred_temp_c": 23,
+      "temp_tolerance_c": 3.0
+    },
+    "notes": "Carnivorous bladderwort whose grass-like leaves form a dense lawn; bladders trap micro-organisms and do not harm fish or shrimp. Tropica lists medium growth, 3-10+ cm height and a high-CO2 range of about 15-25 mg/L; Dennerle notes a highland Sri Lankan origin (about 2000 m, cool fast water), so keep temperature moderate. Has no true roots, so it anchors poorly and mats lift as they thicken - pin down with small stones and trim often. Tropica calls it rather demanding.",
+    "images": [],
+    "citations": ["tropica-utricularia-graminifolia", "dennerle-utricularia-graminifolia", "taylor-1989-utricularia"]
+  },
+  {
+    "id": "eleocharis-acicularis-mini",
+    "scientificName": "Eleocharis acicularis 'Mini'",
+    "family": "Cyperaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Liliopsida",
+      "order": "Poales",
+      "family": "Cyperaceae",
+      "genus": "Eleocharis",
+      "species": "acicularis",
+      "cultivar": "Mini"
+    },
+    "commonNames": {
+      "en": ["Mini hairgrass", "Eleocharis Mini", "Eleocharis acicularis Mini"],
+      "zh": ["迷你牛毛毡", "针叶牛毛毡Mini"]
+    },
+    "pinyin": ["mi ni niu mao zhan", "zhen ye niu mao zhan mini"],
+    "group": "carpeting",
+    "growthForm": "carpeting",
+    "origin": ["Cultivar — first supplied to Tropica from the USA"],
+    "difficulty": 3,
+    "difficultyLabel": "medium",
+    "envelope": {
+      "light":        { "min": 40, "opt": 80, "max": 120, "unit": "µmol/m²/s" },
+      "co2":          { "min": 15, "opt": 25, "max": 35, "unit": "ppm" },
+      "temperatureC": { "min": 20, "opt": 24, "max": 28 },
+      "pH":           { "min": 5.5, "opt": 6.5, "max": 7.5 },
+      "gh":           { "min": 2, "opt": 6, "max": 14 },
+      "kh":           { "min": 1, "opt": 3, "max": 8 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "medium", "phosphorusDemand": "medium", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "medium", "traceDemand": "medium" },
+      "rootFeeder": true,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "slow",
+      "maxHeightCm": 5,
+      "maxSpreadCm": 15,
+      "internodeCm": null,
+      "propagation": ["runners"]
+    },
+    "placement": ["foreground"],
+    "colorRange": ["green"],
+    "colorHex": "#6fae45",
+    "sim": {
+      "k_photosynthesis": 0.55,
+      "k_light": 65,
+      "k_co2": 18,
+      "preferred_temp_c": 24,
+      "temp_tolerance_c": 3.0
+    },
+    "notes": "An even finer, shorter form of dwarf hairgrass; Tropica lists medium difficulty, slow growth, 3-5+ cm and medium light/CO2. Plant in many small portions to cover an area and let it thicken by runners. Sold as Eleocharis sp. 'Mini' / E. pusilla by some vendors - naming is inconsistent. Note existing eleocharis-parvula already carries the zh name 迷你牛毛毡 as a trade name, so search will return both.",
+    "images": [],
+    "citations": ["tropica-eleocharis-acicularis-mini", "aquasabi-eleocharis-mini", "svensson-2016-carpeting-plants"]
+  },
+  {
+    "id": "rotala-sp-hra",
+    "scientificName": "Rotala sp. 'H'ra'",
+    "family": "Lythraceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Magnoliopsida",
+      "order": "Myrtales",
+      "family": "Lythraceae",
+      "genus": "Rotala",
+      "species": "sp.",
+      "cultivar": "H'ra"
+    },
+    "commonNames": {
+      "en": ["Rotala H'ra", "Rotala sp. 'Gia Lai'", "Rotala rotundifolia 'H'ra'"],
+      "zh": ["红宫廷 H'ra", "H'ra 圆叶节节菜"]
+    },
+    "pinyin": ["hong gong ting h'ra", "h'ra yuan ye jie jie cai"],
+    "group": "stem",
+    "growthForm": "stem",
+    "origin": ["Vietnam (Gia Lai province)"],
+    "difficulty": 3,
+    "difficultyLabel": "medium",
+    "envelope": {
+      "light":        { "min": 60, "opt": 100, "max": 150, "unit": "µmol/m²/s" },
+      "co2":          { "min": 20, "opt": 30, "max": 40, "unit": "ppm" },
+      "temperatureC": { "min": 20, "opt": 25, "max": 29 },
+      "pH":           { "min": 5.0, "opt": 6.3, "max": 7.5 },
+      "gh":           { "min": 2, "opt": 5, "max": 12 },
+      "kh":           { "min": 0, "opt": 2, "max": 6 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "medium", "phosphorusDemand": "medium", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "high", "traceDemand": "medium" },
+      "rootFeeder": true,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "fast",
+      "maxHeightCm": 40,
+      "maxSpreadCm": 5,
+      "internodeCm": 1.5,
+      "propagation": ["topping", "side-shoots"]
+    },
+    "placement": ["midground", "background"],
+    "colorRange": ["green", "orange-red-high-light"],
+    "colorHex": "#e8803a",
+    "sim": {
+      "k_photosynthesis": 1.0,
+      "k_light": 70,
+      "k_co2": 22,
+      "preferred_temp_c": 25,
+      "temp_tolerance_c": 3.0
+    },
+    "notes": "Vietnamese Rotala collected near the H'Ra hamlet; fiery orange-red tips under high light, low nitrate and CO2 around 20-30 ppm, mostly green and gold in dim tanks. Fast, needs frequent trimming. Flowgrow lists tolerance 4-32 C (optimum 22-28), pH 4.5-7.5; light figures (about 80-120 PAR) come from hobby care guides. Treated by Flowgrow as a Rotala rotundifolia variant; unresolved taxonomically.",
+    "images": [],
+    "citations": ["aquasabi-rotala-hra", "flowgrow-rotala-hra", "buceplant-rotala-hra", "graham-wain-2005-rotala"]
+  },
+  {
+    "id": "rotala-wallichii",
+    "scientificName": "Rotala wallichii",
+    "family": "Lythraceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Magnoliopsida",
+      "order": "Myrtales",
+      "family": "Lythraceae",
+      "genus": "Rotala",
+      "species": "wallichii"
+    },
+    "commonNames": {
+      "en": ["Rotala wallichii", "Whorled rotala", "Pine-needle rotala"],
+      "zh": ["红松尾", "瓦氏节节菜"]
+    },
+    "pinyin": ["hong song wei", "wa shi jie jie cai"],
+    "group": "stem",
+    "growthForm": "stem",
+    "origin": ["India, Southeast Asia"],
+    "difficulty": 4,
+    "difficultyLabel": "hard",
+    "envelope": {
+      "light":        { "min": 60, "opt": 100, "max": 150, "unit": "µmol/m²/s" },
+      "co2":          { "min": 20, "opt": 30, "max": 40, "unit": "ppm" },
+      "temperatureC": { "min": 20, "opt": 24, "max": 28 },
+      "pH":           { "min": 5.0, "opt": 6.2, "max": 7.0 },
+      "gh":           { "min": 1, "opt": 4, "max": 8 },
+      "kh":           { "min": 0, "opt": 2, "max": 5 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "medium", "phosphorusDemand": "medium", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "high", "traceDemand": "high" },
+      "rootFeeder": true,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "medium",
+      "maxHeightCm": 30,
+      "maxSpreadCm": 5,
+      "internodeCm": 1.2,
+      "propagation": ["topping", "side-shoots"]
+    },
+    "placement": ["background", "midground"],
+    "colorRange": ["green", "rose-red-high-light"],
+    "colorHex": "#c9627a",
+    "sim": {
+      "k_photosynthesis": 0.65,
+      "k_light": 100,
+      "k_co2": 25,
+      "preferred_temp_c": 24,
+      "temp_tolerance_c": 3.0
+    },
+    "notes": "Fine, whorled, feather-like foliage with rose-to-red tips. Tropica rates it advanced: strong light, added CO2 and soft slightly acidic water; 10-30+ cm, moderate growth. Melts quickly if hardness or CO2 swings. Looks best in groups of several stems in the background.",
+    "images": [],
+    "citations": ["tropica-rotala-wallichii", "graham-wain-2005-rotala", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "ludwigia-palustris-super-red",
+    "scientificName": "Ludwigia palustris 'Super Red'",
+    "family": "Onagraceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Magnoliopsida",
+      "order": "Myrtales",
+      "family": "Onagraceae",
+      "genus": "Ludwigia",
+      "species": "palustris",
+      "cultivar": "Super Red"
+    },
+    "commonNames": {
+      "en": ["Ludwigia 'Super Red'", "Ludwigia palustris Super Red"],
+      "zh": ["超红水丁香", "超级红水丁香"]
+    },
+    "pinyin": ["chao hong shui ding xiang", "chao ji hong shui ding xiang"],
+    "group": "stem",
+    "growthForm": "stem",
+    "origin": ["Cultivar"],
+    "difficulty": 2,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 50, "opt": 90, "max": 140, "unit": "µmol/m²/s" },
+      "co2":          { "min": 15, "opt": 25, "max": 35, "unit": "ppm" },
+      "temperatureC": { "min": 18, "opt": 24, "max": 28 },
+      "pH":           { "min": 5.5, "opt": 6.5, "max": 7.5 },
+      "gh":           { "min": 2, "opt": 6, "max": 14 },
+      "kh":           { "min": 1, "opt": 3, "max": 10 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "high", "phosphorusDemand": "medium", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "high", "traceDemand": "medium" },
+      "rootFeeder": true,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "fast",
+      "maxHeightCm": 30,
+      "maxSpreadCm": 4,
+      "internodeCm": 2.0,
+      "propagation": ["topping", "side-shoots"]
+    },
+    "placement": ["midground", "background"],
+    "colorRange": ["red-high-light", "deep-red"],
+    "colorHex": "#b0293a",
+    "sim": {
+      "k_photosynthesis": 1.0,
+      "k_light": 80,
+      "k_co2": 22,
+      "preferred_temp_c": 24,
+      "temp_tolerance_c": 3.5
+    },
+    "notes": "Colours up more readily and stays smaller than L. repens 'Rubin'; Tropica lists 10-30 cm stems 2-4 cm wide and an easy category, but strong light and CO2 give the best colour and density. Nitrogen-hungry, so dose regularly in high-energy tanks. Dennerle describes the red as intense even under standard lighting.",
+    "images": [],
+    "citations": ["tropica-ludwigia-palustris-super-red", "dennerle-ludwigia-super-red", "peng-1989-ludwigia-revision"]
+  },
+  {
+    "id": "alternanthera-reineckii-mini",
+    "scientificName": "Alternanthera reineckii 'Mini'",
+    "family": "Amaranthaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Magnoliopsida",
+      "order": "Caryophyllales",
+      "family": "Amaranthaceae",
+      "genus": "Alternanthera",
+      "species": "reineckii",
+      "cultivar": "Mini"
+    },
+    "commonNames": {
+      "en": ["Alternanthera reineckii 'Mini'", "AR Mini", "Mini red Alternanthera"],
+      "zh": ["迷你红千年", "迷你红叶莲子草"]
+    },
+    "pinyin": ["mi ni hong qian nian", "mi ni hong ye lian zi cao"],
+    "group": "stem",
+    "growthForm": "stem",
+    "origin": ["Cultivar"],
+    "difficulty": 3,
+    "difficultyLabel": "medium",
+    "envelope": {
+      "light":        { "min": 40, "opt": 75, "max": 120, "unit": "µmol/m²/s" },
+      "co2":          { "min": 10, "opt": 20, "max": 30, "unit": "ppm" },
+      "temperatureC": { "min": 20, "opt": 24, "max": 28 },
+      "pH":           { "min": 5.5, "opt": 6.5, "max": 7.5 },
+      "gh":           { "min": 2, "opt": 6, "max": 14 },
+      "kh":           { "min": 1, "opt": 3, "max": 8 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "medium", "phosphorusDemand": "medium", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "high", "traceDemand": "medium" },
+      "rootFeeder": true,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "slow",
+      "maxHeightCm": 10,
+      "maxSpreadCm": 8,
+      "internodeCm": 0.8,
+      "propagation": ["topping", "side-shoots"]
+    },
+    "placement": ["foreground", "midground"],
+    "colorRange": ["red-violet", "olive-green-low-light"],
+    "colorHex": "#9a3b5c",
+    "sim": {
+      "k_photosynthesis": 0.7,
+      "k_light": 70,
+      "k_co2": 18,
+      "preferred_temp_c": 24,
+      "temp_tolerance_c": 3.0
+    },
+    "notes": "Miniature, compact form of A. reineckii; Tropica describes slower growth and, with careful trimming, a dense red-violet carpet of about 5-10 cm. Medium light/CO2 per retailer data quoting Tropica; stronger light and CO2 improve colour. Colour fades to olive in shade.",
+    "images": [],
+    "citations": ["tropica-alternanthera-reineckii-mini", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "pogostemon-erectus",
+    "scientificName": "Pogostemon erectus",
+    "family": "Lamiaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Magnoliopsida",
+      "order": "Lamiales",
+      "family": "Lamiaceae",
+      "genus": "Pogostemon",
+      "species": "erectus"
+    },
+    "commonNames": {
+      "en": ["Pogostemon erectus", "Pogostemon deccanensis", "Indian star grass"],
+      "zh": ["松尾", "绿松尾"]
+    },
+    "pinyin": ["song wei", "lv song wei"],
+    "group": "stem",
+    "growthForm": "stem",
+    "origin": ["India (Maharashtra, Western Ghats)"],
+    "difficulty": 2,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 40, "opt": 75, "max": 120, "unit": "µmol/m²/s" },
+      "co2":          { "min": 10, "opt": 20, "max": 30, "unit": "ppm" },
+      "temperatureC": { "min": 20, "opt": 25, "max": 30 },
+      "pH":           { "min": 5.5, "opt": 6.5, "max": 7.5 },
+      "gh":           { "min": 2, "opt": 6, "max": 14 },
+      "kh":           { "min": 1, "opt": 3, "max": 8 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "medium", "phosphorusDemand": "medium", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "medium", "traceDemand": "medium" },
+      "rootFeeder": true,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "medium",
+      "maxHeightCm": 30,
+      "maxSpreadCm": 6,
+      "internodeCm": 1.5,
+      "propagation": ["topping", "side-shoots"]
+    },
+    "placement": ["midground", "background"],
+    "colorRange": ["bright-green"],
+    "colorHex": "#5faa3c",
+    "sim": {
+      "k_photosynthesis": 0.9,
+      "k_light": 60,
+      "k_co2": 18,
+      "preferred_temp_c": 25,
+      "temp_tolerance_c": 3.5
+    },
+    "notes": "Compact groups of bright green, conifer-like stems 15-40 cm tall and 1-3 cm wide; Tropica lists medium growth and medium light/CO2, with intense light keeping it compact. Cut shoots root readily when replanted. Now often sold as P. deccanensis; older trade stock was labelled 'Rotala verticillaris'.",
+    "images": [],
+    "citations": ["plantedaquaria-pogostemon-erectus", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "pogostemon-helferi",
+    "scientificName": "Pogostemon helferi",
+    "family": "Lamiaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Magnoliopsida",
+      "order": "Lamiales",
+      "family": "Lamiaceae",
+      "genus": "Pogostemon",
+      "species": "helferi"
+    },
+    "commonNames": {
+      "en": ["Pogostemon helferi", "Downoi", "Little star"],
+      "zh": ["雪花草", "皱叶雪花"]
+    },
+    "pinyin": ["xue hua cao", "zhou ye xue hua"],
+    "group": "carpeting",
+    "growthForm": "carpeting",
+    "origin": ["Thailand / Myanmar border"],
+    "difficulty": 3,
+    "difficultyLabel": "medium",
+    "envelope": {
+      "light":        { "min": 30, "opt": 70, "max": 110, "unit": "µmol/m²/s" },
+      "co2":          { "min": 5, "opt": 15, "max": 30, "unit": "ppm" },
+      "temperatureC": { "min": 22, "opt": 26, "max": 30 },
+      "pH":           { "min": 5.5, "opt": 6.5, "max": 7.5 },
+      "gh":           { "min": 2, "opt": 5, "max": 12 },
+      "kh":           { "min": 1, "opt": 3, "max": 8 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "medium", "phosphorusDemand": "medium", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "medium", "traceDemand": "medium" },
+      "rootFeeder": true,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "medium",
+      "maxHeightCm": 8,
+      "maxSpreadCm": 15,
+      "internodeCm": 0.5,
+      "propagation": ["side-shoots"]
+    },
+    "placement": ["foreground", "midground"],
+    "colorRange": ["dark-green"],
+    "colorHex": "#3f7a33",
+    "sim": {
+      "k_photosynthesis": 0.7,
+      "k_light": 50,
+      "k_co2": 12,
+      "preferred_temp_c": 26,
+      "temp_tolerance_c": 3.5
+    },
+    "notes": "Curly-leaved foreground plant closely related to Pogostemon stellatus. Tropica: under low light up to ~15 cm, under intense light compact 5-8 cm; less light-demanding than most carpeters, CO2 optional (slower without), thrives at 23-30 C and, being fairly fast, needs extra nutrients. Prone to leaf melt when moved.",
+    "images": [],
+    "citations": ["tropica-pogostemon-helferi", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "cryptocoryne-lutea",
+    "scientificName": "Cryptocoryne lutea",
+    "family": "Araceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Liliopsida",
+      "order": "Alismatales",
+      "family": "Araceae",
+      "genus": "Cryptocoryne",
+      "species": "lutea"
+    },
+    "commonNames": {
+      "en": ["Cryptocoryne lutea", "Cryptocoryne walkeri (lutea)"],
+      "zh": ["黄椒草", "卢泰椒草"]
+    },
+    "pinyin": ["huang jiao cao", "lu tai jiao cao"],
+    "group": "rosette",
+    "growthForm": "rosette",
+    "origin": ["Sri Lanka"],
+    "difficulty": 2,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 20, "opt": 40, "max": 90, "unit": "µmol/m²/s" },
+      "co2":          { "min": 0, "opt": 10, "max": 25, "unit": "ppm" },
+      "temperatureC": { "min": 22, "opt": 25, "max": 28 },
+      "pH":           { "min": 6.0, "opt": 6.8, "max": 7.8 },
+      "gh":           { "min": 3, "opt": 8, "max": 18 },
+      "kh":           { "min": 1, "opt": 5, "max": 12 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "medium", "phosphorusDemand": "low", "potassiumDemand": "low" },
+      "micros": { "ironDemand": "medium", "traceDemand": "low" },
+      "rootFeeder": true,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "slow",
+      "maxHeightCm": 15,
+      "maxSpreadCm": 12,
+      "internodeCm": null,
+      "propagation": ["runners"]
+    },
+    "placement": ["midground", "foreground"],
+    "colorRange": ["green", "brown"],
+    "colorHex": "#6e7a3c",
+    "sim": {
+      "k_photosynthesis": 0.38,
+      "k_light": 35,
+      "k_co2": 10,
+      "preferred_temp_c": 25,
+      "temp_tolerance_c": 3.0
+    },
+    "notes": "Small Sri Lankan crypt with narrow, slightly wavy green-to-brownish leaves; 12-15 cm tall, 8-12 cm wide, slow. Sold under both lutea and walkeri names. Prone to 'crypt melt' after relocation - leave undisturbed once rooted and use root tabs.",
+    "images": [],
+    "citations": ["dennerle-cryptocoryne-lutea", "jacobsen-1980-cryptocoryne-srilanka", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "cryptocoryne-undulata",
+    "scientificName": "Cryptocoryne undulata",
+    "family": "Araceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Liliopsida",
+      "order": "Alismatales",
+      "family": "Araceae",
+      "genus": "Cryptocoryne",
+      "species": "undulata"
+    },
+    "commonNames": {
+      "en": ["Cryptocoryne undulata", "Cryptocoryne undulata 'Broad Leaves'"],
+      "zh": ["波叶椒草", "宽叶波叶椒草"]
+    },
+    "pinyin": ["bo ye jiao cao", "kuan ye bo ye jiao cao"],
+    "group": "rosette",
+    "growthForm": "rosette",
+    "origin": ["Sri Lanka"],
+    "difficulty": 2,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 20, "opt": 45, "max": 90, "unit": "µmol/m²/s" },
+      "co2":          { "min": 0, "opt": 12, "max": 25, "unit": "ppm" },
+      "temperatureC": { "min": 22, "opt": 25, "max": 28 },
+      "pH":           { "min": 6.0, "opt": 6.8, "max": 7.8 },
+      "gh":           { "min": 2, "opt": 8, "max": 16 },
+      "kh":           { "min": 1, "opt": 4, "max": 10 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "medium", "phosphorusDemand": "low", "potassiumDemand": "low" },
+      "micros": { "ironDemand": "medium", "traceDemand": "low" },
+      "rootFeeder": true,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "medium",
+      "maxHeightCm": 25,
+      "maxSpreadCm": 15,
+      "internodeCm": null,
+      "propagation": ["runners"]
+    },
+    "placement": ["midground"],
+    "colorRange": ["brown-green", "red-brown"],
+    "colorHex": "#7b5f3a",
+    "sim": {
+      "k_photosynthesis": 0.5,
+      "k_light": 35,
+      "k_co2": 12,
+      "preferred_temp_c": 25,
+      "temp_tolerance_c": 3.5
+    },
+    "notes": "Hardy, adaptable crypt with wavy brown-green leaves; the Tropica 'Broad Leaves' form is a triploid. Retail sources give 15-30 cm, medium growth, low light/CO2. Boundaries between C. undulata, C. wendtii and C. beckettii are debated and trade stock is often mislabelled.",
+    "images": [],
+    "citations": ["birstall-cryptocoryne-undulata", "jacobsen-1980-cryptocoryne-srilanka", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "cryptocoryne-spiralis",
+    "scientificName": "Cryptocoryne spiralis",
+    "family": "Araceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Liliopsida",
+      "order": "Alismatales",
+      "family": "Araceae",
+      "genus": "Cryptocoryne",
+      "species": "spiralis"
+    },
+    "commonNames": {
+      "en": ["Cryptocoryne spiralis", "Cryptocoryne spiralis 'Red'"],
+      "zh": ["螺旋椒草", "红螺旋椒草"]
+    },
+    "pinyin": ["luo xuan jiao cao", "hong luo xuan jiao cao"],
+    "group": "rosette",
+    "growthForm": "rosette",
+    "origin": ["India"],
+    "difficulty": 2,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 30, "opt": 55, "max": 100, "unit": "µmol/m²/s" },
+      "co2":          { "min": 5, "opt": 15, "max": 30, "unit": "ppm" },
+      "temperatureC": { "min": 22, "opt": 25, "max": 28 },
+      "pH":           { "min": 6.0, "opt": 6.8, "max": 7.8 },
+      "gh":           { "min": 3, "opt": 8, "max": 18 },
+      "kh":           { "min": 1, "opt": 5, "max": 12 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "medium", "phosphorusDemand": "low", "potassiumDemand": "low" },
+      "micros": { "ironDemand": "medium", "traceDemand": "low" },
+      "rootFeeder": true,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "medium",
+      "maxHeightCm": 40,
+      "maxSpreadCm": 20,
+      "internodeCm": null,
+      "propagation": ["runners"]
+    },
+    "placement": ["background", "midground"],
+    "colorRange": ["green", "red-brown"],
+    "colorHex": "#5a6b2e",
+    "sim": {
+      "k_photosynthesis": 0.5,
+      "k_light": 40,
+      "k_co2": 14,
+      "preferred_temp_c": 25,
+      "temp_tolerance_c": 3.5
+    },
+    "notes": "Tall Indian crypt with long, loosely corkscrewed leaves (to ~34 cm or more); the 'Red' form wants more light for brown-red colour. Retail data: 20-30+ cm, medium growth, medium light and CO2. Good background clusters; heavy root feeder.",
+    "images": [],
+    "citations": ["aquasabi-cryptocoryne-spiralis-red", "aquariumcoop-crypt-spiralis", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "bucephalandra-sp-mini",
+    "scientificName": "Bucephalandra sp. 'Mini'",
+    "family": "Araceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Liliopsida",
+      "order": "Alismatales",
+      "family": "Araceae",
+      "genus": "Bucephalandra",
+      "species": "sp.",
+      "cultivar": "Mini"
+    },
+    "commonNames": {
+      "en": ["Bucephalandra sp. 'Mini'", "Mini buce"],
+      "zh": ["迷你辣椒榕", "辣椒榕Mini"]
+    },
+    "pinyin": ["mi ni la jiao rong", "la jiao rong mini"],
+    "group": "epiphyte",
+    "growthForm": "epiphyte",
+    "origin": ["Borneo, Indonesia / Malaysia"],
+    "difficulty": 2,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 15, "opt": 40, "max": 100, "unit": "µmol/m²/s" },
+      "co2":          { "min": 0, "opt": 10, "max": 25, "unit": "ppm" },
+      "temperatureC": { "min": 21, "opt": 25, "max": 28 },
+      "pH":           { "min": 5.5, "opt": 6.8, "max": 7.5 },
+      "gh":           { "min": 1, "opt": 5, "max": 12 },
+      "kh":           { "min": 0, "opt": 3, "max": 8 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "low", "phosphorusDemand": "low", "potassiumDemand": "low" },
+      "micros": { "ironDemand": "low", "traceDemand": "medium" },
+      "rootFeeder": false,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "slow",
+      "maxHeightCm": 6,
+      "maxSpreadCm": 10,
+      "internodeCm": null,
+      "propagation": ["rhizome-division"]
+    },
+    "placement": ["attached", "foreground"],
+    "colorRange": ["dark-green", "blue-sheen"],
+    "colorHex": "#3d5a40",
+    "sim": {
+      "k_photosynthesis": 0.3,
+      "k_light": 25,
+      "k_co2": 8,
+      "preferred_temp_c": 25,
+      "temp_tolerance_c": 2.5
+    },
+    "notes": "Small rheophytic Bornean aroid grown attached to rock or wood; low to moderate light (excess light invites algae), stable temperatures (swings cause leaf loss). Hundreds of unnamed local forms are sold as Bucephalandra sp.; values are genus-level and not specific to one locality. Complements the existing 'Kedagang' entry.",
+    "images": [],
+    "citations": ["aquasabi-bucephalandra-mini", "buceplant-bucephalandra-lighting", "wongso-2013-bucephalandra"]
+  },
+  {
+    "id": "anubias-barteri-coffeefolia",
+    "scientificName": "Anubias barteri var. 'Coffeefolia'",
+    "family": "Araceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Liliopsida",
+      "order": "Alismatales",
+      "family": "Araceae",
+      "genus": "Anubias",
+      "species": "barteri",
+      "cultivar": "var. 'Coffeefolia'"
+    },
+    "commonNames": {
+      "en": ["Anubias 'Coffeefolia'", "Anubias barteri var. coffeifolia", "Coffee-leaved anubias"],
+      "zh": ["咖啡叶榕", "咖啡榕"]
+    },
+    "pinyin": ["ka fei ye rong", "ka fei rong"],
+    "group": "epiphyte",
+    "growthForm": "epiphyte",
+    "origin": ["Cultivar — West Africa"],
+    "difficulty": 1,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 15, "opt": 40, "max": 100, "unit": "µmol/m²/s" },
+      "co2":          { "min": 0, "opt": 10, "max": 30, "unit": "ppm" },
+      "temperatureC": { "min": 20, "opt": 25, "max": 30 },
+      "pH":           { "min": 5.5, "opt": 6.8, "max": 8.0 },
+      "gh":           { "min": 2, "opt": 8, "max": 18 },
+      "kh":           { "min": 1, "opt": 5, "max": 14 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "low", "phosphorusDemand": "low", "potassiumDemand": "low" },
+      "micros": { "ironDemand": "low", "traceDemand": "low" },
+      "rootFeeder": false,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "slow",
+      "maxHeightCm": 20,
+      "maxSpreadCm": 20,
+      "internodeCm": null,
+      "propagation": ["rhizome-division"]
+    },
+    "placement": ["midground", "attached"],
+    "colorRange": ["dark-green", "red-brown-new-growth"],
+    "colorHex": "#4a6b3a",
+    "sim": {
+      "k_photosynthesis": 0.33,
+      "k_light": 25,
+      "k_co2": 6,
+      "preferred_temp_c": 25,
+      "temp_tolerance_c": 4.0
+    },
+    "notes": "Leaves arch noticeably between the ribs and emerge red-brown. Tropica lists 15-25 cm height, a 10-15+ cm rhizome and very hard leaves not eaten by herbivorous fish. Do not bury the rhizome; tie to wood or stone and divide with at least two leaves per piece.",
+    "images": [],
+    "citations": ["tropica-anubias-coffeifolia", "crusio-1987-anubias", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "microsorum-pteropus-trident",
+    "scientificName": "Microsorum pteropus 'Trident'",
+    "family": "Polypodiaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Polypodiopsida",
+      "order": "Polypodiales",
+      "family": "Polypodiaceae",
+      "genus": "Microsorum",
+      "species": "pteropus",
+      "cultivar": "Trident"
+    },
+    "commonNames": {
+      "en": ["Trident Java fern", "Microsorum pteropus 'Trident'"],
+      "zh": ["三叉铁皇冠", "三叉叉铁"]
+    },
+    "pinyin": ["san cha tie huang guan", "san cha cha tie"],
+    "group": "epiphyte",
+    "growthForm": "epiphyte",
+    "origin": ["Cultivar — Southeast Asia"],
+    "difficulty": 1,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 20, "opt": 45, "max": 90, "unit": "µmol/m²/s" },
+      "co2":          { "min": 0, "opt": 10, "max": 30, "unit": "ppm" },
+      "temperatureC": { "min": 20, "opt": 25, "max": 28 },
+      "pH":           { "min": 5.5, "opt": 6.8, "max": 8.0 },
+      "gh":           { "min": 2, "opt": 8, "max": 18 },
+      "kh":           { "min": 1, "opt": 5, "max": 14 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "low", "phosphorusDemand": "low", "potassiumDemand": "low" },
+      "micros": { "ironDemand": "low", "traceDemand": "low" },
+      "rootFeeder": false,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "slow",
+      "maxHeightCm": 20,
+      "maxSpreadCm": 15,
+      "internodeCm": null,
+      "propagation": ["rhizome-division", "adventitious-plantlets"]
+    },
+    "placement": ["midground", "attached"],
+    "colorRange": ["dark-green"],
+    "colorHex": "#2f5a2e",
+    "sim": {
+      "k_photosynthesis": 0.34,
+      "k_light": 28,
+      "k_co2": 8,
+      "preferred_temp_c": 25,
+      "temp_tolerance_c": 4.0
+    },
+    "notes": "Narrow-leaved, smaller Java fern whose leaves are typically three-lobed (tripartite) to multipartite; Tropica lists slow growth, 15-20+ cm, medium light (~0.5 W/L). Attach to hardscape; the rhizome rots if buried. Black spots on leaf undersides are sporangia, not disease.",
+    "images": [],
+    "citations": ["tropica-microsorum-trident", "bosman-2003-microsorum-pteropus", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "taxiphyllum-sp-flame",
+    "scientificName": "Taxiphyllum sp. 'Flame'",
+    "family": "Hypnaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Bryophyta",
+      "class": "Bryopsida",
+      "order": "Hypnales",
+      "family": "Hypnaceae",
+      "genus": "Taxiphyllum",
+      "species": "sp.",
+      "cultivar": "Flame"
+    },
+    "commonNames": {
+      "en": ["Flame moss", "Taxiphyllum sp. 'Flame'"],
+      "zh": ["火焰莓", "火焰莫斯", "火焰苔"]
+    },
+    "pinyin": ["huo yan mei", "huo yan mo si", "huo yan tai"],
+    "group": "moss",
+    "growthForm": "moss",
+    "origin": ["Southeast Asia (unidentified species)"],
+    "difficulty": 2,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 15, "opt": 35, "max": 70, "unit": "µmol/m²/s" },
+      "co2":          { "min": 0, "opt": 10, "max": 25, "unit": "ppm" },
+      "temperatureC": { "min": 18, "opt": 23, "max": 27 },
+      "pH":           { "min": 6.0, "opt": 6.8, "max": 7.5 },
+      "gh":           { "min": 2, "opt": 6, "max": 14 },
+      "kh":           { "min": 1, "opt": 4, "max": 10 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "low", "phosphorusDemand": "low", "potassiumDemand": "low" },
+      "micros": { "ironDemand": "low", "traceDemand": "low" },
+      "rootFeeder": false,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "slow",
+      "maxHeightCm": 10,
+      "maxSpreadCm": 15,
+      "internodeCm": null,
+      "propagation": ["fragmentation"]
+    },
+    "placement": ["attached", "midground"],
+    "colorRange": ["bright-green"],
+    "colorHex": "#6fa63a",
+    "sim": {
+      "k_photosynthesis": 0.3,
+      "k_light": 25,
+      "k_co2": 8,
+      "preferred_temp_c": 23,
+      "temp_tolerance_c": 3.0
+    },
+    "notes": "Upright, softly undulating shoots resembling flickering flames, 5-15 cm. Species is not formally identified (genus Taxiphyllum). Retailers disagree on difficulty (easy vs medium); Flowgrow lists medium and slow. Tie or glue to hardscape; low-to-moderate light, shrimp-safe.",
+    "images": [],
+    "citations": ["aquasabi-flame-moss", "flowgrow-flame-moss", "tan-2003-taxiphyllum-barbieri"]
+  },
+  {
+    "id": "riccia-fluitans",
+    "scientificName": "Riccia fluitans",
+    "family": "Ricciaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Marchantiophyta",
+      "class": "Marchantiopsida",
+      "order": "Marchantiales",
+      "family": "Ricciaceae",
+      "genus": "Riccia",
+      "species": "fluitans"
+    },
+    "commonNames": {
+      "en": ["Crystalwort", "Riccia", "Floating liverwort"],
+      "zh": ["鹿角苔"]
+    },
+    "pinyin": ["lu jiao tai"],
+    "group": "moss",
+    "growthForm": "moss",
+    "origin": ["Cosmopolitan"],
+    "difficulty": 2,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 30, "opt": 70, "max": 120, "unit": "µmol/m²/s" },
+      "co2":          { "min": 5, "opt": 20, "max": 35, "unit": "ppm" },
+      "temperatureC": { "min": 18, "opt": 24, "max": 28 },
+      "pH":           { "min": 5.5, "opt": 6.8, "max": 8.0 },
+      "gh":           { "min": 2, "opt": 6, "max": 16 },
+      "kh":           { "min": 1, "opt": 4, "max": 12 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "medium", "phosphorusDemand": "medium", "potassiumDemand": "low" },
+      "micros": { "ironDemand": "low", "traceDemand": "low" },
+      "rootFeeder": false,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "medium",
+      "maxHeightCm": 5,
+      "maxSpreadCm": 30,
+      "internodeCm": null,
+      "propagation": ["fragmentation"]
+    },
+    "placement": ["floating", "foreground", "attached"],
+    "colorRange": ["bright-green"],
+    "colorHex": "#5faa42",
+    "sim": {
+      "k_photosynthesis": 0.6,
+      "k_light": 55,
+      "k_co2": 15,
+      "preferred_temp_c": 24,
+      "temp_tolerance_c": 3.5
+    },
+    "notes": "Floating liverwort that can be tied down with mesh or thread to form a submerged carpet ('Riccia wall' / lawn). Tropica 1-2-Grow lists medium growth/light/CO2 and 3-5 cm; Dennerle notes CO2 supplementation speeds growth. Needs regular trimming or it traps gas and floats. zh 鹿角苔 is also a trade misnomer for Glossostigma in existing data.",
+    "images": [],
+    "citations": ["dennerle-riccia-fluitans", "plantedaquaria-riccia-fluitans", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "hygrophila-pinnatifida",
+    "scientificName": "Hygrophila pinnatifida",
+    "family": "Acanthaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Magnoliopsida",
+      "order": "Lamiales",
+      "family": "Acanthaceae",
+      "genus": "Hygrophila",
+      "species": "pinnatifida"
+    },
+    "commonNames": {
+      "en": ["Hygrophila pinnatifida", "Pinnatifida"],
+      "zh": ["羽裂水蓑衣", "羽叶水蓑衣"]
+    },
+    "pinyin": ["yu lie shui suo yi", "yu ye shui suo yi"],
+    "group": "rosette",
+    "growthForm": "rosette",
+    "origin": ["India (Western Ghats)"],
+    "difficulty": 2,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 30, "opt": 50, "max": 90, "unit": "µmol/m²/s" },
+      "co2":          { "min": 5, "opt": 15, "max": 30, "unit": "ppm" },
+      "temperatureC": { "min": 22, "opt": 25, "max": 30 },
+      "pH":           { "min": 5.5, "opt": 6.5, "max": 7.5 },
+      "gh":           { "min": 2, "opt": 6, "max": 14 },
+      "kh":           { "min": 1, "opt": 3, "max": 8 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "low", "phosphorusDemand": "low", "potassiumDemand": "low" },
+      "micros": { "ironDemand": "medium", "traceDemand": "low" },
+      "rootFeeder": false,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "slow",
+      "maxHeightCm": 25,
+      "maxSpreadCm": 20,
+      "internodeCm": null,
+      "propagation": ["rhizome-division", "side-shoots"]
+    },
+    "placement": ["attached", "midground"],
+    "colorRange": ["olive-green", "brown-green"],
+    "colorHex": "#6a6a3a",
+    "sim": {
+      "k_photosynthesis": 0.45,
+      "k_light": 35,
+      "k_co2": 12,
+      "preferred_temp_c": 25,
+      "temp_tolerance_c": 3.0
+    },
+    "notes": "Slow rhizomatous plant with deeply lobed, brown-green leaves; grows well tied to wood or rock like an epiphyte. Do not bury the rhizome. Frequently used for Dutch-style and nature layouts as a textured accent.",
+    "images": [],
+    "citations": ["kasselmann-2003-aquariumplants", "cook-1996-aquatic-plant-book"]
+  },
+  {
+    "id": "limnophila-aromatica",
+    "scientificName": "Limnophila aromatica",
+    "family": "Plantaginaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Magnoliopsida",
+      "order": "Lamiales",
+      "family": "Plantaginaceae",
+      "genus": "Limnophila",
+      "species": "aromatica"
+    },
+    "commonNames": {
+      "en": ["Limnophila aromatica", "Rice paddy herb", "Ambulia"],
+      "zh": ["紫苏草", "香水草"]
+    },
+    "pinyin": ["zi su cao", "xiang shui cao"],
+    "group": "stem",
+    "growthForm": "stem",
+    "origin": ["South and Southeast Asia"],
+    "difficulty": 1,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 40, "opt": 65, "max": 110, "unit": "µmol/m²/s" },
+      "co2":          { "min": 10, "opt": 20, "max": 30, "unit": "ppm" },
+      "temperatureC": { "min": 20, "opt": 25, "max": 30 },
+      "pH":           { "min": 5.5, "opt": 6.8, "max": 7.8 },
+      "gh":           { "min": 2, "opt": 6, "max": 16 },
+      "kh":           { "min": 1, "opt": 4, "max": 10 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "medium", "phosphorusDemand": "medium", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "medium", "traceDemand": "medium" },
+      "rootFeeder": true,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "fast",
+      "maxHeightCm": 40,
+      "maxSpreadCm": 8,
+      "internodeCm": 3.0,
+      "propagation": ["topping", "side-shoots"]
+    },
+    "placement": ["background"],
+    "colorRange": ["green", "purple-high-light"],
+    "colorHex": "#6aa84a",
+    "sim": {
+      "k_photosynthesis": 1.0,
+      "k_light": 55,
+      "k_co2": 15,
+      "preferred_temp_c": 25,
+      "temp_tolerance_c": 3.5
+    },
+    "notes": "Easy, fast stem with whorled leaves that turn purple-red underside and upper leaves under high light. Aromatic when crushed. Related to L. sessiliflora but broader-leaved and taller.",
+    "images": [],
+    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "eriocaulon-cinereum",
+    "scientificName": "Eriocaulon cinereum",
+    "family": "Eriocaulaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Liliopsida",
+      "order": "Poales",
+      "family": "Eriocaulaceae",
+      "genus": "Eriocaulon",
+      "species": "cinereum"
+    },
+    "commonNames": {
+      "en": ["Eriocaulon cinereum", "Pipewort", "Ashy pipewort"],
+      "zh": ["谷精草", "迷你谷精草"]
+    },
+    "pinyin": ["gu jing cao", "mi ni gu jing cao"],
+    "group": "rosette",
+    "growthForm": "rosette",
+    "origin": ["Asia (India, China, Southeast Asia, Japan)"],
+    "difficulty": 5,
+    "difficultyLabel": "expert",
+    "envelope": {
+      "light":        { "min": 40, "opt": 80, "max": 120, "unit": "µmol/m²/s" },
+      "co2":          { "min": 15, "opt": 25, "max": 35, "unit": "ppm" },
+      "temperatureC": { "min": 20, "opt": 24, "max": 27 },
+      "pH":           { "min": 4.5, "opt": 5.8, "max": 6.8 },
+      "gh":           { "min": 0, "opt": 2, "max": 6 },
+      "kh":           { "min": 0, "opt": 1, "max": 3 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "low", "phosphorusDemand": "low", "potassiumDemand": "low" },
+      "micros": { "ironDemand": "medium", "traceDemand": "medium" },
+      "rootFeeder": true,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "slow",
+      "maxHeightCm": 8,
+      "maxSpreadCm": 8,
+      "internodeCm": null,
+      "propagation": ["side-shoots", "seed"]
+    },
+    "placement": ["foreground", "midground"],
+    "colorRange": ["green", "silver-tip"],
+    "colorHex": "#7fb05a",
+    "sim": {
+      "k_photosynthesis": 0.35,
+      "k_light": 65,
+      "k_co2": 18,
+      "preferred_temp_c": 24,
+      "temp_tolerance_c": 2.5
+    },
+    "notes": "Grass-like rosettes (stiff, upright) valued in Iwagumi/ADA layouts; notoriously hard - needs very soft, acidic, low-KH water, high light, CO2 and clean substrate. Represents the Eriocaulon spp. group (E. cinereum, E. sp. 'Vietnam', E. setaceum); trade identification is unreliable. Zero-to-low gh/kh envelope is hobbyist consensus rather than a measured value.",
+    "images": [],
+    "citations": ["kasselmann-2003-aquariumplants", "amano-1994-nature-aquarium"]
+  },
+  {
+    "id": "sagittaria-subulata",
+    "scientificName": "Sagittaria subulata",
+    "family": "Alismataceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Liliopsida",
+      "order": "Alismatales",
+      "family": "Alismataceae",
+      "genus": "Sagittaria",
+      "species": "subulata"
+    },
+    "commonNames": {
+      "en": ["Dwarf sagittaria", "Subulate arrowhead", "Dwarf sag"],
+      "zh": ["矮慈姑", "窄叶慈姑"]
+    },
+    "pinyin": ["ai ci gu", "zhai ye ci gu"],
+    "group": "rosette",
+    "growthForm": "rosette",
+    "origin": ["Eastern North America, Atlantic coast"],
+    "difficulty": 1,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 30, "opt": 60, "max": 110, "unit": "µmol/m²/s" },
+      "co2":          { "min": 5, "opt": 15, "max": 30, "unit": "ppm" },
+      "temperatureC": { "min": 15, "opt": 22, "max": 28 },
+      "pH":           { "min": 6.0, "opt": 7.0, "max": 8.0 },
+      "gh":           { "min": 3, "opt": 8, "max": 18 },
+      "kh":           { "min": 2, "opt": 5, "max": 14 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "medium", "phosphorusDemand": "medium", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "medium", "traceDemand": "medium" },
+      "rootFeeder": true,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "fast",
+      "maxHeightCm": 20,
+      "maxSpreadCm": 25,
+      "internodeCm": null,
+      "propagation": ["runners"]
+    },
+    "placement": ["foreground", "midground"],
+    "colorRange": ["green"],
+    "colorHex": "#5f9f3d",
+    "sim": {
+      "k_photosynthesis": 0.7,
+      "k_light": 45,
+      "k_co2": 12,
+      "preferred_temp_c": 23,
+      "temp_tolerance_c": 4.0
+    },
+    "notes": "Hardy ribbon-leaved plant that spreads by runners into a lawn; stays 5-10 cm in strong light but reaches 20+ cm in dim tanks. Tolerates cool water and hard water. Root feeder - benefits from enriched substrate.",
+    "images": [],
+    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "lilaeopsis-brasiliensis",
+    "scientificName": "Lilaeopsis brasiliensis",
+    "family": "Apiaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Magnoliopsida",
+      "order": "Apiales",
+      "family": "Apiaceae",
+      "genus": "Lilaeopsis",
+      "species": "brasiliensis"
+    },
+    "commonNames": {
+      "en": ["Brazilian micro sword", "Brasilian lilaeopsis", "Lilaeopsis brasiliensis"],
+      "zh": ["巴西水芹", "矮水芹"]
+    },
+    "pinyin": ["ba xi shui qin", "ai shui qin"],
+    "group": "carpeting",
+    "growthForm": "carpeting",
+    "origin": ["South America (Brazil, Argentina), also reported Americas wetlands"],
+    "difficulty": 3,
+    "difficultyLabel": "medium",
+    "envelope": {
+      "light":        { "min": 50, "opt": 90, "max": 130, "unit": "µmol/m²/s" },
+      "co2":          { "min": 15, "opt": 25, "max": 35, "unit": "ppm" },
+      "temperatureC": { "min": 18, "opt": 23, "max": 27 },
+      "pH":           { "min": 5.5, "opt": 6.5, "max": 7.5 },
+      "gh":           { "min": 2, "opt": 6, "max": 12 },
+      "kh":           { "min": 1, "opt": 3, "max": 8 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "medium", "phosphorusDemand": "medium", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "medium", "traceDemand": "medium" },
+      "rootFeeder": true,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "medium",
+      "maxHeightCm": 6,
+      "maxSpreadCm": 15,
+      "internodeCm": null,
+      "propagation": ["runners"]
+    },
+    "placement": ["foreground"],
+    "colorRange": ["bright-green"],
+    "colorHex": "#6cb04a",
+    "sim": {
+      "k_photosynthesis": 0.7,
+      "k_light": 70,
+      "k_co2": 18,
+      "preferred_temp_c": 23,
+      "temp_tolerance_c": 3.0
+    },
+    "notes": "Fine tubular, grass-like blades forming a lawn under strong light and CO2 (stays 3-6 cm); stretches and thins in dim tanks. Prefers moderate temperature and an enriched substrate. Sometimes confused with Lilaeopsis novae-zelandiae.",
+    "images": [],
+    "citations": ["amano-1994-nature-aquarium", "svensson-2016-carpeting-plants", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "hydrocotyle-tripartita-japan",
+    "scientificName": "Hydrocotyle tripartita 'Japan'",
+    "family": "Araliaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Magnoliopsida",
+      "order": "Apiales",
+      "family": "Araliaceae",
+      "genus": "Hydrocotyle",
+      "species": "tripartita",
+      "cultivar": "Japan"
+    },
+    "commonNames": {
+      "en": ["Pennywort 'Japan'", "Hydrocotyle tripartita", "Japan pennywort"],
+      "zh": ["日本天胡荽", "三裂天胡荽"]
+    },
+    "pinyin": ["ri ben tian hu sui", "san lie tian hu sui"],
+    "group": "carpeting",
+    "growthForm": "carpeting",
+    "origin": ["Trade name \"Japan\"; species native to Australasia/Asia"],
+    "difficulty": 2,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 50, "opt": 80, "max": 130, "unit": "µmol/m²/s" },
+      "co2":          { "min": 10, "opt": 20, "max": 30, "unit": "ppm" },
+      "temperatureC": { "min": 18, "opt": 23, "max": 27 },
+      "pH":           { "min": 5.5, "opt": 6.5, "max": 7.5 },
+      "gh":           { "min": 2, "opt": 6, "max": 14 },
+      "kh":           { "min": 1, "opt": 3, "max": 10 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "medium", "phosphorusDemand": "medium", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "medium", "traceDemand": "low" },
+      "rootFeeder": true,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "medium",
+      "maxHeightCm": 6,
+      "maxSpreadCm": 20,
+      "internodeCm": null,
+      "propagation": ["runners", "topping"]
+    },
+    "placement": ["foreground", "midground"],
+    "colorRange": ["light-green"],
+    "colorHex": "#5fb04a",
+    "sim": {
+      "k_photosynthesis": 0.8,
+      "k_light": 65,
+      "k_co2": 18,
+      "preferred_temp_c": 23,
+      "temp_tolerance_c": 3.0
+    },
+    "notes": "Creeping pennywort with small clover-like, bright green leaves; forms a lush carpet or climbs as a short stem under strong light with CO2. Without enough light it grows tall and leggy. Frequently sold as H. sp. 'Japan' - botanical identity (H. tripartita) is the usual trade attribution and not confirmed.",
+    "images": [],
+    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "ammannia-gracilis",
+    "scientificName": "Ammannia gracilis",
+    "family": "Lythraceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Magnoliopsida",
+      "order": "Myrtales",
+      "family": "Lythraceae",
+      "genus": "Ammannia",
+      "species": "gracilis"
+    },
+    "commonNames": {
+      "en": ["Ammannia gracilis", "Delicate ammannia", "Red ammannia"],
+      "zh": ["水苋菜", "细叶水苋菜"]
+    },
+    "pinyin": ["shui xian cai", "xi ye shui xian cai"],
+    "group": "stem",
+    "growthForm": "stem",
+    "origin": ["Tropical Africa"],
+    "difficulty": 4,
+    "difficultyLabel": "hard",
+    "envelope": {
+      "light":        { "min": 60, "opt": 100, "max": 150, "unit": "µmol/m²/s" },
+      "co2":          { "min": 20, "opt": 30, "max": 40, "unit": "ppm" },
+      "temperatureC": { "min": 22, "opt": 25, "max": 29 },
+      "pH":           { "min": 5.0, "opt": 6.3, "max": 7.2 },
+      "gh":           { "min": 1, "opt": 4, "max": 10 },
+      "kh":           { "min": 0, "opt": 2, "max": 6 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "medium", "phosphorusDemand": "medium", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "high", "traceDemand": "medium" },
+      "rootFeeder": true,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "medium",
+      "maxHeightCm": 45,
+      "maxSpreadCm": 10,
+      "internodeCm": 2.0,
+      "propagation": ["topping", "side-shoots"]
+    },
+    "placement": ["background", "midground"],
+    "colorRange": ["green", "orange-red-high-light"],
+    "colorHex": "#d4543a",
+    "sim": {
+      "k_photosynthesis": 0.9,
+      "k_light": 90,
+      "k_co2": 25,
+      "preferred_temp_c": 25,
+      "temp_tolerance_c": 3.0
+    },
+    "notes": "Delicate lance-shaped leaves on straight stems; turns orange to red under intense light with CO2 and low nitrate. Sensitive to unstable CO2, hard water and nutrient deficiency (leaf drop from the bottom). Aquarium requirements follow common hobbyist consensus.",
+    "images": [],
+    "citations": ["kasselmann-2003-aquariumplants", "graham-wain-2005-rotala"]
+  },
+  {
+    "id": "proserpinaca-palustris",
+    "scientificName": "Proserpinaca palustris",
+    "family": "Haloragaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Magnoliopsida",
+      "order": "Saxifragales",
+      "family": "Haloragaceae",
+      "genus": "Proserpinaca",
+      "species": "palustris"
+    },
+    "commonNames": {
+      "en": ["Marsh mermaidweed", "Mermaid weed", "Proserpinaca palustris"],
+      "zh": ["沼泽狐尾草", "美洲狐尾草"]
+    },
+    "pinyin": ["zhao ze hu wei cao", "mei zhou hu wei cao"],
+    "group": "stem",
+    "growthForm": "stem",
+    "origin": ["Eastern North America, Central America"],
+    "difficulty": 3,
+    "difficultyLabel": "medium",
+    "envelope": {
+      "light":        { "min": 50, "opt": 85, "max": 130, "unit": "µmol/m²/s" },
+      "co2":          { "min": 15, "opt": 25, "max": 35, "unit": "ppm" },
+      "temperatureC": { "min": 16, "opt": 23, "max": 27 },
+      "pH":           { "min": 5.5, "opt": 6.5, "max": 7.5 },
+      "gh":           { "min": 2, "opt": 6, "max": 14 },
+      "kh":           { "min": 1, "opt": 3, "max": 8 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "medium", "phosphorusDemand": "medium", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "medium", "traceDemand": "medium" },
+      "rootFeeder": true,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "medium",
+      "maxHeightCm": 40,
+      "maxSpreadCm": 10,
+      "internodeCm": 2.0,
+      "propagation": ["topping", "side-shoots"]
+    },
+    "placement": ["background", "midground"],
+    "colorRange": ["green", "red-brown-high-light"],
+    "colorHex": "#7a7a3a",
+    "sim": {
+      "k_photosynthesis": 0.9,
+      "k_light": 70,
+      "k_co2": 20,
+      "preferred_temp_c": 23,
+      "temp_tolerance_c": 3.5
+    },
+    "notes": "Submerged form has fine, feathery serrated leaves; bronzes to reddish-brown under strong light. Prefers cooler, soft to moderately hard water and regular trimming. Emersed leaves are quite different (serrated, lance-shaped).",
+    "images": [],
+    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "didiplis-diandra",
+    "scientificName": "Didiplis diandra",
+    "family": "Lythraceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Magnoliopsida",
+      "order": "Myrtales",
+      "family": "Lythraceae",
+      "genus": "Didiplis",
+      "species": "diandra"
+    },
+    "commonNames": {
+      "en": ["Water hedge", "Water-purslane", "Didiplis diandra"],
+      "zh": ["水松", "水松草"]
+    },
+    "pinyin": ["shui song", "shui song cao"],
+    "group": "stem",
+    "growthForm": "stem",
+    "origin": ["Southeastern United States"],
+    "difficulty": 3,
+    "difficultyLabel": "medium",
+    "envelope": {
+      "light":        { "min": 50, "opt": 85, "max": 130, "unit": "µmol/m²/s" },
+      "co2":          { "min": 15, "opt": 25, "max": 35, "unit": "ppm" },
+      "temperatureC": { "min": 18, "opt": 24, "max": 28 },
+      "pH":           { "min": 5.5, "opt": 6.5, "max": 7.5 },
+      "gh":           { "min": 2, "opt": 5, "max": 12 },
+      "kh":           { "min": 0, "opt": 3, "max": 8 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "medium", "phosphorusDemand": "medium", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "medium", "traceDemand": "medium" },
+      "rootFeeder": true,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "fast",
+      "maxHeightCm": 35,
+      "maxSpreadCm": 5,
+      "internodeCm": 1.0,
+      "propagation": ["topping", "side-shoots"]
+    },
+    "placement": ["midground", "background"],
+    "colorRange": ["green", "red-high-light"],
+    "colorHex": "#5a9a45",
+    "sim": {
+      "k_photosynthesis": 0.9,
+      "k_light": 65,
+      "k_co2": 20,
+      "preferred_temp_c": 24,
+      "temp_tolerance_c": 3.5
+    },
+    "notes": "Fine pine-needle-like whorls on thin stems; reddish tips in strong light. Fast but fragile - loses lower leaves without steady CO2 and nutrients. Sometimes classed as Rotala diandra (Lythraceae); zh 水松 is a trade name that also denotes a conifer.",
+    "images": [],
+    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "nymphaea-lotus",
+    "scientificName": "Nymphaea lotus",
+    "family": "Nymphaeaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Magnoliopsida",
+      "order": "Nymphaeales",
+      "family": "Nymphaeaceae",
+      "genus": "Nymphaea",
+      "species": "lotus"
+    },
+    "commonNames": {
+      "en": ["Tiger lotus", "Egyptian lotus", "Nymphaea lotus"],
+      "zh": ["虎纹睡莲", "红睡莲"]
+    },
+    "pinyin": ["hu wen shui lian", "hong shui lian"],
+    "group": "rhizome",
+    "growthForm": "rhizome",
+    "origin": ["Tropical Africa, Egypt, Southeast Asia"],
+    "difficulty": 2,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 40, "opt": 80, "max": 130, "unit": "µmol/m²/s" },
+      "co2":          { "min": 5, "opt": 15, "max": 30, "unit": "ppm" },
+      "temperatureC": { "min": 22, "opt": 26, "max": 30 },
+      "pH":           { "min": 5.5, "opt": 6.8, "max": 7.8 },
+      "gh":           { "min": 2, "opt": 6, "max": 16 },
+      "kh":           { "min": 1, "opt": 4, "max": 12 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "medium", "phosphorusDemand": "medium", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "medium", "traceDemand": "medium" },
+      "rootFeeder": true,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "fast",
+      "maxHeightCm": 40,
+      "maxSpreadCm": 40,
+      "internodeCm": null,
+      "propagation": ["adventitious-plantlets", "seed", "rhizome-division"]
+    },
+    "placement": ["background", "floating"],
+    "colorRange": ["green", "red-brown-tiger"],
+    "colorHex": "#8a3b3b",
+    "sim": {
+      "k_photosynthesis": 0.8,
+      "k_light": 60,
+      "k_co2": 15,
+      "preferred_temp_c": 26,
+      "temp_tolerance_c": 3.5
+    },
+    "notes": "Bulbous tuber with large submerged leaves (red/maroon with tiger-stripe mottling in the 'Red' form); sends floating leaves and flowers if allowed. Keep submerged by trimming floating leaves. Large - suited to 60 cm+ tanks as a focal point.",
+    "images": [],
+    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "echinodorus-red-diamond",
+    "scientificName": "Echinodorus 'Red Diamond'",
+    "family": "Alismataceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Liliopsida",
+      "order": "Alismatales",
+      "family": "Alismataceae",
+      "genus": "Echinodorus",
+      "species": "sp.",
+      "cultivar": "Red Diamond"
+    },
+    "commonNames": {
+      "en": ["Echinodorus 'Red Diamond'", "Red Diamond sword"],
+      "zh": ["红钻石皇冠草", "红钻皇冠草"]
+    },
+    "pinyin": ["hong zuan shi huang guan cao", "hong zuan huang guan cao"],
+    "group": "rosette",
+    "growthForm": "rosette",
+    "origin": ["Cultivar (hybrid)"],
+    "difficulty": 2,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 40, "opt": 70, "max": 110, "unit": "µmol/m²/s" },
+      "co2":          { "min": 10, "opt": 20, "max": 30, "unit": "ppm" },
+      "temperatureC": { "min": 20, "opt": 24, "max": 28 },
+      "pH":           { "min": 6.0, "opt": 6.8, "max": 7.5 },
+      "gh":           { "min": 2, "opt": 6, "max": 14 },
+      "kh":           { "min": 1, "opt": 3, "max": 10 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "high", "phosphorusDemand": "medium", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "high", "traceDemand": "medium" },
+      "rootFeeder": true,
+      "waterColumnFeeder": false
+    },
+    "growth": {
+      "rate": "medium",
+      "maxHeightCm": 40,
+      "maxSpreadCm": 30,
+      "internodeCm": null,
+      "propagation": ["adventitious-plantlets"]
+    },
+    "placement": ["background", "midground"],
+    "colorRange": ["red-brown", "green-low-light"],
+    "colorHex": "#7a2f2f",
+    "sim": {
+      "k_photosynthesis": 0.65,
+      "k_light": 55,
+      "k_co2": 18,
+      "preferred_temp_c": 24,
+      "temp_tolerance_c": 3.5
+    },
+    "notes": "Hybrid sword with large, broad leaves flushed deep red under good light (greener in dim, nutrient-rich water). Heavy root feeder - use root tabs. Originator and parentage are not documented in the sources used here; values follow other red-leaved Echinodorus hybrids (see echinodorus-red-flame).",
+    "images": [],
+    "citations": ["lehtonen-2008-echinodorus-revision", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "vallisneria-spiralis",
+    "scientificName": "Vallisneria spiralis",
+    "family": "Hydrocharitaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Liliopsida",
+      "order": "Alismatales",
+      "family": "Hydrocharitaceae",
+      "genus": "Vallisneria",
+      "species": "spiralis"
+    },
+    "commonNames": {
+      "en": ["Vallisneria", "Eelgrass", "Tape grass"],
+      "zh": ["螺旋苦草", "直叶苦草"]
+    },
+    "pinyin": ["luo xuan ku cao", "zhi ye ku cao"],
+    "group": "rosette",
+    "growthForm": "rosette",
+    "origin": ["Southern Europe, Asia, Africa"],
+    "difficulty": 1,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 25, "opt": 55, "max": 100, "unit": "µmol/m²/s" },
+      "co2":          { "min": 0, "opt": 10, "max": 30, "unit": "ppm" },
+      "temperatureC": { "min": 15, "opt": 24, "max": 30 },
+      "pH":           { "min": 6.0, "opt": 7.2, "max": 8.5 },
+      "gh":           { "min": 4, "opt": 10, "max": 20 },
+      "kh":           { "min": 3, "opt": 6, "max": 15 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "medium", "phosphorusDemand": "medium", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "medium", "traceDemand": "medium" },
+      "rootFeeder": true,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "fast",
+      "maxHeightCm": 60,
+      "maxSpreadCm": 30,
+      "internodeCm": null,
+      "propagation": ["runners"]
+    },
+    "placement": ["background"],
+    "colorRange": ["green"],
+    "colorHex": "#4f9a3a",
+    "sim": {
+      "k_photosynthesis": 0.8,
+      "k_light": 40,
+      "k_co2": 10,
+      "preferred_temp_c": 24,
+      "temp_tolerance_c": 5.0
+    },
+    "notes": "Tall ribbon leaves for the back or sides of a tank; spreads quickly by runners. Prefers harder, alkaline water; may melt in very soft acidic tanks. Taxonomy is complex (V. spiralis / V. americana / V. natans are often confused in trade).",
+    "images": [],
+    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "cryptocoryne-beckettii",
+    "scientificName": "Cryptocoryne beckettii",
+    "family": "Araceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Liliopsida",
+      "order": "Alismatales",
+      "family": "Araceae",
+      "genus": "Cryptocoryne",
+      "species": "beckettii"
+    },
+    "commonNames": {
+      "en": ["Beckett's cryptocoryne", "Cryptocoryne beckettii"],
+      "zh": ["贝克特椒草", "贝氏椒草"]
+    },
+    "pinyin": ["bei ke te jiao cao", "bei shi jiao cao"],
+    "group": "rosette",
+    "growthForm": "rosette",
+    "origin": ["Sri Lanka"],
+    "difficulty": 1,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 20, "opt": 40, "max": 90, "unit": "µmol/m²/s" },
+      "co2":          { "min": 0, "opt": 10, "max": 25, "unit": "ppm" },
+      "temperatureC": { "min": 22, "opt": 25, "max": 28 },
+      "pH":           { "min": 6.0, "opt": 6.8, "max": 7.8 },
+      "gh":           { "min": 2, "opt": 8, "max": 16 },
+      "kh":           { "min": 1, "opt": 4, "max": 10 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "medium", "phosphorusDemand": "low", "potassiumDemand": "low" },
+      "micros": { "ironDemand": "medium", "traceDemand": "low" },
+      "rootFeeder": true,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "medium",
+      "maxHeightCm": 15,
+      "maxSpreadCm": 15,
+      "internodeCm": null,
+      "propagation": ["runners"]
+    },
+    "placement": ["foreground", "midground"],
+    "colorRange": ["olive-green", "brown"],
+    "colorHex": "#6e6a3a",
+    "sim": {
+      "k_photosynthesis": 0.5,
+      "k_light": 35,
+      "k_co2": 12,
+      "preferred_temp_c": 25,
+      "temp_tolerance_c": 3.5
+    },
+    "notes": "Easy, compact crypt with olive-brown crinkled leaves; adapts to low light and low CO2 but melts after being moved. Often confused with C. wendtii and C. undulata.",
+    "images": [],
+    "citations": ["jacobsen-1980-cryptocoryne-srilanka", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "echinodorus-bleheri",
+    "scientificName": "Echinodorus bleheri",
+    "family": "Alismataceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Liliopsida",
+      "order": "Alismatales",
+      "family": "Alismataceae",
+      "genus": "Echinodorus",
+      "species": "bleheri"
+    },
+    "commonNames": {
+      "en": ["Amazon sword", "Broad-leaved Amazon sword", "Echinodorus bleheri"],
+      "zh": ["亚马逊皇冠草", "大皇冠草"]
+    },
+    "pinyin": ["ya ma xun huang guan cao", "da huang guan cao"],
+    "group": "rosette",
+    "growthForm": "rosette",
+    "origin": ["Brazil"],
+    "difficulty": 1,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 40, "opt": 70, "max": 110, "unit": "µmol/m²/s" },
+      "co2":          { "min": 5, "opt": 15, "max": 30, "unit": "ppm" },
+      "temperatureC": { "min": 20, "opt": 24, "max": 28 },
+      "pH":           { "min": 6.0, "opt": 6.8, "max": 7.8 },
+      "gh":           { "min": 3, "opt": 8, "max": 16 },
+      "kh":           { "min": 2, "opt": 5, "max": 12 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "high", "phosphorusDemand": "medium", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "high", "traceDemand": "medium" },
+      "rootFeeder": true,
+      "waterColumnFeeder": false
+    },
+    "growth": {
+      "rate": "fast",
+      "maxHeightCm": 50,
+      "maxSpreadCm": 40,
+      "internodeCm": null,
+      "propagation": ["adventitious-plantlets"]
+    },
+    "placement": ["background"],
+    "colorRange": ["green"],
+    "colorHex": "#3f8a35",
+    "sim": {
+      "k_photosynthesis": 0.75,
+      "k_light": 55,
+      "k_co2": 15,
+      "preferred_temp_c": 24,
+      "temp_tolerance_c": 3.5
+    },
+    "notes": "The classic Amazon sword: large, bright green leaves, vigorous root feeder that needs substrate fertiliser. Grows large - back of tanks 60 cm+. Plantlets form on emersed flower stalks.",
+    "images": [],
+    "citations": ["lehtonen-2008-echinodorus-revision", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "alternanthera-reineckii",
+    "scientificName": "Alternanthera reineckii",
+    "family": "Amaranthaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Magnoliopsida",
+      "order": "Caryophyllales",
+      "family": "Amaranthaceae",
+      "genus": "Alternanthera",
+      "species": "reineckii"
+    },
+    "commonNames": {
+      "en": ["Scarlet temple", "Red temple plant", "Alternanthera reineckii"],
+      "zh": ["红千年", "红莲子草"]
+    },
+    "pinyin": ["hong qian nian", "hong lian zi cao"],
+    "group": "stem",
+    "growthForm": "stem",
+    "origin": ["South America (Paraguay, Brazil)"],
+    "difficulty": 2,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 50, "opt": 85, "max": 130, "unit": "µmol/m²/s" },
+      "co2":          { "min": 10, "opt": 20, "max": 35, "unit": "ppm" },
+      "temperatureC": { "min": 18, "opt": 24, "max": 28 },
+      "pH":           { "min": 5.5, "opt": 6.5, "max": 7.5 },
+      "gh":           { "min": 2, "opt": 6, "max": 14 },
+      "kh":           { "min": 1, "opt": 3, "max": 10 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "medium", "phosphorusDemand": "medium", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "high", "traceDemand": "medium" },
+      "rootFeeder": true,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "medium",
+      "maxHeightCm": 35,
+      "maxSpreadCm": 8,
+      "internodeCm": 2.5,
+      "propagation": ["topping", "side-shoots"]
+    },
+    "placement": ["midground", "background"],
+    "colorRange": ["red-violet", "olive-low-light"],
+    "colorHex": "#8a3050",
+    "sim": {
+      "k_photosynthesis": 0.8,
+      "k_light": 70,
+      "k_co2": 20,
+      "preferred_temp_c": 24,
+      "temp_tolerance_c": 3.5
+    },
+    "notes": "Hardy red-violet stem plant; colour intensifies with strong light and iron. Green-olive in shade. Parent species of the 'Mini' cultivar.",
+    "images": [],
+    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "hygrophila-difformis",
+    "scientificName": "Hygrophila difformis",
+    "family": "Acanthaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Magnoliopsida",
+      "order": "Lamiales",
+      "family": "Acanthaceae",
+      "genus": "Hygrophila",
+      "species": "difformis"
+    },
+    "commonNames": {
+      "en": ["Water wisteria", "Wisteria", "Hygrophila difformis"],
+      "zh": ["水罗兰", "水生罗兰"]
+    },
+    "pinyin": ["shui luo lan", "shui sheng luo lan"],
+    "group": "stem",
+    "growthForm": "stem",
+    "origin": ["India, Southeast Asia"],
+    "difficulty": 1,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 30, "opt": 60, "max": 110, "unit": "µmol/m²/s" },
+      "co2":          { "min": 5, "opt": 15, "max": 30, "unit": "ppm" },
+      "temperatureC": { "min": 20, "opt": 25, "max": 30 },
+      "pH":           { "min": 5.5, "opt": 6.8, "max": 7.8 },
+      "gh":           { "min": 2, "opt": 8, "max": 16 },
+      "kh":           { "min": 1, "opt": 4, "max": 12 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "medium", "phosphorusDemand": "medium", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "medium", "traceDemand": "medium" },
+      "rootFeeder": true,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "fast",
+      "maxHeightCm": 40,
+      "maxSpreadCm": 20,
+      "internodeCm": 4.0,
+      "propagation": ["topping", "side-shoots"]
+    },
+    "placement": ["background"],
+    "colorRange": ["light-green"],
+    "colorHex": "#7cc05a",
+    "sim": {
+      "k_photosynthesis": 1.0,
+      "k_light": 45,
+      "k_co2": 12,
+      "preferred_temp_c": 25,
+      "temp_tolerance_c": 4.0
+    },
+    "notes": "Fast, easy stem with deeply lobed, maple-like submerged leaves (emersed leaves are entire). Needs regular trimming and nitrogen to avoid leaf melt.",
+    "images": [],
+    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "rotala-indica",
+    "scientificName": "Rotala indica",
+    "family": "Lythraceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Magnoliopsida",
+      "order": "Myrtales",
+      "family": "Lythraceae",
+      "genus": "Rotala",
+      "species": "indica"
+    },
+    "commonNames": {
+      "en": ["Indian toothcup", "Rotala indica"],
+      "zh": ["印度节节菜", "节节菜"]
+    },
+    "pinyin": ["yin du jie jie cai", "jie jie cai"],
+    "group": "stem",
+    "growthForm": "stem",
+    "origin": ["Asia"],
+    "difficulty": 2,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 40, "opt": 70, "max": 120, "unit": "µmol/m²/s" },
+      "co2":          { "min": 10, "opt": 25, "max": 35, "unit": "ppm" },
+      "temperatureC": { "min": 18, "opt": 25, "max": 30 },
+      "pH":           { "min": 5.5, "opt": 6.5, "max": 7.5 },
+      "gh":           { "min": 2, "opt": 6, "max": 14 },
+      "kh":           { "min": 0, "opt": 3, "max": 8 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "medium", "phosphorusDemand": "medium", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "high", "traceDemand": "medium" },
+      "rootFeeder": true,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "fast",
+      "maxHeightCm": 30,
+      "maxSpreadCm": 5,
+      "internodeCm": 1.2,
+      "propagation": ["topping", "side-shoots"]
+    },
+    "placement": ["background", "midground"],
+    "colorRange": ["green", "pink-high-light"],
+    "colorHex": "#8ac060",
+    "sim": {
+      "k_photosynthesis": 1.0,
+      "k_light": 55,
+      "k_co2": 18,
+      "preferred_temp_c": 25,
+      "temp_tolerance_c": 3.5
+    },
+    "notes": "Distinct from R. rotundifolia though trade names overlap (see rotala-rotundifolia). Fast, easy, pink tips under strong light. Genus-level data from Graham & Wain and hobbyist consensus.",
+    "images": [],
+    "citations": ["graham-wain-2005-rotala", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "heteranthera-zosterifolia",
+    "scientificName": "Heteranthera zosterifolia",
+    "family": "Pontederiaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Liliopsida",
+      "order": "Commelinales",
+      "family": "Pontederiaceae",
+      "genus": "Heteranthera",
+      "species": "zosterifolia"
+    },
+    "commonNames": {
+      "en": ["Stargrass", "Heteranthera zosterifolia"],
+      "zh": ["水星草", "星草"]
+    },
+    "pinyin": ["shui xing cao", "xing cao"],
+    "group": "stem",
+    "growthForm": "stem",
+    "origin": ["South America (Bolivia, Brazil)"],
+    "difficulty": 2,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 40, "opt": 70, "max": 110, "unit": "µmol/m²/s" },
+      "co2":          { "min": 10, "opt": 20, "max": 30, "unit": "ppm" },
+      "temperatureC": { "min": 20, "opt": 25, "max": 30 },
+      "pH":           { "min": 6.0, "opt": 6.8, "max": 7.5 },
+      "gh":           { "min": 2, "opt": 6, "max": 14 },
+      "kh":           { "min": 1, "opt": 3, "max": 10 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "medium", "phosphorusDemand": "medium", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "medium", "traceDemand": "medium" },
+      "rootFeeder": true,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "fast",
+      "maxHeightCm": 50,
+      "maxSpreadCm": 10,
+      "internodeCm": 3.0,
+      "propagation": ["topping", "side-shoots"]
+    },
+    "placement": ["background"],
+    "colorRange": ["light-green"],
+    "colorHex": "#6fb04a",
+    "sim": {
+      "k_photosynthesis": 1.0,
+      "k_light": 55,
+      "k_co2": 15,
+      "preferred_temp_c": 25,
+      "temp_tolerance_c": 3.5
+    },
+    "notes": "Bushy light-green stem with narrow translucent leaves; fast and easy. Pale green flowers if emersed. Stems get leggy with insufficient light.",
+    "images": [],
+    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "egeria-densa",
+    "scientificName": "Egeria densa",
+    "family": "Hydrocharitaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Liliopsida",
+      "order": "Alismatales",
+      "family": "Hydrocharitaceae",
+      "genus": "Egeria",
+      "species": "densa"
+    },
+    "commonNames": {
+      "en": ["Brazilian waterweed", "Anacharis", "Egeria"],
+      "zh": ["水蕴草", "埃格草"]
+    },
+    "pinyin": ["shui yun cao", "ai ge cao"],
+    "group": "stem",
+    "growthForm": "stem",
+    "origin": ["South America"],
+    "difficulty": 1,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 25, "opt": 50, "max": 100, "unit": "µmol/m²/s" },
+      "co2":          { "min": 0, "opt": 10, "max": 30, "unit": "ppm" },
+      "temperatureC": { "min": 10, "opt": 22, "max": 28 },
+      "pH":           { "min": 6.0, "opt": 7.0, "max": 8.0 },
+      "gh":           { "min": 3, "opt": 8, "max": 18 },
+      "kh":           { "min": 2, "opt": 5, "max": 14 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "high", "phosphorusDemand": "medium", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "medium", "traceDemand": "low" },
+      "rootFeeder": false,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "fast",
+      "maxHeightCm": 100,
+      "maxSpreadCm": 10,
+      "internodeCm": 2.0,
+      "propagation": ["topping", "fragmentation"]
+    },
+    "placement": ["background"],
+    "colorRange": ["green"],
+    "colorHex": "#4a9a3a",
+    "sim": {
+      "k_photosynthesis": 1.2,
+      "k_light": 40,
+      "k_co2": 10,
+      "preferred_temp_c": 22,
+      "temp_tolerance_c": 5.0
+    },
+    "notes": "Very fast nutrient sponge; good for new tanks and goldfish. Tolerates cool water. Invasive in many regions - never release into the wild; check local regulation before purchase.",
+    "images": [],
+    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "ceratophyllum-demersum",
+    "scientificName": "Ceratophyllum demersum",
+    "family": "Ceratophyllaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Magnoliopsida",
+      "order": "Ceratophyllales",
+      "family": "Ceratophyllaceae",
+      "genus": "Ceratophyllum",
+      "species": "demersum"
+    },
+    "commonNames": {
+      "en": ["Hornwort", "Coontail"],
+      "zh": ["金鱼藻", "松藻"]
+    },
+    "pinyin": ["jin yu zao", "song zao"],
+    "group": "stem",
+    "growthForm": "stem",
+    "origin": ["Cosmopolitan"],
+    "difficulty": 1,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 20, "opt": 45, "max": 90, "unit": "µmol/m²/s" },
+      "co2":          { "min": 0, "opt": 10, "max": 25, "unit": "ppm" },
+      "temperatureC": { "min": 10, "opt": 22, "max": 28 },
+      "pH":           { "min": 6.0, "opt": 7.2, "max": 8.5 },
+      "gh":           { "min": 3, "opt": 10, "max": 20 },
+      "kh":           { "min": 2, "opt": 6, "max": 15 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "high", "phosphorusDemand": "medium", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "low", "traceDemand": "low" },
+      "rootFeeder": false,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "fast",
+      "maxHeightCm": 100,
+      "maxSpreadCm": 15,
+      "internodeCm": 2.0,
+      "propagation": ["fragmentation"]
+    },
+    "placement": ["background", "floating"],
+    "colorRange": ["dark-green"],
+    "colorHex": "#3f7a35",
+    "sim": {
+      "k_photosynthesis": 1.1,
+      "k_light": 35,
+      "k_co2": 8,
+      "preferred_temp_c": 22,
+      "temp_tolerance_c": 5.0
+    },
+    "notes": "Rootless, free-floating or loosely anchored; extremely fast water-column feeder that suppresses algae. Sheds needles in dim or very warm water.",
+    "images": [],
+    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "ceratopteris-thalictroides",
+    "scientificName": "Ceratopteris thalictroides",
+    "family": "Pteridaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Polypodiopsida",
+      "order": "Polypodiales",
+      "family": "Pteridaceae",
+      "genus": "Ceratopteris",
+      "species": "thalictroides"
+    },
+    "commonNames": {
+      "en": ["Water sprite", "Indian fern", "Oriental waterfern"],
+      "zh": ["水蕨", "水蕨草"]
+    },
+    "pinyin": ["shui jue", "shui jue cao"],
+    "group": "rosette",
+    "growthForm": "rosette",
+    "origin": ["Pantropical"],
+    "difficulty": 1,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 30, "opt": 60, "max": 110, "unit": "µmol/m²/s" },
+      "co2":          { "min": 0, "opt": 10, "max": 30, "unit": "ppm" },
+      "temperatureC": { "min": 20, "opt": 25, "max": 30 },
+      "pH":           { "min": 5.5, "opt": 6.8, "max": 8.0 },
+      "gh":           { "min": 2, "opt": 8, "max": 18 },
+      "kh":           { "min": 1, "opt": 4, "max": 12 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "high", "phosphorusDemand": "medium", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "medium", "traceDemand": "low" },
+      "rootFeeder": true,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "fast",
+      "maxHeightCm": 40,
+      "maxSpreadCm": 30,
+      "internodeCm": null,
+      "propagation": ["adventitious-plantlets"]
+    },
+    "placement": ["background", "floating"],
+    "colorRange": ["light-green"],
+    "colorHex": "#78b850",
+    "sim": {
+      "k_photosynthesis": 1.0,
+      "k_light": 45,
+      "k_co2": 10,
+      "preferred_temp_c": 25,
+      "temp_tolerance_c": 4.0
+    },
+    "notes": "Fast fern with finely divided submerged fronds; plantlets form on leaf margins. Can be planted or left floating (floating fronds are broader). Absorbs nutrients strongly - useful for new tanks.",
+    "images": [],
+    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "anubias-barteri-nana",
+    "scientificName": "Anubias barteri var. nana",
+    "family": "Araceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Liliopsida",
+      "order": "Alismatales",
+      "family": "Araceae",
+      "genus": "Anubias",
+      "species": "barteri",
+      "cultivar": "var. nana"
+    },
+    "commonNames": {
+      "en": ["Anubias nana", "Dwarf anubias"],
+      "zh": ["小榕", "矮榕"]
+    },
+    "pinyin": ["xiao rong", "ai rong"],
+    "group": "epiphyte",
+    "growthForm": "epiphyte",
+    "origin": ["Cameroon, West Africa"],
+    "difficulty": 1,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 15, "opt": 40, "max": 100, "unit": "µmol/m²/s" },
+      "co2":          { "min": 0, "opt": 10, "max": 30, "unit": "ppm" },
+      "temperatureC": { "min": 20, "opt": 25, "max": 30 },
+      "pH":           { "min": 5.5, "opt": 6.8, "max": 8.0 },
+      "gh":           { "min": 2, "opt": 8, "max": 18 },
+      "kh":           { "min": 1, "opt": 5, "max": 14 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "low", "phosphorusDemand": "low", "potassiumDemand": "low" },
+      "micros": { "ironDemand": "low", "traceDemand": "low" },
+      "rootFeeder": false,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "slow",
+      "maxHeightCm": 12,
+      "maxSpreadCm": 15,
+      "internodeCm": null,
+      "propagation": ["rhizome-division"]
+    },
+    "placement": ["attached", "midground", "foreground"],
+    "colorRange": ["dark-green"],
+    "colorHex": "#2f5d34",
+    "sim": {
+      "k_photosynthesis": 0.3,
+      "k_light": 22,
+      "k_co2": 5,
+      "preferred_temp_c": 25,
+      "temp_tolerance_c": 4.0
+    },
+    "notes": "Bomb-proof dwarf anubias for low-light tanks; rhizome must not be buried. Slow growth makes it prone to algae on leaves in high light - keep light moderate. The 'Petite' cultivar is listed separately.",
+    "images": [],
+    "citations": ["crusio-1987-anubias", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "lemna-minor",
+    "scientificName": "Lemna minor",
+    "family": "Araceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Liliopsida",
+      "order": "Alismatales",
+      "family": "Araceae",
+      "genus": "Lemna",
+      "species": "minor"
+    },
+    "commonNames": {
+      "en": ["Common duckweed", "Lesser duckweed"],
+      "zh": ["浮萍", "青萍"]
+    },
+    "pinyin": ["fu ping", "qing ping"],
+    "group": "floating",
+    "growthForm": "floating",
+    "origin": ["Cosmopolitan"],
+    "difficulty": 1,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 30, "opt": 70, "max": 150, "unit": "µmol/m²/s" },
+      "co2":          { "min": 0, "opt": 0, "max": 10, "unit": "ppm" },
+      "temperatureC": { "min": 10, "opt": 22, "max": 30 },
+      "pH":           { "min": 5.5, "opt": 7.0, "max": 8.5 },
+      "gh":           { "min": 2, "opt": 8, "max": 20 },
+      "kh":           { "min": 1, "opt": 5, "max": 15 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "high", "phosphorusDemand": "high", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "low", "traceDemand": "low" },
+      "rootFeeder": false,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "fast",
+      "maxHeightCm": 1,
+      "maxSpreadCm": 30,
+      "internodeCm": null,
+      "propagation": ["fragmentation"]
+    },
+    "placement": ["floating"],
+    "colorRange": ["bright-green"],
+    "colorHex": "#4fa83c",
+    "sim": {
+      "k_photosynthesis": 1.3,
+      "k_light": 60,
+      "k_co2": 2,
+      "preferred_temp_c": 22,
+      "temp_tolerance_c": 6.0
+    },
+    "notes": "Tiny floating plant that doubles rapidly and can shade out the whole tank; maxHeightCm is a 1 cm placeholder (frond thickness plus roots). Absorbs nitrate and phosphate aggressively; control by regular removal.",
+    "images": [],
+    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants"]
+  },
+  {
+    "id": "monosolenium-tenerum",
+    "scientificName": "Monosolenium tenerum",
+    "family": "Monosoleniaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Marchantiophyta",
+      "class": "Marchantiopsida",
+      "order": "Marchantiales",
+      "family": "Monosoleniaceae",
+      "genus": "Monosolenium",
+      "species": "tenerum"
+    },
+    "commonNames": {
+      "en": ["Pellia", "Pearl moss", "Monosolenium tenerum"],
+      "zh": ["珍珠莫斯", "珍珠苔"]
+    },
+    "pinyin": ["zhen zhu mo si", "zhen zhu tai"],
+    "group": "moss",
+    "growthForm": "moss",
+    "origin": ["Asia (India, China, Japan)"],
+    "difficulty": 2,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 15, "opt": 40, "max": 80, "unit": "µmol/m²/s" },
+      "co2":          { "min": 0, "opt": 10, "max": 25, "unit": "ppm" },
+      "temperatureC": { "min": 18, "opt": 24, "max": 28 },
+      "pH":           { "min": 6.0, "opt": 7.0, "max": 8.0 },
+      "gh":           { "min": 2, "opt": 6, "max": 14 },
+      "kh":           { "min": 1, "opt": 4, "max": 10 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "low", "phosphorusDemand": "low", "potassiumDemand": "low" },
+      "micros": { "ironDemand": "low", "traceDemand": "low" },
+      "rootFeeder": false,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "slow",
+      "maxHeightCm": 3,
+      "maxSpreadCm": 15,
+      "internodeCm": null,
+      "propagation": ["fragmentation"]
+    },
+    "placement": ["attached", "foreground"],
+    "colorRange": ["bright-green"],
+    "colorHex": "#5aa045",
+    "sim": {
+      "k_photosynthesis": 0.3,
+      "k_light": 28,
+      "k_co2": 8,
+      "preferred_temp_c": 24,
+      "temp_tolerance_c": 3.5
+    },
+    "notes": "Thalloid liverwort that forms lush cushions when attached to stone or wood; low-to-moderate light and stable conditions. Traps debris, so keep flow gentle but clean. Vendors often label it 'Pellia'.",
+    "images": [],
+    "citations": ["kasselmann-2003-aquariumplants", "svensson-2016-carpeting-plants"]
+  },
+  {
+    "id": "hydrocotyle-leucocephala",
+    "scientificName": "Hydrocotyle leucocephala",
+    "family": "Araliaceae",
+    "taxonomy": {
+      "kingdom": "Plantae",
+      "phylum": "Tracheophyta",
+      "class": "Magnoliopsida",
+      "order": "Apiales",
+      "family": "Araliaceae",
+      "genus": "Hydrocotyle",
+      "species": "leucocephala"
+    },
+    "commonNames": {
+      "en": ["Brazilian pennywort", "Hydrocotyle leucocephala"],
+      "zh": ["巴西珍珠草", "巴西天胡荽"]
+    },
+    "pinyin": ["ba xi zhen zhu cao", "ba xi tian hu sui"],
+    "group": "stem",
+    "growthForm": "stem",
+    "origin": ["South and Central America"],
+    "difficulty": 2,
+    "difficultyLabel": "easy",
+    "envelope": {
+      "light":        { "min": 40, "opt": 70, "max": 120, "unit": "µmol/m²/s" },
+      "co2":          { "min": 5, "opt": 15, "max": 30, "unit": "ppm" },
+      "temperatureC": { "min": 18, "opt": 24, "max": 28 },
+      "pH":           { "min": 5.5, "opt": 6.8, "max": 7.5 },
+      "gh":           { "min": 2, "opt": 6, "max": 14 },
+      "kh":           { "min": 1, "opt": 3, "max": 10 }
+    },
+    "nutrients": {
+      "macros": { "nitrogenDemand": "medium", "phosphorusDemand": "medium", "potassiumDemand": "medium" },
+      "micros": { "ironDemand": "medium", "traceDemand": "low" },
+      "rootFeeder": true,
+      "waterColumnFeeder": true
+    },
+    "growth": {
+      "rate": "medium",
+      "maxHeightCm": 20,
+      "maxSpreadCm": 25,
+      "internodeCm": null,
+      "propagation": ["runners", "topping"]
+    },
+    "placement": ["midground", "foreground"],
+    "colorRange": ["bright-green"],
+    "colorHex": "#5cb050",
+    "sim": {
+      "k_photosynthesis": 0.8,
+      "k_light": 55,
+      "k_co2": 14,
+      "preferred_temp_c": 24,
+      "temp_tolerance_c": 3.5
+    },
+    "notes": "Creeping pennywort with rounded, scalloped leaves on long internodes; can be pinned as a loose mat or grown as a bushy mid-ground plant. Spreads fast under high light.",
+    "images": [],
+    "citations": ["cook-1996-aquatic-plant-book", "kasselmann-2003-aquariumplants"]
+  }
+]

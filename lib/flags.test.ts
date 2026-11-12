@@ -1,0 +1,29 @@
+import { afterEach, describe, expect, it, vi } from "vitest"
+import { parseFlag } from "./flags"
+
+describe("parseFlag", () => {
+  it("is on only for '1' and 'true'", () => {
+    expect(parseFlag("1")).toBe(true)
+    expect(parseFlag("true")).toBe(true)
+    for (const v of [undefined, "", "0", "false", "TRUE", "yes", " 1"]) expect(parseFlag(v)).toBe(false)
+  })
+})
+
+describe("flags.growthTimelapse", () => {
+  afterEach(() => {
+    vi.unstubAllEnvs()
+    vi.resetModules()
+  })
+
+  it("defaults to off", async () => {
+    vi.stubEnv("NEXT_PUBLIC_FF_GROWTH_TIMELAPSE", undefined as unknown as string)
+    const { flags } = await import("./flags")
+    expect(flags.growthTimelapse).toBe(false)
+  })
+
+  it.each(["1", "true"])("is on for %s", async (v) => {
+    vi.stubEnv("NEXT_PUBLIC_FF_GROWTH_TIMELAPSE", v)
+    const { flags } = await import("./flags")
+    expect(flags.growthTimelapse).toBe(true)
+  })
+})

@@ -118,4 +118,3 @@ export interface InstantiatedTemplate {
  *       stone footprint (except onHardscape epiphytes); all positions clamped
  *       1 cm inside the glass; total placements ≤ 60 (sim budget).
  */
-export type _Ensure = TankDims

@@ -1,13 +1,16 @@
 "use client"
 
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react"
-import { useSearchParams } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import Link from "next/link"
 import dynamic from "next/dynamic"
 import { flags } from "@/lib/flags"
 import plantsJson from "@/lib/sim/vendor/plants.json"
 import vendorInfo from "@/lib/sim/vendor/VENDOR.json"
-import { buildInput, type BotanyRecord } from "@/lib/sim/buildInput"
+import { buildInput, type BotanyRecord, type BuildResult } from "@/lib/sim/buildInput"
+import { defaultHardscape } from "@/lib/sim/toFrontal"
+import { parseGuidesParam, parseTemplateParam, type GuideMode, type InstantiatedTemplate } from "@/lib/templates"
+import { buildTemplateInput } from "@/lib/templates/buildTemplateInput"
 import { useGrowthSim } from "@/lib/sim/useGrowthSim"
 import type { PlantFrame } from "@/lib/sim/vendor/sim-core/contract"
 import { eventsByDay, fmtG, lowLightFraction, speciesMeta, speciesSeries, totalSeries, type SpeciesMeta } from "./derive"
@@ -17,6 +20,7 @@ import TotalChart, { eventColor } from "./TotalChart"
 import LightMap from "./LightMap"
 import SpeciesMultiples from "./SpeciesMultiples"
 import ControlBar from "./ControlBar"
+import { PICKER_CSS, TemplateBar, TemplateNote } from "./TemplatePicker"
 
 const PLANTS = plantsJson as unknown as BotanyRecord[]
 const BY_ID = new Map(PLANTS.map((p) => [p.id, p]))
@@ -31,6 +35,11 @@ const PLAY_MS_PER_DAY = 110
 /** Stylized 3D tank — only referenced (and its chunk only requested) when the flag is on. */
 const FrontalHero = flags.stylizedTank ? dynamic(() => import("./FrontalHero"), { ssr: false }) : null
 
+/** "rotala-rotundifolia#2" (legacy) or "rotala-rotundifolia-2" (templates) → "2" */
+function instanceNo(id: string): string | undefined {
+  return id.includes("#") ? id.split("#")[1] : id.slice(id.lastIndexOf("-") + 1)
+}
+
 function clampDay(raw: string | null, days: number): number {
   const n = raw === null ? NaN : Math.round(Number(raw))
   return Number.isFinite(n) ? Math.min(days, Math.max(0, n)) : 0
@@ -38,12 +47,19 @@ function clampDay(raw: string | null, days: number): number {
 
 export default function TimelapseView() {
   const sp = useSearchParams()
+  const router = useRouter()
   const baseQuery = useMemo(() => {
     const p = new URLSearchParams(sp.toString())
     p.delete("day")
+    // guides are view-only — changing them must not re-run the simulation
+    if (flags.styleTemplates) p.delete("guides")
     return p.toString()
   }, [sp])
-  const built = useMemo(() => buildInput(new URLSearchParams(baseQuery), PLANTS), [baseQuery])
+  const template = flags.styleTemplates ? parseTemplateParam(new URLSearchParams(baseQuery).get("tpl")) : undefined
+  const built: BuildResult & { scene?: InstantiatedTemplate } = useMemo(
+    () => (template ? buildTemplateInput(template, new URLSearchParams(baseQuery), PLANTS) : buildInput(new URLSearchParams(baseQuery), PLANTS)),
+    [baseQuery, template],
+  )
   const { input } = built
   const days = input.days
   const lowLightPar = input.lowLightPar ?? 30
@@ -68,6 +84,41 @@ export default function TimelapseView() {
     return Math.ceil(Math.max(m, lowLightPar * 2) / 10) * 10
   }, [frames, lowLightPar])
   const computing = sim.status === "running"
+
+  // style templates (flag): ?tpl= picks the template, ?guides= the overlay
+  const [guides, setGuides] = useState<GuideMode>(() => (flags.styleTemplates ? parseGuidesParam(sp.get("guides")) : "none"))
+  const pickTemplate = useCallback(
+    (id: string | null) => {
+      const url = new URL(window.location.href)
+      if (id) url.searchParams.set("tpl", id)
+      else url.searchParams.delete("tpl")
+      router.replace(`${url.pathname}?${url.searchParams.toString()}`, { scroll: false })
+    },
+    [router],
+  )
+  const changeGuides = useCallback((g: GuideMode) => {
+    setGuides(g)
+    const url = new URL(window.location.href)
+    if (g === "none") url.searchParams.delete("guides")
+    else url.searchParams.set("guides", g)
+    window.history.replaceState(window.history.state, "", url)
+  }, [])
+  const tankScene = useMemo(
+    () =>
+      flags.styleTemplates
+        ? {
+            hardscape: built.scene ? built.scene.hardscape : defaultHardscape(input.tank),
+            bed: built.scene?.bed,
+            focalPoint: built.scene?.focalPoint,
+            guides,
+          }
+        : undefined,
+    [built, input.tank, guides],
+  )
+  const tplBar = flags.styleTemplates ? (
+    <TemplateBar selected={template} onPick={pickTemplate} guides={guides} onGuides={changeGuides} showGuides={!!FrontalHero} />
+  ) : null
+  const tplNote = flags.styleTemplates ? <TemplateNote selected={template} onPick={pickTemplate} /> : null
 
   // playback
   const dayRef = useRef(day)
@@ -153,11 +204,14 @@ export default function TimelapseView() {
   return (
     <main className="mx-auto max-w-[1080px] px-4 pb-10 sm:px-6">
       {FrontalHero && <div className="pt-4 [&>nav]:mb-0">{breadcrumb}</div>}
+      {flags.styleTemplates && <style dangerouslySetInnerHTML={{ __html: PICKER_CSS }} />}
+      {FrontalHero && tplBar && <div className="pt-2">{tplBar}</div>}
       {FrontalHero && (
         <StylizedTankHero tank={tank} day={day}>
-          {(onReady) => <FrontalHero input={input} frame={frame} byId={BY_ID} onReady={onReady} />}
+          {(onReady) => <FrontalHero input={input} frame={frame} byId={BY_ID} onReady={onReady} scene={tankScene} />}
         </StylizedTankHero>
       )}
+      {FrontalHero && tplNote}
 
       {/* hero */}
       <section className={FrontalHero ? "pb-14 pt-10 sm:pb-20 sm:pt-16" : "pb-14 pt-14 sm:pb-20 sm:pt-24"}>
@@ -205,6 +259,9 @@ export default function TimelapseView() {
           </p>
         )}
       </section>
+
+      {!FrontalHero && tplBar && <div className="pb-2">{tplBar}</div>}
+      {!FrontalHero && tplNote && <div className="pb-14">{tplNote}</div>}
 
       {sim.status === "error" && (
         <div role="alert" className="mb-10 rounded-[28px] p-6" style={{ background: c("coralSoft") }}>
@@ -288,7 +345,7 @@ export default function TimelapseView() {
                   color: on ? c("bg") : c("text"),
                 }}
               >
-                {s?.zh ?? p.speciesId} <span style={{ opacity: 0.6 }}>#{p.id.split("#")[1]}</span>
+                {s?.zh ?? p.speciesId} <span style={{ opacity: 0.6 }}>#{instanceNo(p.id)}</span>
               </button>
             )
           })}

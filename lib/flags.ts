@@ -11,4 +11,6 @@ export const flags = {
   growthTimelapse: parseFlag(process.env.NEXT_PUBLIC_FF_GROWTH_TIMELAPSE),
   /** stylized front-view 3D tank (@aquascape-studio/render FrontalTank) on the time-lapse */
   stylizedTank: parseFlag(process.env.NEXT_PUBLIC_FF_STYLIZED_TANK),
+  /** /studio/sim style template picker (?tpl=) + composition guides */
+  styleTemplates: parseFlag(process.env.NEXT_PUBLIC_FF_STYLE_TEMPLATES),
 } as const

@@ -25,6 +25,8 @@ export const TOKENS = {
   coralSoft: "rgba(255,127,80,0.16)",
   glass: "rgba(255,255,255,0.82)",
   glassCard: "rgba(255,255,255,0.8)",
+  /** frosted control bar (style-template picker) — use with blur(20px) saturate(180%) */
+  glassBar: "rgba(255,255,255,0.78)",
   /** sequential light → dark green ramp (heatmap, biomass fills) */
   green0: "#F3FAF4",
   green1: "#CDEBD5",

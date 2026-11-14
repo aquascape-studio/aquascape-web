@@ -1,21 +1,25 @@
 import { Suspense } from "react"
-import { Inter, Noto_Sans_SC } from "next/font/google"
+// Self-hosted (bundled from npm) — no Google Fonts fetch at build time.
+import "@fontsource-variable/inter"
 import TimelapseView from "./timelapse/LazyTimelapseView"
 import { TOKENS, tokenVars } from "./timelapse/tokens"
 
-const inter = Inter({ subsets: ["latin"], display: "swap", variable: "--tl-font-latin" })
-const notoSC = Noto_Sans_SC({
-  weight: ["400", "500", "700"],
-  display: "swap",
-  preload: false,
-  variable: "--tl-font-cjk",
-})
+/**
+ * Font variables (same names as the former next/font/google setup): Inter is
+ * self-hosted via @fontsource-variable/inter; Chinese uses the system CJK stack.
+ */
+const FONT_VARS = `
+.tl-root {
+  --tl-font-latin: "Inter Variable", "Inter";
+  --tl-font-cjk: "PingFang SC", "Hiragino Sans", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+}
+`
 
 /**
  * Route-scoped overrides: while the time-lapse is mounted, the global (dark)
  * NavBar and body take the light "超白玻璃" treatment. Removed on unmount.
  */
-const SCOPED_CSS = `
+const SCOPED_CSS = `${FONT_VARS}
 body { background: ${TOKENS.bg} !important; color: ${TOKENS.text} !important; }
 body > nav {
   position: sticky; top: 0; z-index: 40; height: 52px; padding-top: 0 !important; padding-bottom: 0 !important;
@@ -72,7 +76,7 @@ export default function GrowthTimelapse() {
     <>
       <style dangerouslySetInnerHTML={{ __html: SCOPED_CSS }} />
       <div
-        className={`${inter.variable} ${notoSC.variable} tl-root min-h-screen`}
+        className="tl-root min-h-screen"
         style={{ ...tokenVars, backgroundColor: "var(--tl-bg)", color: "var(--tl-text)" }}
       >
         <Suspense

@@ -1,6 +1,10 @@
 /**
- * Style templates (风格模板) — implementation of contract v1.0.0
+ * Style templates (风格模板) — implementation of contract v1.0.1
  * (lib/templates/contract.ts, orchestrator-owned).
+ *
+ * 1.0.1: iwagumi composition; group angle applied in cm space; group counts
+ * are references for a 60 × 30 cm footprint, scaled by tank area then capped
+ * at 60 total; suteishi default buriedFrac 0.35.
  *
  * Layout rules per style (sources listed in contract.ts):
  *  - Iwagumi 三尊石: Oyaishi on the left third, clearly the largest and
@@ -16,7 +20,7 @@
  *    and fine / broad leaves, terraced from low front to tall back,
  *    ≈1 species per 10 cm of a 60 cm tank.
  */
-import type { HardscapeVisual } from "@aquascape-studio/render"
+import type { HardscapeVisual, StoneRole } from "@aquascape-studio/render"
 import type { PlantPlacement, TankDims } from "../sim/vendor/sim-core/contract"
 import type { InstantiatedTemplate, ScapeTemplate, TemplateHardscape, TemplatePlantGroup } from "./contract"
 
@@ -28,14 +32,21 @@ export const MAX_PLACEMENTS = 60
 export const GLASS_MARGIN_CM = 1
 /** extra clearance around a stone footprint for planted (non-epiphyte) placements */
 export const STONE_CLEARANCE_CM = 0.5
-/** template portions are tuned for a 60×30 cm footprint and scaled by area */
-const REF_AREA_CM2 = 60 * 30
+/** group counts are references for a 60 × 30 cm footprint (contract 1.0.1) */
+export const REF_AREA_CM2 = 60 * 30
+/** render 1.2.0 default buriedFrac: suteishi 0.35, every other piece 0.15 */
+export function defaultBuriedFrac(role: StoneRole | undefined): number {
+  return role === "suteishi" ? 0.35 : 0.15
+}
+
+/** lean of the Dutch back streets, radians in cm space (≈ 32°) */
+const STREET_ANGLE = 0.55
 
 export const TEMPLATES: readonly ScapeTemplate[] = [
   {
     id: "iwagumi-sanzon",
     style: "iwagumi",
-    composition: "triangle",
+    composition: "iwagumi",
     nameZh: "三尊石组",
     nameEn: "Iwagumi · Sanzon",
     blurbZh: "主石立于左三分线，副石与添石依次变小，前景铺满草坪。",
@@ -49,7 +60,7 @@ export const TEMPLATES: readonly ScapeTemplate[] = [
       { id: "oyaishi", kind: "stone", role: "oyaishi", u: 0.34, v: 0.42, wFrac: 0.2, hFrac: 0.5, dFrac: 0.34, rotationY: 0.28, seed: 101, buriedFrac: 0.2 },
       { id: "fukuishi", kind: "stone", role: "fukuishi", u: 0.49, v: 0.5, wFrac: 0.13, hFrac: 0.3, dFrac: 0.26, rotationY: -0.35, seed: 211, buriedFrac: 0.22 },
       { id: "soeishi", kind: "stone", role: "soeishi", u: 0.22, v: 0.56, wFrac: 0.09, hFrac: 0.17, dFrac: 0.2, rotationY: 0.6, seed: 307, buriedFrac: 0.25 },
-      { id: "suteishi-1", kind: "stone", role: "suteishi", u: 0.7, v: 0.5, wFrac: 0.07, hFrac: 0.1, dFrac: 0.16, rotationY: -0.2, seed: 401, buriedFrac: 0.4 },
+      { id: "suteishi-1", kind: "stone", role: "suteishi", u: 0.7, v: 0.5, wFrac: 0.07, hFrac: 0.1, dFrac: 0.16, rotationY: -0.2, seed: 401 }, // default buriedFrac 0.35
       { id: "suteishi-2", kind: "stone", role: "suteishi", u: 0.8, v: 0.66, wFrac: 0.05, hFrac: 0.07, dFrac: 0.12, rotationY: 0.9, seed: 503, buriedFrac: 0.45 },
     ],
     groups: [
@@ -148,19 +159,24 @@ export const TEMPLATES: readonly ScapeTemplate[] = [
     bed: { front: 0.05, back: 0.25 },
     hardscape: [],
     groups: [
-      // back row, left → right: green fine / coral-red / green broad / red / green needle / dark red
-      { speciesId: "heteranthera-zosterifolia", u: 0.09, v: 0.3, ru: 0.03, rv: 0.22, angle: 0.35, count: 4, portions: 2 },
-      { speciesId: "ammannia-gracilis", u: 0.22, v: 0.32, ru: 0.035, rv: 0.24, angle: 0.35, count: 5, portions: 2 },
-      { speciesId: "hygrophila-corymbosa", u: 0.36, v: 0.24, ru: 0.035, rv: 0.2, angle: 0.3, count: 4, portions: 2 },
-      { speciesId: "rotala-macrandra", u: 0.52, v: 0.3, ru: 0.035, rv: 0.24, angle: 0.3, count: 5, portions: 2 },
-      { speciesId: "pogostemon-erectus", u: 0.66, v: 0.26, ru: 0.035, rv: 0.22, angle: 0.25, count: 4, portions: 2 },
-      { speciesId: "alternanthera-reineckii", u: 0.8, v: 0.32, ru: 0.035, rv: 0.22, angle: 0.25, count: 5, portions: 2 },
-      { speciesId: "limnophila-aromatica", u: 0.93, v: 0.24, ru: 0.025, rv: 0.18, angle: 0.2, count: 3, portions: 2 },
-      // front terrace: low streets
-      { speciesId: "staurogyne-repens", u: 0.22, v: 0.82, ru: 0.18, rv: 0.05, angle: -0.12, count: 5, portions: 2 },
-      { speciesId: "alternanthera-reineckii-mini", u: 0.5, v: 0.78, ru: 0.1, rv: 0.05, angle: -0.12, count: 4, portions: 2 },
-      { speciesId: "lobelia-cardinalis-mini", u: 0.76, v: 0.82, ru: 0.15, rv: 0.05, angle: -0.12, count: 4, portions: 2 },
-      { speciesId: "rotala-sp-hra", u: 0.92, v: 0.62, ru: 0.03, rv: 0.1, angle: 0.25, count: 3, portions: 2 },
+      // 11-14 feedback: streets must read as clear diagonal bands. Every back street is a long, thin
+      // ellipse at the same 32° lean (cm space), 0.13 W apart, so parallel bands of single species run
+      // back-right → front-left with bare gaps between them; neighbours alternate red / green and
+      // fine / broad leaves. Hygrophila corymbosa (60 cm, broad leaves) was swamping its neighbours:
+      // it is now a short, narrow street with 2 single-portion clumps.
+      // back row, left → right: green fine / coral-red / green broad / red / green needle / dark red / green / orange
+      { speciesId: "heteranthera-zosterifolia", u: 0.07, v: 0.36, ru: 0.022, rv: 0.3, angle: STREET_ANGLE, count: 4, portions: 2 },
+      { speciesId: "ammannia-gracilis", u: 0.2, v: 0.36, ru: 0.022, rv: 0.3, angle: STREET_ANGLE, count: 4, portions: 2 },
+      { speciesId: "hygrophila-corymbosa", u: 0.33, v: 0.28, ru: 0.016, rv: 0.2, angle: STREET_ANGLE, count: 2, portions: 1 },
+      { speciesId: "rotala-macrandra", u: 0.46, v: 0.36, ru: 0.022, rv: 0.3, angle: STREET_ANGLE, count: 4, portions: 2 },
+      { speciesId: "pogostemon-erectus", u: 0.59, v: 0.36, ru: 0.022, rv: 0.3, angle: STREET_ANGLE, count: 4, portions: 2 },
+      { speciesId: "alternanthera-reineckii", u: 0.72, v: 0.36, ru: 0.022, rv: 0.3, angle: STREET_ANGLE, count: 4, portions: 2 },
+      { speciesId: "limnophila-aromatica", u: 0.85, v: 0.36, ru: 0.022, rv: 0.3, angle: STREET_ANGLE, count: 4, portions: 2 },
+      { speciesId: "rotala-sp-hra", u: 0.96, v: 0.4, ru: 0.018, rv: 0.22, angle: STREET_ANGLE, count: 3, portions: 2 },
+      // front terrace: low streets, slightly angled against the back streets
+      { speciesId: "staurogyne-repens", u: 0.2, v: 0.84, ru: 0.17, rv: 0.045, angle: -0.12, count: 5, portions: 2 },
+      { speciesId: "alternanthera-reineckii-mini", u: 0.5, v: 0.8, ru: 0.1, rv: 0.045, angle: -0.12, count: 4, portions: 2 },
+      { speciesId: "lobelia-cardinalis-mini", u: 0.78, v: 0.84, ru: 0.14, rv: 0.045, angle: -0.12, count: 4, portions: 2 },
     ],
   },
 ]
@@ -200,7 +216,9 @@ export function hardscapeFor(h: TemplateHardscape, tank: TankDims): HardscapeVis
     seed: h.seed,
   }
   if (h.role !== undefined) out.role = h.role
+  // suteishi default 0.35 (contract 1.0.1 / render 1.2.0) — made explicit so the doc carries it
   if (h.buriedFrac !== undefined) out.buriedFrac = h.buriedFrac
+  else if (h.kind === "stone" && h.role === "suteishi") out.buriedFrac = defaultBuriedFrac("suteishi")
   return out
 }
 
@@ -248,12 +266,29 @@ function hashStr(s: string): number {
 
 const GOLDEN_ANGLE = Math.PI * (3 - Math.sqrt(5))
 
-/** Group counts after the ≤ MAX_PLACEMENTS budget (proportional scale-down, ≥ 1 each). */
-function budgetCounts(groups: readonly TemplatePlantGroup[]): number[] {
-  const total = groups.reduce((a, g) => a + Math.max(0, Math.floor(g.count)), 0)
-  if (total <= MAX_PLACEMENTS) return groups.map((g) => Math.max(0, Math.floor(g.count)))
+/**
+ * Group counts for a tank (contract 1.0.1): reference count × (W·D)/(60·30),
+ * rounded, ≥ 1; then, if the total exceeds MAX_PLACEMENTS, every group is
+ * scaled down proportionally (≥ 1 each, largest trimmed first).
+ */
+export function scaledCounts(groups: readonly TemplatePlantGroup[], tank: TankDims): number[] {
+  const area = (tank.widthCm * tank.depthCm) / REF_AREA_CM2
+  const scaled = groups.map((g) => (g.count > 0 ? Math.max(1, Math.round(g.count * area)) : 0))
+  const total = scaled.reduce((a, n) => a + n, 0)
+  if (total <= MAX_PLACEMENTS) return scaled
   const k = MAX_PLACEMENTS / total
-  const counts = groups.map((g) => Math.max(1, Math.floor(g.count * k)))
+  const counts = scaled.map((n) => (n > 0 ? Math.max(1, Math.floor(n * k)) : 0))
+  // hand the floor() leftovers to the largest remainders (stable order) so the budget is used fully
+  let left = MAX_PLACEMENTS - counts.reduce((a, n) => a + n, 0)
+  const byRemainder = scaled
+    .map((n, i) => ({ i, r: n > 0 ? n * k - Math.floor(n * k) : -1 }))
+    .filter((e) => e.r >= 0)
+    .sort((a, b) => b.r - a.r || a.i - b.i)
+  for (const { i } of byRemainder) {
+    if (left <= 0) break
+    counts[i]! += 1
+    left--
+  }
   // trim (largest first) if the ≥1 floor pushed us over
   let over = counts.reduce((a, n) => a + n, 0) - MAX_PLACEMENTS
   while (over > 0) {
@@ -281,7 +316,7 @@ export function instantiate(t: ScapeTemplate, tank: TankDims, seed = 0): Instant
   const blocked = (x: number, z: number) => stones.some((s) => insideFootprint(s, x, z, STONE_CLEARANCE_CM))
   const areaScale = (W * D) / REF_AREA_CM2
 
-  const counts = budgetCounts(t.groups)
+  const counts = scaledCounts(t.groups, tank)
   const perSpecies = new Map<string, number>()
   const plants: PlantPlacement[] = []
 
@@ -290,7 +325,9 @@ export function instantiate(t: ScapeTemplate, tank: TankDims, seed = 0): Instant
     if (n <= 0) return
     const rand = prng(hashStr(`${t.id}|${gi}|${g.speciesId}`) ^ (seed >>> 0))
     const host = g.onHardscape !== undefined ? hsById.get(g.onHardscape) : undefined
-    const portions = Math.max(1, Math.round(g.portions * Math.min(2, Math.max(0.5, areaScale))))
+    // counts carry the tank-area scaling; portions only make up for what the 60-placement cap removed
+    const wanted = g.count * areaScale
+    const portions = Math.max(1, Math.round(g.portions * Math.min(2, Math.max(1, wanted / n))))
     const angle = g.angle ?? 0
     const ca = Math.cos(angle)
     const sa = Math.sin(angle)
@@ -311,6 +348,8 @@ export function instantiate(t: ScapeTemplate, tank: TankDims, seed = 0): Instant
       const lx = ex * a
       const lz = ez * b
       // angle is measured in the floor plane from the width axis
+      // contract 1.0.1: rotation is applied in cm space after (u,v) → (x,z) scaling,
+      // so a street keeps its angle in any tank aspect ratio
       return [cx + ca * lx - sa * lz, cz + sa * lx + ca * lz]
     }
 
@@ -325,7 +364,7 @@ export function instantiate(t: ScapeTemplate, tank: TankDims, seed = 0): Instant
         const hz = host.sizeCm[2] / 2
         x = clampX(Math.min(host.x + hx * 0.6, Math.max(host.x - hx * 0.6, px)))
         z = clampZ(Math.min(host.z + hz * 0.6, Math.max(host.z - hz * 0.6, pz)))
-        const exposed = host.sizeCm[1] * (1 - (host.buriedFrac ?? 0.15))
+        const exposed = host.sizeCm[1] * (1 - (host.buriedFrac ?? defaultBuriedFrac(host.role)))
         y = r2(exposed * (host.kind === "wood" ? 0.45 + 0.25 * rand() : 0.6 + 0.25 * rand()))
       } else {
         let found: [number, number] | null = null

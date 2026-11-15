@@ -8,7 +8,7 @@
  */
 import { useEffect, useMemo, useState } from "react"
 import { FrontalTank, speciesLook } from "@aquascape-studio/render"
-import type { BotanyRecordLike, CompositionGuide, HardscapeVisual } from "@aquascape-studio/render"
+import type { BotanyRecordLike, CompositionGuide, EditMoveEvent, EditTarget, HardscapeVisual } from "@aquascape-studio/render"
 import { toFrontal } from "@/lib/sim/toFrontal"
 import type { Frame, SimInput } from "@/lib/sim/vendor/sim-core/contract"
 
@@ -39,9 +39,18 @@ export interface FrontalHeroProps {
     focalPoint: { x: number; y: number } | undefined
     guides: CompositionGuide
   } | undefined
+  /**
+   * Drag editing (behind `flags.dragEditor`, render ≥ 1.2.0). When absent the
+   * tank is not editable and receives exactly the props it did before.
+   */
+  edit?: {
+    selected: EditTarget | null
+    onSelect: (t: EditTarget | null) => void
+    onMove: (e: EditMoveEvent) => void
+  } | undefined
 }
 
-export default function FrontalHero({ input, frame, byId, onReady, scene }: FrontalHeroProps) {
+export default function FrontalHero({ input, frame, byId, onReady, scene, edit }: FrontalHeroProps) {
   const reducedMotion = useReducedMotion()
   const data = useMemo(() => toFrontal(input, frame, byId, speciesLook), [input, frame, byId])
   return (
@@ -51,6 +60,7 @@ export default function FrontalHero({ input, frame, byId, onReady, scene }: Fron
       plants={data.plants}
       hardscape={scene ? scene.hardscape : data.hardscape}
       {...(scene ? { guides: scene.guides, focalPoint: scene.focalPoint, bed: scene.bed } : {})}
+      {...(edit ? { editable: true, selected: edit.selected, onSelect: edit.onSelect, onMove: edit.onMove } : {})}
       quality="auto"
       reducedMotion={reducedMotion}
       data-testid="frontal-tank"

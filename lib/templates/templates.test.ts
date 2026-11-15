@@ -4,13 +4,18 @@ import type { BotanyRecord } from "../sim/buildInput"
 import {
   GLASS_MARGIN_CM,
   MAX_PLACEMENTS,
+  REF_AREA_CM2,
   TEMPLATES,
+  defaultBuriedFrac,
   getTemplate,
+  hardscapeFor,
   insideFootprint,
   instantiate,
   parseGuidesParam,
   parseTemplateParam,
+  scaledCounts,
 } from "./index"
+import { TEMPLATE_CONTRACT_VERSION, type ScapeTemplate, type TemplatePlantGroup } from "./contract"
 import { buildTemplateInput } from "./buildTemplateInput"
 
 const PLANTS = plantsJson as unknown as BotanyRecord[]
@@ -178,23 +183,182 @@ describe("instantiate", () => {
     const t = getTemplate("dutch-streets")!
     const a = instantiate(t, TANKS[0]!)
     const b = instantiate(t, TANKS[2]!)
-    expect(a.plants.map((p) => p.id)).toEqual(b.plants.map((p) => p.id))
-    // mean normalised x per species agrees within a few %
+    expect(new Set(a.plants.map((p) => p.speciesId))).toEqual(new Set(b.plants.map((p) => p.speciesId)))
+    // mean normalised x per species agrees within a few % (a 1-clump street on the small tank vs 4 on the big one)
     for (const sid of new Set(a.plants.map((p) => p.speciesId))) {
       const mean = (o: typeof a, W: number) => {
         const xs = o.plants.filter((p) => p.speciesId === sid).map((p) => p.x / W)
         return xs.reduce((s, x) => s + x, 0) / xs.length
       }
-      expect(Math.abs(mean(a, TANKS[0]!.widthCm) - mean(b, TANKS[2]!.widthCm))).toBeLessThan(0.03)
+      expect(Math.abs(mean(a, TANKS[0]!.widthCm) - mean(b, TANKS[2]!.widthCm)), sid).toBeLessThan(0.04)
     }
-    // bigger tank → more portions per placement
-    expect(b.plants[0]!.portions).toBeGreaterThan(a.plants[0]!.portions)
+    // bigger tank → more placements (1.0.1 count scaling), never more than the budget
+    expect(b.plants.length).toBeGreaterThan(a.plants.length)
+    expect(b.plants.length).toBeLessThanOrEqual(MAX_PLACEMENTS)
   })
 
   it("caps an over-budget template at 60 placements", () => {
     const t = getTemplate("dutch-streets")!
     const big = { ...t, groups: t.groups.map((g) => ({ ...g, count: 20 })) }
     expect(instantiate(big, TANKS[1]!).plants.length).toBeLessThanOrEqual(MAX_PLACEMENTS)
+  })
+})
+
+describe("contract 1.0.1", () => {
+  const group = (count: number, extra: Partial<TemplatePlantGroup> = {}): TemplatePlantGroup => ({
+    speciesId: "hemianthus-callitrichoides-cuba", u: 0.5, v: 0.5, ru: 0.2, rv: 0.1, count, portions: 1, ...extra,
+  })
+  const bare = (groups: TemplatePlantGroup[]): ScapeTemplate => ({
+    ...getTemplate("dutch-streets")!, id: "test", hardscape: [], groups,
+  })
+
+  it("is version 1.0.1 and the Iwagumi template uses the iwagumi composition", () => {
+    expect(TEMPLATE_CONTRACT_VERSION).toBe("1.0.1")
+    expect(getTemplate("iwagumi-sanzon")!.composition).toBe("iwagumi")
+    for (const t of TEMPLATES) if (t.style === "iwagumi") expect(t.composition).toBe("iwagumi")
+    for (const t of TEMPLATES) if (t.style !== "iwagumi") expect(t.composition).not.toBe("iwagumi")
+  })
+
+  describe("count scaling by tank area (ref 60 × 30)", () => {
+    const groups = [group(10), group(6), group(3), group(1)]
+    it("keeps reference counts on the reference tank", () => {
+      expect(REF_AREA_CM2).toBe(1800)
+      expect(scaledCounts(groups, { widthCm: 60, depthCm: 30, heightCm: 36 })).toEqual([10, 6, 3, 1])
+    })
+    it("scales by W·D / 1800, rounds, keeps ≥ 1", () => {
+      // 45 × 27 → ×0.675
+      expect(scaledCounts(groups, { widthCm: 45, depthCm: 27, heightCm: 30 })).toEqual([7, 4, 2, 1])
+      // 30 × 20 → ×0.333: the single-plant group survives
+      expect(scaledCounts(groups, { widthCm: 30, depthCm: 20, heightCm: 25 })).toEqual([3, 2, 1, 1])
+      // 80 × 35 → ×1.556
+      expect(scaledCounts(groups, { widthCm: 80, depthCm: 35, heightCm: 40 })).toEqual([16, 9, 5, 2])
+    })
+    it("scales all groups down proportionally when the total exceeds 60", () => {
+      const big = [group(20), group(10), group(5), group(1)]
+      const out = scaledCounts(big, { widthCm: 120, depthCm: 50, heightCm: 50 }) // ×3.33 → 67+33+17+3 = 120
+      expect(out.reduce((a, n) => a + n, 0)).toBe(MAX_PLACEMENTS)
+      for (const n of out) expect(n).toBeGreaterThanOrEqual(1)
+      expect(out[0]! / out[1]!).toBeCloseTo(2, 0)
+      expect(out[0]!).toBeGreaterThan(out[1]!)
+      expect(out[1]!).toBeGreaterThan(out[2]!)
+      expect(out[2]!).toBeGreaterThan(out[3]!)
+    })
+    it("drives instantiate(): placements follow the scaled counts", () => {
+      const t = bare([group(10, { u: 0.25 }), group(6, { u: 0.75, speciesId: "glossostigma-elatinoides" })])
+      expect(instantiate(t, { widthCm: 60, depthCm: 30, heightCm: 36 }).plants).toHaveLength(16)
+      expect(instantiate(t, { widthCm: 45, depthCm: 27, heightCm: 30 }).plants).toHaveLength(11)
+      expect(instantiate(t, { widthCm: 90, depthCm: 45, heightCm: 45 }).plants).toHaveLength(37) // 22.5→23, 13.5→14
+      for (const tpl of TEMPLATES) {
+        const ref = instantiate(tpl, TANKS[1]!).plants.length
+        expect(instantiate(tpl, TANKS[0]!).plants.length, tpl.id).toBeLessThan(ref)
+        expect(instantiate(tpl, TANKS[2]!).plants.length, tpl.id).toBeGreaterThan(ref)
+      }
+    })
+    it("makes up capped placements with portions, never shrinks portions", () => {
+      const t = bare([group(30, { portions: 1 }), group(30, { portions: 1, u: 0.2, speciesId: "glossostigma-elatinoides" })])
+      const capped = instantiate(t, { widthCm: 90, depthCm: 45, heightCm: 45 }) // wants 2 × 68
+      expect(capped.plants).toHaveLength(60)
+      for (const p of capped.plants) expect(p.portions).toBe(2)
+      const small = instantiate(t, { widthCm: 45, depthCm: 27, heightCm: 30 })
+      for (const p of small.plants) expect(p.portions).toBe(1)
+    })
+  })
+
+  it("applies group angle in cm space (same street angle in any aspect ratio)", () => {
+    const angle = 0.5
+    const t = bare([group(40, { ru: 0.4, rv: 0.04, angle })])
+    for (const tank of [
+      { widthCm: 60, depthCm: 30, heightCm: 36 },
+      { widthCm: 60, depthCm: 60, heightCm: 36 },
+      { widthCm: 120, depthCm: 40, heightCm: 50 },
+    ]) {
+      const pts = instantiate(t, tank).plants
+      const mx = pts.reduce((a, p) => a + p.x, 0) / pts.length
+      const mz = pts.reduce((a, p) => a + p.z, 0) / pts.length
+      let sxx = 0, szz = 0, sxz = 0
+      for (const p of pts) {
+        sxx += (p.x - mx) ** 2
+        szz += (p.z - mz) ** 2
+        sxz += (p.x - mx) * (p.z - mz)
+      }
+      // principal-axis angle in the floor plane (cm), measured from +x towards +z
+      const principal = 0.5 * Math.atan2(2 * sxz, sxx - szz)
+      expect(Math.abs(principal - angle), `${tank.widthCm}×${tank.depthCm}`).toBeLessThan(0.08)
+    }
+  })
+
+  it("defaults suteishi buriedFrac to 0.35 (other roles keep the renderer default)", () => {
+    expect(defaultBuriedFrac("suteishi")).toBe(0.35)
+    expect(defaultBuriedFrac("oyaishi")).toBe(0.15)
+    expect(defaultBuriedFrac(undefined)).toBe(0.15)
+    const tank = TANKS[1]!
+    const base = { id: "s", kind: "stone" as const, u: 0.5, v: 0.5, wFrac: 0.1, hFrac: 0.1, dFrac: 0.1, rotationY: 0, seed: 1 }
+    expect(hardscapeFor({ ...base, role: "suteishi" }, tank).buriedFrac).toBe(0.35)
+    expect(hardscapeFor({ ...base, role: "suteishi", buriedFrac: 0.5 }, tank).buriedFrac).toBe(0.5)
+    expect(hardscapeFor({ ...base, role: "oyaishi" }, tank).buriedFrac).toBeUndefined()
+    const iw = instantiate(getTemplate("iwagumi-sanzon")!, tank)
+    for (const h of iw.hardscape.filter((hh) => hh.role === "suteishi")) expect(h.buriedFrac).toBeGreaterThanOrEqual(0.35)
+    expect(iw.hardscape.find((h) => h.id === "suteishi-1")!.buriedFrac).toBe(0.35)
+  })
+})
+
+describe("dutch-streets (11-14 feedback)", () => {
+  const t = getTemplate("dutch-streets")!
+  const back = t.groups.filter((g) => g.v < 0.5).sort((a, b) => a.u - b.u)
+  const tank = TANKS[1]!
+  const W = tank.widthCm
+  const D = tank.depthCm
+
+  it("keeps Hygrophila groups small next to their neighbours", () => {
+    const hygro = t.groups.filter((g) => g.speciesId.startsWith("hygrophila"))
+    expect(hygro.length).toBeGreaterThan(0)
+    const others = back.filter((g) => !g.speciesId.startsWith("hygrophila"))
+    for (const h of hygro) {
+      for (const o of others) {
+        expect(h.count * h.portions, o.speciesId).toBeLessThan(o.count * o.portions)
+        expect(h.ru * h.rv).toBeLessThan(o.ru * o.rv)
+      }
+    }
+    const out = instantiate(t, tank)
+    const share = (sid: string) => out.plants.filter((p) => p.speciesId === sid).reduce((a, p) => a + p.portions, 0)
+    const total = out.plants.reduce((a, p) => a + p.portions, 0)
+    for (const h of hygro) expect(share(h.speciesId) / total).toBeLessThan(0.05)
+  })
+
+  it("lays the back streets out as parallel, long, thin diagonal bands", () => {
+    expect(back.length).toBeGreaterThanOrEqual(6)
+    const a0 = back[0]!.angle!
+    expect(Math.abs(a0)).toBeGreaterThan(0.35) // clearly diagonal (> 20°)
+    expect(Math.abs(a0)).toBeLessThan(0.9)
+    for (const g of back) {
+      expect(g.angle, g.speciesId).toBe(a0) // parallel
+      expect((g.rv * D) / (g.ru * W), g.speciesId).toBeGreaterThanOrEqual(4) // long and thin (cm)
+    }
+    // gap between neighbouring band axes (perpendicular, cm) is at least twice the bands' half-widths
+    for (let i = 1; i < back.length; i++) {
+      const [p, q] = [back[i - 1]!, back[i]!]
+      const dx = (q.u - p.u) * W
+      const dz = (q.v - p.v) * D
+      // band axis = local z rotated by angle → normal = (cos a, sin a)
+      const perp = Math.abs(dx * Math.cos(a0) + dz * Math.sin(a0))
+      expect(perp, `${p.speciesId} | ${q.speciesId}`).toBeGreaterThan(2 * (p.ru * W + q.ru * W))
+    }
+  })
+
+  it("puts every back-street clump closer to its own band than to any other", () => {
+    for (const tk of TANKS) {
+      const out = instantiate(t, tk)
+      const axis = (g: TemplatePlantGroup, x: number, z: number) => {
+        const a = g.angle ?? 0
+        return Math.abs((x - (g.u - 0.5) * tk.widthCm) * Math.cos(a) + (z - (g.v - 0.5) * tk.depthCm) * Math.sin(a))
+      }
+      for (const p of out.plants) {
+        const own = back.find((g) => g.speciesId === p.speciesId)
+        if (!own) continue
+        const d = axis(own, p.x, p.z)
+        for (const g of back) if (g !== own) expect(axis(g, p.x, p.z), `${p.id} @${tk.widthCm}`).toBeGreaterThan(d)
+      }
+    }
   })
 })
 

@@ -12,7 +12,9 @@ import { defaultHardscape } from "@/lib/sim/toFrontal"
 import { parseGuidesParam, parseTemplateParam, type GuideMode, type InstantiatedTemplate } from "@/lib/templates"
 import { buildTemplateInput } from "@/lib/templates/buildTemplateInput"
 import { useGrowthSim } from "@/lib/sim/useGrowthSim"
-import type { PlantFrame } from "@/lib/sim/vendor/sim-core/contract"
+import type { Frame, PlantFrame } from "@/lib/sim/vendor/sim-core/contract"
+import { docFromTemplate, type ScapeDoc } from "@/lib/editor"
+import { docFromInput } from "@/lib/editor/buildDocInput"
 import { eventsByDay, fmtG, lowLightFraction, speciesMeta, speciesSeries, totalSeries, type SpeciesMeta } from "./derive"
 import { EVENT_LABEL, EVENT_ORDER, FACTOR_LABEL, LIGHT_LABEL } from "./labels"
 import { c } from "./tokens"
@@ -21,6 +23,8 @@ import LightMap from "./LightMap"
 import SpeciesMultiples from "./SpeciesMultiples"
 import ControlBar from "./ControlBar"
 import { PICKER_CSS, TemplateBar, TemplateNote } from "./TemplatePicker"
+import { useScapeEditor, type ScapeEditor } from "./useScapeEditor"
+import EditorToolbar, { EDITOR_CSS } from "./EditorToolbar"
 
 const PLANTS = plantsJson as unknown as BotanyRecord[]
 const BY_ID = new Map(PLANTS.map((p) => [p.id, p]))
@@ -34,6 +38,21 @@ const PLAY_MS_PER_DAY = 110
 
 /** Stylized 3D tank — only referenced (and its chunk only requested) when the flag is on. */
 const FrontalHero = flags.stylizedTank ? dynamic(() => import("./FrontalHero"), { ssr: false }) : null
+
+/** Drag editor (lib/editor contract 1.0.0) — needs the stylized tank. Build-time constant. */
+const EDITOR = flags.dragEditor && flags.stylizedTank
+/** constant per build, so the hook call order never changes; flag off → nothing runs */
+const useEditor: (o: Parameters<typeof useScapeEditor>[0]) => ScapeEditor | null = EDITOR ? useScapeEditor : () => null
+
+/** Plants added in the editor have no frame until the sim re-runs: show them as small seedlings meanwhile. */
+function withSeedlings(frame: Frame | undefined, plants: ScapeDoc["plants"]): Frame | undefined {
+  if (!frame) return frame
+  const have = new Set(frame.plants.map((p) => p.id))
+  const missing = plants.filter((p) => !have.has(p.id))
+  if (!missing.length) return frame
+  const seedling = (id: string): PlantFrame => ({ id, biomassG: 0, heightCm: 3, spreadCm: 3, health: 1, parAtPlant: 0, limiting: [] })
+  return { ...frame, plants: [...frame.plants, ...missing.map((p) => seedling(p.id))] }
+}
 
 /** "rotala-rotundifolia#2" (legacy) or "rotala-rotundifolia-2" (templates) → "2" */
 function instanceNo(id: string): string | undefined {
@@ -53,25 +72,48 @@ export default function TimelapseView() {
     p.delete("day")
     // guides are view-only — changing them must not re-run the simulation
     if (flags.styleTemplates) p.delete("guides")
+    // the edited doc is state; ?scape= is only its share-link mirror
+    if (EDITOR) p.delete("scape")
     return p.toString()
   }, [sp])
   const template = flags.styleTemplates ? parseTemplateParam(new URLSearchParams(baseQuery).get("tpl")) : undefined
-  const built: BuildResult & { scene?: InstantiatedTemplate } = useMemo(
+  const baseBuilt: BuildResult & { scene?: InstantiatedTemplate } = useMemo(
     () => (template ? buildTemplateInput(template, new URLSearchParams(baseQuery), PLANTS) : buildInput(new URLSearchParams(baseQuery), PLANTS)),
     [baseQuery, template],
   )
+  const [selectedId, setSelectedId] = useState<string | null>(null)
+  // drag editor (flag): the doc starts from ?scape= (wins over ?tpl=), else from the template / URL plants
+  const seedDoc = useMemo(
+    () =>
+      !EDITOR
+        ? null
+        : baseBuilt.scene && template
+          ? docFromTemplate(baseBuilt.scene, baseBuilt.input.tank, template.id)
+          : docFromInput(baseBuilt.input, defaultHardscape(baseBuilt.input.tank)),
+    [baseBuilt, template],
+  )
+  const editor = useEditor({
+    seedDoc: seedDoc!,
+    initialScape: sp.get("scape"),
+    baseQuery,
+    plants: PLANTS,
+    onPlantPicked: setSelectedId,
+  })
+  const built: BuildResult & { scene?: InstantiatedTemplate } = editor ? editor.built : baseBuilt
   const { input } = built
   const days = input.days
   const lowLightPar = input.lowLightPar ?? 30
-  const sim = useGrowthSim(input, baseQuery)
+  const sim = useGrowthSim(input, editor ? editor.simKey : baseQuery)
 
   const [day, setDay] = useState(() => clampDay(sp.get("day"), days))
   const [playing, setPlaying] = useState(false)
   const species = useMemo(() => speciesMeta(built, BY_ID, LEGACY_NAMES), [built])
-  const [selectedId, setSelectedId] = useState<string | null>(null)
   const selId = selectedId && input.plants.some((p) => p.id === selectedId) ? selectedId : (input.plants[0]?.id ?? null)
 
-  const frames = sim.frames
+  // editor re-runs keep showing the previous result until the new one is complete (no flash back to day 0)
+  const lastDoneFrames = useRef<Frame[] | null>(null)
+  if (sim.status === "done") lastDoneFrames.current = sim.frames
+  const frames = editor && sim.status === "running" && lastDoneFrames.current ? lastDoneFrames.current : sim.frames
   const available = Math.max(0, frames.length - 1)
   const frame = frames[Math.min(day, available)]
   const total = useMemo(() => totalSeries(frames), [frames])
@@ -92,6 +134,8 @@ export default function TimelapseView() {
       const url = new URL(window.location.href)
       if (id) url.searchParams.set("tpl", id)
       else url.searchParams.delete("tpl")
+      // picking a template starts from it: the edited doc's share link no longer applies
+      if (EDITOR) url.searchParams.delete("scape")
       router.replace(`${url.pathname}?${url.searchParams.toString()}`, { scroll: false })
     },
     [router],
@@ -103,9 +147,12 @@ export default function TimelapseView() {
     else url.searchParams.set("guides", g)
     window.history.replaceState(window.history.state, "", url)
   }, [])
+  const viewDoc = editor?.viewDoc
   const tankScene = useMemo(
     () =>
-      flags.styleTemplates
+      viewDoc
+        ? { hardscape: viewDoc.hardscape, bed: viewDoc.bed, focalPoint: viewDoc.focalPoint, guides }
+        : flags.styleTemplates
         ? {
             hardscape: built.scene ? built.scene.hardscape : defaultHardscape(input.tank),
             bed: built.scene?.bed,
@@ -113,7 +160,18 @@ export default function TimelapseView() {
             guides,
           }
         : undefined,
-    [built, input.tank, guides],
+    [built, input.tank, guides, viewDoc],
+  )
+  // editor: the tank shows the live (preview) doc with the current frame's sizes
+  const heroInput = useMemo(() => (viewDoc ? { ...input, tank: viewDoc.tank, plants: viewDoc.plants } : input), [input, viewDoc])
+  const heroFrame = useMemo(() => (viewDoc ? withSeedlings(frame, viewDoc.plants) : frame), [frame, viewDoc])
+  const editSelected = editor?.state.selected ?? null
+  const editSelect = editor?.select
+  const editMove = editor?.onMove
+  // stable while selection is unchanged, so drags do not re-render the tank needlessly
+  const heroEdit = useMemo(
+    () => (editSelect && editMove ? { selected: editSelected, onSelect: editSelect, onMove: editMove } : undefined),
+    [editSelected, editSelect, editMove],
   )
   const tplBar = flags.styleTemplates ? (
     <TemplateBar selected={template} onPick={pickTemplate} guides={guides} onGuides={changeGuides} showGuides={!!FrontalHero} />
@@ -208,8 +266,31 @@ export default function TimelapseView() {
       {FrontalHero && tplBar && <div className="pt-2">{tplBar}</div>}
       {FrontalHero && (
         <StylizedTankHero tank={tank} day={day}>
-          {(onReady) => <FrontalHero input={input} frame={frame} byId={BY_ID} onReady={onReady} scene={tankScene} />}
+          {(onReady) =>
+            heroEdit ? (
+              <FrontalHero input={heroInput} frame={heroFrame} byId={BY_ID} onReady={onReady} scene={tankScene} edit={heroEdit} />
+            ) : (
+              <FrontalHero input={input} frame={frame} byId={BY_ID} onReady={onReady} scene={tankScene} />
+            )
+          }
         </StylizedTankHero>
+      )}
+      {editor && <style dangerouslySetInnerHTML={{ __html: EDITOR_CSS }} />}
+      {editor && (
+        <EditorToolbar
+          doc={editor.viewDoc}
+          selected={editor.state.selected}
+          canUndo={editor.canUndo}
+          canRedo={editor.canRedo}
+          simulating={computing}
+          byId={BY_ID}
+          onUndo={editor.undo}
+          onRedo={editor.redo}
+          onDelete={editor.removeSelected}
+          onCopy={editor.copyLink}
+          onAdd={editor.addPlant}
+          onSelect={editor.select}
+        />
       )}
       {FrontalHero && tplNote}
 

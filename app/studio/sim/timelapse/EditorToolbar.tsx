@@ -202,8 +202,10 @@ export default function EditorToolbar({ doc, selected, canUndo, canRedo, simulat
         </button>
       </div>
 
+      {/* select + add: one row on wider screens, stacked on phones */}
+      <div className="flex w-full max-w-full flex-col items-center gap-2 lg:w-auto lg:flex-row lg:gap-6">
       {doc.hardscape.length > 0 && (
-        <div className="flex w-full max-w-full items-center gap-2 sm:w-auto">
+        <div className="flex w-full max-w-full items-center gap-2 lg:w-auto">
           <span className="shrink-0 text-[12px] font-medium" style={{ color: c("muted") }}>
             选择 <span className="hidden sm:inline">Select</span>
           </span>
@@ -232,7 +234,7 @@ export default function EditorToolbar({ doc, selected, canUndo, canRedo, simulat
         </div>
       )}
       {species.length > 0 && (
-        <div className="flex w-full max-w-full items-center gap-2 sm:w-auto">
+        <div className="flex w-full max-w-full items-center gap-2 lg:w-auto">
           <span className="shrink-0 text-[12px] font-medium" style={{ color: c("muted") }}>
             添加 <span className="hidden sm:inline">Add</span>
           </span>
@@ -257,6 +259,7 @@ export default function EditorToolbar({ doc, selected, canUndo, canRedo, simulat
           </div>
         </div>
       )}
+      </div>
       {full && (
         <p className="text-[12px]" style={{ color: c("muted") }}>
           已达 {MAX_PLANTS} 丛上限 · {MAX_PLANTS}-plant limit reached

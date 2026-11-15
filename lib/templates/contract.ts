@@ -29,10 +29,22 @@ import type { CompositionGuide, StoneRole } from "@aquascape-studio/render"
 import type { HardscapeVisual } from "@aquascape-studio/render"
 import type { PlantPlacement, TankDims } from "../sim/vendor/sim-core/contract"
 
-export const TEMPLATE_CONTRACT_VERSION = "1.0.0" as const
+export const TEMPLATE_CONTRACT_VERSION = "1.0.1" as const
+
+/*
+ * 1.0.1 (2026-11-15, from app-agent objections):
+ *  - Composition gains "iwagumi" (odd-stone triangle grouping). Existing
+ *    iwagumi templates should use it instead of "triangle".
+ *  - TemplatePlantGroup.angle is applied in CM space after (u,v)→(x,z)
+ *    scaling, so a 30° street stays 30° in any tank aspect ratio.
+ *  - Tank-size scaling: group `count` is a reference for a 60 × 30 cm
+ *    footprint; instantiate() scales it by (W·D)/(60·30), rounds, keeps ≥ 1,
+ *    then scales all groups down proportionally if the total exceeds 60.
+ *  - Suteishi default buriedFrac is 0.35 (render 1.2.0).
+ */
 
 export type ScapeStyle = "iwagumi" | "nature" | "dutch"
-export type Composition = "triangle" | "concave" | "convex" | "streets"
+export type Composition = "triangle" | "concave" | "convex" | "streets" | "iwagumi"
 export type LightLevel = "Low" | "Medium" | "High"
 
 export interface TemplateHardscape {

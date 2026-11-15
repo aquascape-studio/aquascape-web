@@ -13,4 +13,6 @@ export const flags = {
   stylizedTank: parseFlag(process.env.NEXT_PUBLIC_FF_STYLIZED_TANK),
   /** /studio/sim style template picker (?tpl=) + composition guides */
   styleTemplates: parseFlag(process.env.NEXT_PUBLIC_FF_STYLE_TEMPLATES),
+  /** /studio/sim drag editor (lib/editor contract 1.0.0); requires stylizedTank */
+  dragEditor: parseFlag(process.env.NEXT_PUBLIC_FF_DRAG_EDITOR),
 } as const

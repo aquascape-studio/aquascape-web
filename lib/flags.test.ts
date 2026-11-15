@@ -1,5 +1,10 @@
-import { afterEach, describe, expect, it, vi } from "vitest"
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 import { parseFlag } from "./flags"
+
+// the static import above caches ./flags with the real env; every dynamic import below must re-evaluate it
+beforeEach(() => {
+  vi.resetModules()
+})
 
 describe("parseFlag", () => {
   it("is on only for '1' and 'true'", () => {
@@ -91,5 +96,30 @@ describe("flags.styleTemplates", () => {
     vi.stubEnv("NEXT_PUBLIC_FF_STYLE_TEMPLATES", undefined as unknown as string)
     const { flags } = await import("./flags")
     expect(flags.styleTemplates).toBe(false)
+  })
+})
+
+describe("flags.dragEditor", () => {
+  afterEach(() => {
+    vi.unstubAllEnvs()
+    vi.resetModules()
+  })
+
+  it("defaults to off", async () => {
+    vi.stubEnv("NEXT_PUBLIC_FF_DRAG_EDITOR", undefined as unknown as string)
+    const { flags } = await import("./flags")
+    expect(flags.dragEditor).toBe(false)
+  })
+
+  it.each(["0", "false", ""])("is off for %j", async (v) => {
+    vi.stubEnv("NEXT_PUBLIC_FF_DRAG_EDITOR", v)
+    const { flags } = await import("./flags")
+    expect(flags.dragEditor).toBe(false)
+  })
+
+  it.each(["1", "true"])("is on for %s", async (v) => {
+    vi.stubEnv("NEXT_PUBLIC_FF_DRAG_EDITOR", v)
+    const { flags } = await import("./flags")
+    expect(flags.dragEditor).toBe(true)
   })
 })

@@ -163,8 +163,10 @@ export default function TimelapseView() {
     [built, input.tank, guides, viewDoc],
   )
   // editor: the tank shows the live (preview) doc with the current frame's sizes
-  const heroInput = useMemo(() => (viewDoc ? { ...input, tank: viewDoc.tank, plants: viewDoc.plants } : input), [input, viewDoc])
-  const heroFrame = useMemo(() => (viewDoc ? withSeedlings(frame, viewDoc.plants) : frame), [frame, viewDoc])
+  const viewTank = viewDoc?.tank
+  const viewPlants = viewDoc?.plants
+  const heroInput = useMemo(() => (viewTank && viewPlants ? { ...input, tank: viewTank, plants: viewPlants } : input), [input, viewTank, viewPlants])
+  const heroFrame = useMemo(() => (viewPlants ? withSeedlings(frame, viewPlants) : frame), [frame, viewPlants])
   const editSelected = editor?.state.selected ?? null
   const editSelect = editor?.select
   const editMove = editor?.onMove

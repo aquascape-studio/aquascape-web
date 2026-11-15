@@ -180,6 +180,15 @@ describe("editorReducer · move", () => {
     expect(plant(s2, "taxiphyllum-barbieri-1")).toMatchObject({ x: 11, z: 0, y: 8 })
   })
 
+  it("keeps the plants array reference when a piece carries nothing", () => {
+    const doc = fixture()
+    const s = run(initEditor(doc), { type: "apply", op: { type: "move", target: H("wood"), x: 10, z: 0 } }) // wood carries moss
+    expect(s.doc.plants).not.toBe(doc.plants)
+    const bare: ScapeDoc = { ...doc, plants: doc.plants.filter((p) => p.y === 0) }
+    const t = run(initEditor(bare), { type: "apply", op: { type: "move", target: H("rock"), x: -8, z: 2 } })
+    expect(t.doc.plants).toBe(bare.plants)
+  })
+
   it("does not carry planted (y = 0) plants or epiphytes outside the footprint", () => {
     const doc = fixture()
     doc.plants.push({ id: "anubias-barteri-1", speciesId: "anubias-barteri", x: 8, z: 0, y: 4, portions: 1 }) // y > 0 but off the rock

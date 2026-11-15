@@ -161,7 +161,8 @@ function moveHardscape(doc: ScapeDoc, id: string, x: number, z: number): ScapeDo
   return {
     ...doc,
     hardscape: doc.hardscape.map((hh) => (hh.id === id ? { ...hh, x: cx, z: cz } : hh)),
-    plants: doc.plants.map((p) => {
+    // nothing carried: keep the plants array itself, so views keyed on it do not re-layout
+    plants: carried.size === 0 ? doc.plants : doc.plants.map((p) => {
       if (!carried.has(p.id)) return p
       const [px, pz] = clampPos(doc.tank, p.x + dx, p.z + dz)
       return { ...p, x: px, z: pz }

@@ -266,34 +266,42 @@ export default function TimelapseView() {
       {FrontalHero && <div className="pt-4 [&>nav]:mb-0">{breadcrumb}</div>}
       {flags.styleTemplates && <style dangerouslySetInnerHTML={{ __html: PICKER_CSS }} />}
       {FrontalHero && tplBar && <div className="pt-2">{tplBar}</div>}
-      {FrontalHero && (
-        <StylizedTankHero tank={tank} day={day}>
-          {(onReady) =>
-            heroEdit ? (
-              <FrontalHero input={heroInput} frame={heroFrame} byId={BY_ID} onReady={onReady} scene={tankScene} edit={heroEdit} />
-            ) : (
-              <FrontalHero input={input} frame={frame} byId={BY_ID} onReady={onReady} scene={tankScene} />
-            )
-          }
-        </StylizedTankHero>
-      )}
-      {editor && <style dangerouslySetInnerHTML={{ __html: EDITOR_CSS }} />}
-      {editor && (
-        <EditorToolbar
-          doc={editor.viewDoc}
-          selected={editor.state.selected}
-          canUndo={editor.canUndo}
-          canRedo={editor.canRedo}
-          simulating={computing}
-          byId={BY_ID}
-          onUndo={editor.undo}
-          onRedo={editor.redo}
-          onDelete={editor.removeSelected}
-          onCopy={editor.copyLink}
-          onAdd={editor.addPlant}
-          onSelect={editor.select}
-        />
-      )}
+      {FrontalHero &&
+        (() => {
+          const hero = (
+            <StylizedTankHero tank={tank} day={day}>
+              {(onReady) =>
+                heroEdit ? (
+                  <FrontalHero input={heroInput} frame={heroFrame} byId={BY_ID} onReady={onReady} scene={tankScene} edit={heroEdit} />
+                ) : (
+                  <FrontalHero input={input} frame={frame} byId={BY_ID} onReady={onReady} scene={tankScene} />
+                )
+              }
+            </StylizedTankHero>
+          )
+          // flag off: exactly the original single child here (adding sibling slots would shift React useId values)
+          if (!editor) return hero
+          return (
+            <>
+              {hero}
+              <style dangerouslySetInnerHTML={{ __html: EDITOR_CSS }} />
+              <EditorToolbar
+                doc={editor.viewDoc}
+                selected={editor.state.selected}
+                canUndo={editor.canUndo}
+                canRedo={editor.canRedo}
+                simulating={computing}
+                byId={BY_ID}
+                onUndo={editor.undo}
+                onRedo={editor.redo}
+                onDelete={editor.removeSelected}
+                onCopy={editor.copyLink}
+                onAdd={editor.addPlant}
+                onSelect={editor.select}
+              />
+            </>
+          )
+        })()}
       {FrontalHero && tplNote}
 
       {/* hero */}

@@ -39,7 +39,7 @@ const PLAY_MS_PER_DAY = 110
 /** Stylized 3D tank — only referenced (and its chunk only requested) when the flag is on. */
 const FrontalHero = flags.stylizedTank ? dynamic(() => import("./FrontalHero"), { ssr: false }) : null
 
-/** Drag editor (lib/editor contract 1.0.0) — needs the stylized tank. Build-time constant. */
+/** Drag editor (lib/editor contract 1.1.0) — needs the stylized tank. Build-time constant. */
 const EDITOR = flags.dragEditor && flags.stylizedTank
 /** constant per build, so the hook call order never changes; flag off → nothing runs */
 const useEditor: (o: Parameters<typeof useScapeEditor>[0]) => ScapeEditor | null = EDITOR ? useScapeEditor : () => null
@@ -176,8 +176,12 @@ export default function TimelapseView() {
     [editSelected, editSelect, editMove],
   )
   const tplBar = flags.styleTemplates ? (
-    <TemplateBar selected={template} onPick={pickTemplate} guides={guides} onGuides={changeGuides} showGuides={!!FrontalHero} />
+    <TemplateBar selected={template} onPick={pickTemplate} guides={guides} onGuides={changeGuides} showGuides={!!FrontalHero} sticky={!!FrontalHero} />
   ) : null
+  // editor: the timeline docks under the editor while the editor is on screen, and floats only once it is
+  // scrolled away — so the floating bar never covers the editor's chip rows (11-15 issue)
+  const editRegionRef = useRef<HTMLDivElement | null>(null)
+  const editorOnScreen = useOnScreen(editor ? editRegionRef : null)
   const tplNote = flags.styleTemplates ? <TemplateNote selected={template} onPick={pickTemplate} /> : null
 
   // playback
@@ -265,7 +269,7 @@ export default function TimelapseView() {
     <main className="mx-auto max-w-[1080px] px-4 pb-10 sm:px-6">
       {FrontalHero && <div className="pt-4 [&>nav]:mb-0">{breadcrumb}</div>}
       {flags.styleTemplates && <style dangerouslySetInnerHTML={{ __html: PICKER_CSS }} />}
-      {FrontalHero && tplBar && <div className="pt-2">{tplBar}</div>}
+      {FrontalHero && tplBar}
       {FrontalHero &&
         (() => {
           const hero = (
@@ -285,20 +289,38 @@ export default function TimelapseView() {
             <>
               {hero}
               <style dangerouslySetInnerHTML={{ __html: EDITOR_CSS }} />
-              <EditorToolbar
-                doc={editor.viewDoc}
-                selected={editor.state.selected}
-                canUndo={editor.canUndo}
-                canRedo={editor.canRedo}
-                simulating={computing}
-                byId={BY_ID}
-                onUndo={editor.undo}
-                onRedo={editor.redo}
-                onDelete={editor.removeSelected}
-                onCopy={editor.copyLink}
-                onAdd={editor.addPlant}
-                onSelect={editor.select}
-              />
+              <div ref={editRegionRef} data-testid="editor-region">
+                <EditorToolbar
+                  doc={editor.viewDoc}
+                  selected={editor.state.selected}
+                  canUndo={editor.canUndo}
+                  canRedo={editor.canRedo}
+                  simulating={computing}
+                  byId={BY_ID}
+                  onUndo={editor.undo}
+                  onRedo={editor.redo}
+                  onDelete={editor.removeSelected}
+                  onCopy={editor.copyLink}
+                  onAdd={editor.addPlant}
+                  onSelect={editor.select}
+                  onAddHardscape={editor.addHardscape}
+                  onResize={editor.resizeSelected}
+                  onWoodStyle={editor.setWoodStyle}
+                />
+                <div className="px-0 pt-6" data-testid="timeline-dock">
+                  <ControlBar
+                    day={day}
+                    days={days}
+                    available={available}
+                    playing={playing}
+                    computing={computing}
+                    total={total}
+                    events={events}
+                    onDay={seek}
+                    onTogglePlay={togglePlay}
+                  />
+                </div>
+              </div>
             </>
           )
         })()}
@@ -468,7 +490,10 @@ export default function TimelapseView() {
         <span className="hidden sm:inline"> · 快捷键 ←/→ 逐日 · Space 播放 · Home/End</span>
       </p>
 
-      <div className="sticky bottom-[max(16px,env(safe-area-inset-bottom))] z-30">
+      <div
+        className={editor ? "tl-float sticky bottom-[max(16px,env(safe-area-inset-bottom))] z-30" : "sticky bottom-[max(16px,env(safe-area-inset-bottom))] z-30"}
+        {...(editor ? { "data-docked": editorOnScreen ? "1" : "0", inert: editorOnScreen, "data-testid": "timeline-float" } : {})}
+      >
         <ControlBar
           day={day}
           days={days}
@@ -483,6 +508,22 @@ export default function TimelapseView() {
       </div>
     </main>
   )
+}
+
+/** true while any part of the element is in the viewport (null ref: always false, no observer) */
+function useOnScreen(ref: { current: Element | null } | null): boolean {
+  const [on, setOn] = useState(true)
+  const active = ref !== null
+  useEffect(() => {
+    const el = ref?.current
+    if (!active || !el || typeof IntersectionObserver === "undefined") return
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) setOn(e.isIntersecting)
+    })
+    io.observe(el)
+    return () => io.disconnect()
+  }, [active, ref])
+  return active && on
 }
 
 /** Layout box for the stylized tank: full content width, tank aspect, white, no border; caption below. */

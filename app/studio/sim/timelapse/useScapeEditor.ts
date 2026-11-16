@@ -8,10 +8,12 @@
  * back to `?scape=` (history.replaceState, debounced 500 ms).
  */
 import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from "react"
-import type { EditMoveEvent, EditTarget } from "@aquascape-studio/render"
+import type { EditMoveEvent, EditTarget, WoodStyle } from "@aquascape-studio/render"
 import {
   NUDGE_CM,
   NUDGE_FAST_CM,
+  RESIZE_DOWN,
+  RESIZE_UP,
   ROTATE_STEP_RAD,
   canRedo,
   canUndo,
@@ -19,9 +21,11 @@ import {
   decodeScape,
   editorReducer,
   encodeScape,
+  findFreeHardscapeSpot,
   findFreeSpot,
   initEditor,
   isPreviewing,
+  needsResim,
   targetPosition,
   type EditorAction,
   type EditorState,
@@ -49,6 +53,12 @@ export interface ScapeEditor {
   redo: () => void
   removeSelected: () => void
   addPlant: (speciesId: string) => void
+  /** 1.1.0: add a stone / driftwood at a free spot near the centre (selected) */
+  addHardscape: (kind: "stone" | "wood", woodStyle?: WoodStyle) => void
+  /** 1.1.0: ×scale the selected hardscape piece (no-op otherwise) */
+  resizeSelected: (scale: number) => void
+  /** 1.1.0: woodStyle of the selected wood piece */
+  setWoodStyle: (style: WoodStyle) => void
   select: (t: EditTarget | null) => void
   onMove: (e: EditMoveEvent) => void
   copyLink: () => Promise<boolean>
@@ -142,9 +152,22 @@ export function useScapeEditor({ seedDoc, initialScape, baseQuery, plants, onPla
   }, [seedKey, seedDoc, dispatch, flushNudge])
 
   const committed = committedDoc(state)
-  const built = useMemo(() => buildDocInput(committed, new URLSearchParams(baseQuery), plants), [committed, baseQuery, plants])
-  // hardscape is visual only (sim-core has none): moving a bare stone does not re-run the sim
-  const simKey = useMemo(() => `${baseQuery}|${JSON.stringify([committed.tank, committed.plants])}`, [committed, baseQuery])
+  // The sim runs `simDoc`: the committed doc as of the last edit that needs a re-run (contract 1.1.0
+  // needsResim — tank / plants / bed). Hardscape-only edits keep the previous simDoc, so neither the
+  // sim input nor the sim key changes. A different templateId changes light / CO₂ (buildDocInput),
+  // so it re-runs as well.
+  const simDocRef = useRef(committed)
+  const simGenRef = useRef(0)
+  if (committed !== simDocRef.current) {
+    const prev = simDocRef.current
+    if (needsResim(prev, committed) || prev.templateId !== committed.templateId) {
+      simDocRef.current = committed
+      simGenRef.current++
+    }
+  }
+  const simDoc = simDocRef.current
+  const built = useMemo(() => buildDocInput(simDoc, new URLSearchParams(baseQuery), plants), [simDoc, baseQuery, plants])
+  const simKey = `${baseQuery}|${simGenRef.current}`
 
   // ?scape= write-back after each committed edit, debounced
   const initialCommitted = useRef(committed)
@@ -177,6 +200,33 @@ export function useScapeEditor({ seedDoc, initialScape, baseQuery, plants, onPla
       const doc = committedDoc(stateRef.current)
       const spot = findFreeSpot(doc, 0, 0)
       if (spot) dispatch({ type: "apply", op: { type: "addPlant", speciesId, x: spot.x, z: spot.z } })
+    },
+    [dispatch, flushNudge],
+  )
+  const addHardscape = useCallback(
+    (kind: "stone" | "wood", woodStyle?: WoodStyle) => {
+      flushNudge()
+      const doc = committedDoc(stateRef.current)
+      const spot = findFreeHardscapeSpot(doc, kind, woodStyle, 0, 0)
+      if (spot) dispatch({ type: "apply", op: { type: "addHardscape", kind, woodStyle, x: spot.x, z: spot.z } })
+    },
+    [dispatch, flushNudge],
+  )
+  const resizeSelected = useCallback(
+    (scale: number) => {
+      const sel = stateRef.current.selected
+      if (sel?.kind !== "hardscape" || dragRef.current) return
+      flushNudge()
+      dispatch({ type: "apply", op: { type: "resize", id: sel.id, scale } })
+    },
+    [dispatch, flushNudge],
+  )
+  const setWoodStyle = useCallback(
+    (woodStyle: WoodStyle) => {
+      const sel = stateRef.current.selected
+      if (sel?.kind !== "hardscape" || dragRef.current) return
+      flushNudge()
+      dispatch({ type: "apply", op: { type: "setWoodStyle", id: sel.id, woodStyle } })
     },
     [dispatch, flushNudge],
   )
@@ -285,6 +335,10 @@ export function useScapeEditor({ seedDoc, initialScape, baseQuery, plants, onPla
         consume()
         flushNudge()
         dispatch({ type: "apply", op: { type: "rotate", id: sel.id, dRad: key === "]" ? ROTATE_STEP_RAD : -ROTATE_STEP_RAD } })
+      } else if ((key === "-" || key === "=" || key === "+") && sel.kind === "hardscape") {
+        // 1.1.0: "-" smaller, "=" / "+" larger (×0.9 / ×1.1)
+        consume()
+        resizeSelected(key === "-" ? RESIZE_DOWN : RESIZE_UP)
       } else if (key === "Delete" || key === "Backspace") {
         consume()
         removeSelected()
@@ -292,7 +346,7 @@ export function useScapeEditor({ seedDoc, initialScape, baseQuery, plants, onPla
     }
     window.addEventListener("keydown", onKey, true)
     return () => window.removeEventListener("keydown", onKey, true)
-  }, [dispatch, flushNudge, undo, redo, removeSelected])
+  }, [dispatch, flushNudge, undo, redo, removeSelected, resizeSelected])
 
   useEffect(
     () => () => {
@@ -313,6 +367,9 @@ export function useScapeEditor({ seedDoc, initialScape, baseQuery, plants, onPla
     redo,
     removeSelected,
     addPlant,
+    addHardscape,
+    resizeSelected,
+    setWoodStyle,
     select,
     onMove,
     copyLink,

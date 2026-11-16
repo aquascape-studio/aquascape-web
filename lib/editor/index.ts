@@ -1,25 +1,24 @@
 /**
- * Drag editor (拖拽编辑器) — implementation of contract v1.0.0
+ * Drag editor (拖拽编辑器) — implementation of contract v1.1.0
  * (lib/editor/contract.ts, orchestrator-owned).
  *
  * A pure document model + reducer. Positions are sim-core cm (origin centre
  * of the substrate plane, x left→right, z back→front).
  *
- * Preview bookkeeping: the contract's EditorState has no slot for the
- * pre-drag doc that `commitPreview` / `cancelPreview` need, so the reducer
- * keeps it in an extra optional field `previewBase` (see EditorStateWithPreview).
- * States without it are exactly contract EditorStates.
+ * Preview bookkeeping (1.1.0): `EditorState.previewBase` holds the pre-drag
+ * doc while a drag / nudge preview is active and is null otherwise; every
+ * state this reducer returns has it set.
  */
-import type { EditTarget, HardscapeVisual, StoneRole } from "@aquascape-studio/render"
+import type { EditTarget, HardscapeVisual, StoneRole, WoodStyle } from "@aquascape-studio/render"
 import plantsJson from "../sim/vendor/plants.json"
 import type { PlantPlacement, TankDims } from "../sim/vendor/sim-core/contract"
 import type { InstantiatedTemplate } from "../templates/contract"
 import type { EditOp, EditorAction, EditorState, ScapeDoc } from "./contract"
-import { footprintContains } from "./footprint"
+import { clampHardscapeXZ, footprintContains, footprintHalfExtents } from "./footprint"
 
 export type { EditOp, EditorAction, EditorState, ScapeDoc } from "./contract"
 export { EDITOR_CONTRACT_VERSION } from "./contract"
-export { footprintContains, footprintDistance } from "./footprint"
+export { clampHardscapeXZ, footprintContains, footprintDistance, footprintHalfExtents } from "./footprint"
 
 /** sim budget (contract) */
 export const MAX_PLANTS = 60
@@ -36,6 +35,14 @@ export const NUDGE_CM = 1
 export const NUDGE_FAST_CM = 5
 /** decode guard: hardscape pieces per doc */
 export const MAX_HARDSCAPE = 24
+/** addHardscape: at most this many pieces (contract 1.1.0) */
+export const MAX_HARDSCAPE_PIECES = 12
+/** keyboard "-" / "=" ("+") and the toolbar −/+ pills: ×0.9 / ×1.1 (contract 1.1.0) */
+export const RESIZE_DOWN = 0.9
+export const RESIZE_UP = 1.1
+/** smallest hardscape axis (contract 1.1.0) */
+export const MIN_HARDSCAPE_CM = 2
+export const WOOD_STYLES: readonly WoodStyle[] = ["branchy", "root", "log"]
 /** decode guard: longest accepted ?scape= value */
 export const MAX_ENCODED_LENGTH = 8000
 
@@ -46,23 +53,33 @@ export function isKnownSpecies(id: string): boolean {
   return KNOWN_SPECIES.has(id)
 }
 
-/** Reducer state; `previewBase` is the pre-drag doc while a preview is active. */
-export interface EditorStateWithPreview extends EditorState {
-  previewBase?: ScapeDoc | undefined
-}
-
 export function initEditor(doc: ScapeDoc): EditorState {
-  return { doc, past: [], future: [], selected: null }
+  return { doc, past: [], future: [], selected: null, previewBase: null }
 }
 
-/** true while a drag / nudge preview is active */
+/** true while a drag / nudge preview is active (1.0.0-shaped states without previewBase: false) */
 export function isPreviewing(s: EditorState): boolean {
-  return (s as EditorStateWithPreview).previewBase !== undefined
+  return s.previewBase != null
 }
 
 /** the last committed doc (the pre-drag doc while previewing) — what the sim runs */
 export function committedDoc(s: EditorState): ScapeDoc {
-  return (s as EditorStateWithPreview).previewBase ?? s.doc
+  return s.previewBase ?? s.doc
+}
+
+/**
+ * Contract 1.1.0: the sim re-runs only when the tank, the plants (any field)
+ * or the bed changed. Hardscape-only edits (move / rotate / resize / add /
+ * setWoodStyle with no epiphyte carried) do not — growth ignores hardscape.
+ */
+export function needsResim(prev: ScapeDoc, next: ScapeDoc): boolean {
+  if (prev === next) return false
+  const tankSame =
+    prev.tank === next.tank ||
+    (prev.tank.widthCm === next.tank.widthCm && prev.tank.depthCm === next.tank.depthCm && prev.tank.heightCm === next.tank.heightCm)
+  const bedSame = prev.bed === next.bed || (prev.bed.frontCm === next.bed.frontCm && prev.bed.backCm === next.bed.backCm)
+  const plantsSame = prev.plants === next.plants || JSON.stringify(prev.plants) === JSON.stringify(next.plants)
+  return !(tankSame && bedSame && plantsSame)
 }
 
 export function canUndo(s: EditorState): boolean {
@@ -154,20 +171,23 @@ function movePlant(doc: ScapeDoc, id: string, x: number, z: number): ScapeDoc | 
 function moveHardscape(doc: ScapeDoc, id: string, x: number, z: number): ScapeDoc | null {
   const h = doc.hardscape.find((hh) => hh.id === id)
   if (!h || !Number.isFinite(x) || !Number.isFinite(z)) return null
-  const [cx, cz] = clampPos(doc.tank, x, z)
-  const dx = cx - h.x
-  const dz = cz - h.z
-  const carried = epiphytesOn(doc, h)
+  // 1.1.0: the whole rotated footprint stays ≥ 1 cm inside the glass
+  const { x: cx, z: cz } = clampHardscapeXZ(h, doc.tank, x, z)
   return {
     ...doc,
     hardscape: doc.hardscape.map((hh) => (hh.id === id ? { ...hh, x: cx, z: cz } : hh)),
-    // nothing carried: keep the plants array itself, so views keyed on it do not re-layout
-    plants: carried.size === 0 ? doc.plants : doc.plants.map((p) => {
-      if (!carried.has(p.id)) return p
-      const [px, pz] = clampPos(doc.tank, p.x + dx, p.z + dz)
-      return { ...p, x: px, z: pz }
-    }),
+    plants: shiftCarried(doc, epiphytesOn(doc, h), cx - h.x, cz - h.z),
   }
+}
+
+/** carried epiphytes follow their piece by (dx, dz); nothing carried / no shift keeps the plants array itself */
+function shiftCarried(doc: ScapeDoc, carried: ReadonlySet<string>, dx: number, dz: number): PlantPlacement[] {
+  if (carried.size === 0 || (dx === 0 && dz === 0)) return doc.plants
+  return doc.plants.map((p) => {
+    if (!carried.has(p.id)) return p
+    const [px, pz] = clampPos(doc.tank, p.x + dx, p.z + dz)
+    return { ...p, x: px, z: pz }
+  })
 }
 
 function move(doc: ScapeDoc, t: EditTarget, x: number, z: number): ScapeDoc | null {
@@ -181,14 +201,17 @@ function rotate(doc: ScapeDoc, id: string, dRad: number): ScapeDoc | null {
   // rotate carried epiphytes about the piece's centre by Ry(dRad) so they keep their local position
   const c = Math.cos(dRad)
   const s = Math.sin(dRad)
+  const rotationY = normAngle(h.rotationY + dRad)
+  // 1.1.0: rotating changes the footprint's extent — re-clamp the centre; carried epiphytes follow the shift too
+  const { x: nx, z: nz } = clampHardscapeXZ({ rotationY, sizeCm: h.sizeCm }, doc.tank, h.x, h.z)
   return {
     ...doc,
-    hardscape: doc.hardscape.map((hh) => (hh.id === id ? { ...hh, rotationY: normAngle(hh.rotationY + dRad) } : hh)),
+    hardscape: doc.hardscape.map((hh) => (hh.id === id ? { ...hh, rotationY, x: nx, z: nz } : hh)),
     plants: doc.plants.map((p) => {
       if (!carried.has(p.id)) return p
       const dx = p.x - h.x
       const dz = p.z - h.z
-      const [px, pz] = clampPos(doc.tank, h.x + c * dx + s * dz, h.z - s * dx + c * dz)
+      const [px, pz] = clampPos(doc.tank, nx + c * dx + s * dz, nz - s * dx + c * dz)
       return { ...p, x: px, z: pz }
     }),
   }
@@ -228,6 +251,157 @@ function addPlant(doc: ScapeDoc, speciesId: string, x: number, z: number, portio
   return { ...doc, plants: [...doc.plants, plant] }
 }
 
+// --- 1.1.0: resize / addHardscape / setWoodStyle
+
+type Size3 = [number, number, number]
+
+/**
+ * Uniform scale `scale` applied to `size`, reduced (or raised) so every axis
+ * stays within the contract bounds: ≥ 2 cm; width ≤ W − 2, depth ≤ D − 2,
+ * height ≤ 0.9 H. Growing never shrinks and shrinking never grows (a piece
+ * already outside a bound is left alone by a scale that would push it
+ * further out). Returns the effective factor (1 = nothing to do).
+ */
+export function effectiveScale(size: readonly number[], tank: TankDims, scale: number): number {
+  if (!Number.isFinite(scale) || scale <= 0) return 1
+  const [w, h, d] = size as Size3
+  if (!(w > 0 && h > 0 && d > 0)) return 1
+  if (scale > 1) {
+    const cap = Math.min(scale, (tank.widthCm - 2) / w, (tank.depthCm - 2) / d, (0.9 * tank.heightCm) / h)
+    return Math.max(1, cap)
+  }
+  const floor = Math.max(scale, MIN_HARDSCAPE_CM / w, MIN_HARDSCAPE_CM / h, MIN_HARDSCAPE_CM / d)
+  return Math.min(1, floor)
+}
+
+/** fit a fresh size into the contract bounds keeping its proportions (shrink first, then grow to the 2 cm floor) */
+function fitSize(size: Size3, tank: TankDims): Size3 {
+  const down = Math.min(1, (tank.widthCm - 2) / size[0], (tank.depthCm - 2) / size[2], (0.9 * tank.heightCm) / size[1])
+  let s: Size3 = [size[0] * down, size[1] * down, size[2] * down]
+  const up = Math.max(1, MIN_HARDSCAPE_CM / s[0], MIN_HARDSCAPE_CM / s[1], MIN_HARDSCAPE_CM / s[2])
+  if (up > 1) s = [s[0] * up, s[1] * up, s[2] * up]
+  return [r1(s[0]), r1(s[1]), r1(s[2])]
+}
+
+function r1(v: number): number {
+  return Math.round(v * 10) / 10
+}
+
+function resize(doc: ScapeDoc, id: string, scale: number): ScapeDoc | null {
+  const h = doc.hardscape.find((hh) => hh.id === id)
+  if (!h) return null
+  const f = effectiveScale(h.sizeCm, doc.tank, scale)
+  if (Math.abs(f - 1) < 1e-9) return null
+  const sizeCm: Size3 = [h.sizeCm[0] * f, h.sizeCm[1] * f, h.sizeCm[2] * f]
+  // a growing piece near the glass is pushed inwards; epiphytes keep their positions (contract)
+  const { x, z } = clampHardscapeXZ({ rotationY: h.rotationY, sizeCm }, doc.tank, h.x, h.z)
+  return { ...doc, hardscape: doc.hardscape.map((hh) => (hh.id === id ? { ...hh, sizeCm, x, z } : hh)) }
+}
+
+/** default size of a new piece (contract 1.1.0), before fitting into the tank */
+export function defaultHardscapeSize(kind: "stone" | "wood", woodStyle: WoodStyle | undefined, tank: TankDims): Size3 {
+  const { widthCm: W, heightCm: H, depthCm: D } = tank
+  if (kind === "stone") return [0.16 * W, 0.22 * H, 0.16 * D]
+  switch (woodStyle ?? "branchy") {
+    case "root":
+      return [0.5 * W, 0.6 * H, 0.3 * D]
+    case "log":
+      return [0.4 * W, 0.18 * H, 0.22 * D]
+    default:
+      return [0.45 * W, 0.55 * H, 0.3 * D]
+  }
+}
+
+/** smallest unused n for "<kind>-<n>" */
+export function nextHardscapeId(doc: Pick<ScapeDoc, "hardscape">, kind: "stone" | "wood"): string {
+  const ids = new Set(doc.hardscape.map((h) => h.id))
+  let n = 1
+  while (ids.has(`${kind}-${n}`)) n++
+  return `${kind}-${n}`
+}
+
+/** deterministic 31-bit FNV-1a hash of an id (seed of an added piece) */
+export function hashId(id: string): number {
+  let h = 0x811c9dc5
+  for (let i = 0; i < id.length; i++) {
+    h ^= id.charCodeAt(i)
+    h = Math.imul(h, 0x01000193)
+  }
+  return (h >>> 0) & 0x7fffffff
+}
+
+/** the piece "addHardscape" would create at (x, z), clamped — or null when kind / input is invalid */
+export function newHardscapePiece(
+  doc: ScapeDoc,
+  kind: "stone" | "wood",
+  woodStyle: WoodStyle | undefined,
+  x: number,
+  z: number,
+): HardscapeVisual | null {
+  if ((kind !== "stone" && kind !== "wood") || !Number.isFinite(x) || !Number.isFinite(z)) return null
+  if (woodStyle !== undefined && !WOOD_STYLES.includes(woodStyle)) return null
+  const id = nextHardscapeId(doc, kind)
+  const sizeCm = fitSize(defaultHardscapeSize(kind, woodStyle, doc.tank), doc.tank)
+  const pos = clampHardscapeXZ({ rotationY: 0, sizeCm }, doc.tank, x, z)
+  const piece: HardscapeVisual = { id, kind, x: pos.x, z: pos.z, rotationY: 0, sizeCm, seed: hashId(id) }
+  if (kind === "stone") piece.role = "soeishi"
+  else piece.woodStyle = woodStyle ?? "branchy"
+  return piece
+}
+
+/** true when the footprint (+0.5 cm) covers a planted (non-epiphyte) plant */
+function coversPlantedPlant(doc: Pick<ScapeDoc, "plants">, h: HardscapeVisual): boolean {
+  return doc.plants.some((p) => !(p.y > 0) && footprintContains(h, p.x, p.z, STONE_MARGIN_CM))
+}
+
+function addHardscape(doc: ScapeDoc, kind: "stone" | "wood", woodStyle: WoodStyle | undefined, x: number, z: number): ScapeDoc | null {
+  if (doc.hardscape.length >= MAX_HARDSCAPE_PIECES) return null
+  const piece = newHardscapePiece(doc, kind, woodStyle, x, z)
+  if (!piece || coversPlantedPlant(doc, piece)) return null
+  return { ...doc, hardscape: [...doc.hardscape, piece] }
+}
+
+/**
+ * A free spot for a new stone / wood near (x, z) (outward spiral, 1 cm rings):
+ * its footprint covers no planted plant; spots clear of other pieces are
+ * preferred. Null when nothing fits (or the piece limit is reached).
+ */
+export function findFreeHardscapeSpot(
+  doc: ScapeDoc,
+  kind: "stone" | "wood",
+  woodStyle: WoodStyle | undefined,
+  x = 0,
+  z = 0,
+): { x: number; z: number } | null {
+  if (doc.hardscape.length >= MAX_HARDSCAPE_PIECES) return null
+  const probe = newHardscapePiece(doc, kind, woodStyle, x, z)
+  if (!probe) return null
+  const reach = Math.min(footprintHalfExtents(probe).x, footprintHalfExtents(probe).z)
+  const maxR = Math.hypot(doc.tank.widthCm, doc.tank.depthCm)
+  for (const avoidPieces of [true, false]) {
+    for (let r = 0; r <= maxR; r += 1) {
+      const steps = r === 0 ? 1 : Math.max(8, Math.ceil(2 * Math.PI * r))
+      for (let k = 0; k < steps; k++) {
+        const th = (k / steps) * 2 * Math.PI
+        const pos = clampHardscapeXZ(probe, doc.tank, x + r * Math.cos(th), z + r * Math.sin(th))
+        const at = { ...probe, x: pos.x, z: pos.z }
+        if (coversPlantedPlant(doc, at)) continue
+        if (avoidPieces && doc.hardscape.some((h) => footprintContains(h, pos.x, pos.z, reach))) continue
+        return pos
+      }
+    }
+  }
+  return null
+}
+
+function setWoodStyle(doc: ScapeDoc, id: string, woodStyle: WoodStyle): ScapeDoc | null {
+  const h = doc.hardscape.find((hh) => hh.id === id)
+  if (!h || h.kind !== "wood" || !WOOD_STYLES.includes(woodStyle)) return null
+  // missing woodStyle means "branchy" (render 1.3.0): setting it explicitly changes nothing
+  if ((h.woodStyle ?? "branchy") === woodStyle) return null
+  return { ...doc, hardscape: doc.hardscape.map((hh) => (hh.id === id ? { ...hh, woodStyle } : hh)) }
+}
+
 function applyOp(doc: ScapeDoc, op: EditOp): ScapeDoc | null {
   switch (op.type) {
     case "move":
@@ -240,6 +414,12 @@ function applyOp(doc: ScapeDoc, op: EditOp): ScapeDoc | null {
       return addPlant(doc, op.speciesId, op.x, op.z, op.portions)
     case "replace":
       return op.doc
+    case "resize":
+      return resize(doc, op.id, op.scale)
+    case "addHardscape":
+      return addHardscape(doc, op.kind, op.woodStyle, op.x, op.z)
+    case "setWoodStyle":
+      return setWoodStyle(doc, op.id, op.woodStyle)
     default:
       return null
   }
@@ -258,11 +438,11 @@ function keepSelection(doc: ScapeDoc, sel: EditTarget | null): EditTarget | null
 }
 
 function plain(doc: ScapeDoc, past: ScapeDoc[], future: ScapeDoc[], selected: EditTarget | null): EditorState {
-  return { doc, past, future, selected }
+  return { doc, past, future, selected, previewBase: null }
 }
 
 export function editorReducer(s: EditorState, a: EditorAction): EditorState {
-  const base = (s as EditorStateWithPreview).previewBase
+  const base = s.previewBase ?? undefined
   switch (a.type) {
     case "apply": {
       // ops apply to the committed doc: an active preview is discarded first
@@ -273,6 +453,9 @@ export function editorReducer(s: EditorState, a: EditorAction): EditorState {
       if (a.op.type === "addPlant") {
         const added = next.plants[next.plants.length - 1]
         if (added) selected = { kind: "plant", id: added.id }
+      } else if (a.op.type === "addHardscape") {
+        const added = next.hardscape[next.hardscape.length - 1]
+        if (added) selected = { kind: "hardscape", id: added.id }
       }
       return plain(next, pushCapped(s.past, cur), [], selected)
     }
@@ -280,8 +463,7 @@ export function editorReducer(s: EditorState, a: EditorAction): EditorState {
       const from = base ?? s.doc
       const next = move(from, a.target, a.x, a.z)
       if (!next || docsEqual(next, s.doc)) return s
-      const out: EditorStateWithPreview = { doc: next, past: s.past, future: s.future, selected: s.selected, previewBase: from }
-      return out
+      return { doc: next, past: s.past, future: s.future, selected: s.selected, previewBase: from }
     }
     case "commitPreview": {
       if (!base) return s
@@ -296,8 +478,7 @@ export function editorReducer(s: EditorState, a: EditorAction): EditorState {
     case "select": {
       if (sameTarget(a.target, s.selected)) return s
       if (a.target !== null && !targetExists(s.doc, a.target)) return s
-      const out: EditorStateWithPreview = { ...(s as EditorStateWithPreview), selected: a.target }
-      return out
+      return { ...s, selected: a.target, previewBase: s.previewBase ?? null }
     }
     case "undo": {
       const cur = base ?? s.doc
@@ -339,7 +520,9 @@ export function docFromTemplate(inst: InstantiatedTemplate, tank: TankDims, temp
 // base64url( UTF-8( JSON ) ) of a compact positional array (format v1):
 //   [1, [W,D,H]·10, templateId | 0, [bedFront,bedBack]·10, [fx,fy]·10 | 0,
 //    speciesIds[], hardscape[], plants[]]
-//   hardscape: [id, kind (0 stone | 1 wood), x·10, z·10, rotY·100, w·10, h·10, d·10, seed, role (0 none | 1..4), buriedFrac·100 | -1]
+//   hardscape: [id, kind (0 stone | 1 wood), x·10, z·10, rotY·100, w·10, h·10, d·10, seed, role (0 none | 1..4), buriedFrac·100 | -1
+//               (, woodStyle 1 branchy | 2 root | 3 log)]   ← 12th entry since 1.1.0, only on wood with a woodStyle;
+//              1.0.0 links (11 entries) still decode, woodStyle undefined (= "branchy")
 //   plants:    flat, 5 numbers / strings per plant:
 //              speciesIndex, id, x·10, z·10, y·10·100 + portions
 //              id = 0 when it is `${speciesId}-${k}` with k = (plants of that species so far) + 1,
@@ -385,6 +568,7 @@ export function encodeScape(doc: ScapeDoc): string {
     Math.round(h.seed),
     h.role ? ROLES.indexOf(h.role) + 1 : 0,
     h.buriedFrac === undefined ? -1 : q2(h.buriedFrac),
+    ...(h.kind === "wood" && h.woodStyle !== undefined && WOOD_STYLES.includes(h.woodStyle) ? [WOOD_STYLES.indexOf(h.woodStyle) + 1] : []),
   ])
   const plants: (number | string)[] = []
   const seen = new Map<string, number>()
@@ -455,8 +639,8 @@ export function decodeScape(s: string): ScapeDoc | null {
     check(Array.isArray(hsRaw) && hsRaw.length <= MAX_HARDSCAPE)
     const hsIds = new Set<string>()
     const hardscape: HardscapeVisual[] = (hsRaw as unknown[]).map((e) => {
-      check(Array.isArray(e) && e.length === 11)
-      const [id, kind, x, z, rot, w, h, d, seed, role, buried] = e as unknown[]
+      check(Array.isArray(e) && (e.length === 11 || e.length === 12))
+      const [id, kind, x, z, rot, w, h, d, seed, role, buried, style] = e as unknown[]
       check(typeof id === "string" && ID_RE.test(id) && !hsIds.has(id))
       hsIds.add(id)
       check(kind === 0 || kind === 1)
@@ -479,6 +663,11 @@ export function decodeScape(s: string): ScapeDoc | null {
       }
       if ((role as number) > 0) out.role = ROLES[(role as number) - 1]!
       if (buried !== -1) out.buriedFrac = (buried as number) / 100
+      if (e.length === 12) {
+        // 1.1.0 woodStyle: wood only
+        check(kind === 1 && isInt(style) && style >= 1 && style <= WOOD_STYLES.length)
+        out.woodStyle = WOOD_STYLES[style - 1]!
+      }
       return out
     })
 

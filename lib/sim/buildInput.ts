@@ -47,6 +47,8 @@ export type BotanyRecord = SpeciesRecord & {
   commonNames?: { en?: string[]; zh?: string[] }
   colorRange?: string[]
   colorHex?: string
+  /** botany schema 0.7.0 (optional) — see lib/sim/regulated.ts */
+  regulated?: unknown
 }
 
 export interface ResolvedPlant {

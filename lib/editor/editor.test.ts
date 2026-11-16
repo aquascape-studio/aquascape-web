@@ -71,10 +71,10 @@ function deepFreeze<T>(o: T): T {
 }
 
 describe("contract", () => {
-  it("is version 1.0.0", () => expect(EDITOR_CONTRACT_VERSION).toBe("1.0.0"))
+  it("is version 1.1.0", () => expect(EDITOR_CONTRACT_VERSION).toBe("1.1.0"))
   it("initEditor starts with empty history and no selection", () => {
     const doc = fixture()
-    expect(initEditor(doc)).toEqual({ doc, past: [], future: [], selected: null })
+    expect(initEditor(doc)).toEqual({ doc, past: [], future: [], selected: null, previewBase: null })
     expect(initEditor(doc).doc).toBe(doc)
     expect(isPreviewing(initEditor(doc))).toBe(false)
   })
@@ -141,12 +141,13 @@ describe("editorReducer · move", () => {
     expect(s1.future).toEqual([])
   })
 
-  it("clamps positions 1 cm inside the glass", () => {
+  it("clamps plants 1 cm inside the glass, hardscape by its whole footprint (clampHardscapeXZ)", () => {
     const s = run(initEditor(fixture()),
       { type: "apply", op: { type: "move", target: P("hemianthus-callitrichoides-cuba-1"), x: -100, z: 100 } },
       { type: "apply", op: { type: "move", target: H("wood"), x: 999, z: -999 } })
     expect(plant(s, "hemianthus-callitrichoides-cuba-1")).toMatchObject({ x: -29, z: 14 })
-    expect(piece(s, "wood")).toMatchObject({ x: 29, z: -14 })
+    // wood 12 × 6 cm: footprint half-extents 6 / 3 → centre ≤ 30 − 1 − 6 = 23, ≥ −(15 − 1 − 3) = −11
+    expect(piece(s, "wood")).toMatchObject({ x: 23, z: -11 })
   })
 
   it("rejects a plant dropped on a stone footprint (+0.5 cm margin) as a same-reference no-op", () => {
@@ -303,7 +304,8 @@ describe("editorReducer · preview / commitPreview / cancelPreview", () => {
     expect(plant(s2, T.id)).toMatchObject({ x: -25, z: 5 })
     expect(isPreviewing(s2)).toBe(false)
     expect(committedDoc(s2)).toBe(s2.doc)
-    expect(Object.keys(s2).sort()).toEqual(["doc", "future", "past", "selected"]) // a plain contract EditorState again
+    expect(Object.keys(s2).sort()).toEqual(["doc", "future", "past", "previewBase", "selected"])
+    expect(s2.previewBase).toBeNull() // 1.1.0: always set, null when idle
   })
 
   it("cancelPreview restores the pre-drag doc without history", () => {

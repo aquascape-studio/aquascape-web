@@ -44,11 +44,17 @@ const MAX_INSTANCES_PER_SPECIES = 12
 /** Botany record as stored in plants.json (superset of SpeciesRecord). */
 export type BotanyRecord = SpeciesRecord & {
   placement?: string[]
-  commonNames?: { en?: string[]; zh?: string[] }
+  /** botany schema 0.8.0: English names only */
+  commonNames?: { en?: string[] }
   colorRange?: string[]
   colorHex?: string
   /** botany schema 0.7.0 (optional) — see lib/sim/regulated.ts */
   regulated?: unknown
+}
+
+/** Display name of a species: first English common name, else the scientific name, else `fallback`. */
+export function speciesName(rec: Pick<BotanyRecord, "commonNames" | "scientificName"> | null | undefined, fallback = ""): string {
+  return rec?.commonNames?.en?.[0] ?? rec?.scientificName ?? fallback
 }
 
 export interface ResolvedPlant {

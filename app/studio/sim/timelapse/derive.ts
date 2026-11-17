@@ -1,10 +1,10 @@
-import type { BotanyRecord, BuildResult, Zone } from "@/lib/sim/buildInput"
+import { speciesName, type BotanyRecord, type BuildResult, type Zone } from "@/lib/sim/buildInput"
 import type { Frame, SimEvent } from "@/lib/sim/vendor/sim-core/contract"
 
 export interface SpeciesMeta {
   id: string
-  zh: string
-  en: string
+  /** display name: first English common name, else the scientific name */
+  name: string
   latin: string
   /** red / pink plants use the coral accent */
   red: boolean
@@ -30,8 +30,7 @@ export function speciesMeta(built: BuildResult, byId: Map<string, BotanyRecord>,
     const colorRange = rec.colorRange ?? []
     out.set(r.speciesId, {
       id: r.speciesId,
-      zh: rec.commonNames?.zh?.[0]?.replace(/（.*?）/g, "") ?? rec.scientificName,
-      en: rec.commonNames?.en?.[0] ?? rec.scientificName,
+      name: speciesName(rec),
       latin: rec.scientificName,
       red: colorRange.some((c) => RED_WORDS.some((w) => c.startsWith(w) || c.includes(`${w}-high`) || c === w)),
       zone: r.zone,

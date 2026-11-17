@@ -28,7 +28,7 @@ import EditorToolbar, { EDITOR_CSS } from "./EditorToolbar"
 
 const PLANTS = plantsJson as unknown as BotanyRecord[]
 const BY_ID = new Map(PLANTS.map((p) => [p.id, p]))
-/** names the legacy UI used, for "替代 …" substitution notes */
+/** names the legacy UI used, for "Stand-in for …" substitution notes */
 const LEGACY_NAMES: Record<string, string> = {
   "java-fern": "Java Fern", "amazon-sword": "Amazon Sword", "hc-cuba": "HC Cuba",
   "vallisneria": "Vallisneria", "hornwort": "Hornwort", "water-wisteria": "Water Wisteria",
@@ -258,7 +258,7 @@ export default function TimelapseView() {
   const breadcrumb = (
     <nav className="mb-8 flex items-center gap-2 text-[13px]" aria-label="Breadcrumb">
       <Link href="/studio" className="inline-flex min-h-11 items-center hover:underline" style={{ color: c("accent") }}>
-        工作室 Studio
+        Studio
       </Link>
       <span style={{ color: c("muted") }}>/</span>
       <span className="truncate" style={{ color: c("muted") }}>{built.name}</span>
@@ -330,21 +330,20 @@ export default function TimelapseView() {
       <section className={FrontalHero ? "pb-14 pt-10 sm:pb-20 sm:pt-16" : "pb-14 pt-14 sm:pb-20 sm:pt-24"}>
         {!FrontalHero && breadcrumb}
         <p className="mb-4 text-[15px] font-semibold tracking-tight sm:text-[17px]" style={{ color: c("accent") }}>
-          生长模拟 · Growth time-lapse
+          Growth time-lapse
         </p>
         <h1 className="tl-h1 max-w-[16ch]">
-          九十天，<br className="sm:hidden" />一眼看完。
+          Ninety days.<br />At a glance.
         </h1>
         <p className="mt-6 max-w-[34em] text-[17px] leading-relaxed sm:text-[21px]" style={{ color: c("muted") }}>
-          每一片叶子，都被单独计算。光照穿过水体与叶冠，养分被逐日分配。
-          <span className="block text-[15px] sm:text-[17px]">Every leaf, computed on its own — 90 days of light, CO₂ and nutrients.</span>
+          Every leaf is computed on its own. Light travels through water and canopy, and nutrients are shared out day by day.
         </p>
         <div className="mt-8 flex flex-wrap items-center gap-2">
           {[
             `${tank.widthCm}×${tank.depthCm}×${tank.heightCm} cm`,
             `${LIGHT_LABEL[built.light]} · ${input.light.surfacePar} PAR`,
-            `CO₂ ${built.co2 ? "开 On" : "关 Off"} · ${input.water.co2Ppm} ppm`,
-            `${species.length} 种 · ${input.plants.length} 丛`,
+            `CO₂ ${built.co2 ? "on" : "off"} · ${input.water.co2Ppm} ppm`,
+            `${species.length} species · ${input.plants.length} plant${input.plants.length === 1 ? "" : "s"}`,
           ].map((t) => (
             <span key={t} className="rounded-full px-3.5 py-1.5 text-[13px] font-medium tl-num" style={{ background: c("surface"), color: c("text") }}>
               {t}
@@ -356,19 +355,19 @@ export default function TimelapseView() {
             className="inline-flex min-h-11 items-center rounded-full px-5 text-[15px] font-medium transition-colors duration-150 hover:[background:var(--tl-accentHover)]"
             style={{ background: c("accent"), color: c("bg") }}
           >
-            3D 预览
+            3D preview
           </Link>
           <Link
             href="/studio/new"
             className="inline-flex min-h-11 items-center rounded-full px-4 text-[15px] font-medium hover:underline"
             style={{ color: c("accent") }}
           >
-            重新配置 ›
+            Change setup ›
           </Link>
         </div>
         {built.unknown.length > 0 && (
           <p className="mt-4 text-[13px]" style={{ color: c("warn") }}>
-            未识别的植物 Unknown plants: {built.unknown.join(", ")}
+            Unknown plants: {built.unknown.join(", ")}
           </p>
         )}
       </section>
@@ -378,7 +377,7 @@ export default function TimelapseView() {
 
       {sim.status === "error" && (
         <div role="alert" className="mb-10 rounded-[28px] p-6" style={{ background: c("coralSoft") }}>
-          <p className="font-semibold" style={{ color: c("warn") }}>模拟失败 Simulation failed</p>
+          <p className="font-semibold" style={{ color: c("warn") }}>Simulation failed</p>
           <p className="mt-1 text-sm" style={{ color: c("text") }}>{sim.error}</p>
         </div>
       )}
@@ -388,22 +387,21 @@ export default function TimelapseView() {
         <div className="flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <h2 id="tl-day" className="tl-h2 tl-num">
-              第 {day} 天 <span style={{ color: c("muted") }}>· Day {day}</span>
+              Day {day}
             </h2>
             <p className="mt-3 text-[15px]" style={{ color: c("muted") }}>
-              {computing ? `正在计算 Computing… ${available}/${days}` : `共 ${days} 天 · ${sim.elapsedMs !== null ? `${Math.round(sim.elapsedMs)} ms` : ""}`}
+              {computing ? `Computing… ${available}/${days}` : `${days} days${sim.elapsedMs !== null ? ` · ${Math.round(sim.elapsedMs)} ms` : ""}`}
             </p>
           </div>
           <dl className="grid grid-cols-3 gap-6 sm:gap-10">
-            <Metric label="总生物量" en="Biomass" value={`${fmtG(total[Math.min(day, available)] ?? 0)}`} unit="g" />
+            <Metric label="Biomass" value={`${fmtG(total[Math.min(day, available)] ?? 0)}`} unit="g" />
             <Metric
-              label="缺光面积"
-              en="Low light"
+              label="Low light"
               value={`${Math.round(lowFrac * 100)}`}
               unit="%"
               tone={lowFrac > 0.25 ? "warn" : undefined}
             />
-            <Metric label="当日事件" en="Events" value={`${todaysEvents.length}`} />
+            <Metric label="Events" value={`${todaysEvents.length}`} />
           </dl>
         </div>
 
@@ -413,7 +411,7 @@ export default function TimelapseView() {
             {eventTotals.map(({ t, n }) => (
               <li key={t} className="flex items-center gap-1.5">
                 <span className="inline-block h-3 w-1 rounded-full" style={{ background: eventColor(t) }} />
-                <span style={{ color: c("text") }}>{EVENT_LABEL[t].zh}</span> {EVENT_LABEL[t].en}
+                <span style={{ color: c("text") }}>{EVENT_LABEL[t].label}</span>
                 <span className="tl-num">×{n}</span>
               </li>
             ))}
@@ -423,9 +421,9 @@ export default function TimelapseView() {
 
       {/* light map + plant card */}
       <section aria-labelledby="tl-light" className="pb-16 sm:pb-24">
-        <h2 id="tl-light" className="tl-h3">光，落在哪里。<span style={{ color: c("muted") }}> Where the light lands.</span></h2>
+        <h2 id="tl-light" className="tl-h3">Where the light lands.</h2>
         <p className="mt-2 max-w-[40em] text-[15px]" style={{ color: c("muted") }}>
-          俯视水底的 PAR 分布，已计入水深衰减与叶冠遮挡。点选植株查看限制因子。
+          PAR across the substrate, seen from above, after water depth and canopy shading. Select a plant to see what limits it.
         </p>
         <div className="mt-8 grid gap-6 lg:grid-cols-[1fr_320px]">
           <div className="rounded-[28px] p-4 sm:p-6" style={{ background: c("surface") }}>
@@ -442,7 +440,7 @@ export default function TimelapseView() {
           </div>
           <PlantCard meta={selSpecies} pf={selFrame} y={selPlacement?.y ?? 0} tankH={tank.heightCm} lowLightPar={lowLightPar} />
         </div>
-        <div className="mt-5 flex flex-wrap gap-2" role="group" aria-label="选择植株 Select plant">
+        <div className="mt-5 flex flex-wrap gap-2" role="group" aria-label="Select plant">
           {input.plants.map((p) => {
             const s = species.find((m) => m.instanceIds.includes(p.id))
             const on = p.id === selId
@@ -458,7 +456,7 @@ export default function TimelapseView() {
                   color: on ? c("bg") : c("text"),
                 }}
               >
-                {s?.zh ?? p.speciesId} <span style={{ opacity: 0.6 }}>#{instanceNo(p.id)}</span>
+                {s?.name ?? p.speciesId} <span style={{ opacity: 0.6 }}>#{instanceNo(p.id)}</span>
               </button>
             )
           })}
@@ -467,8 +465,8 @@ export default function TimelapseView() {
 
       {/* species */}
       <section aria-labelledby="tl-species" className="pb-16 sm:pb-20">
-        <h2 id="tl-species" className="tl-h3">各物种生物量<span style={{ color: c("muted") }}> · Biomass by species</span></h2>
-        <p className="mt-2 text-[15px]" style={{ color: c("muted") }}>共用纵轴，便于比较。Shared scale across panels.</p>
+        <h2 id="tl-species" className="tl-h3">Biomass by species</h2>
+        <p className="mt-2 text-[15px]" style={{ color: c("muted") }}>One shared scale, for easy comparison.</p>
         <div className="mt-8">
           <SpeciesMultiples
             species={species}
@@ -485,9 +483,9 @@ export default function TimelapseView() {
       </section>
 
       <p className="pb-8 text-[12px]" style={{ color: c("muted") }}>
-        引擎 Engine: @aquascape/sim-core {vendorInfo.simCore.commit.slice(0, 7)}
-        {vendorInfo.simCore.placeholder && " · 占位模型 placeholder model (preview only)"} · 物种数据 botany {vendorInfo.plants.commit.slice(0, 7)}
-        <span className="hidden sm:inline"> · 快捷键 ←/→ 逐日 · Space 播放 · Home/End</span>
+        Engine: @aquascape/sim-core {vendorInfo.simCore.commit.slice(0, 7)}
+        {vendorInfo.simCore.placeholder && " · placeholder model (preview only)"} · Species data: botany {vendorInfo.plants.commit.slice(0, 7)}
+        <span className="hidden sm:inline"> · Keys: ←/→ step a day · Space play · Home/End</span>
       </p>
 
       <div
@@ -553,17 +551,17 @@ function StylizedTankHero({
         {children(onReady)}
       </div>
       <figcaption className="mt-3 px-4 text-center text-[13px] tl-num sm:px-0" style={{ color: c("muted") }}>
-        第 {day} 天 · 风格化预览 (stylized preview)
+        Day {day} · Stylized preview
       </figcaption>
     </figure>
   )
 }
 
-function Metric({ label, en, value, unit, tone }: { label: string; en: string; value: string; unit?: string; tone?: "warn" | undefined }) {
+function Metric({ label, value, unit, tone }: { label: string; value: string; unit?: string; tone?: "warn" | undefined }) {
   return (
     <div>
-      <dt className="text-[12px] font-medium" style={{ color: c("muted") }}>
-        {label} <span className="hidden sm:inline">{en}</span>
+      <dt className="whitespace-nowrap text-[12px] font-medium" style={{ color: c("muted") }}>
+        {label}
       </dt>
       <dd className="mt-1 text-[28px] font-semibold tracking-tight tl-num sm:text-[34px]" style={{ color: tone === "warn" ? c("warn") : c("text") }}>
         {value}
@@ -575,7 +573,7 @@ function Metric({ label, en, value, unit, tone }: { label: string; en: string; v
 
 function PlantCard({ meta, pf, y, tankH, lowLightPar }: { meta: SpeciesMeta | undefined; pf: PlantFrame | undefined; y: number; tankH: number; lowLightPar: number }) {
   if (!meta || !pf) {
-    return <div className="rounded-[18px] p-5 text-sm" style={{ background: c("surface"), color: c("muted") }}>选择一株植物 Select a plant</div>
+    return <div className="rounded-[18px] p-5 text-sm" style={{ background: c("surface"), color: c("muted") }}>Select a plant to see its details.</div>
   }
   const healthPct = Math.round(pf.health * 100)
   const goodHealth = pf.health >= 0.6
@@ -589,21 +587,26 @@ function PlantCard({ meta, pf, y, tankH, lowLightPar }: { meta: SpeciesMeta | un
         {pf.id.replace("#", " #")}
       </p>
       <p className="mt-1 text-[20px] font-semibold tracking-tight">
-        {meta.zh} <span className="font-normal" style={{ color: c("muted") }}>·</span>{" "}
-        <i className="text-[16px] font-normal">{meta.latin}</i>
+        {meta.name}
+        {meta.latin !== meta.name && (
+          <>
+            {" "}
+            <span className="font-normal" style={{ color: c("muted") }}>·</span> <i className="text-[16px] font-normal">{meta.latin}</i>
+          </>
+        )}
       </p>
       {meta.substituteFor && (
-        <p className="mt-1 text-[12px]" style={{ color: c("muted") }}>替代 Stand-in for {meta.substituteFor}</p>
+        <p className="mt-1 text-[12px]" style={{ color: c("muted") }}>Stand-in for {meta.substituteFor}</p>
       )}
       <dl className="mt-5 grid grid-cols-2 gap-x-4 gap-y-4">
-        <CardStat label="高度 Height" value={`${pf.heightCm.toFixed(1)}`} unit="cm" note={y + pf.heightCm > tankH * 0.85 ? "需修剪" : undefined} />
-        <CardStat label="冠幅 Spread" value={`${pf.spreadCm.toFixed(1)}`} unit="cm" />
-        <CardStat label="受光 PAR" value={`${Math.round(pf.parAtPlant)}`} warn={pf.parAtPlant < lowLightPar} />
-        <CardStat label="生物量 Biomass" value={fmtG(pf.biomassG)} unit="g" />
+        <CardStat label="Height" value={`${pf.heightCm.toFixed(1)}`} unit="cm" note={y + pf.heightCm > tankH * 0.85 ? "Trim" : undefined} />
+        <CardStat label="Spread" value={`${pf.spreadCm.toFixed(1)}`} unit="cm" />
+        <CardStat label="PAR" value={`${Math.round(pf.parAtPlant)}`} warn={pf.parAtPlant < lowLightPar} />
+        <CardStat label="Biomass" value={fmtG(pf.biomassG)} unit="g" />
       </dl>
       <div className="mt-5">
         <div className="flex items-baseline justify-between text-[12px] font-medium">
-          <span style={{ color: c("muted") }}>健康度 Health</span>
+          <span style={{ color: c("muted") }}>Health</span>
           <span className="text-[15px] font-semibold tl-num" style={{ color: goodHealth ? c("good") : c("warn") }}>{healthPct}%</span>
         </div>
         <div className="mt-2 h-1.5 overflow-hidden rounded-full" style={{ background: c("hairline") }}>
@@ -611,11 +614,11 @@ function PlantCard({ meta, pf, y, tankH, lowLightPar }: { meta: SpeciesMeta | un
         </div>
       </div>
       <div className="mt-5">
-        <p className="text-[12px] font-medium" style={{ color: c("muted") }}>限制因子 Limiting factors</p>
+        <p className="text-[12px] font-medium" style={{ color: c("muted") }}>Limiting factors</p>
         <div className="mt-2 flex flex-wrap gap-1.5">
           {pf.limiting.length === 0 ? (
             <span className="rounded-full px-3 py-1 text-[13px] font-medium" style={{ background: c("surface"), color: c("good") }}>
-              无限制 Unconstrained
+              None
             </span>
           ) : (
             pf.limiting.map((f, i) => (
@@ -628,8 +631,7 @@ function PlantCard({ meta, pf, y, tankH, lowLightPar }: { meta: SpeciesMeta | un
                     : { background: c("surface"), color: c("text") }
                 }
               >
-                {FACTOR_LABEL[f].zh}
-                {FACTOR_LABEL[f].en !== FACTOR_LABEL[f].zh && <span style={{ opacity: 0.7 }}> {FACTOR_LABEL[f].en}</span>}
+                {FACTOR_LABEL[f]}
               </span>
             ))
           )}

@@ -185,26 +185,26 @@ function SimContent() {
   return (
     <main className="mx-auto max-w-4xl px-6 py-10">
       <div className="mb-6 flex items-center gap-3">
-        <Link href="/studio" className="text-sm hover:opacity-70" style={{ color: MUTED }}>← 工作室</Link>
+        <Link href="/studio" className="text-sm hover:opacity-70" style={{ color: MUTED }}>← Studio</Link>
         <span style={{ color: BORDER }}>/</span>
         <span className="text-sm" style={{ color: TEXT }}>{name}</span>
       </div>
 
       <div className="mb-6 flex items-baseline justify-between">
-        <h1 className="text-2xl font-bold" style={{ color: TEXT }}>生长模拟</h1>
+        <h1 className="text-2xl font-bold" style={{ color: TEXT }}>Growth simulation</h1>
         <button
           onClick={() => router.push(`/studio/scene?${params.toString()}`)}
           className="text-sm px-3 py-1.5 rounded-lg transition-opacity hover:opacity-80"
           style={{ backgroundColor: ACCENT, color: TEXT }}
         >
-          🌿 3D 预览
+          🌿 3D preview
         </button>
         <button
           onClick={() => router.push("/studio/new")}
           className="text-sm px-3 py-1.5 rounded-lg transition-opacity hover:opacity-70"
           style={{ backgroundColor: BORDER, color: MUTED }}
         >
-          重新配置
+          Change setup
         </button>
       </div>
 
@@ -215,7 +215,7 @@ function SimContent() {
       >
         {/* Horizon */}
         <div className="flex flex-col gap-1.5">
-          <span className="text-xs" style={{ color: MUTED }}>模拟天数</span>
+          <span className="text-xs" style={{ color: MUTED }}>Days</span>
           <div className="flex gap-2">
             {[7, 14, 30, 60, 90].map((d) => (
               <button
@@ -224,7 +224,7 @@ function SimContent() {
                 className="px-3 py-1.5 rounded text-xs font-medium transition-colors"
                 style={{ backgroundColor: days === d ? ACCENT : BORDER, color: TEXT }}
               >
-                {d}天
+                {d}d
               </button>
             ))}
           </div>
@@ -232,7 +232,7 @@ function SimContent() {
 
         {/* Light */}
         <div className="flex flex-col gap-1.5">
-          <span className="text-xs" style={{ color: MUTED }}>光照</span>
+          <span className="text-xs" style={{ color: MUTED }}>Light</span>
           <div className="flex gap-2">
             {(["Low", "Medium", "High"] as const).map((l) => (
               <button
@@ -241,7 +241,7 @@ function SimContent() {
                 className="px-3 py-1.5 rounded text-xs font-medium transition-colors"
                 style={{ backgroundColor: light === l ? ACCENT : BORDER, color: TEXT }}
               >
-                {l === "Low" ? "弱" : l === "Medium" ? "中" : "强"}
+                {l}
               </button>
             ))}
           </div>
@@ -268,14 +268,14 @@ function SimContent() {
         className="rounded-xl border p-5 mb-6"
         style={{ backgroundColor: BG, borderColor: BORDER }}
       >
-        <p className="text-xs mb-3" style={{ color: MUTED }}>生物量 (g) · {days} 天</p>
+        <p className="text-xs mb-3" style={{ color: MUTED }}>Biomass (g) · {days} days</p>
         <GrowthChart series={series} days={days} />
       </div>
 
       {/* Legend + stats */}
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         <div className="rounded-xl border p-5" style={{ backgroundColor: BG, borderColor: BORDER }}>
-          <p className="text-xs mb-3" style={{ color: MUTED }}>植物图例</p>
+          <p className="text-xs mb-3" style={{ color: MUTED }}>Legend</p>
           <div className="flex flex-col gap-2">
             {series.map((s) => (
               <div key={s.id} className="flex items-center justify-between">
@@ -292,12 +292,12 @@ function SimContent() {
         </div>
 
         <div className="rounded-xl border p-5" style={{ backgroundColor: BG, borderColor: BORDER }}>
-          <p className="text-xs mb-3" style={{ color: MUTED }}>第 {days} 天统计</p>
+          <p className="text-xs mb-3" style={{ color: MUTED }}>Day {days} summary</p>
           <div className="flex flex-col gap-3">
-            <Stat label="总生物量" value={`${Math.round(finalBiomass)} g`} />
-            <Stat label="植物种类" value={`${series.length} 种`} />
-            <Stat label="光照" value={light === "Low" ? "弱光" : light === "Medium" ? "中光" : "强光"} />
-            <Stat label="CO₂" value={co2 ? "开启" : "关闭"} />
+            <Stat label="Total biomass" value={`${Math.round(finalBiomass)} g`} />
+            <Stat label="Species" value={`${series.length}`} />
+            <Stat label="Light" value={light} />
+            <Stat label="CO₂" value={co2 ? "On" : "Off"} />
           </div>
         </div>
       </div>
@@ -316,7 +316,7 @@ function Stat({ label, value }: { label: string; value: string }) {
 
 export default function SimPage() {
   return (
-    <Suspense fallback={<div className="p-10 text-center" style={{ color: "#8FAF9A" }}>加载中…</div>}>
+    <Suspense fallback={<div className="p-10 text-center" style={{ color: "#8FAF9A" }}>Loading…</div>}>
       <SimContent />
     </Suspense>
   )

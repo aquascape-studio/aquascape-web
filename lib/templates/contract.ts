@@ -1,5 +1,5 @@
 /**
- * Style templates — contract v1.0.0.
+ * Style templates — contract v1.0.2.
  *
  * OWNER: orchestrator only. Sub-agents MUST NOT edit this file; report
  * disagreements in the PR instead.
@@ -29,9 +29,14 @@ import type { CompositionGuide, StoneRole } from "@aquascape-studio/render"
 import type { HardscapeVisual } from "@aquascape-studio/render"
 import type { PlantPlacement, TankDims } from "../sim/vendor/sim-core/contract"
 
-export const TEMPLATE_CONTRACT_VERSION = "1.0.1" as const
+export const TEMPLATE_CONTRACT_VERSION = "1.0.2" as const
 
 /*
+ * 1.0.2 (2026-11-17, owner decision: English-only app; orchestrator-authorised
+ * app-agent edit):
+ *  - ScapeTemplate drops nameZh / blurbZh; nameEn / blurbEn become the single
+ *    English `name` / `blurb`.
+ *
  * 1.0.1 (2026-11-15, from app-agent objections):
  *  - Composition gains "iwagumi" (odd-stone triangle grouping). Existing
  *    iwagumi templates should use it instead of "triangle".
@@ -88,11 +93,10 @@ export interface ScapeTemplate {
   id: string
   style: ScapeStyle
   composition: Composition
-  nameZh: string
-  nameEn: string
-  /** one sentence, ≤ 40 Chinese chars */
-  blurbZh: string
-  blurbEn: string
+  /** display name, "<Style> · <Composition>", e.g. "Iwagumi · Sanzon" */
+  name: string
+  /** one short English sentence */
+  blurb: string
   light: LightLevel
   co2: boolean
   /** composition guide that best explains this layout */

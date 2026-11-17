@@ -77,12 +77,10 @@ function PlantCard({ plant }: { plant: Plant }) {
 export function PlantsGrid({ plants }: { plants: Plant[] }) {
   const [query, setQuery] = useState('');
 
-  const filtered = query.trim()
-    ? plants.filter(
-        (p) =>
-          p.name.toLowerCase().includes(query.toLowerCase()) ||
-          p.scientificName.toLowerCase().includes(query.toLowerCase()),
-      )
+  // English-only search: common name, scientific name, id
+  const q = query.trim().toLowerCase();
+  const filtered = q
+    ? plants.filter((p) => [p.name, p.scientificName, p.id].some((f) => f.toLowerCase().includes(q)))
     : plants;
 
   return (

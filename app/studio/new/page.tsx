@@ -12,10 +12,10 @@ const ACCENT = "#3A6B50"
 
 const TANK_PRESETS = [
   { label: "Nano (30×20×25 cm)",   w: 30,  d: 20, h: 25, vol: 15  },
-  { label: "小缸 (45×27×30 cm)",   w: 45,  d: 27, h: 30, vol: 36  },
-  { label: "标准 (60×30×36 cm)",   w: 60,  d: 30, h: 36, vol: 65  },
-  { label: "中缸 (90×45×45 cm)",   w: 90,  d: 45, h: 45, vol: 182 },
-  { label: "大缸 (120×50×50 cm)",  w: 120, d: 50, h: 50, vol: 300 },
+  { label: "Nano (45×27×30 cm)",   w: 45,  d: 27, h: 30, vol: 36  },
+  { label: "Standard (60×30×36 cm)", w: 60,  d: 30, h: 36, vol: 65  },
+  { label: "Large (90×45×45 cm)",  w: 90,  d: 45, h: 45, vol: 182 },
+  { label: "XL (120×50×50 cm)",    w: 120, d: 50, h: 50, vol: 300 },
 ]
 
 const PLANTS = [
@@ -86,10 +86,10 @@ export default function NewTankPage() {
     <main className="mx-auto max-w-2xl px-6 py-10">
       <div className="mb-6 flex items-center gap-3">
         <Link href="/studio" className="text-sm hover:opacity-70" style={{ color: MUTED }}>
-          ← 工作室
+          ← Studio
         </Link>
         <span style={{ color: BORDER }}>/</span>
-        <span className="text-sm" style={{ color: TEXT }}>新建水草缸</span>
+        <span className="text-sm" style={{ color: TEXT }}>New tank</span>
       </div>
 
       {/* Steps indicator */}
@@ -109,14 +109,14 @@ export default function NewTankPage() {
           </div>
         ))}
         <span className="ml-2 text-sm self-center" style={{ color: MUTED }}>
-          {step === 1 ? "选择缸体" : step === 2 ? "添加植物" : "确认配置"}
+          {step === 1 ? "Choose a tank" : step === 2 ? "Add plants" : "Review"}
         </span>
       </div>
 
       {/* Step 1: Tank size */}
       {step === 1 && (
         <div className="flex flex-col gap-4">
-          <h2 className="text-xl font-semibold" style={{ color: TEXT }}>缸体尺寸</h2>
+          <h2 className="text-xl font-semibold" style={{ color: TEXT }}>Tank size</h2>
           <div className="flex flex-col gap-2">
             {TANK_PRESETS.map((t, i) => (
               <button
@@ -134,7 +134,7 @@ export default function NewTankPage() {
             ))}
           </div>
           <div className="flex flex-col gap-2 mt-2">
-            <label className="text-sm" style={{ color: MUTED }}>缸体名称</label>
+            <label className="text-sm" style={{ color: MUTED }}>Tank name</label>
             <input
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -147,7 +147,7 @@ export default function NewTankPage() {
             className="mt-2 rounded-lg px-6 py-3 font-medium text-sm transition-opacity hover:opacity-80"
             style={{ backgroundColor: ACCENT, color: TEXT }}
           >
-            下一步 →
+            Next →
           </button>
         </div>
       )}
@@ -156,8 +156,8 @@ export default function NewTankPage() {
       {step === 2 && (
         <div className="flex flex-col gap-4">
           <div className="flex items-baseline justify-between">
-            <h2 className="text-xl font-semibold" style={{ color: TEXT }}>选择植物</h2>
-            <span className="text-sm" style={{ color: MUTED }}>已选 {plantCount} 种</span>
+            <h2 className="text-xl font-semibold" style={{ color: TEXT }}>Choose plants</h2>
+            <span className="text-sm" style={{ color: MUTED }}>{plantCount} selected</span>
           </div>
           <div className="flex flex-col gap-2 max-h-[460px] overflow-y-auto pr-1">
             {PLANTS.map((p) => {
@@ -214,7 +214,7 @@ export default function NewTankPage() {
               className="rounded-lg px-5 py-3 text-sm transition-opacity hover:opacity-70"
               style={{ backgroundColor: BORDER, color: MUTED }}
             >
-              ← 返回
+              ← Back
             </button>
             <button
               onClick={() => setStep(3)}
@@ -222,7 +222,7 @@ export default function NewTankPage() {
               className="flex-1 rounded-lg px-6 py-3 font-medium text-sm transition-opacity hover:opacity-80 disabled:opacity-40"
               style={{ backgroundColor: ACCENT, color: TEXT }}
             >
-              下一步 → {plantCount > 0 && `(${plantCount} 种植物)`}
+              Next → {plantCount > 0 && `(${plantCount} ${plantCount === 1 ? "plant" : "plants"})`}
             </button>
           </div>
         </div>
@@ -231,11 +231,11 @@ export default function NewTankPage() {
       {/* Step 3: Settings + confirm */}
       {step === 3 && (
         <div className="flex flex-col gap-5">
-          <h2 className="text-xl font-semibold" style={{ color: TEXT }}>环境设置</h2>
+          <h2 className="text-xl font-semibold" style={{ color: TEXT }}>Environment</h2>
 
           {/* Light */}
           <div className="flex flex-col gap-2">
-            <label className="text-sm" style={{ color: MUTED }}>光照强度</label>
+            <label className="text-sm" style={{ color: MUTED }}>Light</label>
             <div className="flex gap-2">
               {(["Low", "Medium", "High"] as const).map((l) => (
                 <button
@@ -247,7 +247,7 @@ export default function NewTankPage() {
                     color: TEXT,
                   }}
                 >
-                  {l === "Low" ? "弱光" : l === "Medium" ? "中光" : "强光"}
+                  {l}
                 </button>
               ))}
             </div>
@@ -257,8 +257,8 @@ export default function NewTankPage() {
           <div className="flex items-center justify-between rounded-xl border px-5 py-4"
             style={{ backgroundColor: BG, borderColor: BORDER }}>
             <div>
-              <p className="text-sm font-medium" style={{ color: TEXT }}>注入 CO₂</p>
-              <p className="text-xs mt-0.5" style={{ color: MUTED }}>开启后加速植物生长</p>
+              <p className="text-sm font-medium" style={{ color: TEXT }}>CO₂ injection</p>
+              <p className="text-xs mt-0.5" style={{ color: MUTED }}>Speeds up plant growth</p>
             </div>
             <button
               onClick={() => setCo2(!co2)}
@@ -280,8 +280,8 @@ export default function NewTankPage() {
             style={{ backgroundColor: BG, borderColor: BORDER }}>
             <p className="text-sm font-semibold" style={{ color: TEXT }}>{name}</p>
             <p className="text-xs" style={{ color: MUTED }}>
-              {TANK_PRESETS[preset]?.label} · {plantCount} 种植物 ·{" "}
-              {light === "Low" ? "弱光" : light === "Medium" ? "中光" : "强光"}{co2 ? " · CO₂" : ""}
+              {TANK_PRESETS[preset]?.label} · {plantCount} {plantCount === 1 ? "plant" : "plants"} ·{" "}
+              {light} light{co2 ? " · CO₂" : ""}
             </p>
             <div className="flex flex-wrap gap-1 mt-1">
               {Object.entries(selected).map(([id, qty]) => {
@@ -302,14 +302,14 @@ export default function NewTankPage() {
               className="rounded-lg px-5 py-3 text-sm transition-opacity hover:opacity-70"
               style={{ backgroundColor: BORDER, color: MUTED }}
             >
-              ← 返回
+              ← Back
             </button>
             <button
               onClick={handleCreate}
               className="flex-1 rounded-lg px-6 py-3 font-medium text-sm transition-opacity hover:opacity-80"
               style={{ backgroundColor: ACCENT, color: TEXT }}
             >
-              🔬 运行模拟
+              🔬 Run simulation
             </button>
           </div>
         </div>

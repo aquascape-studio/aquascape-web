@@ -40,7 +40,7 @@ function SceneLoader() {
       <div className="flex flex-col items-center gap-3">
         <div className="w-8 h-8 rounded-full border-2 border-t-transparent animate-spin"
           style={{ borderColor: "#3A6B50", borderTopColor: "transparent" }} />
-        <p className="text-sm" style={{ color: MUTED }}>渲染水草缸中…</p>
+        <p className="text-sm" style={{ color: MUTED }}>Rendering your tank…</p>
       </div>
     </div>
   )
@@ -79,7 +79,7 @@ function SceneContent() {
         style={{ backgroundColor: BG, borderBottom: `1px solid ${BORDER}` }}>
         <div className="flex items-center gap-3">
           <Link href="/studio" className="text-sm hover:opacity-70" style={{ color: MUTED }}>
-            ← 工作室
+            ← Studio
           </Link>
           <span style={{ color: BORDER }}>/</span>
           <span className="text-sm font-medium" style={{ color: TEXT }}>{name}</span>
@@ -93,14 +93,14 @@ function SceneContent() {
             className="text-sm px-3 py-1.5 rounded-lg transition-opacity hover:opacity-70"
             style={{ backgroundColor: BORDER, color: MUTED }}
           >
-            📈 生长曲线
+            📈 Growth curve
           </button>
           <button
             onClick={() => router.push("/studio/new")}
             className="text-sm px-3 py-1.5 rounded-lg transition-opacity hover:opacity-70"
             style={{ backgroundColor: BORDER, color: MUTED }}
           >
-            重新配置
+            Change setup
           </button>
         </div>
       </div>
@@ -117,7 +117,7 @@ function SceneContent() {
         {/* Plant legend overlay */}
         <div className="absolute bottom-4 left-4 rounded-xl border p-3 max-w-xs"
           style={{ backgroundColor: "rgba(15,42,32,0.85)", borderColor: BORDER, backdropFilter: "blur(6px)" }}>
-          <p className="text-xs mb-2" style={{ color: MUTED }}>植物配置</p>
+          <p className="text-xs mb-2" style={{ color: MUTED }}>Plants</p>
           <div className="flex flex-col gap-1.5">
             {scenePlants.map((p) => (
               <div key={p.id} className="flex items-center gap-2">
@@ -132,7 +132,7 @@ function SceneContent() {
         {/* Controls hint */}
         <div className="absolute bottom-4 right-4 rounded-lg border px-3 py-2"
           style={{ backgroundColor: "rgba(15,42,32,0.85)", borderColor: BORDER, backdropFilter: "blur(6px)" }}>
-          <p className="text-xs" style={{ color: MUTED }}>拖动旋转 · 滚轮缩放</p>
+          <p className="text-xs" style={{ color: MUTED }}>Drag to rotate · Scroll to zoom</p>
         </div>
       </div>
     </div>

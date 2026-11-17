@@ -57,7 +57,7 @@ export default function TotalChart({ total, days, day, events, species, onSeek }
 
   const nameOf = (plantId: string) => {
     const s = species.find((sp) => sp.instanceIds.includes(plantId))
-    return s ? `${s.zh} #${plantId.split("#")[1] ?? ""}` : plantId
+    return s ? `${s.name} #${plantId.split("#")[1] ?? ""}` : plantId
   }
 
   const hd = hover ?? null
@@ -71,7 +71,7 @@ export default function TotalChart({ total, days, day, events, species, onSeek }
         viewBox={`0 0 ${W} ${H + LANE_H}`}
         className="block w-full touch-none select-none"
         role="img"
-        aria-label={`总生物量曲线 Total biomass, day 0–${days}. 第 ${cur} 天 ${fmtG(total[cur] ?? 0)} g`}
+        aria-label={`Total biomass, day 0–${days}. Day ${cur}: ${fmtG(total[cur] ?? 0)} g`}
         onPointerMove={(e) => setHover(dayFromEvent(e.clientX))}
         onPointerLeave={() => setHover(null)}
         onPointerDown={(e) => onSeek(dayFromEvent(e.clientX))}
@@ -92,7 +92,7 @@ export default function TotalChart({ total, days, day, events, species, onSeek }
         ))}
         {(W < 640 ? [0, 30, 60, 90] : [0, 15, 30, 45, 60, 75, 90]).filter((d) => d <= days).map((d) => (
           <text key={d} x={x(d)} y={H - 8} textAnchor="middle" fontSize="12" fill={c("muted")} className="tl-num">
-            {d === 0 ? "第 0 天" : d}
+            {d === 0 ? "Day 0" : d}
           </text>
         ))}
         {area && <path d={area} fill={`url(#g${gid})`} />}
@@ -122,7 +122,7 @@ export default function TotalChart({ total, days, day, events, species, onSeek }
               rx="2"
               fill={eventColor(t)}
             >
-              <title>{`第 ${d} 天 · ${EVENT_LABEL[t].zh} ${EVENT_LABEL[t].en}`}</title>
+              <title>{`Day ${d} · ${EVENT_LABEL[t].label}`}</title>
             </rect>
           ))
         })}
@@ -133,15 +133,15 @@ export default function TotalChart({ total, days, day, events, species, onSeek }
           className="pointer-events-none absolute top-0 z-10 min-w-[150px] max-w-[240px] rounded-[14px] px-3 py-2 text-xs tl-glass"
           style={{ left: `${(x(hd) / W) * 100}%`, transform: `translateX(${hd > days * 0.7 ? "-105%" : "8px"})` }}
         >
-          <p className="font-semibold tl-num">第 {hd} 天 · Day {hd}</p>
+          <p className="font-semibold tl-num">Day {hd}</p>
           <p className="tl-num" style={{ color: c("muted") }}>
-            {total[hd] !== undefined ? `${fmtG(total[hd]!)} g 总生物量` : "计算中… computing"}
+            {total[hd] !== undefined ? `${fmtG(total[hd]!)} g total biomass` : "Computing…"}
           </p>
           {hEvents.slice(0, 4).map((e, i) => (
             <p key={i} className="mt-1 flex items-center gap-1.5">
               <span className="inline-block h-2 w-2 rounded-full" style={{ background: eventColor(e.type) }} />
               <span>
-                {EVENT_LABEL[e.type].zh} {EVENT_LABEL[e.type].en} · {nameOf(e.plantId)}
+                {EVENT_LABEL[e.type].label} · {nameOf(e.plantId)}
               </span>
             </p>
           ))}

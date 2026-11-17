@@ -1,5 +1,5 @@
 {
-  "syncedAt": "2026-11-16T10:04:35.970Z",
+  "syncedAt": "2026-11-17T05:03:28.349Z",
   "script": "scripts/sync-sim-core.sh",
   "simCore": {
     "repo": "aquascape-studio/aquascape-sim",
@@ -26,7 +26,7 @@
     "repo": "aquascape-studio/aquascape-botany",
     "path": "data/plants.json",
     "ref": "origin/main",
-    "commit": "9a8885fe769d0793af09e4fbd32c5d796640a0ee",
+    "commit": "e93753b0cd5a28b69d40f8b691958c933102a37c",
     "dirty": false
   }
 }

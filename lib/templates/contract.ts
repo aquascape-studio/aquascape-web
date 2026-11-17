@@ -1,5 +1,5 @@
 /**
- * Style templates (风格模板) — contract v1.0.0.
+ * Style templates — contract v1.0.0.
  *
  * OWNER: orchestrator only. Sub-agents MUST NOT edit this file; report
  * disagreements in the PR instead.

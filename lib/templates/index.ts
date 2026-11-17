@@ -1,5 +1,5 @@
 /**
- * Style templates (风格模板) — implementation of contract v1.0.1
+ * Style templates — implementation of contract v1.0.1
  * (lib/templates/contract.ts, orchestrator-owned).
  *
  * 1.0.1: iwagumi composition; group angle applied in cm space; group counts
@@ -7,15 +7,15 @@
  * at 60 total; suteishi default buriedFrac 0.35.
  *
  * Layout rules per style (sources listed in contract.ts):
- *  - Iwagumi 三尊石: Oyaishi on the left third, clearly the largest and
+ *  - Iwagumi sanzon: Oyaishi on the left third, clearly the largest and
  *    tallest; Fukuishi beside it and smaller; Soeishi smaller still; two
  *    Suteishi as fill on the opposite side (5 stones, odd count). Carpet and
  *    hairgrass only — no stems, no epiphytes. Steep bed slope (≈2 → 9 cm).
- *  - Nature triangle 三角构图: one dominant mass (wood + stones) peaking on the
+ *  - Nature triangle: one dominant mass (wood + stones) peaking on the
  *    left golden line, descending in height towards the right front.
- *  - Nature concave 凹形构图: two masses at the left and right edges, low open
+ *  - Nature concave: two masses at the left and right edges, low open
  *    centre that pulls the eye into depth.
- *  - Dutch streets 荷兰街道: no hardscape; single-species stem groups in thin
+ *  - Dutch streets: no hardscape; single-species stem groups in thin
  *    diagonal bands front → back, neighbouring streets alternate red / green
  *    and fine / broad leaves, terraced from low front to tall back,
  *    ≈1 species per 10 cm of a 60 cm tank.

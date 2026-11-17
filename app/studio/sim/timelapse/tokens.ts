@@ -1,5 +1,5 @@
 /**
- * Growth time-lapse design tokens ("v3 · 超白玻璃"). The ONLY place colours for
+ * Growth time-lapse design tokens ("v3 · ultra-white glass"). The ONLY place colours for
  * this view are defined. Components use the CSS variables (`var(--tl-*)`),
  * exposed on the view root by `tokenVars`.
  */

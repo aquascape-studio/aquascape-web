@@ -1,5 +1,5 @@
 /**
- * Drag editor (拖拽编辑器) — implementation of contract v1.1.0
+ * Drag editor — implementation of contract v1.1.0
  * (lib/editor/contract.ts, orchestrator-owned).
  *
  * A pure document model + reducer. Positions are sim-core cm (origin centre

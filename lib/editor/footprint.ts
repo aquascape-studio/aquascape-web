@@ -43,33 +43,3 @@ export function footprintHalfExtents(h: Pick<HardscapeVisual, "rotationY" | "siz
   const s = Math.sin(h.rotationY)
   return { x: Math.sqrt(a * a * c * c + b * b * s * s), z: Math.sqrt(a * a * s * s + b * b * c * c) }
 }
-
-/** glass clearance for hardscape footprints (render 1.3.0) */
-const HARDSCAPE_GLASS_MARGIN_CM = 1
-
-/**
- * Local copy of render 1.3.0 `clampHardscapeXZ()` (contract:
- * ../aquascape-render/src/contract.ts). Clamps (x, z) so the piece's rotated
- * footprint ellipse stays ≥ 1 cm inside the glass on x and z; an axis on
- * which the footprint is wider than the tank interior is centred (0).
- * Non-finite input on an axis is treated as the centre (0).
- *
- * TODO(render ≥ 1.3.0 on main): delete this copy and re-export
- * `clampHardscapeXZ` from "@aquascape-studio/render" (the render
- * implementation is not merged yet; see editor.test.ts for the parity test
- * to switch on then).
- */
-export function clampHardscapeXZ(
-  h: Pick<HardscapeVisual, "rotationY" | "sizeCm">,
-  tank: { widthCm: number; depthCm: number },
-  x: number,
-  z: number,
-): { x: number; z: number } {
-  const e = footprintHalfExtents(h)
-  const axis = (v: number, half: number, ext: number) => {
-    const max = half - HARDSCAPE_GLASS_MARGIN_CM - ext
-    if (!(max >= 0) || !Number.isFinite(v)) return 0
-    return Math.min(max, Math.max(-max, v)) + 0 // + 0: never -0
-  }
-  return { x: axis(x, tank.widthCm / 2, e.x), z: axis(z, tank.depthCm / 2, e.z) }
-}

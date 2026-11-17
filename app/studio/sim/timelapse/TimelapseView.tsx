@@ -306,6 +306,9 @@ export default function TimelapseView() {
                   onAddHardscape={editor.addHardscape}
                   onResize={editor.resizeSelected}
                   onWoodStyle={editor.setWoodStyle}
+                  onAttach={editor.attach}
+                  onDetach={editor.detachSelected}
+                  onLeanSide={editor.setLeanSide}
                 />
                 <div className="px-0 pt-6" data-testid="timeline-dock">
                   <ControlBar

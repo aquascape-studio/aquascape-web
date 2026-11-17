@@ -1,27 +1,34 @@
 /**
- * Style templates — implementation of contract v1.0.2
+ * Style templates — implementation of contract v1.1.0
  * (lib/templates/contract.ts, orchestrator-owned).
  *
  * 1.0.1: iwagumi composition; group angle applied in cm space; group counts
  * are references for a 60 × 30 cm footprint, scaled by tank area then capped
  * at 60 total; suteishi default buriedFrac 0.35.
  * 1.0.2: English-only — single `name` / `blurb`.
+ * 1.1.0: no regulated species; Nature templates have a "root" driftwood focal
+ * piece and ≥ 2 epiphyte groups (moss + Anubias / Bucephalandra / Java fern)
+ * seated on anchors() of their host (lib/editor/surface.ts, the render 1.4.0
+ * hardscapeAnchors stand-in); instantiate() returns `attach`.
  *
  * Layout rules per style (sources listed in contract.ts):
  *  - Iwagumi sanzon: Oyaishi on the left third, clearly the largest and
  *    tallest; Fukuishi beside it and smaller; Soeishi smaller still; two
  *    Suteishi as fill on the opposite side (5 stones, odd count). Carpet and
  *    hairgrass only — no stems, no epiphytes. Steep bed slope (≈2 → 9 cm).
- *  - Nature triangle: one dominant mass (wood + stones) peaking on the
- *    left golden line, descending in height towards the right front.
- *  - Nature concave: two masses at the left and right edges, low open
- *    centre that pulls the eye into depth.
+ *  - Nature triangle: one dominant mass peaking on the left golden line — a
+ *    root driftwood whose trunk leans left, in front of the stem background —
+ *    descending in height towards the right front; two stones in front.
+ *  - Nature concave: two masses at the left and right edges (a wide root
+ *    driftwood leaning left, a smaller one leaning right), low open centre
+ *    that pulls the eye into depth.
  *  - Dutch streets: no hardscape; single-species stem groups in thin
  *    diagonal bands front → back, neighbouring streets alternate red / green
  *    and fine / broad leaves, terraced from low front to tall back,
  *    ≈1 species per 10 cm of a 60 cm tank.
  */
 import type { HardscapeVisual, StoneRole } from "@aquascape-studio/render"
+import { anchors, surfaceY } from "../editor/surface"
 import type { PlantPlacement, TankDims } from "../sim/vendor/sim-core/contract"
 import type { InstantiatedTemplate, ScapeTemplate, TemplateHardscape, TemplatePlantGroup } from "./contract"
 
@@ -83,20 +90,23 @@ export const TEMPLATES: readonly ScapeTemplate[] = [
     focal: { u: 0.382, h: 0.55 },
     bed: { front: 0.05, back: 0.27 },
     hardscape: [
-      { id: "wood-main", kind: "wood", u: 0.36, v: 0.38, wFrac: 0.36, hFrac: 0.62, dFrac: 0.3, rotationY: 0.45, seed: 601 },
-      { id: "stone-a", kind: "stone", role: "oyaishi", u: 0.22, v: 0.56, wFrac: 0.14, hFrac: 0.26, dFrac: 0.26, rotationY: 0.3, seed: 613, buriedFrac: 0.2 },
-      { id: "stone-b", kind: "stone", role: "fukuishi", u: 0.45, v: 0.62, wFrac: 0.09, hFrac: 0.14, dFrac: 0.2, rotationY: -0.4, seed: 617, buriedFrac: 0.25 },
+      // 1.1.0 focal piece: root driftwood centred in front of the stem background, trunk leaning to the left peak
+      { id: "wood-main", kind: "wood", woodStyle: "root", leanSide: "left", u: 0.42, v: 0.48, wFrac: 0.47, hFrac: 0.62, dFrac: 0.26, rotationY: 0.12, seed: 601 },
+      { id: "stone-a", kind: "stone", role: "oyaishi", u: 0.15, v: 0.7, wFrac: 0.12, hFrac: 0.22, dFrac: 0.22, rotationY: 0.3, seed: 613, buriedFrac: 0.2 },
+      { id: "stone-b", kind: "stone", role: "fukuishi", u: 0.6, v: 0.74, wFrac: 0.08, hFrac: 0.12, dFrac: 0.17, rotationY: -0.4, seed: 617, buriedFrac: 0.25 },
     ],
     groups: [
       // tall background on the left, the peak of the triangle
       { speciesId: "rotala-rotundifolia", u: 0.13, v: 0.14, ru: 0.11, rv: 0.08, count: 5, portions: 2 },
       { speciesId: "pogostemon-erectus", u: 0.32, v: 0.12, ru: 0.1, rv: 0.07, count: 4, portions: 2 },
       // medium height towards the right
-      { speciesId: "cryptocoryne-wendtii", u: 0.62, v: 0.3, ru: 0.12, rv: 0.1, count: 4, portions: 1 },
-      // epiphytes on the hardscape
-      { speciesId: "microsorum-pteropus-trident", u: 0.36, v: 0.38, ru: 0.08, rv: 0.06, count: 3, portions: 1, onHardscape: "wood-main" },
-      { speciesId: "bucephalandra-sp-mini", u: 0.22, v: 0.56, ru: 0.04, rv: 0.04, count: 2, portions: 1, onHardscape: "stone-a" },
-      { speciesId: "anubias-barteri-nana-petite", u: 0.45, v: 0.62, ru: 0.03, rv: 0.03, count: 1, portions: 1, onHardscape: "stone-b" },
+      { speciesId: "cryptocoryne-wendtii", u: 0.72, v: 0.3, ru: 0.1, rv: 0.1, count: 4, portions: 1 },
+      // epiphytes tied onto the hardscape (seated on surface anchors): moss on the upper trunk,
+      // Java fern at the root flare, Bucephalandra / Anubias on the stones' shoulders
+      { speciesId: "taxiphyllum-barbieri", u: 0.3, v: 0.46, ru: 0.1, rv: 0.06, count: 3, portions: 1, onHardscape: "wood-main" },
+      { speciesId: "microsorum-pteropus-trident", u: 0.56, v: 0.5, ru: 0.08, rv: 0.06, count: 2, portions: 1, onHardscape: "wood-main" },
+      { speciesId: "bucephalandra-sp-mini", u: 0.15, v: 0.7, ru: 0.04, rv: 0.04, count: 2, portions: 1, onHardscape: "stone-a" },
+      { speciesId: "anubias-barteri-nana-petite", u: 0.6, v: 0.74, ru: 0.03, rv: 0.03, count: 1, portions: 1, onHardscape: "stone-b" },
       // low right side and foreground
       { speciesId: "cryptocoryne-parva", u: 0.84, v: 0.62, ru: 0.1, rv: 0.12, count: 4, portions: 1 },
       { speciesId: "staurogyne-repens", u: 0.2, v: 0.84, ru: 0.15, rv: 0.08, count: 5, portions: 1 },
@@ -115,22 +125,25 @@ export const TEMPLATES: readonly ScapeTemplate[] = [
     focal: { u: 0.47, h: 0.28 },
     bed: { front: 0.05, back: 0.22 },
     hardscape: [
-      { id: "wood-left", kind: "wood", u: 0.17, v: 0.4, wFrac: 0.26, hFrac: 0.58, dFrac: 0.26, rotationY: 0.5, seed: 701 },
-      { id: "wood-right", kind: "wood", u: 0.84, v: 0.38, wFrac: 0.22, hFrac: 0.5, dFrac: 0.24, rotationY: -0.55, seed: 709 },
-      { id: "stone-left", kind: "stone", role: "fukuishi", u: 0.27, v: 0.6, wFrac: 0.1, hFrac: 0.15, dFrac: 0.2, rotationY: 0.2, seed: 719, buriedFrac: 0.25 },
-      { id: "stone-right", kind: "stone", role: "soeishi", u: 0.74, v: 0.62, wFrac: 0.08, hFrac: 0.12, dFrac: 0.18, rotationY: -0.6, seed: 727, buriedFrac: 0.3 },
+      // 1.1.0 focal piece: a wide root driftwood whose trunk rises to the left edge; the low root flare points into the open centre
+      { id: "wood-left", kind: "wood", woodStyle: "root", leanSide: "left", u: 0.27, v: 0.47, wFrac: 0.45, hFrac: 0.6, dFrac: 0.24, rotationY: 0.1, seed: 701 },
+      { id: "wood-right", kind: "wood", woodStyle: "root", leanSide: "right", u: 0.83, v: 0.42, wFrac: 0.26, hFrac: 0.5, dFrac: 0.22, rotationY: -0.2, seed: 709 },
+      { id: "stone-left", kind: "stone", role: "fukuishi", u: 0.12, v: 0.72, wFrac: 0.1, hFrac: 0.15, dFrac: 0.2, rotationY: 0.2, seed: 719, buriedFrac: 0.25 },
+      { id: "stone-right", kind: "stone", role: "soeishi", u: 0.76, v: 0.66, wFrac: 0.08, hFrac: 0.12, dFrac: 0.18, rotationY: -0.6, seed: 727, buriedFrac: 0.3 },
     ],
     groups: [
       // left mass — tall background
       { speciesId: "rotala-rotundifolia", u: 0.1, v: 0.13, ru: 0.09, rv: 0.08, count: 4, portions: 2 },
       { speciesId: "ludwigia-repens", u: 0.27, v: 0.15, ru: 0.07, rv: 0.07, count: 3, portions: 2 },
-      // right mass — tall background
-      { speciesId: "limnophila-sessiliflora", u: 0.9, v: 0.13, ru: 0.08, rv: 0.08, count: 4, portions: 2 },
-      { speciesId: "hygrophila-polysperma", u: 0.74, v: 0.16, ru: 0.07, rv: 0.07, count: 3, portions: 2 },
-      // epiphytes on both woods
-      { speciesId: "microsorum-pteropus-windelov", u: 0.17, v: 0.4, ru: 0.06, rv: 0.05, count: 2, portions: 1, onHardscape: "wood-left" },
-      { speciesId: "taxiphyllum-barbieri", u: 0.84, v: 0.38, ru: 0.05, rv: 0.05, count: 2, portions: 1, onHardscape: "wood-right" },
-      { speciesId: "bucephalandra-kedagang", u: 0.27, v: 0.6, ru: 0.03, rv: 0.03, count: 1, portions: 1, onHardscape: "stone-left" },
+      // right mass — tall background (1.1.0: unregulated stems of the same fine / broad-leaf look
+      // replace Limnophila sessiliflora and Hygrophila polysperma, both US federal noxious weeds)
+      { speciesId: "limnophila-heterophylla", u: 0.9, v: 0.13, ru: 0.08, rv: 0.08, count: 4, portions: 2 },
+      { speciesId: "hygrophila-corymbosa-siamensis-53b", u: 0.74, v: 0.16, ru: 0.07, rv: 0.07, count: 3, portions: 2 },
+      // epiphytes tied onto both woods and the left stone: moss up the left trunk, Java fern at its flare
+      { speciesId: "vesicularia-montagnei", u: 0.14, v: 0.45, ru: 0.08, rv: 0.06, count: 2, portions: 1, onHardscape: "wood-left" },
+      { speciesId: "microsorum-pteropus-windelov", u: 0.38, v: 0.5, ru: 0.06, rv: 0.05, count: 2, portions: 1, onHardscape: "wood-left" },
+      { speciesId: "taxiphyllum-barbieri", u: 0.88, v: 0.42, ru: 0.05, rv: 0.05, count: 2, portions: 1, onHardscape: "wood-right" },
+      { speciesId: "bucephalandra-kedagang", u: 0.12, v: 0.72, ru: 0.03, rv: 0.03, count: 1, portions: 1, onHardscape: "stone-left" },
       // low valley floor: short grass at the back, carpet in front
       { speciesId: "eleocharis-acicularis-mini", u: 0.5, v: 0.3, ru: 0.14, rv: 0.12, count: 6, portions: 2 },
       { speciesId: "cryptocoryne-parva", u: 0.32, v: 0.78, ru: 0.08, rv: 0.08, count: 3, portions: 1 },
@@ -209,6 +222,9 @@ export function hardscapeFor(h: TemplateHardscape, tank: TankDims): HardscapeVis
     seed: h.seed,
   }
   if (h.role !== undefined) out.role = h.role
+  // 1.1.0: driftwood style / lean (render 1.3.0 / 1.4.0)
+  if (h.kind === "wood" && h.woodStyle !== undefined) out.woodStyle = h.woodStyle
+  if (h.kind === "wood" && h.woodStyle === "root" && h.leanSide !== undefined) out.leanSide = h.leanSide
   // suteishi default 0.35 (contract 1.0.1 / render 1.2.0) — made explicit so the doc carries it
   if (h.buriedFrac !== undefined) out.buriedFrac = h.buriedFrac
   else if (h.kind === "stone" && h.role === "suteishi") out.buriedFrac = defaultBuriedFrac("suteishi")
@@ -293,9 +309,14 @@ export function scaledCounts(groups: readonly TemplatePlantGroup[], tank: TankDi
   return counts
 }
 
+/** anchors offered per host piece to its epiphyte groups */
+export const TEMPLATE_ANCHORS = 12
+
 /**
  * Template → sim placements + render hardscape for a concrete tank. Pure and
- * deterministic for (t, tank, seed).
+ * deterministic for (t, tank, seed). Epiphyte groups (`onHardscape`) are
+ * seated on anchors(host, 12): each group takes the free anchors nearest to
+ * its (u, v, ru, rv) ellipse, and its placements are listed in `attach`.
  */
 export function instantiate(t: ScapeTemplate, tank: TankDims, seed = 0): InstantiatedTemplate {
   const { widthCm: W, depthCm: D, heightCm: H } = tank
@@ -310,6 +331,9 @@ export function instantiate(t: ScapeTemplate, tank: TankDims, seed = 0): Instant
   const areaScale = (W * D) / REF_AREA_CM2
 
   const counts = scaledCounts(t.groups, tank)
+  const attach: Record<string, string> = {}
+  const hostAnchors = new Map<string, ReturnType<typeof anchors>>()
+  const usedAnchors = new Map<string, Set<number>>()
   const perSpecies = new Map<string, number>()
   const plants: PlantPlacement[] = []
 
@@ -346,19 +370,40 @@ export function instantiate(t: ScapeTemplate, tank: TankDims, seed = 0): Instant
       return [cx + ca * lx - sa * lz, cz + sa * lx + ca * lz]
     }
 
+    // 1.1.0: epiphyte groups take the free host anchors nearest to their ellipse (normalised distance)
+    let seats: { x: number; z: number; y: number }[] = []
+    if (host) {
+      if (!hostAnchors.has(host.id)) {
+        hostAnchors.set(host.id, anchors(host, TEMPLATE_ANCHORS))
+        usedAnchors.set(host.id, new Set())
+      }
+      const list = hostAnchors.get(host.id)!
+      const used = usedAnchors.get(host.id)!
+      const ellipseDist = (ax: number, az: number) => {
+        const dx = ax - cx
+        const dz = az - cz
+        const lx = ca * dx + sa * dz
+        const lz = -sa * dx + ca * dz
+        return Math.hypot(lx / Math.max(0.5, a), lz / Math.max(0.5, b))
+      }
+      const order = list.map((_, i) => i).sort((i, j) => ellipseDist(list[i]!.x, list[i]!.z) - ellipseDist(list[j]!.x, list[j]!.z) || i - j)
+      const free = order.filter((i) => !used.has(i))
+      const pick = [...free, ...order].slice(0, n)
+      for (const i of pick) used.add(i)
+      seats = pick.map((i) => list[i]!)
+    }
+
     for (let k = 0; k < n; k++) {
       let x: number
       let z: number
       let y = 0
       if (host) {
-        // epiphyte: tie onto the host piece — inside its footprint, upper part of it
-        const [px, pz] = candidate(k, 0.25)
-        const hx = host.sizeCm[0] / 2
-        const hz = host.sizeCm[2] / 2
-        x = clampX(Math.min(host.x + hx * 0.6, Math.max(host.x - hx * 0.6, px)))
-        z = clampZ(Math.min(host.z + hz * 0.6, Math.max(host.z - hz * 0.6, pz)))
-        const exposed = host.sizeCm[1] * (1 - (host.buriedFrac ?? defaultBuriedFrac(host.role)))
-        y = r2(exposed * (host.kind === "wood" ? 0.45 + 0.25 * rand() : 0.6 + 0.25 * rand()))
+        const seat = seats[k]
+        if (!seat) continue // a piece without an upward-facing surface: nothing to tie onto
+        x = r2(clampX(seat.x))
+        z = r2(clampZ(seat.z))
+        // the surface height at the stored position, exactly as the editor seats it (no drift on load)
+        y = Math.max(0.1, r2(surfaceY(host, x, z) ?? seat.y))
       } else {
         let found: [number, number] | null = null
         for (let tries = 0; tries < 40 && !found; tries++) {
@@ -372,7 +417,9 @@ export function instantiate(t: ScapeTemplate, tank: TankDims, seed = 0): Instant
       }
       const no = (perSpecies.get(g.speciesId) ?? 0) + 1
       perSpecies.set(g.speciesId, no)
-      plants.push({ id: `${g.speciesId}-${no}`, speciesId: g.speciesId, x: r2(x), z: r2(z), y, portions })
+      const id = `${g.speciesId}-${no}`
+      plants.push({ id, speciesId: g.speciesId, x: r2(x), z: r2(z), y, portions })
+      if (host) attach[id] = host.id
     }
   })
 
@@ -381,6 +428,7 @@ export function instantiate(t: ScapeTemplate, tank: TankDims, seed = 0): Instant
     hardscape,
     focalPoint: { x: r2((t.focal.u - 0.5) * W), y: r2(t.focal.h * H) },
     bed: { frontCm: r2(t.bed.front * H), backCm: r2(t.bed.back * H) },
+    attach,
   }
 }
 

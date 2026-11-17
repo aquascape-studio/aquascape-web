@@ -22,7 +22,7 @@ import type { PlantPlacement, TankDims } from "../sim/vendor/sim-core/contract"
 import type { InstantiatedTemplate } from "../templates/contract"
 import type { EditOp, EditorAction, EditorState, ScapeDoc } from "./contract"
 import { footprintContains, footprintHalfExtents } from "./footprint"
-import { anchors, surfaceY } from "./surface"
+import { anchors, surfaceY, type SurfaceAnchor } from "./surface"
 
 export type { EditOp, EditorAction, EditorState, ScapeDoc } from "./contract"
 export { EDITOR_CONTRACT_VERSION } from "./contract"
@@ -225,10 +225,10 @@ function withAttach(doc: ScapeDoc, m: ReadonlyMap<string, string>): ScapeDoc {
 type Seat = { x: number; z: number; y: number }
 
 /** nearest anchor (floor distance) of anchors(h, 8), or null when the piece has none */
-function nearestAnchor(h: HardscapeVisual, x: number, z: number): Seat | null {
+function nearestAnchor(h: HardscapeVisual, tank: TankDims, x: number, z: number): Seat | null {
   let best: Seat | null = null
   let bestD = Infinity
-  for (const a of anchors(h, ATTACH_ANCHORS)) {
+  for (const a of anchorsInTank(h, tank, ATTACH_ANCHORS)) {
     const d = Math.hypot(a.x - x, a.z - z)
     if (d < bestD) {
       bestD = d
@@ -244,6 +244,13 @@ function nearestAnchor(h: HardscapeVisual, x: number, z: number): Seat | null {
  * then y = surfaceY; where the surface misses, the nearest anchor is used.
  */
 export function seatOn(h: HardscapeVisual, tank: TankDims, x: number, z: number): Seat {
+  // 1.2.1: render 1.4.0 surfaces reach past the footprint ellipse (branch tips) —
+  // a spot that has a surface is on the host already
+  if (Number.isFinite(x) && Number.isFinite(z)) {
+    const [cx, cz] = clampPos(tank, x, z)
+    const y = surfaceY(h, cx, cz)
+    if (y !== null && y > 0) return { x: cx, z: cz, y: Math.max(MIN_ATTACHED_Y, r2(y)) }
+  }
   const a = Math.max(0.05, h.sizeCm[0] / 2 - HOST_INSET_CM)
   const b = Math.max(0.05, h.sizeCm[2] / 2 - HOST_INSET_CM)
   const c = Math.cos(h.rotationY)
@@ -274,7 +281,7 @@ export function seatAt(h: HardscapeVisual, tank: TankDims, x: number, z: number)
   const [cx, cz] = clampPos(tank, Number.isFinite(x) ? x : h.x, Number.isFinite(z) ? z : h.z)
   const y = surfaceY(h, cx, cz)
   if (y !== null && y > 0) return { x: cx, z: cz, y: Math.max(MIN_ATTACHED_Y, r2(y)) }
-  const an = nearestAnchor(h, cx, cz)
+  const an = nearestAnchor(h, tank, cx, cz)
   if (an) return anchorSeat(h, tank, an)
   return { x: cx, z: cz, y: Math.max(MIN_ATTACHED_Y, r2(y ?? 0)) }
 }
@@ -283,7 +290,35 @@ export function seatAt(h: HardscapeVisual, tank: TankDims, x: number, z: number)
 function anchorSeat(h: HardscapeVisual, tank: TankDims, a: Seat): Seat {
   const [ax, az] = clampPos(tank, a.x, a.z)
   const y = surfaceY(h, ax, az)
-  return { x: ax, z: az, y: Math.max(MIN_ATTACHED_Y, r2(y !== null && y > 0 ? y : a.y)) }
+  if (y !== null && y > 0) return { x: ax, z: az, y: Math.max(MIN_ATTACHED_Y, r2(y)) }
+  // rounding / glass clamping can step off a thin twig: snap to the nearest spot that has a surface
+  const snap = snapToSurface(h, tank, ax, az)
+  if (snap) return snap
+  return { x: ax, z: az, y: Math.max(MIN_ATTACHED_Y, r2(a.y)) }
+}
+
+/** nearest (x, z) within 1.5 cm of (x, z) with a surface on `h` (rings of 8–16 probes), or null */
+/**
+ * anchors(h, n) that lie inside the glass (1 cm margin): branch tips of a
+ * rotated piece can reach past the footprint ellipse that clampHardscapeXZ keeps inside
+ */
+function anchorsInTank(h: HardscapeVisual, tank: TankDims, n: number): SurfaceAnchor[] {
+  const xm = tank.widthCm / 2 - 1
+  const zm = tank.depthCm / 2 - 1
+  return anchors(h, n).filter((a) => Math.abs(a.x) <= xm && Math.abs(a.z) <= zm)
+}
+
+function snapToSurface(h: HardscapeVisual, tank: TankDims, x: number, z: number): Seat | null {
+  for (let r = 0.05; r <= 1.5 + 1e-9; r += 0.05) {
+    const k = r < 0.5 ? 8 : 16
+    for (let i = 0; i < k; i++) {
+      const t = (i / k) * 2 * Math.PI
+      const [cx, cz] = clampPos(tank, x + r * Math.cos(t), z + r * Math.sin(t))
+      const y = surfaceY(h, cx, cz)
+      if (y !== null && y > 0) return { x: cx, z: cz, y: Math.max(MIN_ATTACHED_Y, r2(y)) }
+    }
+  }
+  return null
 }
 
 function seated(p: PlantPlacement, seat: Seat): PlantPlacement {
@@ -355,7 +390,7 @@ function reseatCarried(doc: ScapeDoc, oldId: string, newH: HardscapeVisual, to: 
 function reseatOnAnchors(doc: ScapeDoc, oldH: HardscapeVisual, newH: HardscapeVisual): PlantPlacement[] {
   const carried = new Set(attachedTo(doc, oldH.id))
   if (carried.size === 0) return doc.plants
-  const list = anchors(newH, ATTACH_ANCHORS)
+  const list = anchorsInTank(newH, doc.tank, ATTACH_ANCHORS)
   const taken = new Set<number>()
   const dx = newH.x - oldH.x
   const dz = newH.z - oldH.z
@@ -485,13 +520,14 @@ function addPlant(doc: ScapeDoc, speciesId: string, x: number, z: number, portio
  */
 export function attachSeat(doc: ScapeDoc, h: HardscapeVisual, x?: number, z?: number): Seat | null {
   if (x === undefined || z === undefined) {
-    const list = anchors(h, ATTACH_ANCHORS)
+    const list = anchorsInTank(h, doc.tank, ATTACH_ANCHORS)
     if (list.length === 0) return null
     const attached = doc.plants.filter((p) => hostOf(doc, p.id) !== undefined)
     const free = list.find((a) => !attached.some((p) => Math.hypot(p.x - a.x, p.y - a.y, p.z - a.z) < ANCHOR_TAKEN_CM)) ?? list[0]!
     return anchorSeat(h, doc.tank, free)
   }
-  if (!Number.isFinite(x) || !Number.isFinite(z) || !footprintContains(h, x, z, 0)) return null
+  // 1.2.1: "on the piece" = it has a surface there (render surfaces reach past the footprint ellipse)
+  if (!Number.isFinite(x) || !Number.isFinite(z)) return null
   const [cx, cz] = clampPos(doc.tank, x, z)
   const y = surfaceY(h, cx, cz)
   if (y === null || !(y > 0)) return null

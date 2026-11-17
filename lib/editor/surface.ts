@@ -2,7 +2,12 @@
  * Hardscape surface heights + attachment anchors for epiphytes (editor 1.2.0,
  * templates 1.1.0).
  *
- * SWAP POINT: this is a local geometric APPROXIMATION of render 1.4.0
+ * 2026-11-17 (orchestrator): render 1.4.0 has landed — `surfaceY` / `anchors`
+ * now delegate to the render exports, which match the rendered mesh to
+ * ≤ 0.5 cm. The geometric approximation below is kept as `approxSurfaceY` /
+ * `approxAnchors` for reference and tests only.
+ *
+ * (Original note) SWAP POINT: this was a local geometric APPROXIMATION of render 1.4.0
  * `hardscapeSurfaceY()` / `hardscapeAnchors()` (contract:
  * ../aquascape-render/src/contract.ts, 1.4.0 block), which are not exported
  * from render main yet. Every editor and template call site goes through this
@@ -23,6 +28,7 @@
  * Same frame as PlantVisual.y (above the local bed surface).
  */
 import type { HardscapeVisual, LeanSide, SurfaceAnchor } from "@aquascape-studio/render"
+import { hardscapeAnchors, hardscapeSurfaceY } from "@aquascape-studio/render"
 
 export type { SurfaceAnchor } from "@aquascape-studio/render"
 
@@ -62,7 +68,7 @@ function smoothstep(t: number): number {
  * when the column misses the piece (outside its footprint ellipse).
  * Signature and frame as render 1.4.0 `hardscapeSurfaceY(h, x, z)`.
  */
-export function surfaceY(h: SurfacePiece, x: number, z: number): number | null {
+export function approxSurfaceY(h: SurfacePiece, x: number, z: number): number | null {
   if (!Number.isFinite(x) || !Number.isFinite(z)) return null
   const a = h.sizeCm[0] / 2
   const b = h.sizeCm[2] / 2
@@ -116,8 +122,8 @@ function surfaceNormal(h: SurfacePiece, x: number, z: number, y: number): { nx: 
     if (m !== null) return (y - m) / e
     return 0
   }
-  const gx = slope(surfaceY(h, x + e, z), surfaceY(h, x - e, z))
-  const gz = slope(surfaceY(h, x, z + e), surfaceY(h, x, z - e))
+  const gx = slope(approxSurfaceY(h, x + e, z), approxSurfaceY(h, x - e, z))
+  const gz = slope(approxSurfaceY(h, x, z + e), approxSurfaceY(h, x, z - e))
   const n = Math.hypot(gx, 1, gz)
   return { nx: -gx / n, ny: 1 / n, nz: -gz / n }
 }
@@ -131,7 +137,7 @@ const r2 = (v: number) => Math.round(v * 100) / 100 + 0
  * then left-to-right. Signature as render 1.4.0 `hardscapeAnchors(h, n)`.
  * Returns [] for n ≤ 0.
  */
-export function anchors(h: SurfacePiece, n: number): SurfaceAnchor[] {
+export function approxAnchors(h: SurfacePiece, n: number): SurfaceAnchor[] {
   if (!(n > 0)) return []
   const count = Math.floor(n)
   const a = h.sizeCm[0] / 2
@@ -152,7 +158,7 @@ export function anchors(h: SurfacePiece, n: number): SurfaceAnchor[] {
       const lz = rr * Math.sin(th) * b
       const x = h.x + lx * c + lz * s
       const z = h.z - lx * s + lz * c
-      const y = surfaceY(h, x, z)
+      const y = approxSurfaceY(h, x, z)
       if (y === null || y <= 0) continue
       all.push({ x, z, y, ...surfaceNormal(h, x, z, y) })
     }
@@ -194,4 +200,31 @@ export function anchors(h: SurfacePiece, n: number): SurfaceAnchor[] {
   return picked
     .map((p) => ({ x: r2(p.x), z: r2(p.z), y: r2(p.y), nx: r2(p.nx), ny: r2(p.ny), nz: r2(p.nz) }))
     .sort((p, q) => q.z - p.z || p.x - q.x)
+}
+
+/** a full render piece from the editor's structural subset (id is not part of the geometry) */
+function asPiece(h: SurfacePiece): HardscapeVisual {
+  return {
+    id: "",
+    kind: h.kind,
+    x: h.x,
+    z: h.z,
+    rotationY: h.rotationY,
+    sizeCm: h.sizeCm,
+    seed: h.seed ?? 0,
+    role: h.role,
+    buriedFrac: h.buriedFrac,
+    woodStyle: h.woodStyle,
+    leanSide: h.leanSide,
+  }
+}
+
+/** top-surface height at (x, z) — render 1.4.0 hardscapeSurfaceY */
+export function surfaceY(h: SurfacePiece, x: number, z: number): number | null {
+  return hardscapeSurfaceY(asPiece(h), x, z)
+}
+
+/** attachment anchors — render 1.4.0 hardscapeAnchors */
+export function anchors(h: SurfacePiece, n: number): SurfaceAnchor[] {
+  return hardscapeAnchors(asPiece(h), n)
 }

@@ -26,7 +26,7 @@ import {
   migrateAttach,
   needsResim,
 } from "./index"
-import { anchors, exposedHeight, leanSign, surfaceY } from "./surface"
+import { anchors, approxAnchors, approxSurfaceY, exposedHeight, leanSign, surfaceY } from "./surface"
 
 const TANK = { widthCm: 60, depthCm: 30, heightCm: 36 }
 const P = (id: string): EditTarget => ({ kind: "plant", id })
@@ -70,7 +70,7 @@ function checkInvariants(doc: ScapeDoc, label = ""): void {
     } else {
       const h = hs.get(hid)!
       expect(p.y, `${label} ${p.id} attached y`).toBeGreaterThan(0)
-      expect(footprintContains(h, p.x, p.z, 0.01), `${label} ${p.id} on ${hid}`).toBe(true)
+      expect(surfaceY(h, p.x, p.z), `${label} ${p.id} on ${hid}`).not.toBeNull()
       expect(p.y).toBeCloseTo(Math.max(0.1, surfaceY(h, p.x, p.z)!), 2)
       expect(canAttach(p.speciesId), `${label} ${p.id} species`).toBe(true)
     }
@@ -79,15 +79,15 @@ function checkInvariants(doc: ScapeDoc, label = ""): void {
   expect(migrateAttach(doc), `${label} migrateAttach is a no-op`).toBe(doc)
 }
 
-describe("surface.ts (render 1.4.0 stand-in)", () => {
+describe("surface.ts approximation (kept for reference)", () => {
   it("surfaceY is null off the footprint, ≥ 0 on it, ≤ the exposed height", () => {
     for (const h of [ROOT, ROCK, { ...ROOT, woodStyle: "log" as const }, { ...ROOT, woodStyle: "branchy" as const }]) {
-      expect(surfaceY(h, h.x + h.sizeCm[0], h.z)).toBeNull()
-      expect(surfaceY(h, Number.NaN, h.z)).toBeNull()
+      expect(approxSurfaceY(h, h.x + h.sizeCm[0], h.z)).toBeNull()
+      expect(approxSurfaceY(h, Number.NaN, h.z)).toBeNull()
       for (let i = 0; i < 50; i++) {
         const x = h.x + ((i * 7) % 11 - 5) * 0.08 * h.sizeCm[0]
         const z = h.z + ((i * 3) % 7 - 3) * 0.1 * h.sizeCm[2]
-        const y = surfaceY(h, x, z)
+        const y = approxSurfaceY(h, x, z)
         if (y === null) expect(footprintContains(h, x, z, 0)).toBe(false)
         else {
           expect(footprintContains(h, x, z, 1e-6)).toBe(true)
@@ -101,24 +101,24 @@ describe("surface.ts (render 1.4.0 stand-in)", () => {
     const left = { ...ROOT, leanSide: "left" as const }
     const right = { ...ROOT, leanSide: "right" as const }
     const dx = ROOT.sizeCm[0] * 0.3
-    expect(surfaceY(left, ROOT.x - dx, ROOT.z)!).toBeGreaterThan(surfaceY(left, ROOT.x + dx, ROOT.z)!)
-    expect(surfaceY(right, ROOT.x + dx, ROOT.z)!).toBeGreaterThan(surfaceY(right, ROOT.x - dx, ROOT.z)!)
+    expect(approxSurfaceY(left, ROOT.x - dx, ROOT.z)!).toBeGreaterThan(approxSurfaceY(left, ROOT.x + dx, ROOT.z)!)
+    expect(approxSurfaceY(right, ROOT.x + dx, ROOT.z)!).toBeGreaterThan(approxSurfaceY(right, ROOT.x - dx, ROOT.z)!)
     expect(leanSign({ x: -5 })).toBe(1) // x < 0 → right
     expect(leanSign({ x: 0 })).toBe(-1) // x ≥ 0 → left
     expect(leanSign({ x: 5, leanSide: "right" })).toBe(1)
   })
   it("anchors: [] for n ≤ 0; n spread, upward-facing points on the piece, sorted front-to-back, deterministic", () => {
-    expect(anchors(ROOT, 0)).toEqual([])
-    expect(anchors(ROOT, -3)).toEqual([])
+    expect(approxAnchors(ROOT, 0)).toEqual([])
+    expect(approxAnchors(ROOT, -3)).toEqual([])
     for (const h of [ROOT, ROCK, { ...ROOT, woodStyle: "log" as const }]) {
-      const a = anchors(h, 8)
+      const a = approxAnchors(h, 8)
       expect(a).toHaveLength(8)
-      expect(anchors(h, 8)).toEqual(a)
+      expect(approxAnchors(h, 8)).toEqual(a)
       for (const p of a) {
         expect(footprintContains(h, p.x, p.z, 0)).toBe(true)
         expect(p.ny).toBeGreaterThanOrEqual(0.35)
         expect(Math.hypot(p.nx, p.ny, p.nz)).toBeCloseTo(1, 1)
-        expect(p.y).toBeCloseTo(surfaceY(h, p.x, p.z)!, 0)
+        expect(p.y).toBeCloseTo(approxSurfaceY(h, p.x, p.z)!, 0)
       }
       for (let i = 1; i < a.length; i++) expect(a[i - 1]!.z > a[i]!.z || (a[i - 1]!.z === a[i]!.z && a[i - 1]!.x <= a[i]!.x)).toBe(true)
       // spread out: no two anchors closer than 1 cm
@@ -145,17 +145,17 @@ describe("canAttach (1.2.0)", () => {
 describe("migrateAttach (1.2.0)", () => {
   it("attaches a y > 0 plant to the topmost piece whose footprint holds it; others are planted", () => {
     const d = doc0()
-    d.hardscape.push({ id: "pebble", kind: "stone", role: "suteishi", x: 2, z: -2, rotationY: 0, sizeCm: [3, 2, 3], seed: 1 }) // under the trunk
+    d.hardscape.push({ id: "pebble", kind: "stone", role: "suteishi", x: -2, z: -2, rotationY: 0, sizeCm: [3, 2, 3], seed: 1 }) // under the trunk
     d.plants.push(
-      { id: "taxiphyllum-barbieri-1", speciesId: "taxiphyllum-barbieri", x: 2, z: -2, y: 3, portions: 1 },
+      { id: "taxiphyllum-barbieri-1", speciesId: "taxiphyllum-barbieri", x: -2, z: -2, y: 3, portions: 1 },
       { id: "anubias-barteri-nana-1", speciesId: "anubias-barteri-nana", x: 18, z: 6, y: 4, portions: 1 },
       { id: "anubias-barteri-nana-2", speciesId: "anubias-barteri-nana", x: 25, z: -10, y: 4, portions: 1 }, // off every piece
     )
     const m = migrateAttach(d)
-    // the root wood's surface over (2, −2) is higher than the pebble's
-    expect(surfaceY(ROOT, 2, -2)!).toBeGreaterThan(surfaceY(d.hardscape[2]!, 2, -2)!)
+    // the root wood's surface over (−2, −2) is higher than the pebble's
+    expect(surfaceY(ROOT, -2, -2)!).toBeGreaterThan(surfaceY(d.hardscape[2]!, -2, -2)!)
     expect(m.attach).toEqual({ "taxiphyllum-barbieri-1": "root", "anubias-barteri-nana-1": "rock" })
-    expect(plant(m, "taxiphyllum-barbieri-1").y).toBeCloseTo(surfaceY(ROOT, 2, -2)!, 2)
+    expect(plant(m, "taxiphyllum-barbieri-1").y).toBeCloseTo(surfaceY(ROOT, -2, -2)!, 2)
     expect(plant(m, "anubias-barteri-nana-2").y).toBe(0)
     expect(migrateAttach(m)).toBe(m) // idempotent
     checkInvariants(m)

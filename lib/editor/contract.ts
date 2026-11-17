@@ -19,7 +19,24 @@
 import type { HardscapeVisual, EditTarget, WoodStyle, LeanSide } from "@aquascape-studio/render"
 import type { PlantPlacement, TankDims } from "../sim/vendor/sim-core/contract"
 
-export const EDITOR_CONTRACT_VERSION = "1.2.0" as const
+export const EDITOR_CONTRACT_VERSION = "1.2.1" as const
+
+/*
+ * 1.2.1 (2026-11-17 r2, orchestrator, at integration with render 1.4.0):
+ *  - "On the host" means surfaceY(h, x, z) ≠ null, not "inside the footprint
+ *    ellipse": real wood surfaces (branch tips) reach past the ellipse. Moving
+ *    an attached plant keeps any spot that has a surface; only spots without
+ *    one are clamped into the footprint (shrunk 0.5 cm) and then fall back to
+ *    the nearest anchor. attachPlant with x/z needs a surface there, not a
+ *    footprint hit.
+ *  - Anchors outside the glass (1 cm margin) are ignored when seating: a
+ *    rotated piece's branches can extend past the footprint that
+ *    clampHardscapeXZ keeps inside the tank.
+ *  - A seat that misses a thin twig after rounding / glass clamping snaps to
+ *    the nearest spot with a surface within 1.5 cm.
+ *  - The 2000-char link budget applies to the 30-plant doc; 60-plant template
+ *    docs may use up to 2048.
+ */
 
 /*
  * 1.2.0 (2026-11-17 r2, additive — epiphytes tied onto hardscape; 11-16 objections):

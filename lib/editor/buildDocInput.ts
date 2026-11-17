@@ -9,6 +9,7 @@ import { buildInput, hashSeed, type BotanyRecord, type BuildResult } from "../si
 import type { SimInput, TankDims } from "../sim/vendor/sim-core/contract"
 import { getTemplate, type ScapeTemplate } from "../templates"
 import type { ScapeDoc } from "./contract"
+import { migrateAttach } from "./index"
 
 type ParamSource = { get(key: string): string | null }
 
@@ -23,17 +24,21 @@ export function defaultBed(tank: TankDims): { frontCm: number; backCm: number } 
   return { frontCm: r2(front), backCm: r2(front + rise) }
 }
 
-/** Doc for the non-template page: the URL's plants on the default visual hardscape. */
+/**
+ * Doc for the non-template page: the URL's plants on the default visual
+ * hardscape. Epiphytes buildInput() lifts (y > 0) are tied onto the piece
+ * under them, or planted when there is none (editor 1.2.0 migrateAttach).
+ */
 export function docFromInput(input: Pick<SimInput, "tank" | "plants">, hardscape: HardscapeVisual[]): ScapeDoc {
   const { widthCm, depthCm, heightCm } = input.tank
   const tank = { widthCm, depthCm, heightCm }
-  return {
+  return migrateAttach({
     v: 1,
     tank,
     bed: defaultBed(tank),
     hardscape: hardscape.map((h) => ({ ...h, sizeCm: [h.sizeCm[0], h.sizeCm[1], h.sizeCm[2]] })),
     plants: input.plants.map((p) => ({ ...p })),
-  }
+  })
 }
 
 export function buildDocInput(doc: ScapeDoc, params: ParamSource, plants: readonly BotanyRecord[]): DocBuild {

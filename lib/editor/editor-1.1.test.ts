@@ -3,6 +3,7 @@
  * setWoodStyle, previewBase, needsResim, clampHardscapeXZ, woodStyle links.
  */
 import { describe, expect, it } from "vitest"
+import { anchors, surfaceY } from "./surface"
 import type { EditTarget, HardscapeVisual } from "@aquascape-studio/render"
 import * as render from "@aquascape-studio/render"
 import type { EditOp, EditorAction, EditorState, ScapeDoc } from "./contract"
@@ -14,7 +15,10 @@ import {
   decodeScape,
   editorReducer,
   encodeScape,
-  findFreeHardscapeSpot,
+  attachedTo,
+  findHardscapeSpot,
+  footprintsOverlap,
+  hardscapeSpotCandidates,
   footprintContains,
   footprintHalfExtents,
   hashId,
@@ -22,6 +26,7 @@ import {
   isPreviewing,
   needsResim,
   nextHardscapeId,
+  migrateAttach,
 } from "./index"
 
 const TANK = { widthCm: 60, depthCm: 30, heightCm: 36 }
@@ -33,7 +38,8 @@ const piece = (s: EditorState | ScapeDoc, id: string) => ("doc" in s ? s.doc : s
 const plant = (s: EditorState | ScapeDoc, id: string) => ("doc" in s ? s.doc : s).plants.find((p) => p.id === id)!
 
 function fixture(): ScapeDoc {
-  return {
+  // 1.2.0: the 1.0-shaped doc (epiphytes with y > 0 on the rock / wood) migrated — both are attached
+  return migrateAttach({
     v: 1,
     tank: { ...TANK },
     bed: { frontCm: 2, backCm: 9 },
@@ -46,7 +52,7 @@ function fixture(): ScapeDoc {
       { id: "bucephalandra-sp-mini-1", speciesId: "bucephalandra-sp-mini", x: 1, z: 1, y: 5, portions: 1 },
       { id: "taxiphyllum-barbieri-1", speciesId: "taxiphyllum-barbieri", x: 19, z: -4, y: 8, portions: 1 },
     ],
-  }
+  })
 }
 
 /** an empty-plants doc so additions are never blocked */
@@ -54,8 +60,8 @@ function bare(hardscape: HardscapeVisual[] = []): ScapeDoc {
   return { v: 1, tank: { ...TANK }, bed: { frontCm: 2, backCm: 9 }, hardscape, plants: [] }
 }
 
-describe("clampHardscapeXZ (local copy, render 1.3.0 semantics)", () => {
-  const h = { rotationY: 0, sizeCm: [12, 20, 6] as [number, number, number] }
+describe("clampHardscapeXZ (render 1.3.0 export, re-exported by lib/editor)", () => {
+  const h: HardscapeVisual = { id: "h", kind: "wood", x: 0, z: 0, seed: 1, rotationY: 0, sizeCm: [12, 20, 6] }
   it("keeps the axis-aligned footprint ≥ 1 cm inside the glass", () => {
     expect(clampHardscapeXZ(h, TANK, 100, -100)).toEqual({ x: 23, z: -11 })
     expect(clampHardscapeXZ(h, TANK, -100, 100)).toEqual({ x: -23, z: 11 })
@@ -70,22 +76,34 @@ describe("clampHardscapeXZ (local copy, render 1.3.0 semantics)", () => {
     expect(e.z).toBeCloseTo(Math.sqrt((25 + 9) / 2), 6)
   })
   it("centres an axis on which the footprint is wider than the tank interior", () => {
-    expect(clampHardscapeXZ({ rotationY: 0, sizeCm: [59, 5, 4] }, TANK, 7, 3)).toEqual({ x: 0, z: 3 })
-    expect(clampHardscapeXZ({ rotationY: 0, sizeCm: [10, 5, 29] }, TANK, 7, 3)).toEqual({ x: 7, z: 0 })
+    expect(clampHardscapeXZ({ ...h, sizeCm: [59, 5, 4] }, TANK, 7, 3)).toEqual({ x: 0, z: 3 })
+    expect(clampHardscapeXZ({ ...h, sizeCm: [10, 5, 29] }, TANK, 7, 3)).toEqual({ x: 7, z: 0 })
   })
-  it("never returns -0 or NaN", () => {
-    const r = clampHardscapeXZ(h, TANK, -0, Number.NaN)
-    expect(Object.is(r.x, -0)).toBe(false)
-    expect(r.z).toBe(0)
+  it("maps NaN to the centre; the reducer never stores -0", () => {
+    expect(clampHardscapeXZ(h, TANK, 0, Number.NaN).z).toBe(0)
+    const s = apply(initEditor(bare([{ ...h, x: 3, z: 3 }])), { type: "move", target: H("h"), x: -0, z: -0 })
+    expect(Object.is(piece(s, "h").x, -0)).toBe(false)
+    expect(Object.is(piece(s, "h").z, -0)).toBe(false)
   })
-  const renderClamp = (render as Record<string, unknown>).clampHardscapeXZ as typeof clampHardscapeXZ | undefined
-  it.skipIf(!renderClamp)("agrees with render's exported clampHardscapeXZ (once render 1.3.0 is installed)", () => {
+  it("is render's own export — the local copy is gone (1.2.0)", () => {
+    expect(clampHardscapeXZ).toBe(render.clampHardscapeXZ)
+  })
+  // parity test from 1.1.0, re-enabled: render's clamp vs the reference formula of the 1.3.0 contract
+  it("agrees with the render 1.3.0 reference semantics", () => {
+    const reference = (p: HardscapeVisual, x: number, z: number) => {
+      const e = footprintHalfExtents(p)
+      const axis = (v: number, half: number, ext: number) => {
+        const max = half - 1 - ext
+        return max > 0 ? Math.min(max, Math.max(-max, v)) : 0
+      }
+      return { x: axis(x, TANK.widthCm / 2, e.x), z: axis(z, TANK.depthCm / 2, e.z) }
+    }
     for (let i = 0; i < 200; i++) {
-      const p = { id: "p", kind: "stone" as const, seed: 1, rotationY: (i * 0.37) % 6.28 - 3.14, sizeCm: [4 + (i % 40), 5, 3 + (i % 25)] as [number, number, number], x: 0, z: 0 }
+      const p: HardscapeVisual = { id: "p", kind: "stone", seed: 1, rotationY: (i * 0.37) % 6.28 - 3.14, sizeCm: [4 + (i % 40), 5, 3 + (i % 25)], x: 0, z: 0 }
       const x = ((i * 13) % 90) - 45
       const z = ((i * 7) % 40) - 20
-      const a = renderClamp!(p, TANK, x, z)
-      const b = clampHardscapeXZ(p, TANK, x, z)
+      const a = clampHardscapeXZ(p, TANK, x, z)
+      const b = reference(p, x, z)
       expect(a.x).toBeCloseTo(b.x, 6)
       expect(a.z).toBeCloseTo(b.z, 6)
     }
@@ -145,14 +163,16 @@ describe("hardscape clamping in move / preview / rotate", () => {
   })
   it("rotate re-clamps (rotation changes the extent) and carried epiphytes follow the shift", () => {
     // a long log against the left glass: rotating it 90° frees x but needs room on z
-    const doc = bare([{ id: "log", kind: "wood", x: 0, z: 10, rotationY: 0, sizeCm: [20, 6, 4], seed: 3 }])
+    const doc = bare([{ id: "log", kind: "wood", woodStyle: "log", x: 0, z: 10, rotationY: 0, sizeCm: [20, 6, 4], seed: 3 }])
     doc.plants = [{ id: "taxiphyllum-barbieri-1", speciesId: "taxiphyllum-barbieri", x: 0, z: 10, y: 4, portions: 1 }]
+    doc.attach = { "taxiphyllum-barbieri-1": "log" }
     const s = apply(initEditor(doc), { type: "rotate", id: "log", dRad: Math.PI / 2 })
     const log = piece(s, "log")
     expect(log.rotationY).toBeCloseTo(Math.PI / 2, 9)
     expect(log.z).toBeCloseTo(15 - 1 - 10, 6) // half-extent on z is now 10
     expect(plant(s, "taxiphyllum-barbieri-1").z).toBeCloseTo(log.z, 6)
-    expect(plant(s, "taxiphyllum-barbieri-1").y).toBe(4)
+    // 1.2.0: re-seated on the log's top (its centre, the highest point)
+    expect(plant(s, "taxiphyllum-barbieri-1").y).toBeCloseTo(surfaceY(log, log.x, log.z)!, 2)
   })
 })
 
@@ -186,15 +206,20 @@ describe("resize (1.1.0)", () => {
     expect(h).toBeCloseTo(8 / 3, 6)
     expect(apply(s, { type: "resize", id: "rock", scale: 0.9 })).toBe(s)
   })
-  it("re-clamps x / z after growing next to the glass; epiphytes inside keep their positions", () => {
+  it("re-clamps x / z after growing next to the glass; attached plants' offsets scale (1.2.0)", () => {
     const s0 = apply(initEditor(fixture()), { type: "move", target: H("wood"), x: 99, z: 0 })
     expect(piece(s0, "wood").x).toBe(23)
     const before = plant(s0, "taxiphyllum-barbieri-1")
     const s1 = apply(s0, { type: "resize", id: "wood", scale: 1.5 })
-    expect(piece(s1, "wood").sizeCm[0]).toBeCloseTo(18, 6)
-    expect(piece(s1, "wood").x).toBeCloseTo(30 - 1 - 9, 6)
-    expect(plant(s1, "taxiphyllum-barbieri-1")).toEqual(before)
-    expect(s1.doc.plants).toBe(s0.doc.plants)
+    const w = piece(s1, "wood")
+    expect(w.sizeCm[0]).toBeCloseTo(18, 6)
+    expect(w.x).toBeCloseTo(30 - 1 - 9, 6)
+    const after = plant(s1, "taxiphyllum-barbieri-1")
+    expect(after.x - w.x).toBeCloseTo((before.x - 23) * 1.5, 6)
+    expect(after.z - w.z).toBeCloseTo((before.z - 0) * 1.5, 6)
+    expect(after.y).toBeCloseTo(surfaceY(w, after.x, after.z)!, 2)
+    // a planted plant stays put
+    expect(plant(s1, "hemianthus-callitrichoides-cuba-1")).toBe(plant(s0, "hemianthus-callitrichoides-cuba-1"))
   })
   it("is a same-reference no-op for unknown ids, scale 1, non-finite and non-positive scales", () => {
     const s0 = initEditor(fixture())
@@ -206,6 +231,20 @@ describe("resize (1.1.0)", () => {
     const s0 = initEditor(tall)
     expect(apply(s0, { type: "resize", id: "t", scale: 1.1 })).toBe(s0)
     expect(piece(apply(s0, { type: "resize", id: "t", scale: 0.9 }), "t").sizeCm[1]).toBeCloseTo(31.5, 6)
+  })
+  it("1.2.0: over a bound, scale > 1 is a no-op and scale < 1 is applied proportionally — never re-grows", () => {
+    // height 50 > 0.9·36 = 32.4: three ×0.9 steps shrink it proportionally; ×1.1 in between does nothing
+    let s = initEditor(bare([{ id: "t", kind: "stone", x: 0, z: 0, rotationY: 0, sizeCm: [10, 50, 6], seed: 1 }]))
+    for (let i = 0; i < 3; i++) {
+      const up = apply(s, { type: "resize", id: "t", scale: RESIZE_UP })
+      expect(up).toBe(s)
+      const prev = piece(s, "t").sizeCm
+      s = apply(s, { type: "resize", id: "t", scale: RESIZE_DOWN })
+      const next = piece(s, "t").sizeCm
+      for (let k = 0; k < 3; k++) expect(next[k]).toBeCloseTo(prev[k]! * RESIZE_DOWN, 6)
+    }
+    expect(piece(s, "t").sizeCm[1]).toBeCloseTo(50 * 0.9 ** 3, 6) // 36.45: still over the bound
+    expect(apply(s, { type: "resize", id: "t", scale: RESIZE_UP })).toBe(s)
   })
 })
 
@@ -257,11 +296,14 @@ describe("addHardscape (1.1.0)", () => {
     expect(Math.min(...st.sizeCm)).toBeGreaterThanOrEqual(2)
   })
   it(`is a no-op beyond ${MAX_HARDSCAPE_PIECES} pieces`, () => {
-    let s = initEditor(bare())
-    for (let i = 0; i < MAX_HARDSCAPE_PIECES; i++) s = apply(s, { type: "addHardscape", kind: "stone", x: -20 + i * 4, z: 0 })
+    // 11 pebbles along the front glass, then the 12th piece is added at the centre
+    const pebbles: HardscapeVisual[] = Array.from({ length: MAX_HARDSCAPE_PIECES - 1 }, (_, i) => ({
+      id: `p${i}`, kind: "stone", x: -25 + i * 5, z: 12, rotationY: 0, sizeCm: [3, 2, 3], seed: i,
+    }))
+    let s = apply(initEditor(bare(pebbles)), { type: "addHardscape", kind: "stone", x: 0, z: -5 })
     expect(s.doc.hardscape).toHaveLength(MAX_HARDSCAPE_PIECES)
-    expect(apply(s, { type: "addHardscape", kind: "wood", x: 0, z: 0 })).toBe(s)
-    expect(findFreeHardscapeSpot(s.doc, "stone", undefined)).toBeNull()
+    expect(apply(s, { type: "addHardscape", kind: "wood", x: 0, z: -10 })).toBe(s)
+    expect(findHardscapeSpot(s.doc, "stone")).toBeNull()
   })
   it("is rejected when the footprint (+0.5 cm) would cover a planted plant — epiphytes do not block", () => {
     const s0 = initEditor(fixture())
@@ -269,8 +311,13 @@ describe("addHardscape (1.1.0)", () => {
     expect(apply(s0, { type: "addHardscape", kind: "stone", x: -20, z: 8 })).toBe(s0)
     expect(apply(s0, { type: "addHardscape", kind: "stone", x: -15.1, z: 10 })).toBe(s0) // 4.9 < 4.8 + 0.5
     expect(apply(s0, { type: "addHardscape", kind: "stone", x: -14.6, z: 10 })).not.toBe(s0) // 5.4 > 5.3
-    // bucephalandra (y = 5) on the rock does not block
-    expect(apply(s0, { type: "addHardscape", kind: "stone", x: 1, z: 1 }).doc.hardscape).toHaveLength(3)
+    // attached plants never block — but (1.2.0) a new piece may not overlap an existing one
+    const lone = initEditor(migrateAttach({ ...fixture(), hardscape: [fixture().hardscape[1]!] }))
+    expect(plant(lone, "bucephalandra-sp-mini-1").y).toBe(0) // the rock is gone: its buce dropped to the bed
+    const tied = apply(initEditor(fixture()), { type: "attachPlant", speciesId: "taxiphyllum-barbieri", hardscapeId: "wood" })
+    const tiedPlant = tied.doc.plants[tied.doc.plants.length - 1]!
+    const minus = apply(tied, { type: "remove", target: H("wood") }) // wood + its epiphytes go
+    expect(minus.doc.plants.some((p) => p.id === tiedPlant.id)).toBe(false)
   })
   it("rejects unknown kinds / styles and non-finite positions", () => {
     const s0 = initEditor(bare())
@@ -280,22 +327,54 @@ describe("addHardscape (1.1.0)", () => {
   })
 })
 
-describe("findFreeHardscapeSpot", () => {
-  it("finds a spot near the centre whose footprint covers no planted plant, preferring spots off other pieces", () => {
+describe("findHardscapeSpot (1.2.0 candidate spots)", () => {
+  it("tries centre, ±W/4, ±3W/8 at z = 0, then the same at z = −D/4", () => {
+    const c = hardscapeSpotCandidates(TANK)
+    expect(c).toEqual([
+      { x: 0, z: 0 }, { x: -15, z: 0 }, { x: 15, z: 0 }, { x: -22.5, z: 0 }, { x: 22.5, z: 0 },
+      { x: 0, z: -7.5 }, { x: -15, z: -7.5 }, { x: 15, z: -7.5 }, { x: -22.5, z: -7.5 }, { x: 22.5, z: -7.5 },
+    ])
+  })
+  it("returns the first candidate where addHardscape succeeds: no overlap, no planted plant covered", () => {
     const doc = fixture()
-    doc.plants.push({ id: "hemianthus-callitrichoides-cuba-2", speciesId: "hemianthus-callitrichoides-cuba", x: -6, z: 4, y: 0, portions: 1 })
-    for (const [kind, style] of [["stone", undefined], ["wood", "log"], ["wood", "root"]] as const) {
-      const spot = findFreeHardscapeSpot(doc, kind, style)
+    for (const [kind, style] of [["stone", undefined], ["wood", "log"]] as const) {
+      const spot = findHardscapeSpot(doc, kind, style)
       expect(spot).not.toBeNull()
+      expect(hardscapeSpotCandidates(TANK)).toContainEqual(spot)
       const s = apply(initEditor(doc), { type: "addHardscape", kind, woodStyle: style, x: spot!.x, z: spot!.z })
       expect(s.doc.hardscape).toHaveLength(3)
       const added = s.doc.hardscape[2]!
-      expect(added.x).toBeCloseTo(spot!.x, 9)
-      for (const p of doc.plants.filter((pp) => pp.y === 0)) expect(footprintContains(added, p.x, p.z, 0.5)).toBe(false)
+      for (const h of doc.hardscape) expect(footprintsOverlap(h, added)).toBe(false)
+      for (const p of s.doc.plants.filter((pp) => pp.y === 0)) expect(footprintContains(added, p.x, p.z, 0.5)).toBe(false)
     }
-    // stone: not on the rock at the centre
-    const st = findFreeHardscapeSpot(doc, "stone", undefined)!
-    expect(footprintContains(doc.hardscape[0]!, st.x, st.z, 0)).toBe(false)
+    // the rock sits at the centre: a stone goes elsewhere
+    const st = findHardscapeSpot(doc, "stone")!
+    expect(st).not.toEqual({ x: 0, z: 0 })
+  })
+  it("returns null when every candidate is taken (the page shows \"No free spot\")", () => {
+    // a root piece needs half the tank: after two of them nothing fits
+    let s = initEditor(bare())
+    for (let i = 0; i < 3; i++) {
+      const spot = findHardscapeSpot(s.doc, "wood", "root")
+      if (!spot) break
+      s = apply(s, { type: "addHardscape", kind: "wood", woodStyle: "root", x: spot.x, z: spot.z })
+    }
+    expect(findHardscapeSpot(s.doc, "wood", "root")).toBeNull()
+    for (const c of hardscapeSpotCandidates(TANK)) expect(apply(s, { type: "addHardscape", kind: "wood", woodStyle: "root", x: c.x, z: c.z })).toBe(s)
+  })
+})
+
+describe("addHardscape overlap rejection (1.2.0)", () => {
+  it("is a no-op when the centre distance < sum of the radii along the centre line − 1 cm", () => {
+    // existing stone 10 × 6 at the origin; a new default stone is 9.6 × 4.8 (half 4.8 × 2.4)
+    const s0 = initEditor(bare([{ id: "a", kind: "stone", x: 0, z: 0, rotationY: 0, sizeCm: [10, 8, 6], seed: 1 }]))
+    // along x: radii 5 + 4.8 − 1 = 8.8
+    expect(apply(s0, { type: "addHardscape", kind: "stone", x: 8.7, z: 0 })).toBe(s0)
+    expect(apply(s0, { type: "addHardscape", kind: "stone", x: 8.9, z: 0 }).doc.hardscape).toHaveLength(2)
+    // along z: radii 3 + 2.4 − 1 = 4.4
+    expect(apply(s0, { type: "addHardscape", kind: "stone", x: 0, z: 4.3 })).toBe(s0)
+    expect(apply(s0, { type: "addHardscape", kind: "stone", x: 0, z: 4.5 }).doc.hardscape).toHaveLength(2)
+    expect(apply(s0, { type: "addHardscape", kind: "stone", x: 0, z: 0 })).toBe(s0)
   })
 })
 
@@ -304,8 +383,30 @@ describe("setWoodStyle (1.1.0)", () => {
     const s0 = initEditor(fixture())
     const s1 = apply(s0, { type: "setWoodStyle", id: "wood", woodStyle: "root" })
     expect(piece(s1, "wood").woodStyle).toBe("root")
-    expect(piece(s1, "wood").sizeCm).toEqual([12, 20, 6])
     expect(run(s1, { type: "undo" }).doc).toBe(s0.doc)
+  })
+  it("1.2.0: keeps the width and resets height / depth to the style's default proportions, clamped like resize", () => {
+    const s0 = initEditor(fixture()) // wood 12 × 20 × 6
+    // root default [0.5W, 0.6H, 0.3D] = [30, 21.6, 9] → ×12/30
+    expect(piece(apply(s0, { type: "setWoodStyle", id: "wood", woodStyle: "root" }), "wood").sizeCm.map((v) => +v.toFixed(6))).toEqual([12, 8.64, 3.6])
+    // log default [24, 6.48, 6.6] → ×0.5
+    expect(piece(apply(s0, { type: "setWoodStyle", id: "wood", woodStyle: "log" }), "wood").sizeCm.map((v) => +v.toFixed(6))).toEqual([12, 3.24, 3.3])
+    // a very wide branchy piece → root: the depth / height bound shrinks it proportionally
+    const wide = initEditor(bare([{ id: "w", kind: "wood", x: 0, z: 0, rotationY: 0, sizeCm: [58, 10, 4], seed: 1 }]))
+    const r = piece(apply(wide, { type: "setWoodStyle", id: "w", woodStyle: "root" }), "w").sizeCm
+    expect(r[1]).toBeLessThanOrEqual(0.9 * 36 + 1e-9)
+    expect(r[0] / r[1]).toBeCloseTo(30 / 21.6, 6)
+    expect(r[2] / r[1]).toBeCloseTo(9 / 21.6, 6)
+  })
+  it("1.2.0: re-seats attached plants on the nearest free anchors", () => {
+    const s0 = apply(initEditor(fixture()), { type: "attachPlant", speciesId: "anubias-barteri-nana", hardscapeId: "wood" })
+    const s1 = apply(s0, { type: "setWoodStyle", id: "wood", woodStyle: "log" })
+    const w = piece(s1, "wood")
+    const list = anchors(w, 8)
+    const seats = attachedTo(s1.doc, "wood").map((id) => plant(s1, id))
+    expect(seats).toHaveLength(2)
+    for (const p of seats) expect(list.some((a) => a.x === p.x && a.z === p.z && Math.abs(a.y - p.y) < 0.1)).toBe(true)
+    expect(seats[0]!.x === seats[1]!.x && seats[0]!.z === seats[1]!.z).toBe(false) // distinct anchors
   })
   it("is a no-op on stones, unknown ids, unknown styles and the current style (missing = branchy)", () => {
     const s0 = initEditor(fixture())
@@ -323,7 +424,9 @@ describe("needsResim (1.1.0)", () => {
   it("is false for the same doc and for hardscape-only edits", () => {
     expect(needsResim(d0, d0)).toBe(false)
     expect(needsResim(d0, fixture())).toBe(false)
+    // nothing tied onto the wood, so resize / setWoodStyle carry nothing
     const s0 = initEditor(d0)
+    const noWoodEpi = migrateAttach({ ...d0, plants: d0.plants.filter((p) => !p.id.startsWith("taxiphyllum")), attach: { "bucephalandra-sp-mini-1": "rock" } })
     const hardscapeOnly: EditOp[] = [
       { type: "move", target: H("rock"), x: -12, z: -5 }, // the rock's epiphyte is at (1, 1): carried → see below
       { type: "resize", id: "wood", scale: 1.1 },
@@ -332,10 +435,11 @@ describe("needsResim (1.1.0)", () => {
       { type: "setWoodStyle", id: "wood", woodStyle: "root" },
     ]
     for (const op of hardscapeOnly.slice(1)) {
-      const s = apply(s0, op)
-      expect(s).not.toBe(s0)
-      expect(needsResim(d0, s.doc)).toBe(false)
+      const s = apply(initEditor(noWoodEpi), op)
+      expect(s.doc).not.toBe(noWoodEpi)
+      expect(needsResim(noWoodEpi, s.doc)).toBe(false)
     }
+    expect(s0.doc).toBe(d0)
     // a bare stone (nothing carried) moved / rotated
     const bareDoc = { ...d0, plants: d0.plants.filter((p) => p.y === 0) }
     const b = initEditor(bareDoc)
@@ -356,6 +460,11 @@ describe("needsResim (1.1.0)", () => {
     }
     expect(needsResim(d0, { ...d0, plants: d0.plants.slice(1) })).toBe(true)
     expect(needsResim(d0, apply(initEditor(d0), { type: "addPlant", speciesId: "rotala-rotundifolia", x: -20, z: -10 }).doc)).toBe(true)
+  })
+  it("1.2.0: is true when the templateId changed", () => {
+    expect(needsResim(d0, { ...d0, templateId: "nature-triangle" })).toBe(true)
+    expect(needsResim({ ...d0, templateId: "a" }, { ...d0, templateId: "b" })).toBe(true)
+    expect(needsResim({ ...d0, templateId: "a" }, { ...d0, templateId: "a" })).toBe(false)
   })
 })
 
@@ -383,17 +492,18 @@ describe("woodStyle in share links (1.1.0)", () => {
     ],
   }
 
-  it("decodes a link made by the 1.0.0 encoder (woodStyle undefined = branchy)", () => {
+  it("decodes a link made by the 1.0.0 encoder (woodStyle undefined = branchy; epiphytes migrated, 1.2.0)", () => {
     const doc = decodeScape(V100_LINK)
-    expect(doc).toEqual(V100_DOC)
+    expect(doc).toEqual(migrateAttach(V100_DOC))
     expect(doc!.hardscape[1]!.woodStyle).toBeUndefined()
+    expect(doc!.attach).toEqual({ "bucephalandra-sp-mini-1": "rock", "taxiphyllum-barbieri-1": "wood" })
   })
   it("encodes docs without woodStyle exactly as 1.0.0 did", () => {
     expect(encodeScape(V100_DOC)).toBe(V100_LINK)
   })
   it("round-trips every woodStyle", () => {
     for (const style of ["branchy", "root", "log"] as const) {
-      const doc: ScapeDoc = { ...V100_DOC, hardscape: V100_DOC.hardscape.map((h) => (h.kind === "wood" ? { ...h, woodStyle: style } : h)) }
+      const doc: ScapeDoc = migrateAttach({ ...V100_DOC, hardscape: V100_DOC.hardscape.map((h) => (h.kind === "wood" ? { ...h, woodStyle: style } : h)) })
       const back = decodeScape(encodeScape(doc))
       expect(back).toEqual(doc)
       expect(back!.hardscape[1]!.woodStyle).toBe(style)

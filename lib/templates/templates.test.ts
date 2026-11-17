@@ -17,6 +17,8 @@ import {
 } from "./index"
 import { TEMPLATE_CONTRACT_VERSION, type ScapeTemplate, type TemplatePlantGroup } from "./contract"
 import { buildTemplateInput } from "./buildTemplateInput"
+import { anchors, surfaceY } from "../editor/surface"
+import { canAttach } from "../editor"
 
 const PLANTS = plantsJson as unknown as BotanyRecord[]
 const BY_ID = new Map(PLANTS.map((p) => [p.id, p]))
@@ -214,8 +216,8 @@ describe("contract 1.0.1 / 1.0.2", () => {
     ...getTemplate("dutch-streets")!, id: "test", hardscape: [], groups,
   })
 
-  it("is version 1.0.2 and the Iwagumi template uses the iwagumi composition", () => {
-    expect(TEMPLATE_CONTRACT_VERSION).toBe("1.0.2")
+  it("is version 1.1.0 and the Iwagumi template uses the iwagumi composition", () => {
+    expect(TEMPLATE_CONTRACT_VERSION).toBe("1.1.0")
     expect(getTemplate("iwagumi-sanzon")!.composition).toBe("iwagumi")
     for (const t of TEMPLATES) if (t.style === "iwagumi") expect(t.composition).toBe("iwagumi")
     for (const t of TEMPLATES) if (t.style !== "iwagumi") expect(t.composition).not.toBe("iwagumi")
@@ -398,5 +400,95 @@ describe("buildTemplateInput", () => {
     expect(b.input.tank.widthCm).toBe(60)
     expect(b.name).toBe("Dutch · Streets")
     expect(b.scene.hardscape).toEqual([])
+  })
+})
+
+describe("contract 1.1.0 — epiphytes on hardscape", () => {
+  const rec = (id: string) => BY_ID.get(id) as (BotanyRecord & { regulated?: unknown[] }) | undefined
+
+  it("uses no species with a non-empty botany `regulated` list (every template)", () => {
+    for (const t of TEMPLATES) for (const g of t.groups) {
+      const r = rec(g.speciesId)
+      expect(r?.regulated ?? [], `${t.id}: ${g.speciesId}`).toHaveLength(0)
+    }
+    const concave = getTemplate("nature-concave")!.groups.map((g) => g.speciesId)
+    expect(concave).not.toContain("limnophila-sessiliflora")
+    expect(concave).not.toContain("hygrophila-polysperma")
+    // the replacements are stems too (same look: fine-leaved Limnophila, broad-leaved Hygrophila)
+    for (const id of ["limnophila-heterophylla", "hygrophila-corymbosa-siamensis-53b"]) {
+      expect(concave).toContain(id)
+      expect(rec(id)?.growthForm).toBe("stem")
+    }
+  })
+
+  const nature = TEMPLATES.filter((t) => t.style === "nature")
+  it("has at least two Nature templates", () => expect(nature.length).toBeGreaterThanOrEqual(2))
+
+  for (const t of nature) {
+    describe(t.id, () => {
+      it("has a root driftwood focal piece: wFrac ≥ 0.45, v ≥ 0.45, a lean side", () => {
+        const roots = t.hardscape.filter((h) => h.kind === "wood" && h.woodStyle === "root")
+        const focal = roots.find((h) => h.wFrac >= 0.45 && h.v >= 0.45)
+        expect(focal, `${t.id}: focal root wood`).toBeDefined()
+        expect(focal!.leanSide).toMatch(/^(left|right|auto)$/)
+        // the widest piece is the focal one
+        expect(Math.max(...t.hardscape.map((h) => h.wFrac))).toBe(focal!.wFrac)
+      })
+      it("has ≥ 2 epiphyte groups on hardscape: one moss, one Anubias / Bucephalandra / Java fern", () => {
+        const epi = t.groups.filter((g) => g.onHardscape)
+        expect(epi.length).toBeGreaterThanOrEqual(2)
+        expect(epi.some((g) => rec(g.speciesId)?.growthForm === "moss")).toBe(true)
+        expect(epi.some((g) => /^(anubias|bucephalandra|microsorum)-/.test(g.speciesId))).toBe(true)
+        for (const g of epi) expect(canAttach(g.speciesId), g.speciesId).toBe(true)
+      })
+      for (const tank of TANKS) {
+        it(`seats every epiphyte on a host anchor and lists it in attach (${tank.widthCm} cm)`, () => {
+          const out = instantiate(t, tank)
+          expect(out.attach).toBeDefined()
+          const hostIds = new Set(t.groups.filter((g) => g.onHardscape).map((g) => g.onHardscape))
+          for (const [pid, hid] of Object.entries(out.attach!)) {
+            const p = out.plants.find((pp) => pp.id === pid)!
+            const host = out.hardscape.find((h) => h.id === hid)!
+            expect(p, pid).toBeDefined()
+            expect(hostIds.has(hid)).toBe(true)
+            // on one of the host's anchors (to the 0.01 cm rounding), y = surface height there
+            expect(anchors(host, 12).some((a) => Math.abs(a.x - p.x) <= 0.011 && Math.abs(a.z - p.z) <= 0.011), pid).toBe(true)
+            expect(p.y).toBeGreaterThan(0)
+            expect(p.y).toBeCloseTo(Math.max(0.1, surfaceY(host, p.x, p.z)!), 2)
+          }
+          // exactly the onHardscape placements are attached; everything else is planted
+          const epiSpecies = new Map(t.groups.filter((g) => g.onHardscape).map((g) => [g.speciesId, g.onHardscape]))
+          for (const p of out.plants) {
+            if (epiSpecies.has(p.speciesId)) expect(out.attach![p.id], p.id).toBe(epiSpecies.get(p.speciesId))
+            else {
+              expect(out.attach![p.id]).toBeUndefined()
+              expect(p.y).toBe(0)
+            }
+          }
+          // epiphyte groups on the same host take distinct anchors
+          const seats = Object.keys(out.attach!).map((pid) => out.plants.find((pp) => pp.id === pid)!)
+          const keys = seats.map((p) => `${out.attach![p.id]}@${p.x},${p.z}`)
+          expect(new Set(keys).size).toBe(keys.length)
+        })
+      }
+    })
+  }
+
+  it("every template returns attach (empty without epiphytes)", () => {
+    for (const t of TEMPLATES) {
+      const out = instantiate(t, TANKS[1]!)
+      expect(out.attach).toBeDefined()
+      if (!t.groups.some((g) => g.onHardscape)) expect(out.attach).toEqual({})
+    }
+  })
+
+  it("hardscapeFor carries woodStyle / leanSide (wood only)", () => {
+    const tri = getTemplate("nature-triangle")!
+    const wood = hardscapeFor(tri.hardscape.find((h) => h.kind === "wood")!, TANKS[1]!)
+    expect(wood.woodStyle).toBe("root")
+    expect(wood.leanSide).toBe("left")
+    const stone = hardscapeFor({ ...tri.hardscape.find((h) => h.kind === "stone")!, woodStyle: "root", leanSide: "left" }, TANKS[1]!)
+    expect(stone.woodStyle).toBeUndefined()
+    expect(stone.leanSide).toBeUndefined()
   })
 })

@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest"
+import { surfaceY } from "./surface"
 import type { EditTarget, HardscapeVisual } from "@aquascape-studio/render"
 import * as render from "@aquascape-studio/render"
 import plantsJson from "../sim/vendor/plants.json"
@@ -27,6 +28,7 @@ import {
   isPreviewing,
   nextPlantId,
   targetPosition,
+  migrateAttach,
 } from "./index"
 import { buildDocInput, defaultBed, docFromInput } from "./buildDocInput"
 
@@ -39,7 +41,8 @@ const stone = (id: string, x: number, z: number, w = 10, d = 6, rotationY = 0, e
 
 /** small hand-built doc: one stone at the origin, one wood on the right, planted + epiphytes */
 function fixture(): ScapeDoc {
-  return {
+  // 1.2.0: the 1.0-shaped doc (epiphytes with y > 0 on the rock / wood) migrated — both are attached
+  return migrateAttach({
     v: 1,
     tank: { ...TANK },
     bed: { frontCm: 2, backCm: 9 },
@@ -53,7 +56,7 @@ function fixture(): ScapeDoc {
       { id: "bucephalandra-sp-mini-1", speciesId: "bucephalandra-sp-mini", x: 1, z: 1, y: 5, portions: 1 },
       { id: "taxiphyllum-barbieri-1", speciesId: "taxiphyllum-barbieri", x: 19, z: -4, y: 8, portions: 1 },
     ],
-  }
+  })
 }
 
 const P = (id: string): EditTarget => ({ kind: "plant", id })
@@ -71,7 +74,7 @@ function deepFreeze<T>(o: T): T {
 }
 
 describe("contract", () => {
-  it("is version 1.1.0", () => expect(EDITOR_CONTRACT_VERSION).toBe("1.1.0"))
+  it("is version 1.2.1", () => expect(EDITOR_CONTRACT_VERSION).toBe("1.2.1"))
   it("initEditor starts with empty history and no selection", () => {
     const doc = fixture()
     expect(initEditor(doc)).toEqual({ doc, past: [], future: [], selected: null, previewBase: null })
@@ -159,26 +162,39 @@ describe("editorReducer · move", () => {
     expect(into(0, 3.4)).toBe(s0)
   })
 
-  it("lets an epiphyte (y > 0) move onto hardscape, and plants it (y = 0) off hardscape", () => {
+  it("1.2.0: keeps an attached plant on its host (clamped into the footprint − 0.5 cm, y = surface); never re-parents", () => {
     const s0 = initEditor(fixture())
-    const onWood = run(s0, { type: "apply", op: { type: "move", target: P("bucephalandra-sp-mini-1"), x: 17, z: -3 } })
-    expect(plant(onWood, "bucephalandra-sp-mini-1")).toMatchObject({ x: 17, z: -3, y: 5 })
-    const onBed = run(s0, { type: "apply", op: { type: "move", target: P("bucephalandra-sp-mini-1"), x: -15, z: 5 } })
-    expect(plant(onBed, "bucephalandra-sp-mini-1")).toMatchObject({ x: -15, z: 5, y: 0 })
-    // an epiphyte dropped into a stone's margin ring (off the stone itself) is a planted plant → rejected
-    expect(editorReducer(s0, { type: "apply", op: { type: "move", target: P("bucephalandra-sp-mini-1"), x: 5.3, z: 0 } })).toBe(s0)
+    const rock = s0.doc.hardscape[0]!
+    // towards the wood: stays on the rock, on the rim of its footprint shrunk by 0.5 cm (half-axes 4.5 × 2.5)
+    const pulled = plant(run(s0, { type: "apply", op: { type: "move", target: P("bucephalandra-sp-mini-1"), x: 17, z: 0 } }), "bucephalandra-sp-mini-1")
+    expect(pulled.x).toBeCloseTo(4.5, 6)
+    expect(pulled.z).toBeCloseTo(0, 6)
+    expect(pulled.y).toBeCloseTo(surfaceY(rock, 4.5, 0)!, 2)
+    expect(s0.doc.attach!["bucephalandra-sp-mini-1"]).toBe("rock")
+    // inside: moves freely over the rock
+    const inside = plant(run(s0, { type: "apply", op: { type: "move", target: P("bucephalandra-sp-mini-1"), x: -2, z: 1 } }), "bucephalandra-sp-mini-1")
+    expect(inside).toMatchObject({ x: -2, z: 1 })
+    expect(inside.y).toBeCloseTo(surfaceY(rock, -2, 1)!, 2)
   })
 
-  it("carries the epiphytes inside a moved piece by the same dx, dz — and nothing else", () => {
+  it("plants a non-attached plant (y = 0) and rejects stone footprints", () => {
     const s0 = initEditor(fixture())
+    const onBed = run(s0, { type: "apply", op: { type: "move", target: P("hemianthus-callitrichoides-cuba-1"), x: -15, z: 5 } })
+    expect(plant(onBed, "hemianthus-callitrichoides-cuba-1")).toMatchObject({ x: -15, z: 5, y: 0 })
+    expect(editorReducer(s0, { type: "apply", op: { type: "move", target: P("hemianthus-callitrichoides-cuba-1"), x: 5.3, z: 0 } })).toBe(s0)
+  })
+
+  it("carries exactly the attach-listed plants by the same dx, dz — and nothing else (1.2.0)", () => {
+    const s0 = initEditor(fixture())
+    const y0 = plant(s0, "bucephalandra-sp-mini-1").y
     const s1 = run(s0, { type: "apply", op: { type: "move", target: H("rock"), x: -6, z: 3 } })
     expect(piece(s1, "rock")).toMatchObject({ x: -6, z: 3 })
-    expect(plant(s1, "bucephalandra-sp-mini-1")).toMatchObject({ x: -5, z: 4, y: 5 })
+    expect(plant(s1, "bucephalandra-sp-mini-1")).toMatchObject({ x: -5, z: 4, y: y0 })
     expect(plant(s1, "taxiphyllum-barbieri-1")).toEqual(plant(s0, "taxiphyllum-barbieri-1"))
     expect(plant(s1, "hemianthus-callitrichoides-cuba-1")).toEqual(plant(s0, "hemianthus-callitrichoides-cuba-1"))
     // wood carries its moss too
     const s2 = run(s0, { type: "apply", op: { type: "move", target: H("wood"), x: 10, z: 0 } })
-    expect(plant(s2, "taxiphyllum-barbieri-1")).toMatchObject({ x: 11, z: 0, y: 8 })
+    expect(plant(s2, "taxiphyllum-barbieri-1")).toMatchObject({ x: 11, z: 0, y: plant(s0, "taxiphyllum-barbieri-1").y })
   })
 
   it("keeps the plants array reference when a piece carries nothing", () => {
@@ -190,11 +206,15 @@ describe("editorReducer · move", () => {
     expect(t.doc.plants).toBe(bare.plants)
   })
 
-  it("does not carry planted (y = 0) plants or epiphytes outside the footprint", () => {
+  it("does not carry planted plants — even inside the footprint — nor plants tied to another piece", () => {
     const doc = fixture()
-    doc.plants.push({ id: "anubias-barteri-1", speciesId: "anubias-barteri", x: 8, z: 0, y: 4, portions: 1 }) // y > 0 but off the rock
+    doc.plants.push({ id: "anubias-barteri-1", speciesId: "anubias-barteri", x: 8, z: 0, y: 0, portions: 1 })
+    // a planted plant under the rock's footprint edge (old 1.0 docs could have one): not attach-listed → stays
+    doc.plants.push({ id: "anubias-barteri-2", speciesId: "anubias-barteri", x: -4, z: 0, y: 0, portions: 1 })
     const s = run(initEditor(doc), { type: "apply", op: { type: "move", target: H("rock"), x: -10, z: 0 } })
-    expect(plant(s, "anubias-barteri-1")).toMatchObject({ x: 8, z: 0 })
+    expect(plant(s, "anubias-barteri-1")).toMatchObject({ x: 8, z: 0, y: 0 })
+    expect(plant(s, "anubias-barteri-2")).toMatchObject({ x: -4, z: 0, y: 0 })
+    expect(plant(s, "taxiphyllum-barbieri-1")).toEqual(plant(doc, "taxiphyllum-barbieri-1"))
   })
 
   it("is a same-reference no-op for unknown ids, non-finite input and zero-distance moves", () => {
@@ -238,13 +258,16 @@ describe("editorReducer · rotate / remove / addPlant / replace", () => {
     expect(editorReducer(s0, { type: "apply", op: { type: "rotate", id: "rock", dRad: NaN } })).toBe(s0)
   })
 
-  it("removes plants and pieces, clears a removed selection, drops orphaned epiphytes to the bed", () => {
+  it("removes plants and pieces, clears a removed selection, removes the piece's attached plants", () => {
     const s0 = run(initEditor(fixture()), { type: "select", target: H("rock") })
     const s1 = run(s0, { type: "apply", op: { type: "remove", target: H("rock") } })
     expect(s1.doc.hardscape.map((h) => h.id)).toEqual(["wood"])
     expect(s1.selected).toBeNull()
-    expect(plant(s1, "bucephalandra-sp-mini-1").y).toBe(0)
-    expect(plant(s1, "taxiphyllum-barbieri-1").y).toBe(8)
+    // 1.2.0: the rock's attached plant goes with it, in the same history step
+    expect(s1.doc.plants.some((p) => p.id === "bucephalandra-sp-mini-1")).toBe(false)
+    expect(s1.doc.attach).toEqual({ "taxiphyllum-barbieri-1": "wood" })
+    expect(s1.past).toHaveLength(1)
+    expect(plant(s1, "taxiphyllum-barbieri-1")).toEqual(plant(s0, "taxiphyllum-barbieri-1"))
     const s2 = run(s1, { type: "select", target: P("hemianthus-callitrichoides-cuba-2") }, { type: "apply", op: { type: "remove", target: P("hemianthus-callitrichoides-cuba-1") } })
     expect(s2.doc.plants.map((p) => p.id)).not.toContain("hemianthus-callitrichoides-cuba-1")
     expect(s2.selected).toEqual(P("hemianthus-callitrichoides-cuba-2")) // other selection survives
@@ -342,7 +365,7 @@ describe("editorReducer · preview / commitPreview / cancelPreview", () => {
     for (let i = 1; i <= 20; i++) s = editorReducer(s, { type: "preview", target: H("rock"), x: -i, z: i * 0.4 })
     // a stone dragged far away, then back: epiphytes follow exactly
     s = run(s, { type: "preview", target: H("rock"), x: 22, z: -10 }, { type: "preview", target: H("rock"), x: -4, z: 2 }, { type: "commitPreview" })
-    expect(plant(s, "bucephalandra-sp-mini-1")).toMatchObject({ x: -3, z: 3, y: 5 })
+    expect(plant(s, "bucephalandra-sp-mini-1")).toMatchObject({ x: -3, z: 3, y: plant(s0, "bucephalandra-sp-mini-1").y })
     expect(s.past).toEqual([s0.doc])
   })
 
@@ -479,7 +502,10 @@ describe("docFromTemplate", () => {
     it(`${tpl.id} → doc carries the instantiated scene`, () => {
       const inst = instantiate(tpl, TANK)
       const doc = docFromTemplate(inst, TANK, tpl.id)
-      expect(doc).toEqual({ v: 1, tank: TANK, templateId: tpl.id, bed: inst.bed, focalPoint: inst.focalPoint, hardscape: inst.hardscape, plants: inst.plants })
+      const attach = inst.attach && Object.keys(inst.attach).length ? { attach: inst.attach } : {}
+      expect(doc).toEqual({ v: 1, tank: TANK, templateId: tpl.id, bed: inst.bed, focalPoint: inst.focalPoint, hardscape: inst.hardscape, plants: inst.plants, ...attach })
+      // the template seats epiphytes exactly where the editor would: migration changes nothing
+      expect(migrateAttach(doc)).toBe(doc)
       expect(doc.plants).not.toBe(inst.plants)
       if (inst.hardscape[0]) expect(doc.hardscape[0]!.sizeCm).not.toBe(inst.hardscape[0].sizeCm)
       expect(doc.tank).not.toBe(TANK)
@@ -517,15 +543,18 @@ describe("encodeScape / decodeScape", () => {
     expect(encodeURIComponent(s)).toBe(s)
   })
 
-  it("keeps every template doc (all sizes) well under the limit", () => {
+  // The contract budget (≤ 2000) is for a 30-plant doc (tested above). Template docs on a
+  // 90 cm tank hit the 60-plant cap; with real render anchors (1.4.0) nature-concave@90
+  // encodes to ~2004, so these get a 2048-char ceiling (still far below browser URL limits).
+  it("keeps every template doc (all sizes) within 2048 chars", () => {
     for (const tpl of TEMPLATES) for (const tank of [TANK, { widthCm: 90, depthCm: 45, heightCm: 45 }]) {
       const s = encodeScape(docFromTemplate(instantiate(tpl, tank), tank, tpl.id))
-      expect(s.length, `${tpl.id}@${tank.widthCm}`).toBeLessThanOrEqual(2000)
+      expect(s.length, `${tpl.id}@${tank.widthCm}`).toBeLessThanOrEqual(2048)
     }
   })
 
   it("round-trips stably to the rounding (0.1 cm / 0.01 rad)", () => {
-    for (const doc of [bigDoc(), fixture(), ...TEMPLATES.map((t) => docFromTemplate(instantiate(t, TANK), TANK, t.id))]) {
+    for (const doc of [migrateAttach(bigDoc()), fixture(), ...TEMPLATES.map((t) => docFromTemplate(instantiate(t, TANK), TANK, t.id))]) {
       const s = encodeScape(doc)
       const back = decodeScape(s)
       expect(back).not.toBeNull()
@@ -538,8 +567,16 @@ describe("encodeScape / decodeScape", () => {
         const q = back!.plants[i]!
         expect(Math.abs(q.x - p.x)).toBeLessThanOrEqual(0.05 + 1e-9)
         expect(Math.abs(q.z - p.z)).toBeLessThanOrEqual(0.05 + 1e-9)
-        expect(Math.abs(q.y - p.y)).toBeLessThanOrEqual(0.05 + 1e-9)
+        const hid = doc.attach?.[p.id]
+        if (hid === undefined) expect(q.y).toBe(0)
+        else {
+          // 1.2.0: attached y is the host surface at the decoded (rounded) position
+          expect(back!.attach![p.id]).toBe(hid)
+          const host = back!.hardscape.find((h) => h.id === hid)!
+          expect(q.y).toBeCloseTo(Math.max(0.1, surfaceY(host, q.x, q.z)!), 2)
+        }
       })
+      expect(Object.keys(back!.attach ?? {}).sort()).toEqual(Object.keys(doc.attach ?? {}).sort())
       doc.hardscape.forEach((h, i) => {
         const g = back!.hardscape[i]!
         expect([g.id, g.kind, g.role, g.seed]).toEqual([h.id, h.kind, h.role, h.seed])

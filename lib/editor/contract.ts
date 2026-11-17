@@ -1,5 +1,5 @@
 /**
- * Drag editor (拖拽编辑器) — contract v1.0.0 (2026-11-15).
+ * Drag editor — contract v1.0.0 (2026-11-15).
  *
  * OWNER: orchestrator only. Sub-agents MUST NOT edit this file; report
  * disagreements in the PR instead.

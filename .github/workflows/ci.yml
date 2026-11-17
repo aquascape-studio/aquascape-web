@@ -186,3 +186,32 @@ jobs:
             --task-definition "$NEW_ARN" \
             --force-new-deployment \
             --region us-east-1
+
+      - name: Verify deployment (ECS stable + HTTP smoke)
+        # dev scales to 0 outside its daily window (infra#1); then there is nothing to probe.
+        run: |
+          DESIRED=$(aws ecs describe-services --cluster aquascape-dev --services aquascape-web-dev \
+            --region us-east-1 --query 'services[0].desiredCount' --output text)
+          echo "desiredCount=$DESIRED"
+          if [ "$DESIRED" = "0" ]; then
+            echo "::notice::dev is scaled to 0 (outside its daily window); skipping HTTP smoke"
+            exit 0
+          fi
+          aws ecs wait services-stable --cluster aquascape-dev --services aquascape-web-dev --region us-east-1
+          RUNNING_IMG=$(aws ecs describe-task-definition --region us-east-1 --task-definition \
+            "$(aws ecs describe-services --cluster aquascape-dev --services aquascape-web-dev --region us-east-1 \
+               --query 'services[0].taskDefinition' --output text)" \
+            --query 'taskDefinition.containerDefinitions[0].image' --output text)
+          echo "running image: $RUNNING_IMG"
+          case "$RUNNING_IMG" in *"${{ github.sha }}") ;; *) echo "::error::service is not running this commit"; exit 1;; esac
+          # CloudFront → task origin is re-pointed by a Lambda on task start; allow a few minutes
+          for path in / /studio/sim /plants; do
+            ok=0
+            for i in $(seq 1 20); do
+              code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 "https://dev.efferves.live$path" || true)
+              if [ "$code" = "200" ]; then ok=1; break; fi
+              echo "$path → $code (attempt $i)"; sleep 15
+            done
+            [ "$ok" = "1" ] || { echo "::error::$path did not return 200"; exit 1; }
+            echo "$path → 200"
+          done

@@ -16,10 +16,62 @@
  * Coordinates / units: sim-core (origin centre of the substrate plane,
  * x left→right, z back→front, y up, cm).
  */
-import type { HardscapeVisual, EditTarget, WoodStyle } from "@aquascape-studio/render"
+import type { HardscapeVisual, EditTarget, WoodStyle, LeanSide } from "@aquascape-studio/render"
 import type { PlantPlacement, TankDims } from "../sim/vendor/sim-core/contract"
 
-export const EDITOR_CONTRACT_VERSION = "1.1.0" as const
+export const EDITOR_CONTRACT_VERSION = "1.2.0" as const
+
+/*
+ * 1.2.0 (2026-11-17 r2, additive — epiphytes tied onto hardscape; 11-16 objections):
+ *  - ScapeDoc.attach (optional): plantId → hardscapeId. A plant listed here is
+ *    an epiphyte TIED onto that piece; its y is the piece's surface height at
+ *    (x, z) (render ≥ 1.4.0 hardscapeSurfaceY; until web can import it, a local
+ *    approximation in lib/editor/surface.ts with the same signature). Docs
+ *    without `attach` (1.0/1.1 links) are migrated on load: a plant with y > 0
+ *    whose (x, z) lies in a piece's footprint is attached to the topmost such
+ *    piece. Invariant after every op: every attach key is an existing plant,
+ *    every value an existing hardscape id, and attached plants have y > 0;
+ *    non-attached plants have y = 0.
+ *  - Only species whose botany growthForm is "epiphyte" or "moss" AND whose
+ *    placement includes "attached" may be attached (`canAttach(speciesId)`).
+ *  - EditOp "attachPlant" { speciesId, hardscapeId, x?, z?, portions? }: adds a
+ *    new plant tied onto the piece. x/z omitted → the first anchor from
+ *    hardscapeAnchors(h, 8) not within 3 cm of an already attached plant
+ *    (fallback: anchor 0). x/z given → must be inside the footprint (margin 0)
+ *    and have a surface (surfaceY ≠ null), else no-op. Id "<speciesId>-<n>".
+ *    Counts towards the 60-plant cap. Not a canAttach species → no-op.
+ *  - EditOp "detachPlant" { id }: the plant drops onto the bed in front of the
+ *    piece (z = piece front edge + 2 cm, clamped; y = 0); no-op if that spot is
+ *    blocked by a stone.
+ *  - Moving an attached plant (move / preview) keeps it on its host: (x, z) is
+ *    clamped into the host footprint shrunk by 0.5 cm, then y = surfaceY; if
+ *    surfaceY is null there, the nearest anchor of hardscapeAnchors(h, 8) is
+ *    used. A drag can never silently re-parent; re-parenting = detach + attach.
+ *  - Moving / rotating a hardscape piece carries exactly its attach-listed
+ *    plants (replaces the 1.0 footprint test), and recomputes their y.
+ *    Resizing scales their offset from the piece centre by `scale` and
+ *    recomputes y. Changing woodStyle / leanSide re-seats them on the nearest
+ *    anchors (k-th attached plant → nearest free anchor of hardscapeAnchors(h, 8)).
+ *    Removing a piece removes its attached plants in the same history step.
+ *  - EditOp "setLeanSide" { id, leanSide }: wood "root" only (else no-op).
+ *  - 11-16 objections, normative:
+ *    · needsResim is also true when templateId changed.
+ *    · setWoodStyle keeps width sizeCm[0] and resets height and depth to the
+ *      new style's default proportions (addHardscape defaults) scaled by
+ *      width / defaultWidth, then clamps like "resize".
+ *    · addHardscape is a no-op if the new footprint ellipse overlaps an
+ *      existing piece's footprint (test: centre distance < sum of the two
+ *      ellipses' radii along the centre line − 1 cm). The page tries candidate
+ *      spots (centre, ±W/4, ±3W/8 at z = 0, then z = −D/4) and uses the first
+ *      free one; if none is free it shows "No free spot" and adds nothing.
+ *    · resize: when a piece already exceeds a bound, scale > 1 is a no-op and
+ *      scale < 1 is applied (proportional, never re-grows).
+ *    · Web imports clampHardscapeXZ from @aquascape-studio/render (≥ 1.3.0);
+ *      the local copy is deleted and the skipped parity test re-enabled.
+ *  - encodeScape / decodeScape carry `attach` and hardscape `leanSide`;
+ *    ScapeDoc.v stays 1; a 30-plant, 5-piece doc with 8 attached plants must
+ *    still encode to ≤ 2000 chars.
+ */
 
 /*
  * 1.1.0 (2026-11-16, additive — driftwood + resize, 11-15 objections):
@@ -66,6 +118,8 @@ export interface ScapeDoc {
   focalPoint?: { x: number; y: number } | undefined
   hardscape: HardscapeVisual[]
   plants: PlantPlacement[]
+  /** 1.2.0 — epiphytes tied onto hardscape: plantId → hardscapeId */
+  attach?: Record<string, string> | undefined
 }
 
 export type EditOp =
@@ -82,6 +136,12 @@ export type EditOp =
   | { type: "addHardscape"; kind: "stone" | "wood"; woodStyle?: WoodStyle | undefined; x: number; z: number }
   /** 1.1.0 — wood only */
   | { type: "setWoodStyle"; id: string; woodStyle: WoodStyle }
+  /** 1.2.0 — tie a new epiphyte onto a hardscape piece */
+  | { type: "attachPlant"; speciesId: string; hardscapeId: string; x?: number | undefined; z?: number | undefined; portions?: number | undefined }
+  /** 1.2.0 — untie an attached plant; it drops onto the bed in front of the piece */
+  | { type: "detachPlant"; id: string }
+  /** 1.2.0 — root wood only */
+  | { type: "setLeanSide"; id: string; leanSide: LeanSide }
 
 export interface EditorState {
   doc: ScapeDoc
@@ -133,6 +193,8 @@ export type EditorAction =
  *       0.01 rad); a 30-plant, 5-stone doc must encode to ≤ 2000 chars.
  *   export function needsResim(prev: ScapeDoc, next: ScapeDoc): boolean   (1.1.0)
  *   export function clampHardscapeXZ(h, tank, x, z): { x: number; z: number }   (1.1.0, render 1.3.0 semantics)
+ *   export function canAttach(speciesId: string): boolean   (1.2.0)
+ *   export function migrateAttach(doc: ScapeDoc): ScapeDoc   (1.2.0; idempotent, used by decodeScape / docFromTemplate)
  *   export function decodeScape(s: string): ScapeDoc | null
  *     — null on any malformed / unknown-version / unknown-species input;
  *       never throws. Round-trip encode→decode is stable to the rounding.

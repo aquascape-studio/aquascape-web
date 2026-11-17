@@ -25,11 +25,28 @@
  *    10 cm of length, little or no hardscape.
  *    https://aquatic-gardeners.org/Articles/Vin-Dutch
  */
-import type { CompositionGuide, StoneRole } from "@aquascape-studio/render"
+import type { CompositionGuide, StoneRole, WoodStyle, LeanSide } from "@aquascape-studio/render"
 import type { HardscapeVisual } from "@aquascape-studio/render"
 import type { PlantPlacement, TankDims } from "../sim/vendor/sim-core/contract"
 
-export const TEMPLATE_CONTRACT_VERSION = "1.0.2" as const
+export const TEMPLATE_CONTRACT_VERSION = "1.1.0" as const
+
+/*
+ * 1.1.0 (2026-11-17 r2 — epiphytes, 11-16 follow-ups):
+ *  - No template may use a species with a non-empty botany `regulated` list
+ *    (tested). nature-concave's Limnophila sessiliflora and Hygrophila
+ *    polysperma are replaced by unregulated stems of similar look.
+ *  - TemplateHardscape gains optional woodStyle / leanSide (render 1.4.0).
+ *    Nature templates use "root" driftwood as the focal piece, wFrac ≥ 0.45,
+ *    centred in front of the stem background (v ≥ 0.45) so that at least
+ *    half of its silhouette is visible from the front at day 45.
+ *  - Every Nature template has ≥ 2 epiphyte groups `onHardscape` (one moss,
+ *    one Anubias / Bucephalandra / Java fern). Their placements are seated on
+ *    hardscapeAnchors(host, …) (render 1.4.0) and listed in
+ *    InstantiatedTemplate.attach; (u, v, ru, rv) only pick which anchors
+ *    (nearest to the group ellipse).
+ *  - InstantiatedTemplate.attach: plantId → hardscapeId (editor 1.2.0).
+ */
 
 /*
  * 1.0.2 (2026-11-17, owner decision: English-only app; orchestrator-authorised
@@ -66,6 +83,10 @@ export interface TemplateHardscape {
   rotationY: number
   seed: number
   buriedFrac?: number | undefined
+  /** wood only (1.1.0) */
+  woodStyle?: WoodStyle | undefined
+  /** root wood only (1.1.0) */
+  leanSide?: LeanSide | undefined
 }
 
 /**
@@ -115,6 +136,11 @@ export interface InstantiatedTemplate {
   /** cm, front view, for FrontalTank.focalPoint */
   focalPoint: { x: number; y: number }
   bed: { frontCm: number; backCm: number }
+  /**
+   * 1.1.0 — epiphytes tied onto hardscape: plantId → hardscapeId. Optional in
+   * the type only so 1.0.x output stays valid; 1.1.0 instantiate() always sets it.
+   */
+  attach?: Record<string, string> | undefined
 }
 
 /**

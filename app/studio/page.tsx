@@ -18,7 +18,7 @@ export default async function StudioPage() {
           style={{ backgroundColor: BG, borderColor: BORDER }}
         >
           <p className="text-sm" style={{ color: MUTED }}>
-            以访客身份体验。登录后可保存你的水草缸方案。
+            You’re browsing as a guest. Sign in to save your tanks.
           </p>
           <div className="flex gap-3 ml-4 shrink-0">
             <Link
@@ -26,14 +26,14 @@ export default async function StudioPage() {
               className="rounded-md px-3 py-1.5 text-sm font-medium transition-opacity hover:opacity-80"
               style={{ backgroundColor: ACCENT, color: TEXT }}
             >
-              登录
+              Sign in
             </Link>
             <Link
               href="/register"
               className="rounded-md px-3 py-1.5 text-sm font-medium transition-opacity hover:opacity-80"
               style={{ backgroundColor: BORDER, color: MUTED }}
             >
-              注册
+              Sign up
             </Link>
           </div>
         </div>
@@ -42,10 +42,10 @@ export default async function StudioPage() {
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold" style={{ color: TEXT }}>
-          {session?.user?.name ? `${session.user.name} 的工作室` : "水草工作室"}
+          {session?.user?.name ? `${session.user.name}’s Studio` : "Studio"}
         </h1>
         <p className="mt-1 text-sm" style={{ color: MUTED }}>
-          设计你的水草缸，运行生长模拟
+          Design your planted tank and simulate how it grows.
         </p>
       </div>
 
@@ -53,21 +53,21 @@ export default async function StudioPage() {
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 mb-10">
         <ActionCard
           icon="🌿"
-          title="新建水草缸"
-          desc="从空白缸开始设计"
+          title="New tank"
+          desc="Start from an empty tank"
           href="/studio/new"
           primary
         />
         <ActionCard
           icon="🔬"
-          title="运行模拟"
-          desc="模拟植物30天生长曲线"
+          title="Run a simulation"
+          desc="See 30 days of plant growth"
           href="/studio/sim"
         />
         <ActionCard
           icon="📚"
-          title="浏览植物库"
-          desc="查看15种水草的参数"
+          title="Browse plants"
+          desc="Explore 15 aquatic plants"
           href="/plants"
         />
       </div>
@@ -75,7 +75,7 @@ export default async function StudioPage() {
       {/* My scapes */}
       <section>
         <h2 className="text-lg font-semibold mb-4" style={{ color: TEXT }}>
-          我的水草缸
+          My tanks
         </h2>
         <EmptyScapes loggedIn={!!session} />
       </section>
@@ -83,13 +83,13 @@ export default async function StudioPage() {
       {/* Feature preview */}
       <section className="mt-10">
         <h2 className="text-lg font-semibold mb-4" style={{ color: TEXT }}>
-          即将上线
+          Coming soon
         </h2>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-          <FeatureCard icon="🎨" title="3D 可视化" desc="实时渲染水草缸三维效果" />
-          <FeatureCard icon="📈" title="1年生长模拟" desc="预测植物生物量与健康度变化" />
-          <FeatureCard icon="💧" title="水质管理" desc="CO₂ / 肥料 / 光照联动计算" />
-          <FeatureCard icon="🤝" title="分享方案" desc="导出并分享你的造景配置" />
+          <FeatureCard icon="🎨" title="3D view" desc="Your tank, rendered in real time" />
+          <FeatureCard icon="📈" title="One-year growth" desc="Forecast biomass and plant health" />
+          <FeatureCard icon="💧" title="Water chemistry" desc="CO₂, fertiliser and light, modelled together" />
+          <FeatureCard icon="🤝" title="Share" desc="Export and share your layout" />
         </div>
       </section>
     </main>
@@ -139,11 +139,11 @@ function EmptyScapes({ loggedIn }: { loggedIn: boolean }) {
       style={{ borderColor: BORDER }}
     >
       <span className="text-4xl mb-3">🪴</span>
-      <p className="text-sm font-medium mb-1" style={{ color: TEXT }}>还没有水草缸</p>
+      <p className="text-sm font-medium mb-1" style={{ color: TEXT }}>No tanks yet</p>
       <p className="text-xs mb-4" style={{ color: MUTED }}>
         {loggedIn
-          ? "点击「新建水草缸」开始你的第一个造景方案"
-          : "登录后即可创建并保存你的造景方案"}
+          ? "Choose New tank to start your first layout."
+          : "Sign in to create and save your layouts."}
       </p>
       {loggedIn ? (
         <Link
@@ -151,7 +151,7 @@ function EmptyScapes({ loggedIn }: { loggedIn: boolean }) {
           className="rounded-lg px-4 py-2 text-sm font-medium transition-opacity hover:opacity-80"
           style={{ backgroundColor: ACCENT, color: TEXT }}
         >
-          新建水草缸
+          New tank
         </Link>
       ) : (
         <Link
@@ -159,7 +159,7 @@ function EmptyScapes({ loggedIn }: { loggedIn: boolean }) {
           className="rounded-lg px-4 py-2 text-sm font-medium transition-opacity hover:opacity-80"
           style={{ backgroundColor: ACCENT, color: TEXT }}
         >
-          登录
+          Sign in
         </Link>
       )}
     </div>

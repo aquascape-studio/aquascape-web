@@ -6,18 +6,17 @@ import { TOKENS, tokenVars } from "./timelapse/tokens"
 
 /**
  * Font variables (same names as the former next/font/google setup): Inter is
- * self-hosted via @fontsource-variable/inter; Chinese uses the system CJK stack.
+ * self-hosted via @fontsource-variable/inter.
  */
 const FONT_VARS = `
 .tl-root {
   --tl-font-latin: "Inter Variable", "Inter";
-  --tl-font-cjk: "PingFang SC", "Hiragino Sans", "Noto Sans SC", "Microsoft YaHei", sans-serif;
 }
 `
 
 /**
  * Route-scoped overrides: while the time-lapse is mounted, the global (dark)
- * NavBar and body take the light "超白玻璃" treatment. Removed on unmount.
+ * NavBar and body take the light "ultra-clear glass" treatment. Removed on unmount.
  */
 const SCOPED_CSS = `${FONT_VARS}
 body { background: ${TOKENS.bg} !important; color: ${TOKENS.text} !important; }
@@ -35,7 +34,7 @@ body > nav a[href="/login"], body > nav button {
 body > nav a[href="/login"]:hover, body > nav button:hover { background: ${TOKENS.accentHover} !important; opacity: 1 !important; }
 
 .tl-root {
-  font-family: var(--tl-font-latin), var(--tl-font-cjk), -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif;
+  font-family: var(--tl-font-latin), -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 .tl-root .tl-num { font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; }
@@ -82,7 +81,7 @@ export default function GrowthTimelapse() {
         <Suspense
           fallback={
             <p className="px-6 py-24 text-center text-sm" style={{ color: "var(--tl-muted)" }}>
-              加载中… Loading
+              Loading…
             </p>
           }
         >

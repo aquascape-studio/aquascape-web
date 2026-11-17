@@ -31,13 +31,13 @@ export default function ControlBar({ day, days, available, playing, computing, t
   return (
     <div
       role="toolbar"
-      aria-label="时间轴 Timeline"
+      aria-label="Timeline"
       className="tl-glass mx-auto flex max-w-[760px] flex-wrap items-center gap-x-3 gap-y-1 rounded-[28px] px-3 py-2 sm:flex-nowrap sm:rounded-full sm:pl-2.5 sm:pr-2"
     >
       <button
         type="button"
         onClick={onTogglePlay}
-        aria-label={playing ? "暂停 Pause" : "播放 Play"}
+        aria-label={playing ? "Pause" : "Play"}
         aria-pressed={playing}
         className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full transition-transform duration-150 active:scale-95"
         style={{ background: c("text"), color: c("bg") }}
@@ -54,10 +54,10 @@ export default function ControlBar({ day, days, available, playing, computing, t
         )}
       </button>
 
-      <div className="w-[76px] shrink-0 leading-tight" aria-live="polite">
-        <p className="text-[15px] font-semibold tracking-tight tl-num">第 {day} 天</p>
+      <div className="w-[92px] shrink-0 whitespace-nowrap leading-tight" aria-live="polite">
+        <p className="text-[15px] font-semibold tracking-tight tl-num">Day {day}</p>
         <p className="text-[11px] tl-num" style={{ color: c("muted") }}>
-          {computing ? `计算中 ${available}/${days}` : `Day ${day} / ${days}`}
+          {computing ? `Computing… ${available}/${days}` : `of ${days}`}
         </p>
       </div>
 
@@ -74,8 +74,8 @@ export default function ControlBar({ day, days, available, playing, computing, t
           value={day}
           onChange={(e) => onDay(Number(e.target.value))}
           className="tl-range relative"
-          aria-label="模拟天数 Simulation day"
-          aria-valuetext={`第 ${day} 天 Day ${day}`}
+          aria-label="Simulation day"
+          aria-valuetext={`Day ${day}`}
         />
         <div className="pointer-events-none absolute inset-x-[11px] bottom-[4px] h-[5px]" aria-hidden>
           {[...events.entries()].map(([d, evs]) => {
@@ -93,7 +93,7 @@ export default function ControlBar({ day, days, available, playing, computing, t
 
       <div
         role="group"
-        aria-label="快速跳转 Jump to day"
+        aria-label="Jump to day"
         className="flex w-full shrink-0 items-center justify-between rounded-full sm:w-auto"
         style={{ background: c("segTrack") }}
       >
@@ -115,7 +115,7 @@ export default function ControlBar({ day, days, available, playing, computing, t
                   boxShadow: on ? "0 1px 3px rgba(0,0,0,0.14), 0 0 0 0.5px rgba(0,0,0,0.06)" : "none",
                 }}
               >
-                {d} 天
+                Day {d}
               </span>
             </button>
           )

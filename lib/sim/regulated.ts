@@ -13,7 +13,7 @@ export interface RegulatedEntry {
 }
 
 /** neutral caption shown with the species' add chip */
-export const REGULATED_CAPTION = { zh: "部分地区管制", en: "Regulated in some regions" } as const
+export const REGULATED_CAPTION = "Regulated in some regions"
 
 /** valid regulated entries of a record (empty when the field is absent or malformed) */
 export function regulatedEntries(rec: { regulated?: unknown } | null | undefined): RegulatedEntry[] {

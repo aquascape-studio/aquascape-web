@@ -4,7 +4,7 @@ import type { SpeciesMeta } from "./derive"
 import { fmtG, niceMax } from "./derive"
 import { c } from "./tokens"
 
-const ZONE_LABEL = { foreground: "前景", midground: "中景", background: "后景", floating: "浮水" } as const
+const ZONE_LABEL = { foreground: "Foreground", midground: "Midground", background: "Background", floating: "Floating" } as const
 
 interface Props {
   species: SpeciesMeta[]
@@ -49,10 +49,13 @@ export default function SpeciesMultiples({ species, series, days, day, selectedS
           >
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
-                <p className="truncate text-[17px] font-semibold tracking-tight">{s.zh}</p>
-                <p className="truncate text-[13px]" style={{ color: c("muted") }}>
-                  {s.en} · <i>{s.latin}</i>
-                </p>
+                <p className="truncate text-[17px] font-semibold tracking-tight">{s.name}</p>
+                {/* cultivars often have no separate common name — don't repeat it */}
+                {s.latin !== s.name && (
+                  <p className="truncate text-[13px]" style={{ color: c("muted") }}>
+                    <i>{s.latin}</i>
+                  </p>
+                )}
               </div>
               <div className="shrink-0 text-right">
                 <p className="text-[22px] font-semibold tracking-tight tl-num">
@@ -77,7 +80,7 @@ export default function SpeciesMultiples({ species, series, days, day, selectedS
             </svg>
             <p className="mt-3 text-[12px]" style={{ color: c("muted") }}>
               {ZONE_LABEL[s.zone]} · ×{s.qty}
-              {s.substituteFor && <> · 替代 {s.substituteFor}</>}
+              {s.substituteFor && <> · Stand-in for {s.substituteFor}</>}
             </p>
           </button>
         )

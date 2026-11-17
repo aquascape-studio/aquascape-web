@@ -3,7 +3,7 @@
 /**
  * Drag-editor toolbar (behind `flags.dragEditor`): a small frosted-glass
  * capsule under the tank — undo / redo / delete / − + size / copy share link —
- * with the selection + "模拟中…" status above it, the driftwood style control
+ * with the selection + "Simulating…" status above it, the driftwood style control
  * when a wood piece is selected, and the select / add chip rows below
  * (chips wrap; nothing scrolls sideways).
  */
@@ -11,7 +11,7 @@ import { useEffect, useId, useState, type ReactNode } from "react"
 import type { EditTarget, StoneRole, WoodStyle } from "@aquascape-studio/render"
 import type { ScapeDoc } from "@/lib/editor"
 import { MAX_HARDSCAPE_PIECES, MAX_PLANTS, RESIZE_DOWN, RESIZE_UP, WOOD_STYLES } from "@/lib/editor"
-import type { BotanyRecord } from "@/lib/sim/buildInput"
+import { speciesName, type BotanyRecord } from "@/lib/sim/buildInput"
 import { REGULATED_CAPTION, isRegulated, regulatedJurisdictions } from "@/lib/sim/regulated"
 import { c } from "./tokens"
 import { useFlag } from "./useScapeEditor"
@@ -40,35 +40,34 @@ export const EDITOR_CSS = `
 .tl-root .tl-pulse { animation: tl-pulse 1.2s ease-in-out infinite; }
 `
 
-export const WOOD_STYLE_LABEL: Record<WoodStyle, { zh: string; en: string }> = {
-  branchy: { zh: "枝状", en: "Branchy" },
-  root: { zh: "树根", en: "Root" },
-  log: { zh: "横木", en: "Log" },
+export const WOOD_STYLE_LABEL: Record<WoodStyle, string> = {
+  branchy: "Branchy",
+  root: "Root",
+  log: "Log",
 }
 
-const ROLE_LABEL: Record<StoneRole, { zh: string; en: string }> = {
-  oyaishi: { zh: "主石", en: "Oyaishi" },
-  fukuishi: { zh: "副石", en: "Fukuishi" },
-  soeishi: { zh: "添石", en: "Soeishi" },
-  suteishi: { zh: "捨石", en: "Suteishi" },
+/** Iwagumi stone roles keep their standard Japanese names; `hint` explains them. */
+const ROLE_LABEL: Record<StoneRole, { label: string; hint: string }> = {
+  oyaishi: { label: "Oyaishi", hint: "main stone" },
+  fukuishi: { label: "Fukuishi", hint: "secondary stone" },
+  soeishi: { label: "Soeishi", hint: "accent stone" },
+  suteishi: { label: "Suteishi", hint: "fill stone" },
 }
 
-function shortZh(rec: BotanyRecord | undefined, fallback: string): string {
-  return rec?.commonNames?.zh?.[0]?.replace(/（.*?）/g, "") ?? fallback
+function pieceLabel(h: ScapeDoc["hardscape"][number]): string {
+  if (h.kind === "wood") return "Driftwood"
+  return h.role ? ROLE_LABEL[h.role].label : "Stone"
 }
 
-function selectionLabel(doc: ScapeDoc, sel: EditTarget, byId: ReadonlyMap<string, BotanyRecord>): { zh: string; en: string } | null {
+function selectionLabel(doc: ScapeDoc, sel: EditTarget, byId: ReadonlyMap<string, BotanyRecord>): string | null {
   if (sel.kind === "hardscape") {
     const h = doc.hardscape.find((x) => x.id === sel.id)
-    if (!h) return null
-    if (h.kind === "wood") return { zh: "沉木", en: "Wood" }
-    return h.role ? ROLE_LABEL[h.role] : { zh: "石头", en: "Stone" }
+    return h ? pieceLabel(h) : null
   }
   const p = doc.plants.find((x) => x.id === sel.id)
   if (!p) return null
-  const rec = byId.get(p.speciesId)
   const no = p.id.slice(p.id.lastIndexOf(p.id.includes("#") ? "#" : "-") + 1)
-  return { zh: `${shortZh(rec, p.speciesId)} #${no}`, en: rec?.commonNames?.en?.[0] ?? rec?.scientificName ?? "" }
+  return `${speciesName(byId.get(p.speciesId), p.speciesId)} #${no}`
 }
 
 const Icon = {
@@ -119,18 +118,19 @@ export interface EditorToolbarProps {
   onWoodStyle: (style: WoodStyle) => void
 }
 
-/** "主石", "捨石 1", "捨石 2" … (numbered only when a label repeats) */
-function hardscapeChips(doc: ScapeDoc): { id: string; zh: string; en: string }[] {
-  const base = doc.hardscape.map((h) => (h.kind === "wood" ? { zh: "沉木", en: "Wood" } : h.role ? ROLE_LABEL[h.role] : { zh: "石头", en: "Stone" }))
+/** "Oyaishi", "Suteishi 1", "Suteishi 2" … (numbered only when a label repeats) */
+function hardscapeChips(doc: ScapeDoc): { id: string; label: string; hint: string }[] {
+  const base = doc.hardscape.map(pieceLabel)
   const total = new Map<string, number>()
-  for (const b of base) total.set(b.zh, (total.get(b.zh) ?? 0) + 1)
+  for (const b of base) total.set(b, (total.get(b) ?? 0) + 1)
   const seen = new Map<string, number>()
   return doc.hardscape.map((h, i) => {
     const b = base[i]!
-    const n = (seen.get(b.zh) ?? 0) + 1
-    seen.set(b.zh, n)
-    const suffix = (total.get(b.zh) ?? 0) > 1 ? ` ${n}` : ""
-    return { id: h.id, zh: b.zh + suffix, en: b.en + suffix }
+    const n = (seen.get(b) ?? 0) + 1
+    seen.set(b, n)
+    const suffix = (total.get(b) ?? 0) > 1 ? ` ${n}` : ""
+    const hint = h.kind === "stone" && h.role ? `${b}, ${ROLE_LABEL[h.role].hint}` : b
+    return { id: h.id, label: b + suffix, hint }
   })
 }
 
@@ -158,35 +158,34 @@ export default function EditorToolbar({
       <p className="flex min-h-6 flex-wrap items-center justify-center gap-x-3 gap-y-1 text-center text-[13px] font-medium" aria-live="polite">
         {sel ? (
           <span>
-            <span style={{ color: c("muted") }}>已选 Selected · </span>
-            <span style={{ color: c("text") }}>{sel.zh}</span>
-            {sel.en && <span style={{ color: c("muted") }}> {sel.en}</span>}
+            <span style={{ color: c("muted") }}>Selected · </span>
+            <span style={{ color: c("text") }}>{sel}</span>
           </span>
         ) : (
           <span style={{ color: c("muted") }}>
-            拖动石头或水草调整布局 <span className="hidden sm:inline">· Drag stones or plants to edit</span>
+            Drag stones or plants to edit
           </span>
         )}
         {simulating && (
           <span className="inline-flex items-center gap-1.5" style={{ color: c("accent") }} data-testid="editor-simulating">
             <span className="tl-pulse inline-block h-1.5 w-1.5 rounded-full" style={{ background: c("accent") }} />
-            模拟中… Simulating…
+            Simulating…
           </span>
         )}
       </p>
 
-      <div role="toolbar" aria-label="编辑 Edit" className="tl-edit flex items-center gap-0.5 rounded-full p-1">
+      <div role="toolbar" aria-label="Edit" className="tl-edit flex items-center gap-0.5 rounded-full p-1">
         <button
           type="button"
           className="tl-ebtn inline-flex min-h-11 min-w-11 items-center justify-center gap-1.5 rounded-full px-2.5 text-[14px] font-medium sm:px-3"
           style={{ color: c("text") }}
           onClick={onUndo}
           disabled={!canUndo}
-          aria-label="撤销 Undo"
-          title={`撤销 Undo (${mod}Z)`}
+          aria-label="Undo"
+          title={`Undo (${mod}Z)`}
         >
           <Svg>{Icon.undo}</Svg>
-          <span className="hidden sm:inline">撤销</span>
+          <span className="hidden sm:inline" aria-hidden="true">Undo</span>
         </button>
         <button
           type="button"
@@ -194,11 +193,11 @@ export default function EditorToolbar({
           style={{ color: c("text") }}
           onClick={onRedo}
           disabled={!canRedo}
-          aria-label="重做 Redo"
-          title={`重做 Redo (${isMac ? "⇧⌘Z" : "Ctrl+Y"})`}
+          aria-label="Redo"
+          title={`Redo (${isMac ? "⇧⌘Z" : "Ctrl+Y"})`}
         >
           <Svg>{Icon.redo}</Svg>
-          <span className="hidden sm:inline">重做</span>
+          <span className="hidden sm:inline" aria-hidden="true">Redo</span>
         </button>
         <button
           type="button"
@@ -206,11 +205,11 @@ export default function EditorToolbar({
           style={{ color: selected ? c("warn") : c("text") }}
           onClick={onDelete}
           disabled={!selected}
-          aria-label="删除 Delete"
-          title="删除 Delete (⌫)"
+          aria-label="Delete"
+          title="Delete (⌫)"
         >
           <Svg>{Icon.trash}</Svg>
-          <span className="hidden sm:inline">删除</span>
+          <span className="hidden sm:inline" aria-hidden="true">Delete</span>
         </button>
         <span className="mx-0.5 h-6 w-px sm:mx-1" style={{ background: c("hairline") }} aria-hidden="true" />
         <button
@@ -219,8 +218,8 @@ export default function EditorToolbar({
           style={{ color: c("text") }}
           onClick={() => onResize(RESIZE_DOWN)}
           disabled={!selPiece}
-          aria-label="缩小 Smaller"
-          title="缩小 Smaller (−)"
+          aria-label="Smaller"
+          title="Smaller (−)"
           data-testid="editor-smaller"
         >
           <Svg>{Icon.minus}</Svg>
@@ -231,8 +230,8 @@ export default function EditorToolbar({
           style={{ color: c("text") }}
           onClick={() => onResize(RESIZE_UP)}
           disabled={!selPiece}
-          aria-label="放大 Larger"
-          title="放大 Larger (+)"
+          aria-label="Larger"
+          title="Larger (+)"
           data-testid="editor-larger"
         >
           <Svg>{Icon.plus}</Svg>
@@ -248,13 +247,7 @@ export default function EditorToolbar({
         >
           <Svg>{copied ? Icon.check : Icon.link}</Svg>
           <span aria-live="polite">
-            {copied ? "已复制 Copied" : copyFailed ? "地址栏已更新 URL updated" : (
-              <>
-                {/* phones: a shorter label keeps the capsule inside 390 px */}
-                <span className="sm:hidden">复制链接</span>
-                <span className="hidden sm:inline">复制分享链接 Copy link</span>
-              </>
-            )}
+            {copied ? "Copied" : copyFailed ? "URL updated" : "Copy link"}
           </span>
         </button>
       </div>
@@ -263,7 +256,7 @@ export default function EditorToolbar({
       {selWood && (
         <div className="flex items-center gap-2" data-testid="wood-style">
           <span id={`${uid}-ws`} className="text-[12px] font-medium" style={{ color: c("muted") }}>
-            沉木造型 <span className="hidden sm:inline">Wood style</span>
+            Wood style
           </span>
           <div role="radiogroup" aria-labelledby={`${uid}-ws`} className="flex rounded-full p-[3px]" style={{ background: c("segTrack") }}>
             {WOOD_STYLES.map((ws) => {
@@ -275,7 +268,6 @@ export default function EditorToolbar({
                   role="radio"
                   aria-checked={on}
                   onClick={() => onWoodStyle(ws)}
-                  title={WOOD_STYLE_LABEL[ws].en}
                   className="tl-seg flex min-h-11 items-center justify-center whitespace-nowrap rounded-full px-4 text-[13px] font-medium"
                   style={{
                     background: on ? c("bg") : "transparent",
@@ -283,8 +275,7 @@ export default function EditorToolbar({
                     boxShadow: on ? "0 1px 3px rgba(0,0,0,0.14), 0 0 0 0.5px rgba(0,0,0,0.06)" : "none",
                   }}
                 >
-                  {WOOD_STYLE_LABEL[ws].zh}
-                  <span className="tl-sr"> {WOOD_STYLE_LABEL[ws].en}</span>
+                  {WOOD_STYLE_LABEL[ws]}
                 </button>
               )
             })}
@@ -297,9 +288,9 @@ export default function EditorToolbar({
         {doc.hardscape.length > 0 && (
           <div className="flex w-full items-start gap-2">
             <span className="flex min-h-11 w-12 shrink-0 items-center text-[12px] font-medium sm:w-[84px]" style={{ color: c("muted") }}>
-              选择 <span className="ml-1 hidden sm:inline">Select</span>
+              Select
             </span>
-            <div role="group" aria-label="选择硬景 Select hardscape" className="flex min-w-0 flex-1 flex-wrap gap-1.5">
+            <div role="group" aria-label="Select hardscape" className="flex min-w-0 flex-1 flex-wrap gap-1.5">
               {hardscapeChips(doc).map((h) => {
                 const on = selected?.kind === "hardscape" && selected.id === h.id
                 return (
@@ -310,9 +301,9 @@ export default function EditorToolbar({
                     onClick={() => onSelect(on ? null : { kind: "hardscape", id: h.id })}
                     className="tl-chip inline-flex min-h-11 items-center whitespace-nowrap rounded-full px-3.5 text-[13px] font-medium"
                     style={on ? { background: c("text"), color: c("bg") } : { background: c("surface"), color: c("text") }}
-                    title={`${h.en} — ←↑→↓ 移动 move · [ ] 旋转 rotate · − + 大小 size`}
+                    title={`${h.hint} — ←↑→↓ move · [ ] rotate · − + size`}
                   >
-                    {h.zh}
+                    {h.label}
                   </button>
                 )
               })}
@@ -321,15 +312,15 @@ export default function EditorToolbar({
         )}
         <div className="flex w-full items-start gap-2">
           <span className="flex min-h-11 w-12 shrink-0 items-center text-[12px] font-medium sm:w-[84px]" style={{ color: c("muted") }}>
-            添加 <span className="ml-1 hidden sm:inline">Add</span>
+            Add
           </span>
-          <div role="group" aria-label="添加 Add" className="flex min-w-0 flex-1 flex-wrap gap-1.5">
+          <div role="group" aria-label="Add" className="flex min-w-0 flex-1 flex-wrap gap-1.5">
             {(
               [
-                ["stone", "石头", "Stone"],
-                ["wood", "沉木", "Driftwood"],
+                ["stone", "Stone"],
+                ["wood", "Driftwood"],
               ] as const
-            ).map(([kind, zh, en]) => (
+            ).map(([kind, label]) => (
               <button
                 key={kind}
                 type="button"
@@ -337,11 +328,10 @@ export default function EditorToolbar({
                 onClick={() => onAddHardscape(kind)}
                 className="tl-chip inline-flex min-h-11 items-center gap-1 whitespace-nowrap rounded-full px-3.5 text-[13px] font-medium"
                 style={{ background: c("surface"), color: c("text") }}
-                title={hsFull ? `最多 ${MAX_HARDSCAPE_PIECES} 件硬景 · ${MAX_HARDSCAPE_PIECES}-piece limit` : `${en} — 添加到中央空位 Add near the centre`}
+                title={hsFull ? `${MAX_HARDSCAPE_PIECES}-piece limit` : `${label} — add near the centre`}
                 data-testid={`add-${kind}`}
               >
-                <span aria-hidden="true" style={{ color: c("accent") }}>+</span> {zh}
-                <span className="tl-sr"> {en}</span>
+                <span aria-hidden="true" style={{ color: c("accent") }}>+</span> {label}
               </button>
             ))}
             {species.length > 0 && <span className="mx-0.5 my-2.5 w-px self-stretch" style={{ background: c("hairline") }} aria-hidden="true" />}
@@ -357,14 +347,14 @@ export default function EditorToolbar({
                   onClick={() => onAdd(sid)}
                   className="tl-chip inline-flex min-h-11 items-center gap-1 whitespace-nowrap rounded-full px-3.5 text-[13px] font-medium"
                   style={{ background: c("surface"), color: c("text") }}
-                  title={`${rec?.scientificName ?? sid} — 添加到中央 Add at centre${regulated ? `\n${REGULATED_CAPTION.zh} · ${REGULATED_CAPTION.en} (${regulatedJurisdictions(rec)})` : ""}`}
+                  title={`${rec?.scientificName ?? sid} — add at centre${regulated ? `\n${REGULATED_CAPTION} (${regulatedJurisdictions(rec)})` : ""}`}
                   aria-describedby={regulated ? descId : undefined}
                   data-regulated={regulated ? "1" : undefined}
                 >
-                  <span aria-hidden="true" style={{ color: c("accent") }}>+</span> {shortZh(rec, sid)}
+                  <span aria-hidden="true" style={{ color: c("accent") }}>+</span> {speciesName(rec, sid)}
                   {regulated && (
                     <span id={descId} className="tl-sr">
-                      {REGULATED_CAPTION.zh} {REGULATED_CAPTION.en} ({regulatedJurisdictions(rec)})
+                      {REGULATED_CAPTION} ({regulatedJurisdictions(rec)})
                     </span>
                   )}
                 </button>
@@ -375,7 +365,7 @@ export default function EditorToolbar({
       </div>
       {full && (
         <p className="text-[12px]" style={{ color: c("muted") }}>
-          已达 {MAX_PLANTS} 丛上限 · {MAX_PLANTS}-plant limit reached
+          {MAX_PLANTS}-plant limit reached
         </p>
       )}
     </div>

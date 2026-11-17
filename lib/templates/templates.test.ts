@@ -41,12 +41,14 @@ describe("TEMPLATES", () => {
     for (const t of TEMPLATES) for (const g of t.groups) expect(BY_ID.has(g.speciesId), `${t.id}: ${g.speciesId}`).toBe(true)
   })
 
-  it("has bilingual names and short blurbs", () => {
+  it("has English names and short one-sentence blurbs", () => {
     for (const t of TEMPLATES) {
-      expect(t.nameZh).toMatch(/[一-鿿]/)
-      expect(t.nameEn.length).toBeGreaterThan(0)
-      expect([...t.blurbZh].length).toBeLessThanOrEqual(40)
-      expect(t.blurbEn.length).toBeGreaterThan(0)
+      expect(t.name).toMatch(/^[A-Z][a-z]+ · [A-Z][a-z]+$/)
+      expect(t.blurb.length).toBeGreaterThan(0)
+      expect(t.blurb.length).toBeLessThanOrEqual(110)
+      expect(t.blurb.endsWith(".")).toBe(true)
+      expect(t).not.toHaveProperty("nameZh")
+      expect(t).not.toHaveProperty("blurbZh")
     }
   })
 
@@ -204,7 +206,7 @@ describe("instantiate", () => {
   })
 })
 
-describe("contract 1.0.1", () => {
+describe("contract 1.0.1 / 1.0.2", () => {
   const group = (count: number, extra: Partial<TemplatePlantGroup> = {}): TemplatePlantGroup => ({
     speciesId: "hemianthus-callitrichoides-cuba", u: 0.5, v: 0.5, ru: 0.2, rv: 0.1, count, portions: 1, ...extra,
   })
@@ -212,8 +214,8 @@ describe("contract 1.0.1", () => {
     ...getTemplate("dutch-streets")!, id: "test", hardscape: [], groups,
   })
 
-  it("is version 1.0.1 and the Iwagumi template uses the iwagumi composition", () => {
-    expect(TEMPLATE_CONTRACT_VERSION).toBe("1.0.1")
+  it("is version 1.0.2 and the Iwagumi template uses the iwagumi composition", () => {
+    expect(TEMPLATE_CONTRACT_VERSION).toBe("1.0.2")
     expect(getTemplate("iwagumi-sanzon")!.composition).toBe("iwagumi")
     for (const t of TEMPLATES) if (t.style === "iwagumi") expect(t.composition).toBe("iwagumi")
     for (const t of TEMPLATES) if (t.style !== "iwagumi") expect(t.composition).not.toBe("iwagumi")
@@ -394,7 +396,7 @@ describe("buildTemplateInput", () => {
   it("defaults to the 60 cm tank and the template name", () => {
     const b = buildTemplateInput(getTemplate("dutch-streets")!, new URLSearchParams(""), PLANTS)
     expect(b.input.tank.widthCm).toBe(60)
-    expect(b.name).toContain("荷兰街道")
+    expect(b.name).toBe("Dutch · Streets")
     expect(b.scene.hardscape).toEqual([])
   })
 })

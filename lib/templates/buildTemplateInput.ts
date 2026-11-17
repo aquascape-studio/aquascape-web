@@ -26,7 +26,7 @@ export function buildTemplateInput(t: ScapeTemplate, params: ParamSource, plants
     const v = params.get(k)
     if (v !== null) p.set(k, v)
   }
-  p.set("name", params.get("name") ?? `${t.nameZh} ${t.nameEn}`)
+  p.set("name", params.get("name") ?? t.name)
   p.set("light", t.light)
   if (t.co2) p.set("co2", "true")
   p.set("plants", JSON.stringify(qty))

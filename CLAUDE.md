@@ -12,7 +12,7 @@ aquascape-web/
 │   ├── page.tsx             # marketing + live 3D demo
 │   ├── studio/              # authenticated editor
 │   ├── scapes/[id]/         # public scape viewer
-│   ├── plants/              # species library (zh + en search)
+│   ├── plants/              # species library (English search)
 │   ├── learn/               # MDX articles
 │   └── api/                 # tRPC + next-auth
 ├── components/

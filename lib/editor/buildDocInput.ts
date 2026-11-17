@@ -45,7 +45,7 @@ export function buildDocInput(doc: ScapeDoc, params: ParamSource, plants: readon
   p.set("w", String(doc.tank.widthCm))
   p.set("d", String(doc.tank.depthCm))
   p.set("h", String(doc.tank.heightCm))
-  const name = params.get("name") ?? (template ? `${template.nameZh} ${template.nameEn}` : null)
+  const name = params.get("name") ?? (template ? template.name : null)
   if (name !== null) p.set("name", name)
   if (template) {
     p.set("light", template.light)

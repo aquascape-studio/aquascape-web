@@ -54,14 +54,14 @@ export default function LightMap({ frame, tank, placements, species, lowLightPar
   return (
     <div>
       <p className="mb-2 text-[12px] font-medium" style={{ color: c("muted") }}>
-        后 Back <span className="tl-num">· {W}×{D} cm</span>
+        Back <span className="tl-num">· {W}×{D} cm</span>
       </p>
       <div className="relative">
         <svg
           viewBox={`-1.5 -1.5 ${W + 3} ${D + 3}`}
           className="block w-full"
           role="img"
-          aria-label={`俯视光照图 Top-down light map, ${nx}×${nz} cells; 缺光 cells below ${lowLightPar} PAR are hatched`}
+          aria-label={`Top-down light map, ${nx}×${nz} cells; low-light cells below ${lowLightPar} PAR are hatched`}
           onPointerLeave={() => setHover(null)}
         >
           <defs>
@@ -106,7 +106,7 @@ export default function LightMap({ frame, tank, placements, species, lowLightPar
                 key={pl.id}
                 role="button"
                 tabIndex={-1}
-                aria-label={`${sp?.zh ?? pl.speciesId} ${pl.id}`}
+                aria-label={`${sp?.name ?? pl.speciesId} ${pl.id}`}
                 className="cursor-pointer"
                 onClick={() => onSelect(pl.id)}
               >
@@ -136,12 +136,12 @@ export default function LightMap({ frame, tank, placements, species, lowLightPar
             }}
           >
             <span className="font-semibold">{Math.round(hoverPar)} PAR</span>
-            {hoverPar < lowLightPar && <span style={{ color: c("warn") }}> · 缺光 low light</span>}
+            {hoverPar < lowLightPar && <span style={{ color: c("warn") }}> · Low light</span>}
           </div>
         )}
       </div>
 
-      <p className="mt-2 text-[12px] font-medium" style={{ color: c("muted") }}>前 Front · 观赏面 viewing side</p>
+      <p className="mt-2 text-[12px] font-medium" style={{ color: c("muted") }}>Front · Viewing side</p>
 
       {/* legend */}
       <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3 text-xs" style={{ color: c("muted") }}>
@@ -168,7 +168,7 @@ export default function LightMap({ frame, tank, placements, species, lowLightPar
             <rect x="0.75" y="0.75" width="16.5" height="12.5" rx="3" fill={`url(#lh${pid})`} stroke={c("coral")} strokeWidth="1.2" />
           </svg>
           <span style={{ color: c("warn") }} className="font-medium">
-            缺光 low light
+            Low light
           </span>
           <span className="tl-num">&lt; {lowLightPar} PAR</span>
         </div>
@@ -177,7 +177,7 @@ export default function LightMap({ frame, tank, placements, species, lowLightPar
             <circle cx="8" cy="8" r="7" fill={c("green4")} fillOpacity="0.28" stroke={c("green4")} />
             <circle cx="8" cy="8" r="1.6" fill={c("bg")} stroke={c("text")} strokeWidth="0.6" />
           </svg>
-          <span>植株 · 圆径 = 冠幅 spread</span>
+          <span>Plant · circle size = spread</span>
         </div>
       </div>
     </div>

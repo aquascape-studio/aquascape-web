@@ -32,7 +32,7 @@ async function snapshot(browser, origin) {
   const page = await ctx.newPage()
   await page.goto(origin + path, { waitUntil: "networkidle", timeout: 300000 })
   // time-lapse builds: wait for the simulation to finish (legacy page: no-op)
-  await page.waitForFunction(() => !/计算中|Computing…/.test(document.body.innerText), null, { timeout: 300000 }).catch(() => {})
+  await page.waitForFunction(() => !/Computing…/.test(document.body.innerText), null, { timeout: 300000 }).catch(() => {})
   await page.waitForTimeout(3000)
   const html = await page.evaluate(() => {
     const root = document.body.cloneNode(true)
@@ -49,7 +49,7 @@ async function snapshot(browser, origin) {
     .replace(/\/_next\/static\/[^"')\s]+/g, "/_next/static/…")
     .replace(/«r[0-9a-z]+»|:r[0-9a-z]+:/g, "«id»")
     .replace(/\d+ ms/g, "… ms")
-    .replace(/计算中 \d+\/\d+|Computing… \d+\/\d+/g, "computing")
+    .replace(/Computing… \d+\/\d+/g, "computing")
 }
 
 ;(async () => {

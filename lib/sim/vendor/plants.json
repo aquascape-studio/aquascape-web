@@ -16,16 +16,8 @@
       "en": [
         "Anubias barteri",
         "Broadleaf anubias"
-      ],
-      "zh": [
-        "大榕",
-        "大叶榕"
       ]
     },
-    "pinyin": [
-      "da rong",
-      "da ye rong"
-    ],
     "group": "epiphyte",
     "growthForm": "epiphyte",
     "origin": [
@@ -138,16 +130,8 @@
       "en": [
         "Anubias nana Petite",
         "Dwarf anubias"
-      ],
-      "zh": [
-        "迷你小榕",
-        "小榕Petite"
       ]
     },
-    "pinyin": [
-      "mi ni xiao rong",
-      "xiao rong petite"
-    ],
     "group": "epiphyte",
     "growthForm": "epiphyte",
     "origin": [
@@ -260,16 +244,8 @@
         "Lemon bacopa",
         "Blue waterhyssop",
         "Giant bacopa"
-      ],
-      "zh": [
-        "过长沙",
-        "卡罗来纳过长沙"
       ]
     },
-    "pinyin": [
-      "guo chang sha",
-      "ka luo lai na guo chang sha"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -383,18 +359,8 @@
         "Moneywort",
         "Water hyssop",
         "Brahmi"
-      ],
-      "zh": [
-        "过长沙（正名）",
-        "钱草",
-        "婆罗米"
       ]
     },
-    "pinyin": [
-      "guo chang sha",
-      "qian cao",
-      "po luo mi"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -508,16 +474,8 @@
       "en": [
         "Bucephalandra Kedagang",
         "Buce Kedagang"
-      ],
-      "zh": [
-        "辣椒榕·克达岗",
-        "红火焰辣椒榕"
       ]
     },
-    "pinyin": [
-      "la jiao rong ke da gang",
-      "hong huo yan la jiao rong"
-    ],
     "group": "epiphyte",
     "growthForm": "epiphyte",
     "origin": [
@@ -633,18 +591,8 @@
         "Green cabomba",
         "Carolina fanwort",
         "Washington grass"
-      ],
-      "zh": [
-        "卡布汶",
-        "绿卡布汶",
-        "绿鱼草"
       ]
     },
-    "pinyin": [
-      "ka bu wen",
-      "lv ka bu wen",
-      "lv yu cao"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -767,16 +715,8 @@
       "en": [
         "Wendt's cryptocoryne",
         "Crypt wendtii"
-      ],
-      "zh": [
-        "温蒂椒草",
-        "温氏椒草"
       ]
     },
-    "pinyin": [
-      "wen di jiao cao",
-      "wen shi jiao cao"
-    ],
     "group": "rosette",
     "growthForm": "rosette",
     "origin": [
@@ -890,16 +830,8 @@
       "en": [
         "Red Flame sword",
         "Echinodorus Red Flame"
-      ],
-      "zh": [
-        "红火焰皇冠",
-        "红焰皇冠"
       ]
     },
-    "pinyin": [
-      "hong huo yan huang guan",
-      "hong yan huang guan"
-    ],
     "group": "rosette",
     "growthForm": "rosette",
     "origin": [
@@ -1014,18 +946,8 @@
       "en": [
         "Dwarf hairgrass",
         "Least spikerush"
-      ],
-      "zh": [
-        "迷你矮珍珠（误用）",
-        "迷你牛毛毡",
-        "矮牛毛毡"
       ]
     },
-    "pinyin": [
-      "mi ni ai zhen zhu",
-      "mi ni niu mao zhan",
-      "ai niu mao zhan"
-    ],
     "group": "carpeting",
     "growthForm": "carpeting",
     "origin": [
@@ -1136,16 +1058,8 @@
       "en": [
         "Glosso",
         "Glossostigma"
-      ],
-      "zh": [
-        "牛顿草",
-        "鹿角苔（误用）"
       ]
     },
-    "pinyin": [
-      "niu dun cao",
-      "lu jiao tai"
-    ],
     "group": "carpeting",
     "growthForm": "carpeting",
     "origin": [
@@ -1257,18 +1171,8 @@
         "Temple plant",
         "Giant hygro",
         "Starhorn"
-      ],
-      "zh": [
-        "大水蓑衣",
-        "大叶水蓑衣",
-        "神庙草"
       ]
     },
-    "pinyin": [
-      "da shui suo yi",
-      "da ye shui suo yi",
-      "shen miao cao"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -1382,18 +1286,8 @@
         "Dwarf hygro",
         "Indian waterweed",
         "Miramar weed"
-      ],
-      "zh": [
-        "小水兰（误用）",
-        "印度小圆叶",
-        "多子水蓑衣"
       ]
     },
-    "pinyin": [
-      "xiao shui lan",
-      "yin du xiao yuan ye",
-      "duo zi shui suo yi"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -1516,18 +1410,8 @@
       "en": [
         "Amazon frogbit",
         "South American spongeplant"
-      ],
-      "zh": [
-        "亚马逊浮萍（俗称）",
-        "南美蛙蹼",
-        "拉美水鳖"
       ]
     },
-    "pinyin": [
-      "ya ma xun fu ping",
-      "nan mei wa pu",
-      "la mei shui bie"
-    ],
     "group": "floating",
     "growthForm": "floating",
     "origin": [
@@ -1640,18 +1524,8 @@
         "Ambulia",
         "Asian marshweed",
         "Dwarf ambulia"
-      ],
-      "zh": [
-        "水虎尾",
-        "石龙尾",
-        "安布利亚"
       ]
     },
-    "pinyin": [
-      "shui hu wei",
-      "shi long wei",
-      "an bu li ya"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -1775,18 +1649,8 @@
       "en": [
         "Marsh seedbox",
         "Water purslane"
-      ],
-      "zh": [
-        "水丁香（误用）",
-        "沼地丁香",
-        "小叶红蝴蝶"
       ]
     },
-    "pinyin": [
-      "shui ding xiang",
-      "zhao di ding xiang",
-      "xiao ye hong hu die"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -1903,16 +1767,8 @@
       "en": [
         "Ludwigia Pantanal",
         "Pantanal ludwigia"
-      ],
-      "zh": [
-        "潘塔纳尔红蝴蝶",
-        "潘塔纳尔丁香"
       ]
     },
-    "pinyin": [
-      "pan ta na er hong hu die",
-      "pan ta na er ding xiang"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -2026,16 +1882,8 @@
       "en": [
         "Creeping primrose-willow",
         "Red ludwigia"
-      ],
-      "zh": [
-        "红丁香",
-        "爬地丁香"
       ]
     },
-    "pinyin": [
-      "hong ding xiang",
-      "pa di ding xiang"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -2151,16 +1999,8 @@
       "en": [
         "Four-leaf clover",
         "Hairy water clover"
-      ],
-      "zh": [
-        "四叶草",
-        "毛叶田字草"
       ]
     },
-    "pinyin": [
-      "si ye cao",
-      "mao ye tian zi cao"
-    ],
     "group": "carpeting",
     "growthForm": "carpeting",
     "origin": [
@@ -2272,16 +2112,8 @@
       "en": [
         "Monte Carlo",
         "Bacopa sp. 'Monte Carlo' (trade)"
-      ],
-      "zh": [
-        "蒙特卡罗",
-        "蒙特卡洛珍珠草"
       ]
     },
-    "pinyin": [
-      "meng te ka luo",
-      "meng te ka luo zhen zhu cao"
-    ],
     "group": "carpeting",
     "growthForm": "carpeting",
     "origin": [
@@ -2394,16 +2226,8 @@
       "en": [
         "Narrow-leaf Java fern",
         "Java fern Narrow"
-      ],
-      "zh": [
-        "细叶铁皇冠",
-        "窄叶铁皇冠"
       ]
     },
-    "pinyin": [
-      "xi ye tie huang guan",
-      "zhai ye tie huang guan"
-    ],
     "group": "epiphyte",
     "growthForm": "epiphyte",
     "origin": [
@@ -2518,18 +2342,8 @@
         "Red Myriophyllum",
         "Mato Grosso parrot's feather",
         "Brazilian milfoil"
-      ],
-      "zh": [
-        "红狐尾（俗称）",
-        "马托格罗索狐尾",
-        "巴西羽毛草"
       ]
     },
-    "pinyin": [
-      "hong hu wei",
-      "ma tuo ge luo suo hu wei",
-      "ba xi yu mao cao"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -2644,16 +2458,8 @@
       "en": [
         "Giant red rotala",
         "Macrandra"
-      ],
-      "zh": [
-        "大红叶",
-        "大叶红蝴蝶"
       ]
     },
-    "pinyin": [
-      "da hong ye",
-      "da ye hong hu die"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -2769,18 +2575,8 @@
         "Roundleaf toothcup",
         "Dwarf rotala",
         "Rotala indica (trade)"
-      ],
-      "zh": [
-        "小圆叶",
-        "绿菊",
-        "印度小圆叶（误用）"
       ]
     },
-    "pinyin": [
-      "xiao yuan ye",
-      "lv ju",
-      "yin du xiao yuan ye"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -2897,18 +2693,8 @@
       "en": [
         "Staurogyne repens",
         "Creeping staurogyne"
-      ],
-      "zh": [
-        "斯塔罗椒草（误用）",
-        "爬地水蓑衣",
-        "矮生蛇尾草"
       ]
     },
-    "pinyin": [
-      "si ta luo jiao cao",
-      "pa di shui suo yi",
-      "ai sheng she wei cao"
-    ],
     "group": "rosette",
     "growthForm": "stem",
     "origin": [
@@ -3021,16 +2807,8 @@
       "en": [
         "Java moss",
         "Bogor moss"
-      ],
-      "zh": [
-        "爪哇莫斯",
-        "爪哇苔"
       ]
     },
-    "pinyin": [
-      "zhua wa mo si",
-      "zhua wa tai"
-    ],
     "group": "moss",
     "growthForm": "moss",
     "origin": [
@@ -3143,16 +2921,8 @@
       "en": [
         "Christmas moss",
         "Xmas moss"
-      ],
-      "zh": [
-        "圣诞莫斯",
-        "圣诞莫丝"
       ]
     },
-    "pinyin": [
-      "sheng dan mo si",
-      "sheng dan mo si"
-    ],
     "group": "moss",
     "growthForm": "moss",
     "origin": [
@@ -3265,16 +3035,8 @@
       "en": [
         "Dwarf crypt",
         "Cryptocoryne parva"
-      ],
-      "zh": [
-        "矮椒草",
-        "小椒草"
       ]
     },
-    "pinyin": [
-      "ai jiao cao",
-      "xiao jiao cao"
-    ],
     "group": "rosette",
     "growthForm": "rosette",
     "origin": [
@@ -3386,16 +3148,8 @@
       "en": [
         "Balansae crypt",
         "Ruffled cryptocoryne"
-      ],
-      "zh": [
-        "波浪椒草",
-        "巴兰萨椒草"
       ]
     },
-    "pinyin": [
-      "bo lang jiao cao",
-      "ba lan sa jiao cao"
-    ],
     "group": "rosette",
     "growthForm": "rosette",
     "origin": [
@@ -3508,16 +3262,8 @@
       "en": [
         "Pygmy chain sword",
         "Dwarf Amazon sword"
-      ],
-      "zh": [
-        "迷你皇冠草",
-        "矮皇冠"
       ]
     },
-    "pinyin": [
-      "mi ni huang guan cao",
-      "ai huang guan"
-    ],
     "group": "rosette",
     "growthForm": "rosette",
     "origin": [
@@ -3630,16 +3376,8 @@
       "en": [
         "Windelov Java fern",
         "Lace Java fern"
-      ],
-      "zh": [
-        "细叶铁皇冠",
-        "温德洛夫铁皇冠"
       ]
     },
-    "pinyin": [
-      "xi ye tie huang guan",
-      "wen de luo fu tie huang guan"
-    ],
     "group": "epiphyte",
     "growthForm": "epiphyte",
     "origin": [
@@ -3751,16 +3489,8 @@
       "en": [
         "African water fern",
         "Congo fern"
-      ],
-      "zh": [
-        "非洲水蕨",
-        "刚果水蕨"
       ]
     },
-    "pinyin": [
-      "fei zhou shui jue",
-      "gang guo shui jue"
-    ],
     "group": "epiphyte",
     "growthForm": "epiphyte",
     "origin": [
@@ -3876,16 +3606,8 @@
         "Mini pellia",
         "Coral moss",
         "Riccardia moss"
-      ],
-      "zh": [
-        "迷你珊瑚莫斯",
-        "迷你派莉亚"
       ]
     },
-    "pinyin": [
-      "mi ni shan hu mo si",
-      "mi ni pai li ya"
-    ],
     "group": "moss",
     "growthForm": "moss",
     "origin": [
@@ -3997,16 +3719,8 @@
         "Phoenix moss",
         "Pocket moss",
         "Water pocket moss"
-      ],
-      "zh": [
-        "凤凰莫斯",
-        "袋形莫斯"
       ]
     },
-    "pinyin": [
-      "feng huang mo si",
-      "dai xing mo si"
-    ],
     "group": "moss",
     "growthForm": "moss",
     "origin": [
@@ -4118,16 +3832,8 @@
       "en": [
         "Stringy moss",
         "Creeping feather moss"
-      ],
-      "zh": [
-        "细丝莫斯",
-        "溪岸细网藓"
       ]
     },
-    "pinyin": [
-      "xi si mo si",
-      "xi an xi wang xian"
-    ],
     "group": "moss",
     "growthForm": "moss",
     "origin": [
@@ -4239,18 +3945,8 @@
         "Water lettuce",
         "Tropical duckweed",
         "Nile cabbage"
-      ],
-      "zh": [
-        "大薸",
-        "水莲花",
-        "水白菜"
       ]
     },
-    "pinyin": [
-      "da piao",
-      "shui lian hua",
-      "shui bai cai"
-    ],
     "group": "floating",
     "growthForm": "floating",
     "origin": [
@@ -4362,16 +4058,8 @@
       "en": [
         "Floating fern",
         "Water butterfly wings"
-      ],
-      "zh": [
-        "槐叶苹",
-        "浮萍蕨"
       ]
     },
-    "pinyin": [
-      "huai ye ping",
-      "fu ping jue"
-    ],
     "group": "floating",
     "growthForm": "floating",
     "origin": [
@@ -4483,18 +4171,8 @@
         "HC Cuba",
         "Dwarf baby tears",
         "Cuban baby tears"
-      ],
-      "zh": [
-        "古巴珍珠草",
-        "古巴珍珠",
-        "HC珍珠草"
       ]
     },
-    "pinyin": [
-      "gu ba zhen zhu cao",
-      "gu ba zhen zhu",
-      "hc zhen zhu cao"
-    ],
     "group": "carpeting",
     "growthForm": "carpeting",
     "origin": [
@@ -4607,18 +4285,8 @@
         "Utricularia graminifolia",
         "UG",
         "Grass-leaved bladderwort"
-      ],
-      "zh": [
-        "狸藻",
-        "禾叶狸藻",
-        "叉柱狸藻（俗称）"
       ]
     },
-    "pinyin": [
-      "li zao",
-      "he ye li zao",
-      "cha zhu li zao"
-    ],
     "group": "carpeting",
     "growthForm": "carpeting",
     "origin": [
@@ -4732,16 +4400,8 @@
         "Mini hairgrass",
         "Eleocharis Mini",
         "Eleocharis acicularis Mini"
-      ],
-      "zh": [
-        "迷你牛毛毡",
-        "针叶牛毛毡Mini"
       ]
     },
-    "pinyin": [
-      "mi ni niu mao zhan",
-      "zhen ye niu mao zhan mini"
-    ],
     "group": "carpeting",
     "growthForm": "carpeting",
     "origin": [
@@ -4826,7 +4486,7 @@
       "leafWidthCm": 0.05,
       "leafDensity": 0.95
     },
-    "notes": "An even finer, shorter form of dwarf hairgrass; Tropica lists medium difficulty, slow growth, 3-5+ cm and medium light/CO2. Plant in many small portions to cover an area and let it thicken by runners. Sold as Eleocharis sp. 'Mini' / E. pusilla by some vendors - naming is inconsistent. Note existing eleocharis-parvula already carries the zh name 迷你牛毛毡 as a trade name, so search will return both.",
+    "notes": "An even finer, shorter form of dwarf hairgrass; Tropica lists medium difficulty, slow growth, 3-5+ cm and medium light/CO2. Plant in many small portions to cover an area and let it thicken by runners. Sold as Eleocharis sp. 'Mini' / E. pusilla by some vendors - naming is inconsistent.",
     "images": [],
     "citations": [
       "tropica-eleocharis-acicularis-mini",
@@ -4854,16 +4514,8 @@
         "Rotala H'ra",
         "Rotala sp. 'Gia Lai'",
         "Rotala rotundifolia 'H'ra'"
-      ],
-      "zh": [
-        "红宫廷 H'ra",
-        "H'ra 圆叶节节菜"
       ]
     },
-    "pinyin": [
-      "hong gong ting h'ra",
-      "h'ra yuan ye jie jie cai"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -4980,16 +4632,8 @@
         "Rotala wallichii",
         "Whorled rotala",
         "Pine-needle rotala"
-      ],
-      "zh": [
-        "红松尾",
-        "瓦氏节节菜"
       ]
     },
-    "pinyin": [
-      "hong song wei",
-      "wa shi jie jie cai"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -5105,16 +4749,8 @@
       "en": [
         "Ludwigia 'Super Red'",
         "Ludwigia palustris Super Red"
-      ],
-      "zh": [
-        "超红水丁香",
-        "超级红水丁香"
       ]
     },
-    "pinyin": [
-      "chao hong shui ding xiang",
-      "chao ji hong shui ding xiang"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -5231,16 +4867,8 @@
         "Alternanthera reineckii 'Mini'",
         "AR Mini",
         "Mini red Alternanthera"
-      ],
-      "zh": [
-        "迷你红千年",
-        "迷你红叶莲子草"
       ]
     },
-    "pinyin": [
-      "mi ni hong qian nian",
-      "mi ni hong ye lian zi cao"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -5355,16 +4983,8 @@
         "Pogostemon erectus",
         "Pogostemon deccanensis",
         "Indian star grass"
-      ],
-      "zh": [
-        "松尾",
-        "绿松尾"
       ]
     },
-    "pinyin": [
-      "song wei",
-      "lv song wei"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -5477,16 +5097,8 @@
         "Pogostemon helferi",
         "Downoi",
         "Little star"
-      ],
-      "zh": [
-        "雪花草",
-        "皱叶雪花"
       ]
     },
-    "pinyin": [
-      "xue hua cao",
-      "zhou ye xue hua"
-    ],
     "group": "carpeting",
     "growthForm": "carpeting",
     "origin": [
@@ -5597,16 +5209,8 @@
       "en": [
         "Cryptocoryne lutea",
         "Cryptocoryne walkeri (lutea)"
-      ],
-      "zh": [
-        "黄椒草",
-        "卢泰椒草"
       ]
     },
-    "pinyin": [
-      "huang jiao cao",
-      "lu tai jiao cao"
-    ],
     "group": "rosette",
     "growthForm": "rosette",
     "origin": [
@@ -5719,16 +5323,8 @@
       "en": [
         "Cryptocoryne undulata",
         "Cryptocoryne undulata 'Broad Leaves'"
-      ],
-      "zh": [
-        "波叶椒草",
-        "宽叶波叶椒草"
       ]
     },
-    "pinyin": [
-      "bo ye jiao cao",
-      "kuan ye bo ye jiao cao"
-    ],
     "group": "rosette",
     "growthForm": "rosette",
     "origin": [
@@ -5840,16 +5436,8 @@
       "en": [
         "Cryptocoryne spiralis",
         "Cryptocoryne spiralis 'Red'"
-      ],
-      "zh": [
-        "螺旋椒草",
-        "红螺旋椒草"
       ]
     },
-    "pinyin": [
-      "luo xuan jiao cao",
-      "hong luo xuan jiao cao"
-    ],
     "group": "rosette",
     "growthForm": "rosette",
     "origin": [
@@ -5963,16 +5551,8 @@
       "en": [
         "Bucephalandra sp. 'Mini'",
         "Mini buce"
-      ],
-      "zh": [
-        "迷你辣椒榕",
-        "辣椒榕Mini"
       ]
     },
-    "pinyin": [
-      "mi ni la jiao rong",
-      "la jiao rong mini"
-    ],
     "group": "epiphyte",
     "growthForm": "epiphyte",
     "origin": [
@@ -6087,16 +5667,8 @@
         "Anubias 'Coffeefolia'",
         "Anubias barteri var. coffeifolia",
         "Coffee-leaved anubias"
-      ],
-      "zh": [
-        "咖啡叶榕",
-        "咖啡榕"
       ]
     },
-    "pinyin": [
-      "ka fei ye rong",
-      "ka fei rong"
-    ],
     "group": "epiphyte",
     "growthForm": "epiphyte",
     "origin": [
@@ -6211,16 +5783,8 @@
       "en": [
         "Trident Java fern",
         "Microsorum pteropus 'Trident'"
-      ],
-      "zh": [
-        "三叉铁皇冠",
-        "三叉叉铁"
       ]
     },
-    "pinyin": [
-      "san cha tie huang guan",
-      "san cha cha tie"
-    ],
     "group": "epiphyte",
     "growthForm": "epiphyte",
     "origin": [
@@ -6334,18 +5898,8 @@
       "en": [
         "Flame moss",
         "Taxiphyllum sp. 'Flame'"
-      ],
-      "zh": [
-        "火焰莓",
-        "火焰莫斯",
-        "火焰苔"
       ]
     },
-    "pinyin": [
-      "huo yan mei",
-      "huo yan mo si",
-      "huo yan tai"
-    ],
     "group": "moss",
     "growthForm": "moss",
     "origin": [
@@ -6458,14 +6012,8 @@
         "Crystalwort",
         "Riccia",
         "Floating liverwort"
-      ],
-      "zh": [
-        "鹿角苔"
       ]
     },
-    "pinyin": [
-      "lu jiao tai"
-    ],
     "group": "moss",
     "growthForm": "moss",
     "origin": [
@@ -6552,7 +6100,7 @@
       "leafWidthCm": 0.07,
       "leafDensity": 0.95
     },
-    "notes": "Floating liverwort that can be tied down with mesh or thread to form a submerged carpet ('Riccia wall' / lawn). Tropica 1-2-Grow lists medium growth/light/CO2 and 3-5 cm; Dennerle notes CO2 supplementation speeds growth. Needs regular trimming or it traps gas and floats. zh 鹿角苔 is also a trade misnomer for Glossostigma in existing data.",
+    "notes": "Floating liverwort that can be tied down with mesh or thread to form a submerged carpet ('Riccia wall' / lawn). Tropica 1-2-Grow lists medium growth/light/CO2 and 3-5 cm; Dennerle notes CO2 supplementation speeds growth. Needs regular trimming or it traps gas and floats.",
     "images": [],
     "citations": [
       "dennerle-riccia-fluitans",
@@ -6578,16 +6126,8 @@
       "en": [
         "Hygrophila pinnatifida",
         "Pinnatifida"
-      ],
-      "zh": [
-        "羽裂水蓑衣",
-        "羽叶水蓑衣"
       ]
     },
-    "pinyin": [
-      "yu lie shui suo yi",
-      "yu ye shui suo yi"
-    ],
     "group": "rosette",
     "growthForm": "rosette",
     "origin": [
@@ -6701,16 +6241,8 @@
         "Limnophila aromatica",
         "Rice paddy herb",
         "Ambulia"
-      ],
-      "zh": [
-        "紫苏草",
-        "香水草"
       ]
     },
-    "pinyin": [
-      "zi su cao",
-      "xiang shui cao"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -6823,16 +6355,8 @@
         "Eriocaulon cinereum",
         "Pipewort",
         "Ashy pipewort"
-      ],
-      "zh": [
-        "谷精草",
-        "迷你谷精草"
       ]
     },
-    "pinyin": [
-      "gu jing cao",
-      "mi ni gu jing cao"
-    ],
     "group": "rosette",
     "growthForm": "rosette",
     "origin": [
@@ -6946,16 +6470,8 @@
         "Dwarf sagittaria",
         "Subulate arrowhead",
         "Dwarf sag"
-      ],
-      "zh": [
-        "矮慈姑",
-        "窄叶慈姑"
       ]
     },
-    "pinyin": [
-      "ai ci gu",
-      "zhai ye ci gu"
-    ],
     "group": "rosette",
     "growthForm": "rosette",
     "origin": [
@@ -7067,16 +6583,8 @@
         "Brazilian micro sword",
         "Brasilian lilaeopsis",
         "Lilaeopsis brasiliensis"
-      ],
-      "zh": [
-        "巴西水芹",
-        "矮水芹"
       ]
     },
-    "pinyin": [
-      "ba xi shui qin",
-      "ai shui qin"
-    ],
     "group": "carpeting",
     "growthForm": "carpeting",
     "origin": [
@@ -7189,16 +6697,8 @@
         "Pennywort 'Japan'",
         "Hydrocotyle tripartita",
         "Japan pennywort"
-      ],
-      "zh": [
-        "日本天胡荽",
-        "三裂天胡荽"
       ]
     },
-    "pinyin": [
-      "ri ben tian hu sui",
-      "san lie tian hu sui"
-    ],
     "group": "carpeting",
     "growthForm": "carpeting",
     "origin": [
@@ -7311,16 +6811,8 @@
         "Ammannia gracilis",
         "Delicate ammannia",
         "Red ammannia"
-      ],
-      "zh": [
-        "水苋菜",
-        "细叶水苋菜"
       ]
     },
-    "pinyin": [
-      "shui xian cai",
-      "xi ye shui xian cai"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -7435,16 +6927,8 @@
         "Marsh mermaidweed",
         "Mermaid weed",
         "Proserpinaca palustris"
-      ],
-      "zh": [
-        "沼泽狐尾草",
-        "美洲狐尾草"
       ]
     },
-    "pinyin": [
-      "zhao ze hu wei cao",
-      "mei zhou hu wei cao"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -7558,16 +7042,8 @@
         "Water hedge",
         "Water-purslane",
         "Didiplis diandra"
-      ],
-      "zh": [
-        "水松",
-        "水松草"
       ]
     },
-    "pinyin": [
-      "shui song",
-      "shui song cao"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -7656,7 +7132,7 @@
       "leafDensity": 0.8,
       "tipColorHex": "#c0553f"
     },
-    "notes": "Fine pine-needle-like whorls on thin stems; reddish tips in strong light. Fast but fragile - loses lower leaves without steady CO2 and nutrients. Sometimes classed as Rotala diandra (Lythraceae); zh 水松 is a trade name that also denotes a conifer.",
+    "notes": "Fine pine-needle-like whorls on thin stems; reddish tips in strong light. Fast but fragile - loses lower leaves without steady CO2 and nutrients. Sometimes classed as Rotala diandra (Lythraceae).",
     "images": [],
     "citations": [
       "cook-1996-aquatic-plant-book",
@@ -7682,16 +7158,8 @@
         "Tiger lotus",
         "Egyptian lotus",
         "Nymphaea lotus"
-      ],
-      "zh": [
-        "虎纹睡莲",
-        "红睡莲"
       ]
     },
-    "pinyin": [
-      "hu wen shui lian",
-      "hong shui lian"
-    ],
     "group": "rhizome",
     "growthForm": "rhizome",
     "origin": [
@@ -7807,16 +7275,8 @@
       "en": [
         "Echinodorus 'Red Diamond'",
         "Red Diamond sword"
-      ],
-      "zh": [
-        "红钻石皇冠草",
-        "红钻皇冠草"
       ]
     },
-    "pinyin": [
-      "hong zuan shi huang guan cao",
-      "hong zuan huang guan cao"
-    ],
     "group": "rosette",
     "growthForm": "rosette",
     "origin": [
@@ -7930,16 +7390,8 @@
         "Vallisneria",
         "Eelgrass",
         "Tape grass"
-      ],
-      "zh": [
-        "螺旋苦草",
-        "直叶苦草"
       ]
     },
-    "pinyin": [
-      "luo xuan ku cao",
-      "zhi ye ku cao"
-    ],
     "group": "rosette",
     "growthForm": "rosette",
     "origin": [
@@ -8049,16 +7501,8 @@
       "en": [
         "Beckett's cryptocoryne",
         "Cryptocoryne beckettii"
-      ],
-      "zh": [
-        "贝克特椒草",
-        "贝氏椒草"
       ]
     },
-    "pinyin": [
-      "bei ke te jiao cao",
-      "bei shi jiao cao"
-    ],
     "group": "rosette",
     "growthForm": "rosette",
     "origin": [
@@ -8171,16 +7615,8 @@
         "Amazon sword",
         "Broad-leaved Amazon sword",
         "Echinodorus bleheri"
-      ],
-      "zh": [
-        "亚马逊皇冠草",
-        "大皇冠草"
       ]
     },
-    "pinyin": [
-      "ya ma xun huang guan cao",
-      "da huang guan cao"
-    ],
     "group": "rosette",
     "growthForm": "rosette",
     "origin": [
@@ -8291,16 +7727,8 @@
         "Scarlet temple",
         "Red temple plant",
         "Alternanthera reineckii"
-      ],
-      "zh": [
-        "红千年",
-        "红莲子草"
       ]
     },
-    "pinyin": [
-      "hong qian nian",
-      "hong lian zi cao"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -8415,16 +7843,8 @@
         "Water wisteria",
         "Wisteria",
         "Hygrophila difformis"
-      ],
-      "zh": [
-        "水罗兰",
-        "水生罗兰"
       ]
     },
-    "pinyin": [
-      "shui luo lan",
-      "shui sheng luo lan"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -8535,16 +7955,8 @@
       "en": [
         "Indian toothcup",
         "Rotala indica"
-      ],
-      "zh": [
-        "印度节节菜",
-        "节节菜"
       ]
     },
-    "pinyin": [
-      "yin du jie jie cai",
-      "jie jie cai"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -8658,16 +8070,8 @@
       "en": [
         "Stargrass",
         "Heteranthera zosterifolia"
-      ],
-      "zh": [
-        "水星草",
-        "星草"
       ]
     },
-    "pinyin": [
-      "shui xing cao",
-      "xing cao"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -8779,16 +8183,8 @@
         "Brazilian waterweed",
         "Anacharis",
         "Egeria"
-      ],
-      "zh": [
-        "水蕴草",
-        "埃格草"
       ]
     },
-    "pinyin": [
-      "shui yun cao",
-      "ai ge cao"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -8899,16 +8295,8 @@
       "en": [
         "Hornwort",
         "Coontail"
-      ],
-      "zh": [
-        "金鱼藻",
-        "松藻"
       ]
     },
-    "pinyin": [
-      "jin yu zao",
-      "song zao"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -9020,16 +8408,8 @@
         "Water sprite",
         "Indian fern",
         "Oriental waterfern"
-      ],
-      "zh": [
-        "水蕨",
-        "水蕨草"
       ]
     },
-    "pinyin": [
-      "shui jue",
-      "shui jue cao"
-    ],
     "group": "rosette",
     "growthForm": "rosette",
     "origin": [
@@ -9141,16 +8521,8 @@
       "en": [
         "Anubias nana",
         "Dwarf anubias"
-      ],
-      "zh": [
-        "小榕",
-        "矮榕"
       ]
     },
-    "pinyin": [
-      "xiao rong",
-      "ai rong"
-    ],
     "group": "epiphyte",
     "growthForm": "epiphyte",
     "origin": [
@@ -9262,16 +8634,8 @@
       "en": [
         "Common duckweed",
         "Lesser duckweed"
-      ],
-      "zh": [
-        "浮萍",
-        "青萍"
       ]
     },
-    "pinyin": [
-      "fu ping",
-      "qing ping"
-    ],
     "group": "floating",
     "growthForm": "floating",
     "origin": [
@@ -9383,16 +8747,8 @@
         "Pellia",
         "Pearl moss",
         "Monosolenium tenerum"
-      ],
-      "zh": [
-        "珍珠莫斯",
-        "珍珠苔"
       ]
     },
-    "pinyin": [
-      "zhen zhu mo si",
-      "zhen zhu tai"
-    ],
     "group": "moss",
     "growthForm": "moss",
     "origin": [
@@ -9503,16 +8859,8 @@
       "en": [
         "Brazilian pennywort",
         "Hydrocotyle leucocephala"
-      ],
-      "zh": [
-        "巴西珍珠草",
-        "巴西天胡荽"
       ]
     },
-    "pinyin": [
-      "ba xi zhen zhu cao",
-      "ba xi tian hu sui"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -9625,16 +8973,8 @@
       "en": [
         "Rotala 'Bonsai'",
         "Bonsai rotala"
-      ],
-      "zh": [
-        "盆景节节菜",
-        "小圆叶盆景"
       ]
     },
-    "pinyin": [
-      "pen jing jie jie cai",
-      "xiao yuan ye pen jing"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -9750,16 +9090,8 @@
       "en": [
         "Rotala 'Colorata'",
         "Rotala sp. Yao Yai"
-      ],
-      "zh": [
-        "彩色节节菜",
-        "红叶圆叶节节菜"
       ]
     },
-    "pinyin": [
-      "cai se jie jie cai",
-      "hong ye yuan ye jie jie cai"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -9875,16 +9207,8 @@
       "en": [
         "Rotala macrandra 'Mini'",
         "Mini red rotala"
-      ],
-      "zh": [
-        "小宫廷",
-        "迷你红宫廷"
       ]
     },
-    "pinyin": [
-      "xiao gong ting",
-      "mi ni hong gong ting"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -9998,16 +9322,8 @@
       "en": [
         "Ammannia 'Bonsai'",
         "Ammannia pedicellata 'Mini'"
-      ],
-      "zh": [
-        "盆景水苋菜",
-        "迷你水苋菜"
       ]
     },
-    "pinyin": [
-      "pen jing shui xian cai",
-      "mi ni shui xian cai"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -10120,16 +9436,8 @@
       "en": [
         "Needle-leaf ludwigia",
         "Narrow-leaf ludwigia"
-      ],
-      "zh": [
-        "针叶丁香",
-        "细叶水丁香"
       ]
     },
-    "pinyin": [
-      "zhen ye ding xiang",
-      "xi ye shui ding xiang"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -10246,16 +9554,8 @@
       "en": [
         "Ludwigia 'Cuba'",
         "Ludwigia inclinata var. verticillata 'Cuba'"
-      ],
-      "zh": [
-        "古巴丁香",
-        "古巴红丁香"
       ]
     },
-    "pinyin": [
-      "gu ba ding xiang",
-      "gu ba hong ding xiang"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -10370,16 +9670,8 @@
       "en": [
         "Hygrophila 'Araguaia'",
         "Hygrophila lancea 'Araguaia'"
-      ],
-      "zh": [
-        "阿拉瓜亚水蓑衣",
-        "阿拉瓜亚"
       ]
     },
-    "pinyin": [
-      "a la gua ya shui suo yi",
-      "a la gua ya"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -10493,16 +9785,8 @@
         "Octopus pogostemon",
         "Pogostemon stellatus 'Octopus'",
         "Eusteralis stellata 'Octopus'"
-      ],
-      "zh": [
-        "章鱼草",
-        "章鱼水罗兰"
       ]
     },
-    "pinyin": [
-      "zhang yu cao",
-      "zhang yu shui luo lan"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -10616,16 +9900,8 @@
       "en": [
         "Red ambulia",
         "Limnophila hippuridoides"
-      ],
-      "zh": [
-        "红石龙尾",
-        "红九冠"
       ]
     },
-    "pinyin": [
-      "hong shi long wei",
-      "hong jiu guan"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -10738,14 +10014,8 @@
       "en": [
         "Gratiola viscidula",
         "Hedge-hyssop"
-      ],
-      "zh": [
-        "水八角"
       ]
     },
-    "pinyin": [
-      "shui ba jiao"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -10832,7 +10102,7 @@
       "leafWidthCm": 0.4,
       "leafDensity": 0.7
     },
-    "notes": "Fine small-leaved bushy stem used for Dutch-style foreground groupings; needs good light and CO2 to stay compact. Zh name is the genus name (水八角) and should be reviewed.",
+    "notes": "Fine small-leaved bushy stem used for Dutch-style foreground groupings; needs good light and CO2 to stay compact.",
     "images": [],
     "citations": [
       "envelope-estimate-2026",
@@ -10856,14 +10126,8 @@
       "en": [
         "Round-leaf lindernia",
         "Moneywort lindernia"
-      ],
-      "zh": [
-        "圆叶母草"
       ]
     },
-    "pinyin": [
-      "yuan ye mu cao"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -10975,14 +10239,8 @@
       "en": [
         "Bacopa 'Salzmannii'",
         "Salzmann's bacopa"
-      ],
-      "zh": [
-        "萨氏假马齿苋"
       ]
     },
-    "pinyin": [
-      "sa shi jia ma chi xian"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -11095,16 +10353,8 @@
       "en": [
         "Red foxtail",
         "Red watermilfoil"
-      ],
-      "zh": [
-        "红狐尾藻",
-        "红狐尾"
       ]
     },
-    "pinyin": [
-      "hong hu wei zao",
-      "hong hu wei"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -11218,14 +10468,8 @@
       "en": [
         "Myriophyllum 'Guyana'",
         "Guyana foxtail"
-      ],
-      "zh": [
-        "圭亚那狐尾藻"
       ]
     },
-    "pinyin": [
-      "gui ya na hu wei zao"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -11337,16 +10581,8 @@
     "commonNames": {
       "en": [
         "Cryptocoryne albida"
-      ],
-      "zh": [
-        "白椒草",
-        "阿尔比达椒草"
       ]
     },
-    "pinyin": [
-      "bai jiao cao",
-      "a er bi da jiao cao"
-    ],
     "group": "rosette",
     "growthForm": "rosette",
     "origin": [
@@ -11458,16 +10694,8 @@
       "en": [
         "Nur's crypt",
         "Cryptocoryne nurii"
-      ],
-      "zh": [
-        "努里椒草",
-        "红努里椒草"
       ]
     },
-    "pinyin": [
-      "nu li jiao cao",
-      "hong nu li jiao cao"
-    ],
     "group": "rosette",
     "growthForm": "rosette",
     "origin": [
@@ -11579,16 +10807,8 @@
       "en": [
         "Anubias 'Pinto'",
         "Variegated anubias nana"
-      ],
-      "zh": [
-        "斑叶迷你榕",
-        "白斑迷你榕"
       ]
     },
-    "pinyin": [
-      "ban ye mi ni rong",
-      "bai ban mi ni rong"
-    ],
     "group": "epiphyte",
     "growthForm": "epiphyte",
     "origin": [
@@ -11700,16 +10920,8 @@
       "en": [
         "Bucephalandra 'Brownie'",
         "Brownie buce"
-      ],
-      "zh": [
-        "布朗尼辣椒榕",
-        "辣椒榕Brownie"
       ]
     },
-    "pinyin": [
-      "bu lang ni la jiao rong",
-      "la jiao rong brownie"
-    ],
     "group": "epiphyte",
     "growthForm": "epiphyte",
     "origin": [
@@ -11822,16 +11034,8 @@
       "en": [
         "Philippine java fern",
         "Microsorum 'Philippine'"
-      ],
-      "zh": [
-        "菲律宾铁皇冠",
-        "菲律宾莫丝蕨"
       ]
     },
-    "pinyin": [
-      "fei lu bin tie huang guan",
-      "fei lu bin mo si jue"
-    ],
     "group": "epiphyte",
     "growthForm": "epiphyte",
     "origin": [
@@ -11944,16 +11148,8 @@
       "en": [
         "Bolbitis 'Difformis'",
         "Mini African water fern"
-      ],
-      "zh": [
-        "迷你非洲水蕨",
-        "小水榕蕨"
       ]
     },
-    "pinyin": [
-      "mi ni fei zhou shui jue",
-      "xiao shui rong jue"
-    ],
     "group": "epiphyte",
     "growthForm": "epiphyte",
     "origin": [
@@ -12063,16 +11259,8 @@
       "en": [
         "Umbrella hair grass",
         "Giant hairgrass"
-      ],
-      "zh": [
-        "胎生荸荠",
-        "长毛草"
       ]
     },
-    "pinyin": [
-      "tai sheng bi qi",
-      "chang mao cao"
-    ],
     "group": "rosette",
     "growthForm": "rosette",
     "origin": [
@@ -12183,14 +11371,8 @@
       "en": [
         "Japanese blyxa",
         "Blyxa japonica"
-      ],
-      "zh": [
-        "日本水筛"
       ]
     },
-    "pinyin": [
-      "ri ben shui shai"
-    ],
     "group": "rosette",
     "growthForm": "rosette",
     "origin": [
@@ -12304,16 +11486,8 @@
       "en": [
         "Dwarf sagittaria",
         "Sagittaria 'Pusilla'"
-      ],
-      "zh": [
-        "迷你慈姑",
-        "小慈姑"
       ]
     },
-    "pinyin": [
-      "mi ni ci gu",
-      "xiao ci gu"
-    ],
     "group": "carpeting",
     "growthForm": "carpeting",
     "origin": [
@@ -12423,16 +11597,8 @@
       "en": [
         "Helanthium 'Quadricostatus'",
         "Amazon chain sword"
-      ],
-      "zh": [
-        "窄叶皇冠草",
-        "四脉皇冠"
       ]
     },
-    "pinyin": [
-      "zhai ye huang guan cao",
-      "si mai huang guan"
-    ],
     "group": "carpeting",
     "growthForm": "carpeting",
     "origin": [
@@ -12544,16 +11710,8 @@
       "en": [
         "Ozelot sword",
         "Echinodorus 'Ozelot'"
-      ],
-      "zh": [
-        "豹纹皇冠草",
-        "红豹纹皇冠"
       ]
     },
-    "pinyin": [
-      "bao wen huang guan cao",
-      "hong bao wen huang guan"
-    ],
     "group": "rosette",
     "growthForm": "rosette",
     "origin": [
@@ -12667,16 +11825,8 @@
       "en": [
         "Dwarf cardinal flower",
         "Lobelia cardinalis 'Mini'"
-      ],
-      "zh": [
-        "迷你红花半边莲",
-        "矮红花半边莲"
       ]
     },
-    "pinyin": [
-      "mi ni hong hua ban bian lian",
-      "ai hong hua ban bian lian"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -12789,16 +11939,8 @@
       "en": [
         "Crispus aponogeton",
         "Ruffled aponogeton"
-      ],
-      "zh": [
-        "皱叶水蕹",
-        "波浪水蕹"
       ]
     },
-    "pinyin": [
-      "zhou ye shui weng",
-      "bo lang shui weng"
-    ],
     "group": "rosette",
     "growthForm": "rosette",
     "origin": [
@@ -12909,16 +12051,8 @@
       "en": [
         "Madagascar lace-like aponogeton",
         "Ulvaceus"
-      ],
-      "zh": [
-        "薄叶水蕹",
-        "透明水蕹"
       ]
     },
-    "pinyin": [
-      "bao ye shui weng",
-      "tou ming shui weng"
-    ],
     "group": "rosette",
     "growthForm": "rosette",
     "origin": [
@@ -13029,16 +12163,8 @@
       "en": [
         "Taiwan lily",
         "Nymphoides 'Taiwan'"
-      ],
-      "zh": [
-        "台湾荇菜",
-        "台湾小睡莲"
       ]
     },
-    "pinyin": [
-      "tai wan xing cai",
-      "tai wan xiao shui lian"
-    ],
     "group": "rosette",
     "growthForm": "rosette",
     "origin": [
@@ -13151,14 +12277,8 @@
       "en": [
         "Water violet",
         "Featherfoil"
-      ],
-      "zh": [
-        "水堇"
       ]
     },
-    "pinyin": [
-      "shui jin"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -13271,16 +12391,8 @@
       "en": [
         "Tonina 'Belem'",
         "Tonina fluviatilis 'Belem'"
-      ],
-      "zh": [
-        "贝伦水草",
-        "贝伦"
       ]
     },
-    "pinyin": [
-      "bei lun shui cao",
-      "bei lun"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -13390,16 +12502,8 @@
       "en": [
         "Weeping moss",
         "Vesicularia ferriei"
-      ],
-      "zh": [
-        "垂泪莫斯",
-        "垂柳莫丝"
       ]
     },
-    "pinyin": [
-      "chui lei mo si",
-      "chui liu mo si"
-    ],
     "group": "moss",
     "growthForm": "moss",
     "origin": [
@@ -13508,16 +12612,8 @@
     "commonNames": {
       "en": [
         "Taiwan moss"
-      ],
-      "zh": [
-        "台湾莫斯",
-        "台湾莫丝"
       ]
     },
-    "pinyin": [
-      "tai wan mo si",
-      "tai wan mo si"
-    ],
     "group": "moss",
     "growthForm": "moss",
     "origin": [
@@ -13629,16 +12725,8 @@
       "en": [
         "Rotala 'Blood Red'",
         "Rotala rotundifolia Blood Red"
-      ],
-      "zh": [
-        "血红节节菜",
-        "红小圆叶"
       ]
     },
-    "pinyin": [
-      "xue hong jie jie cai",
-      "hong xiao yuan ye"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -13754,16 +12842,8 @@
       "en": [
         "Rotala macrandra 'Green'",
         "Rotala 'Green' (Wavy)"
-      ],
-      "zh": [
-        "绿宫廷",
-        "绿宫廷草"
       ]
     },
-    "pinyin": [
-      "lv gong ting",
-      "lv gong ting cao"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -13879,16 +12959,8 @@
       "en": [
         "Rotala sp. 'Nanjenshan'",
         "Nanjenshan rotala"
-      ],
-      "zh": [
-        "南仁山",
-        "南仁山节节菜"
       ]
     },
-    "pinyin": [
-      "nan ren shan",
-      "nan ren shan jie jie cai"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -14003,16 +13075,8 @@
       "en": [
         "Ludwigia glandulosa",
         "Peruvian ludwigia"
-      ],
-      "zh": [
-        "腺茎丁香",
-        "秘鲁水丁香"
       ]
     },
-    "pinyin": [
-      "xian jing ding xiang",
-      "bi lu shui ding xiang"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -14129,16 +13193,8 @@
       "en": [
         "Hygrophila 'Siamensis 53B'",
         "Siamese hygrophila"
-      ],
-      "zh": [
-        "泰国水蓑衣",
-        "53B水蓑衣"
       ]
     },
-    "pinyin": [
-      "tai guo shui suo yi",
-      "53B shui suo yi"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -14249,16 +13305,8 @@
       "en": [
         "Parrot feather",
         "Brazilian watermilfoil"
-      ],
-      "zh": [
-        "粉绿狐尾藻",
-        "绿狐尾藻"
       ]
     },
-    "pinyin": [
-      "fen lv hu wei zao",
-      "lv hu wei zao"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -14387,16 +13435,8 @@
       "en": [
         "Limnophila heterophylla",
         "Heterophyllous ambulia"
-      ],
-      "zh": [
-        "异叶石龙尾",
-        "异叶水族"
       ]
     },
-    "pinyin": [
-      "yi ye shi long wei",
-      "yi ye shui zu"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -14508,16 +13548,8 @@
       "en": [
         "Staurogyne 'Porto Velho'",
         "Hygrophila sp. 'Roraima'"
-      ],
-      "zh": [
-        "波多维尔斯塔罗",
-        "波多维尔"
       ]
     },
-    "pinyin": [
-      "bo duo wei er si ta luo",
-      "bo duo wei er"
-    ],
     "group": "carpeting",
     "growthForm": "carpeting",
     "origin": [
@@ -14631,16 +13663,8 @@
       "en": [
         "Dwarf four-leaf clover",
         "Marsilea crenata"
-      ],
-      "zh": [
-        "小四叶草",
-        "田字草"
       ]
     },
-    "pinyin": [
-      "xiao si ye cao",
-      "tian zi cao"
-    ],
     "group": "carpeting",
     "growthForm": "carpeting",
     "origin": [
@@ -14751,16 +13775,8 @@
       "en": [
         "New Zealand micro sword",
         "Lilaeopsis novae-zelandiae"
-      ],
-      "zh": [
-        "新西兰水芹",
-        "矮水芹"
       ]
     },
-    "pinyin": [
-      "xin xi lan shui qin",
-      "ai shui qin"
-    ],
     "group": "carpeting",
     "growthForm": "carpeting",
     "origin": [
@@ -14870,16 +13886,8 @@
       "en": [
         "Shade mudflower",
         "Giant baby tears"
-      ],
-      "zh": [
-        "大珍珠草",
-        "阴生珍珠草"
       ]
     },
-    "pinyin": [
-      "da zhen zhu cao",
-      "yin sheng zhen zhu cao"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -14992,18 +14000,8 @@
       "en": [
         "Whorled pennywort",
         "Shield pennywort"
-      ],
-      "zh": [
-        "香菇草",
-        "铜钱草",
-        "轮叶天胡荽"
       ]
     },
-    "pinyin": [
-      "xiang gu cao",
-      "tong qian cao",
-      "lun ye tian hu sui"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -15115,16 +14113,8 @@
       "en": [
         "Helfer's sedge",
         "Cyperus helferi"
-      ],
-      "zh": [
-        "赫氏莎草",
-        "水蒲"
       ]
     },
-    "pinyin": [
-      "he shi suo cao",
-      "shui pu"
-    ],
     "group": "rosette",
     "growthForm": "rosette",
     "origin": [
@@ -15236,16 +14226,8 @@
       "en": [
         "Uruguay sword",
         "Echinodorus uruguayensis"
-      ],
-      "zh": [
-        "乌拉圭皇冠草",
-        "乌拉圭皇冠"
       ]
     },
-    "pinyin": [
-      "wu la gui huang guan cao",
-      "wu la gui huang guan"
-    ],
     "group": "rosette",
     "growthForm": "rosette",
     "origin": [
@@ -15358,16 +14340,8 @@
       "en": [
         "Black amazon sword",
         "Echinodorus parviflorus"
-      ],
-      "zh": [
-        "黑皇冠",
-        "黑皇冠草"
       ]
     },
-    "pinyin": [
-      "hei huang guan",
-      "hei huang guan cao"
-    ],
     "group": "rosette",
     "growthForm": "rosette",
     "origin": [
@@ -15481,16 +14455,8 @@
       "en": [
         "Cryptocoryne wendtii 'Green Gecko'",
         "Green Gecko crypt"
-      ],
-      "zh": [
-        "绿壁虎椒草",
-        "壁虎椒草"
       ]
     },
-    "pinyin": [
-      "lv bi hu jiao cao",
-      "bi hu jiao cao"
-    ],
     "group": "rosette",
     "growthForm": "rosette",
     "origin": [
@@ -15603,16 +14569,8 @@
       "en": [
         "Cryptocoryne wendtii 'Red'",
         "Red wendtii"
-      ],
-      "zh": [
-        "红温蒂椒草",
-        "红椒草"
       ]
     },
-    "pinyin": [
-      "hong wen di jiao cao",
-      "hong jiao cao"
-    ],
     "group": "rosette",
     "growthForm": "rosette",
     "origin": [
@@ -15724,16 +14682,8 @@
       "en": [
         "Pink crypt",
         "Cryptocoryne pontederiifolia"
-      ],
-      "zh": [
-        "心叶椒草",
-        "粉红椒草"
       ]
     },
-    "pinyin": [
-      "xin ye jiao cao",
-      "fen hong jiao cao"
-    ],
     "group": "rosette",
     "growthForm": "rosette",
     "origin": [
@@ -15846,16 +14796,8 @@
       "en": [
         "Madagascar lace plant",
         "Lace plant"
-      ],
-      "zh": [
-        "网草",
-        "马岛网草"
       ]
     },
-    "pinyin": [
-      "wang cao",
-      "ma dao wang cao"
-    ],
     "group": "rosette",
     "growthForm": "rosette",
     "origin": [
@@ -15968,16 +14910,8 @@
       "en": [
         "Red tiger lotus",
         "Nymphaea lotus Red"
-      ],
-      "zh": [
-        "红虎纹睡莲",
-        "红睡莲"
       ]
     },
-    "pinyin": [
-      "hong hu wen shui lian",
-      "hong shui lian"
-    ],
     "group": "rhizome",
     "growthForm": "rhizome",
     "origin": [
@@ -16092,16 +15026,8 @@
       "en": [
         "American eelgrass",
         "Giant vallisneria"
-      ],
-      "zh": [
-        "美洲苦草",
-        "大苦草"
       ]
     },
-    "pinyin": [
-      "mei zhou ku cao",
-      "da ku cao"
-    ],
     "group": "rosette",
     "growthForm": "rosette",
     "origin": [
@@ -16211,16 +15137,8 @@
       "en": [
         "Narrow-leaf vallisneria",
         "Dwarf vallisneria"
-      ],
-      "zh": [
-        "矮苦草",
-        "小苦草"
       ]
     },
-    "pinyin": [
-      "ai ku cao",
-      "xiao ku cao"
-    ],
     "group": "rosette",
     "growthForm": "rosette",
     "origin": [
@@ -16333,16 +15251,8 @@
       "en": [
         "Bucephalandra 'Godzilla'",
         "Green Godzilla"
-      ],
-      "zh": [
-        "哥斯拉辣椒榕",
-        "哥斯拉布塞"
       ]
     },
-    "pinyin": [
-      "ge si la la jiao rong",
-      "ge si la bu sai"
-    ],
     "group": "epiphyte",
     "growthForm": "epiphyte",
     "origin": [
@@ -16456,16 +15366,8 @@
       "en": [
         "Bucephalandra 'Wavy Green'",
         "Bucephalandra pygmaea 'Bukit Kelam' Wavy Green"
-      ],
-      "zh": [
-        "绿波浪辣椒榕",
-        "波浪绿辣椒榕"
       ]
     },
-    "pinyin": [
-      "lv bo lang la jiao rong",
-      "bo lang lv la jiao rong"
-    ],
     "group": "epiphyte",
     "growthForm": "epiphyte",
     "origin": [
@@ -16578,16 +15480,8 @@
       "en": [
         "Slender anubias",
         "Anubias gracilis"
-      ],
-      "zh": [
-        "纤细榕",
-        "细叶榕·纤细"
       ]
     },
-    "pinyin": [
-      "xian xi rong",
-      "xi ye rong   xian xi"
-    ],
     "group": "epiphyte",
     "growthForm": "epiphyte",
     "origin": [
@@ -16701,16 +15595,8 @@
       "en": [
         "Narrow-leaf anubias",
         "Anubias barteri angustifolia"
-      ],
-      "zh": [
-        "窄叶榕",
-        "长叶榕"
       ]
     },
-    "pinyin": [
-      "zhai ye rong",
-      "zhang ye rong"
-    ],
     "group": "epiphyte",
     "growthForm": "epiphyte",
     "origin": [
@@ -16822,16 +15708,8 @@
       "en": [
         "Java fern",
         "Microsorum pteropus"
-      ],
-      "zh": [
-        "铁皇冠",
-        "黑木耳"
       ]
     },
-    "pinyin": [
-      "tie huang guan",
-      "hei mu er"
-    ],
     "group": "epiphyte",
     "growthForm": "epiphyte",
     "origin": [
@@ -16945,16 +15823,8 @@
       "en": [
         "Java fern 'Needle Leaf'",
         "Taiwan narrow java fern"
-      ],
-      "zh": [
-        "针叶铁皇冠",
-        "窄叶铁皇冠"
       ]
     },
-    "pinyin": [
-      "zhen ye tie huang guan",
-      "zhai ye tie huang guan"
-    ],
     "group": "epiphyte",
     "growthForm": "epiphyte",
     "origin": [
@@ -17067,16 +15937,8 @@
       "en": [
         "Willow moss",
         "Fontinalis"
-      ],
-      "zh": [
-        "柳莫斯",
-        "水藓"
       ]
     },
-    "pinyin": [
-      "liu mo si",
-      "shui xian"
-    ],
     "group": "moss",
     "growthForm": "moss",
     "origin": [
@@ -17188,16 +16050,8 @@
       "en": [
         "Water spangles",
         "Common salvinia"
-      ],
-      "zh": [
-        "小槐叶萍",
-        "水蕨萍"
       ]
     },
-    "pinyin": [
-      "xiao huai ye ping",
-      "shui jue ping"
-    ],
     "group": "floating",
     "growthForm": "floating",
     "origin": [
@@ -17308,16 +16162,8 @@
       "en": [
         "Red root floater",
         "Phyllanthus fluitans"
-      ],
-      "zh": [
-        "红根浮萍",
-        "红根浮草"
       ]
     },
-    "pinyin": [
-      "hong gen fu ping",
-      "hong gen fu cao"
-    ],
     "group": "floating",
     "growthForm": "floating",
     "origin": [
@@ -17431,16 +16277,8 @@
       "en": [
         "Stream bogmoss",
         "Bog moss"
-      ],
-      "zh": [
-        "须叶藻",
-        "小松叶"
       ]
     },
-    "pinyin": [
-      "xu ye zao",
-      "xiao song ye"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -17555,18 +16393,8 @@
       "en": [
         "Red cabomba",
         "Cabomba piauhyensis"
-      ],
-      "zh": [
-        "红卡布汶",
-        "红水盾草",
-        "红菊花草"
       ]
     },
-    "pinyin": [
-      "hong ka bu wen",
-      "hong shui dun cao",
-      "hong ju hua cao"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -17684,16 +16512,8 @@
       "en": [
         "Giant vallisneria",
         "Giant val"
-      ],
-      "zh": [
-        "巨型苦草",
-        "巨苦草"
       ]
     },
-    "pinyin": [
-      "ju xing ku cao",
-      "ju ku cao"
-    ],
     "group": "rosette",
     "growthForm": "rosette",
     "origin": [
@@ -17804,16 +16624,8 @@
       "en": [
         "Delta arrowhead",
         "Giant sagittaria"
-      ],
-      "zh": [
-        "宽叶慈姑",
-        "平叶慈姑"
       ]
     },
-    "pinyin": [
-      "kuan ye ci gu",
-      "ping ye ci gu"
-    ],
     "group": "rosette",
     "growthForm": "rosette",
     "origin": [
@@ -17927,16 +16739,8 @@
       "en": [
         "Dwarf sweet flag",
         "Japanese rush"
-      ],
-      "zh": [
-        "矮石菖蒲",
-        "金钱蒲"
       ]
     },
-    "pinyin": [
-      "ai shi chang pu",
-      "jin qian pu"
-    ],
     "group": "rosette",
     "growthForm": "rosette",
     "origin": [
@@ -18046,16 +16850,8 @@
       "en": [
         "Southern naiad",
         "Guppy grass"
-      ],
-      "zh": [
-        "茨藻",
-        "孔雀草"
       ]
     },
-    "pinyin": [
-      "ci zao",
-      "kong que cao"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -18165,16 +16961,8 @@
       "en": [
         "Lawn marshpennywort",
         "Mini pennywort"
-      ],
-      "zh": [
-        "天胡荽",
-        "满天星"
       ]
     },
-    "pinyin": [
-      "tian hu sui",
-      "man tian xing"
-    ],
     "group": "carpeting",
     "growthForm": "carpeting",
     "origin": [
@@ -18285,16 +17073,8 @@
         "Red azolla",
         "Water fern",
         "Fairy moss"
-      ],
-      "zh": [
-        "满江红",
-        "细绿萍"
       ]
     },
-    "pinyin": [
-      "man jiang hong",
-      "xi lv ping"
-    ],
     "group": "floating",
     "growthForm": "floating",
     "origin": [
@@ -18406,16 +17186,8 @@
       "en": [
         "Japanese spatterdock",
         "Japanese pond lily"
-      ],
-      "zh": [
-        "日本萍蓬草",
-        "萍蓬草"
       ]
     },
-    "pinyin": [
-      "ri ben ping peng cao",
-      "ping peng cao"
-    ],
     "group": "rhizome",
     "growthForm": "rhizome",
     "origin": [
@@ -18526,16 +17298,8 @@
       "en": [
         "Canadian waterweed",
         "Anacharis"
-      ],
-      "zh": [
-        "伊乐藻",
-        "加拿大伊乐藻"
       ]
     },
-    "pinyin": [
-      "yi le zao",
-      "jia na da yi le zao"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -18645,16 +17409,8 @@
       "en": [
         "Eurasian watermilfoil",
         "Spiked watermilfoil"
-      ],
-      "zh": [
-        "穗状狐尾藻",
-        "狐尾藻"
       ]
     },
-    "pinyin": [
-      "sui zhuang hu wei zao",
-      "hu wei zao"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -18766,16 +17522,8 @@
       "en": [
         "Water hyacinth",
         "Common water hyacinth"
-      ],
-      "zh": [
-        "凤眼莲",
-        "水葫芦"
       ]
     },
-    "pinyin": [
-      "feng yan lian",
-      "shui hu lu"
-    ],
     "group": "floating",
     "growthForm": "floating",
     "origin": [
@@ -18909,16 +17657,8 @@
       "en": [
         "Hydrilla",
         "Waterthyme"
-      ],
-      "zh": [
-        "黑藻",
-        "水王孙"
       ]
     },
-    "pinyin": [
-      "hei zao",
-      "shui wang sun"
-    ],
     "group": "stem",
     "growthForm": "stem",
     "origin": [
@@ -19046,16 +17786,8 @@
       "en": [
         "Eared watermoss",
         "Butterfly fern"
-      ],
-      "zh": [
-        "耳叶槐叶萍",
-        "大槐叶萍"
       ]
     },
-    "pinyin": [
-      "er ye huai ye ping",
-      "da huai ye ping"
-    ],
     "group": "floating",
     "growthForm": "floating",
     "origin": [
@@ -19175,16 +17907,8 @@
       "en": [
         "Greater duckweed",
         "Giant duckweed"
-      ],
-      "zh": [
-        "紫萍",
-        "多根紫萍"
       ]
     },
-    "pinyin": [
-      "zi ping",
-      "duo gen zi ping"
-    ],
     "group": "floating",
     "growthForm": "floating",
     "origin": [

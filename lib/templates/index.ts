@@ -1,10 +1,11 @@
 /**
- * Style templates — implementation of contract v1.0.1
+ * Style templates — implementation of contract v1.0.2
  * (lib/templates/contract.ts, orchestrator-owned).
  *
  * 1.0.1: iwagumi composition; group angle applied in cm space; group counts
  * are references for a 60 × 30 cm footprint, scaled by tank area then capped
  * at 60 total; suteishi default buriedFrac 0.35.
+ * 1.0.2: English-only — single `name` / `blurb`.
  *
  * Layout rules per style (sources listed in contract.ts):
  *  - Iwagumi sanzon: Oyaishi on the left third, clearly the largest and
@@ -47,10 +48,8 @@ export const TEMPLATES: readonly ScapeTemplate[] = [
     id: "iwagumi-sanzon",
     style: "iwagumi",
     composition: "iwagumi",
-    nameZh: "三尊石组",
-    nameEn: "Iwagumi · Sanzon",
-    blurbZh: "主石立于左三分线，副石与添石依次变小，前景铺满草坪。",
-    blurbEn: "Main stone on the left third, smaller companions beside it, a single carpet below.",
+    name: "Iwagumi · Sanzon",
+    blurb: "Main stone on the left third, two smaller stones beside it, a full carpet in front.",
     light: "High",
     co2: true,
     guide: "thirds",
@@ -76,10 +75,8 @@ export const TEMPLATES: readonly ScapeTemplate[] = [
     id: "nature-triangle",
     style: "nature",
     composition: "triangle",
-    nameZh: "三角构图",
-    nameEn: "Nature · Triangle",
-    blurbZh: "沉木与石块在左侧黄金线堆出高点，向右前方逐渐降低。",
-    blurbEn: "Wood and stone peak on the left golden line and fall away to the right.",
+    name: "Nature · Triangle",
+    blurb: "Wood and stone peak on the left golden line and slope down toward the front right.",
     light: "Medium",
     co2: true,
     guide: "golden",
@@ -110,10 +107,8 @@ export const TEMPLATES: readonly ScapeTemplate[] = [
     id: "nature-concave",
     style: "nature",
     composition: "concave",
-    nameZh: "凹形构图",
-    nameEn: "Nature · Concave",
-    blurbZh: "左右两组沉木水草围出中央低谷，视线被引向深处。",
-    blurbEn: "Two planted masses frame an open centre that draws the eye into depth.",
+    name: "Nature · Concave",
+    blurb: "Two masses of wood and plants frame a low open centre that draws the eye into depth.",
     light: "Medium",
     co2: true,
     guide: "thirds",
@@ -148,10 +143,8 @@ export const TEMPLATES: readonly ScapeTemplate[] = [
     id: "dutch-streets",
     style: "dutch",
     composition: "streets",
-    nameZh: "荷兰街道",
-    nameEn: "Dutch · Streets",
-    blurbZh: "不用石木，红绿有茎草排成斜向街道，相邻色块强烈对比。",
-    blurbEn: "No hardscape — red and green stems in diagonal streets of strong contrast.",
+    name: "Dutch · Streets",
+    blurb: "No stone or wood — red and green stems in diagonal streets, each in strong contrast to the next.",
     light: "High",
     co2: true,
     guide: "thirds",

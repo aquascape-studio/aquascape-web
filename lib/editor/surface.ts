@@ -32,6 +32,13 @@ import { hardscapeAnchors, hardscapeSurfaceY } from "@aquascape-studio/render"
 
 export type { SurfaceAnchor } from "@aquascape-studio/render"
 
+/**
+ * Editor contract 1.2.2: anchors offered per host piece — one constant for the
+ * editor (attachPlant / seating / re-seating) and the templates (epiphyte
+ * groups). Was 8 (editor) / 12 (templates) before 1.2.2.
+ */
+export const ANCHORS_PER_HOST = 12
+
 export type SurfacePiece = Pick<HardscapeVisual, "kind" | "x" | "z" | "rotationY" | "sizeCm"> &
   Partial<Pick<HardscapeVisual, "role" | "woodStyle" | "leanSide" | "buriedFrac" | "seed">>
 

@@ -15,6 +15,12 @@
  * hashes in asset URLs, React useId values, WebGL canvas sizes and timing
  * readouts ("123 ms") are masked. Exits 1 and prints the first difference
  * when they differ. Needs Playwright (`require("playwright")`).
+ *
+ * Flag-off checks done so far (baseline = the branch's base, candidate = the
+ * branch, both built with the same flags):
+ *  - dragEditor: GROWTH_TIMELAPSE + STYLIZED_TANK + STYLE_TEMPLATES on
+ *  - commandPalette (compose 1.0.0): GROWTH_TIMELAPSE + STYLIZED_TANK +
+ *    STYLE_TEMPLATES + DRAG_EDITOR on, COMMAND_PALETTE off
  */
 const { chromium } = require("playwright")
 

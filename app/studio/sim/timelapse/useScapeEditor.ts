@@ -68,6 +68,8 @@ export interface ScapeEditor {
   detachSelected: () => void
   /** 1.2.0: lean of the selected root wood */
   setLeanSide: (side: LeanSide) => void
+  /** editor 1.2.2 "replace" (one undo step) — the ⌘K one-sentence scape applies its doc with it */
+  replace: (doc: ScapeDoc) => void
   select: (t: EditTarget | null) => void
   onMove: (e: EditMoveEvent) => void
   copyLink: () => Promise<boolean>
@@ -116,7 +118,7 @@ async function writeClipboard(text: string): Promise<boolean> {
   }
 }
 
-function isTextField(t: EventTarget | null): boolean {
+export function isTextField(t: EventTarget | null): boolean {
   const el = t as HTMLElement | null
   if (!el || !el.tagName) return false
   if (el.isContentEditable) return true
@@ -265,6 +267,14 @@ export function useScapeEditor({ seedDoc, initialScape, baseQuery, plants, onPla
     },
     [dispatch, flushNudge],
   )
+  const replace = useCallback(
+    (doc: ScapeDoc) => {
+      flushNudge()
+      dragRef.current = null
+      dispatch({ type: "apply", op: { type: "replace", doc } })
+    },
+    [dispatch, flushNudge],
+  )
   const select = useCallback(
     (t: EditTarget | null) => {
       if (t === null && dragRef.current) return
@@ -312,6 +322,8 @@ export function useScapeEditor({ seedDoc, initialScape, baseQuery, plants, onPla
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (isTextField(e.target)) return
+      // the ⌘K dialog (compose flag) is modal: its keys never edit the scape behind it
+      if ((e.target as Element | null)?.closest?.("[data-compose-dialog]")) return
       const s = stateRef.current
       const mod = e.metaKey || e.ctrlKey
       const key = e.key
@@ -408,6 +420,7 @@ export function useScapeEditor({ seedDoc, initialScape, baseQuery, plants, onPla
     attach,
     detachSelected,
     setLeanSide,
+    replace,
     select,
     onMove,
     copyLink,

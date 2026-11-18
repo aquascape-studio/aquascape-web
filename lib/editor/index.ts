@@ -1,5 +1,5 @@
 /**
- * Drag editor — implementation of contract v1.2.0
+ * Drag editor — implementation of contract v1.2.2
  * (lib/editor/contract.ts, orchestrator-owned).
  *
  * A pure document model + reducer. Positions are sim-core cm (origin centre
@@ -14,19 +14,28 @@
  * keys are existing plants, values existing pieces; attached plants sit on
  * their host's surface (y > 0, lib/editor/surface.ts); every other plant has
  * y = 0. An empty attach map is normalised to `undefined`.
+ *
+ * 1.2.2: root-wood lean sides are frozen (addHardscape / setWoodStyle → root /
+ * a committed move of an "auto" piece store the resolved side);
+ * migrateAttach only attaches canAttach species and drops other lifted
+ * plants onto the bed; ANCHORS_PER_HOST = 12 is shared with the templates;
+ * "replace" sanitises the incoming doc (sanitizeDoc) before migrating it.
  */
 import type { EditTarget, HardscapeVisual, LeanSide, StoneRole, WoodStyle } from "@aquascape-studio/render"
-import { clampHardscapeXZ as renderClampHardscapeXZ } from "@aquascape-studio/render"
+import { clampHardscapeXZ as renderClampHardscapeXZ, resolveLeanSide } from "@aquascape-studio/render"
 import plantsJson from "../sim/vendor/plants.json"
 import type { PlantPlacement, TankDims } from "../sim/vendor/sim-core/contract"
 import type { InstantiatedTemplate } from "../templates/contract"
 import type { EditOp, EditorAction, EditorState, ScapeDoc } from "./contract"
 import { footprintContains, footprintHalfExtents } from "./footprint"
-import { anchors, surfaceY, type SurfaceAnchor } from "./surface"
+import { ANCHORS_PER_HOST, anchors, surfaceY, type SurfaceAnchor } from "./surface"
 
 export type { EditOp, EditorAction, EditorState, ScapeDoc } from "./contract"
 export { EDITOR_CONTRACT_VERSION } from "./contract"
 export { footprintContains, footprintDistance, footprintHalfExtents } from "./footprint"
+export { ANCHORS_PER_HOST } from "./surface"
+/** 1.2.2: render 1.4.1 — what "auto" (or an explicit side) resolves to */
+export { resolveLeanSide } from "@aquascape-studio/render"
 /** 1.1.0 objection (normative in 1.2.0): the render implementation, no local copy */
 export { clampHardscapeXZ } from "@aquascape-studio/render"
 
@@ -57,8 +66,6 @@ export const WOOD_STYLES: readonly WoodStyle[] = ["branchy", "root", "log"]
 export const LEAN_SIDES: readonly LeanSide[] = ["auto", "left", "right"]
 /** decode guard: longest accepted ?scape= value */
 export const MAX_ENCODED_LENGTH = 8000
-/** 1.2.0: anchors considered when seating epiphytes (contract: hardscapeAnchors(h, 8)) */
-export const ATTACH_ANCHORS = 8
 /** 1.2.0: an anchor within this distance of an attached plant is taken */
 export const ANCHOR_TAKEN_CM = 3
 /** 1.2.0: a moved attached plant stays inside its host's footprint shrunk by this */
@@ -224,11 +231,11 @@ function withAttach(doc: ScapeDoc, m: ReadonlyMap<string, string>): ScapeDoc {
 
 type Seat = { x: number; z: number; y: number }
 
-/** nearest anchor (floor distance) of anchors(h, 8), or null when the piece has none */
+/** nearest anchor (floor distance) of anchors(h, ANCHORS_PER_HOST), or null when the piece has none */
 function nearestAnchor(h: HardscapeVisual, tank: TankDims, x: number, z: number): Seat | null {
   let best: Seat | null = null
   let bestD = Infinity
-  for (const a of anchorsInTank(h, tank, ATTACH_ANCHORS)) {
+  for (const a of anchorsInTank(h, tank, ANCHORS_PER_HOST)) {
     const d = Math.hypot(a.x - x, a.z - z)
     if (d < bestD) {
       bestD = d
@@ -331,17 +338,28 @@ function seated(p: PlantPlacement, seat: Seat): PlantPlacement {
  * whose (x, z) lies in a piece's footprint is attached to the topmost such
  * piece (highest surface there; later pieces win ties). Then every attached
  * plant is seated on its host's surface and every other plant gets y = 0.
+ *
+ * 1.2.2: only canAttach species are attached (entries of other species are
+ * dropped from an existing map too). Every other lifted plant (y > 0) drops to
+ * y = 0 at the same (x, z) — unless that spot is in a stone footprint
+ * (margin 0.5 cm), in which case it moves to that stone's front edge + 2 cm
+ * (the detachPlant rule; if that spot is blocked as well, the nearest free
+ * spot, findFreeSpot).
+ *
  * Returns the same doc when nothing changes.
  */
 export function migrateAttach(doc: ScapeDoc): ScapeDoc {
   const hsById = new Map(doc.hardscape.map((h) => [h.id, h]))
-  const plantIds = new Set(doc.plants.map((p) => p.id))
+  const plantById = new Map(doc.plants.map((p) => [p.id, p]))
   const m = new Map<string, string>()
   if (doc.attach !== undefined) {
-    for (const [pid, hid] of attachMap(doc)) if (plantIds.has(pid) && hsById.has(hid)) m.set(pid, hid)
+    for (const [pid, hid] of attachMap(doc)) {
+      const p = plantById.get(pid)
+      if (p && hsById.has(hid) && canAttach(p.speciesId)) m.set(pid, hid)
+    }
   } else {
     for (const p of doc.plants) {
-      if (!(p.y > 0)) continue
+      if (!(p.y > 0) || !canAttach(p.speciesId)) continue
       let top: HardscapeVisual | undefined
       let topY = -Infinity
       for (const h of doc.hardscape) {
@@ -358,7 +376,7 @@ export function migrateAttach(doc: ScapeDoc): ScapeDoc {
   let changed = false
   const plants = doc.plants.map((p) => {
     const hid = m.get(p.id)
-    const next = hid ? seated(p, seatAt(hsById.get(hid)!, doc.tank, p.x, p.z)) : p.y === 0 ? p : { ...p, y: 0 }
+    const next = hid ? seated(p, seatAt(hsById.get(hid)!, doc.tank, p.x, p.z)) : p.y === 0 ? p : dropLifted(doc, p)
     if (next !== p) changed = true
     return next
   })
@@ -366,6 +384,15 @@ export function migrateAttach(doc: ScapeDoc): ScapeDoc {
   const sameAttach = (doc.attach === undefined) === (m.size === 0) && before.size === m.size && [...m].every(([k, v]) => before.get(k) === v)
   if (!changed && sameAttach) return doc
   return withAttach({ ...doc, plants: changed ? plants : doc.plants }, m)
+}
+
+/** 1.2.2: a lifted plant that is not attached drops onto the bed (in front of a stone it would land on) */
+function dropLifted(doc: ScapeDoc, p: PlantPlacement): PlantPlacement {
+  const stone = doc.hardscape.find((h) => h.kind === "stone" && footprintContains(h, p.x, p.z, STONE_MARGIN_CM))
+  if (!stone) return { ...p, y: 0 }
+  let spot = detachSpot(doc, stone, p)
+  if (blockedByStone(doc, spot.x, spot.z)) spot = findFreeSpot(doc, spot.x, spot.z) ?? spot
+  return { ...p, x: spot.x, z: spot.z, y: 0 }
 }
 
 /** carried plants of `oldH` re-seated on `newH`, each at `to(p)` */
@@ -385,12 +412,12 @@ function reseatCarried(doc: ScapeDoc, oldId: string, newH: HardscapeVisual, to: 
 
 /**
  * 1.2.0 (woodStyle / leanSide change): the k-th attached plant goes to the
- * nearest free anchor of anchors(h, 8) (all taken → the nearest one).
+ * nearest free anchor of anchors(h, ANCHORS_PER_HOST) (all taken → the nearest one).
  */
 function reseatOnAnchors(doc: ScapeDoc, oldH: HardscapeVisual, newH: HardscapeVisual): PlantPlacement[] {
   const carried = new Set(attachedTo(doc, oldH.id))
   if (carried.size === 0) return doc.plants
-  const list = anchorsInTank(newH, doc.tank, ATTACH_ANCHORS)
+  const list = anchorsInTank(newH, doc.tank, ANCHORS_PER_HOST)
   const taken = new Set<number>()
   const dx = newH.x - oldH.x
   const dz = newH.z - oldH.z
@@ -435,15 +462,21 @@ function moveHardscape(doc: ScapeDoc, id: string, x: number, z: number): ScapeDo
   if (!h || !Number.isFinite(x) || !Number.isFinite(z)) return null
   // 1.1.0: the whole rotated footprint stays ≥ 1 cm inside the glass
   const { x: cx, z: cz } = clampHS(h, doc.tank, x, z)
-  const moved: HardscapeVisual = { ...h, x: cx, z: cz }
   const dx = cx - h.x
   const dz = cz - h.z
+  // 1.2.2: a root piece on "auto" keeps the side it resolved to BEFORE the move (no flip across the centre)
+  const moved: HardscapeVisual = (dx !== 0 || dz !== 0) && isAutoRoot(h) ? { ...h, x: cx, z: cz, leanSide: resolveLeanSide(h) } : { ...h, x: cx, z: cz }
   return {
     ...doc,
     hardscape: doc.hardscape.map((hh) => (hh.id === id ? moved : hh)),
     // 1.2.0: exactly the attach-listed plants follow, re-seated on the moved piece
     plants: dx === 0 && dz === 0 ? doc.plants : reseatCarried(doc, id, moved, (p) => [p.x + dx, p.z + dz]),
   }
+}
+
+/** root wood whose lean is "auto" (explicitly, or missing = "auto" in render) */
+function isAutoRoot(h: HardscapeVisual): boolean {
+  return h.kind === "wood" && h.woodStyle === "root" && (h.leanSide ?? "auto") === "auto"
 }
 
 function move(doc: ScapeDoc, t: EditTarget, x: number, z: number): ScapeDoc | null {
@@ -515,12 +548,12 @@ function addPlant(doc: ScapeDoc, speciesId: string, x: number, z: number, portio
 
 /**
  * 1.2.0 "attachPlant": the seat a new epiphyte on `h` would get — x/z omitted:
- * the first anchor of anchors(h, 8) not within 3 cm of an attached plant
+ * the first anchor of anchors(h, ANCHORS_PER_HOST) not within 3 cm of an attached plant
  * (fallback anchor 0); x/z given: inside the footprint with a surface there.
  */
 export function attachSeat(doc: ScapeDoc, h: HardscapeVisual, x?: number, z?: number): Seat | null {
   if (x === undefined || z === undefined) {
-    const list = anchorsInTank(h, doc.tank, ATTACH_ANCHORS)
+    const list = anchorsInTank(h, doc.tank, ANCHORS_PER_HOST)
     if (list.length === 0) return null
     const attached = doc.plants.filter((p) => hostOf(doc, p.id) !== undefined)
     const free = list.find((a) => !attached.some((p) => Math.hypot(p.x - a.x, p.y - a.y, p.z - a.z) < ANCHOR_TAKEN_CM)) ?? list[0]!
@@ -673,6 +706,8 @@ export function newHardscapePiece(
   const piece: HardscapeVisual = { id, kind, x: pos.x, z: pos.z, rotationY: 0, sizeCm, seed: hashId(id) }
   if (kind === "stone") piece.role = "soeishi"
   else piece.woodStyle = woodStyle ?? "branchy"
+  // 1.2.2: new root wood stores the side "auto" resolves to here (frozen)
+  if (piece.woodStyle === "root") piece.leanSide = resolveLeanSide(piece)
   return piece
 }
 
@@ -742,8 +777,10 @@ function setWoodStyle(doc: ScapeDoc, id: string, woodStyle: WoodStyle): ScapeDoc
   const sizeCm = fitSize([h.sizeCm[0], def[1] * k, def[2] * k], doc.tank, false)
   const { x, z } = clampHS({ rotationY: h.rotationY, sizeCm }, doc.tank, h.x, h.z)
   const { leanSide: _lean, ...rest } = h
-  // leanSide is root-only: dropped when the piece stops being root wood
-  const styled: HardscapeVisual = woodStyle === "root" && h.leanSide !== undefined ? { ...rest, leanSide: h.leanSide, woodStyle, sizeCm, x, z } : { ...rest, woodStyle, sizeCm, x, z }
+  // leanSide is root-only: dropped when the piece stops being root wood (1.2.2: documented, tested);
+  // switching to root freezes the side "auto" resolves to at the piece's (clamped) position
+  const styled: HardscapeVisual =
+    woodStyle === "root" ? { ...rest, woodStyle, sizeCm, x, z, leanSide: resolveLeanSide({ x, leanSide: h.leanSide }) } : { ...rest, woodStyle, sizeCm, x, z }
   return { ...doc, hardscape: doc.hardscape.map((hh) => (hh.id === id ? styled : hh)), plants: reseatOnAnchors(doc, h, styled) }
 }
 
@@ -756,9 +793,51 @@ function setLeanSide(doc: ScapeDoc, id: string, leanSide: LeanSide): ScapeDoc | 
   return { ...doc, hardscape: doc.hardscape.map((hh) => (hh.id === id ? leaned : hh)), plants: reseatOnAnchors(doc, h, leaned) }
 }
 
+/**
+ * 1.2.2 "replace": the incoming doc (a template, a compose result, a pasted
+ * link) gets the invariants a decoded link has — null (→ no-op) for a tank
+ * outside the link ranges; otherwise unknown species and duplicate ids are
+ * dropped, at most 60 plants / 24 pieces are kept, positions are clamped
+ * 1 cm inside the glass (hardscape by its real extent, clampHardscapeXZ),
+ * portions to 1–99, and the result is migrated (migrateAttach). A doc that
+ * already satisfies all of this comes back structurally unchanged.
+ */
+export function sanitizeDoc(doc: ScapeDoc): ScapeDoc | null {
+  const t = doc?.tank
+  if (!t || doc.v !== 1) return null
+  const { widthCm: W, depthCm: D, heightCm: H } = t
+  if (!(W >= 10 && W <= 300 && D >= 10 && D <= 150 && H >= 10 && H <= 120)) return null
+  const tank: TankDims = { widthCm: W, depthCm: D, heightCm: H }
+  const fin = (v: number) => typeof v === "number" && Number.isFinite(v)
+  const hsIds = new Set<string>()
+  const hardscape: HardscapeVisual[] = []
+  for (const h of doc.hardscape ?? []) {
+    if (hardscape.length >= MAX_HARDSCAPE || hsIds.has(h.id) || (h.kind !== "stone" && h.kind !== "wood")) continue
+    if (![h.x, h.z, h.rotationY, ...h.sizeCm].every(fin) || !h.sizeCm.every((v) => v > 0)) continue
+    hsIds.add(h.id)
+    const pos = clampHS(h, tank, h.x, h.z)
+    hardscape.push(pos.x === h.x && pos.z === h.z ? h : { ...h, x: pos.x, z: pos.z })
+  }
+  const ids = new Set<string>()
+  const plants: PlantPlacement[] = []
+  for (const p of doc.plants ?? []) {
+    if (plants.length >= MAX_PLANTS || ids.has(p.id) || !isKnownSpecies(p.speciesId) || !fin(p.x) || !fin(p.z)) continue
+    ids.add(p.id)
+    const [x, z] = clampPos(tank, p.x, p.z)
+    const y = fin(p.y) && p.y > 0 ? p.y : 0
+    const portions = clampPortions(p.portions)
+    plants.push(x === p.x && z === p.z && y === p.y && portions === p.portions ? p : { ...p, x, z, y, portions })
+  }
+  const same = <T,>(a: readonly T[], b: readonly T[]) => a.length === b.length && a.every((v, i) => v === b[i])
+  if (doc.tank === t && same(hardscape, doc.hardscape ?? []) && same(plants, doc.plants ?? [])) return migrateAttach(doc)
+  const out: ScapeDoc = { ...doc, tank, hardscape, plants }
+  if (doc.attach !== undefined) out.attach = Object.fromEntries(Object.entries(doc.attach).filter(([pid, hid]) => ids.has(pid) && hsIds.has(hid)))
+  return migrateAttach(out)
+}
+
 /** `doc` must be migrated (migrateAttach) */
 function applyOp(doc: ScapeDoc, op: EditOp): ScapeDoc | null {
-  if (op.type === "replace") return migrateAttach(op.doc)
+  if (op.type === "replace") return sanitizeDoc(op.doc)
   switch (op.type) {
     case "move":
       return move(doc, op.target, op.x, op.z)

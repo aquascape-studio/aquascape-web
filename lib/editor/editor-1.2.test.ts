@@ -9,6 +9,7 @@ import type { EditTarget, HardscapeVisual } from "@aquascape-studio/render"
 import { TEMPLATES, instantiate } from "../templates"
 import type { EditOp, EditorAction, EditorState, ScapeDoc } from "./contract"
 import {
+  ANCHORS_PER_HOST,
   ANCHOR_TAKEN_CM,
   MAX_PLANTS,
   attachableSpeciesIds,
@@ -195,7 +196,7 @@ describe("attachPlant (1.2.0)", () => {
   it("x/z omitted: ties onto the first anchor not within 3 cm of an attached plant; id '<species>-<n>'; host stays selected", () => {
     const s0 = run(initEditor(doc0()), { type: "select", target: H("root") })
     const s1 = apply(s0, { type: "attachPlant", speciesId: "taxiphyllum-barbieri", hardscapeId: "root" })
-    const a = anchors(piece(s1, "root"), 8)
+    const a = anchors(piece(s1, "root"), ANCHORS_PER_HOST)
     const p1 = last(s1)
     expect(p1).toMatchObject({ id: "taxiphyllum-barbieri-1", speciesId: "taxiphyllum-barbieri", portions: 1, x: a[0]!.x, z: a[0]!.z })
     expect(p1.y).toBeCloseTo(a[0]!.y, 1)
@@ -212,10 +213,10 @@ describe("attachPlant (1.2.0)", () => {
   })
   it("falls back to anchor 0 when every anchor is taken", () => {
     let s = initEditor(doc0())
-    for (let i = 0; i < 9; i++) s = apply(s, { type: "attachPlant", speciesId: "bucephalandra-sp-mini", hardscapeId: "rock" })
-    const a0 = anchors(piece(s, "rock"), 8)[0]!
+    for (let i = 0; i < ANCHORS_PER_HOST + 1; i++) s = apply(s, { type: "attachPlant", speciesId: "bucephalandra-sp-mini", hardscapeId: "rock" })
+    const a0 = anchors(piece(s, "rock"), ANCHORS_PER_HOST)[0]!
     expect(last(s)).toMatchObject({ x: a0.x, z: a0.z })
-    expect(attachedTo(s.doc, "rock")).toHaveLength(9)
+    expect(attachedTo(s.doc, "rock")).toHaveLength(ANCHORS_PER_HOST + 1)
   })
   it("x/z given: must be on the footprint with a surface", () => {
     const s0 = initEditor(doc0())
@@ -328,7 +329,7 @@ describe("setLeanSide (1.2.0)", () => {
     // ROOT at x = −6: auto leans right; switch to left
     const s1 = apply(s, { type: "setLeanSide", id: "root", leanSide: "left" })
     expect(piece(s1, "root").leanSide).toBe("left")
-    const list = anchors(piece(s1, "root"), 8)
+    const list = anchors(piece(s1, "root"), ANCHORS_PER_HOST)
     const seats = attachedTo(s1.doc, "root").map((id) => plant(s1, id))
     for (const p of seats) expect(list.some((a) => a.x === p.x && a.z === p.z)).toBe(true)
     expect(new Set(seats.map((p) => `${p.x},${p.z}`)).size).toBe(seats.length)

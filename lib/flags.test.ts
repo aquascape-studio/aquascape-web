@@ -123,3 +123,36 @@ describe("flags.dragEditor", () => {
     expect(flags.dragEditor).toBe(true)
   })
 })
+
+describe("flags.commandPalette", () => {
+  afterEach(() => {
+    vi.unstubAllEnvs()
+    vi.resetModules()
+  })
+
+  it("defaults to off", async () => {
+    vi.stubEnv("NEXT_PUBLIC_FF_COMMAND_PALETTE", undefined as unknown as string)
+    const { flags } = await import("./flags")
+    expect(flags.commandPalette).toBe(false)
+  })
+
+  it.each(["0", "false", ""])("is off for %j", async (v) => {
+    vi.stubEnv("NEXT_PUBLIC_FF_COMMAND_PALETTE", v)
+    const { flags } = await import("./flags")
+    expect(flags.commandPalette).toBe(false)
+  })
+
+  it.each(["1", "true"])("is on for %s", async (v) => {
+    vi.stubEnv("NEXT_PUBLIC_FF_COMMAND_PALETTE", v)
+    const { flags } = await import("./flags")
+    expect(flags.commandPalette).toBe(true)
+  })
+
+  it("is independent of dragEditor", async () => {
+    vi.stubEnv("NEXT_PUBLIC_FF_DRAG_EDITOR", "1")
+    vi.stubEnv("NEXT_PUBLIC_FF_COMMAND_PALETTE", undefined as unknown as string)
+    const { flags } = await import("./flags")
+    expect(flags.dragEditor).toBe(true)
+    expect(flags.commandPalette).toBe(false)
+  })
+})

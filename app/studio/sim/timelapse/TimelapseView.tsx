@@ -25,6 +25,8 @@ import ControlBar from "./ControlBar"
 import { PICKER_CSS, TemplateBar, TemplateNote } from "./TemplatePicker"
 import { useScapeEditor, type ScapeEditor } from "./useScapeEditor"
 import EditorToolbar, { EDITOR_CSS } from "./EditorToolbar"
+import { useCommandPalette, type CommandPalette } from "./useCommandPalette"
+import ComposeNotes, { COMPOSE_NOTES_CSS } from "./ComposeNotes"
 
 const PLANTS = plantsJson as unknown as BotanyRecord[]
 const BY_ID = new Map(PLANTS.map((p) => [p.id, p]))
@@ -43,6 +45,13 @@ const FrontalHero = flags.stylizedTank ? dynamic(() => import("./FrontalHero"), 
 const EDITOR = flags.dragEditor && flags.stylizedTank
 /** constant per build, so the hook call order never changes; flag off → nothing runs */
 const useEditor: (o: Parameters<typeof useScapeEditor>[0]) => ScapeEditor | null = EDITOR ? useScapeEditor : () => null
+
+/** ⌘K one-sentence scape (lib/compose contract 1.0.0) — needs the drag editor. Build-time constant. */
+const COMPOSE = EDITOR && flags.commandPalette
+/** the dialog's chunk is only requested when the flag is on */
+const ComposeDialog = COMPOSE ? dynamic(() => import("./ComposeDialog"), { ssr: false }) : null
+/** constant per build (hook order never changes); flag off → nothing runs */
+const usePalette: (e: ScapeEditor | null, plants: readonly BotanyRecord[]) => CommandPalette | null = COMPOSE ? useCommandPalette : () => null
 
 /** Plants added in the editor have no frame until the sim re-runs: show them as small seedlings meanwhile. */
 function withSeedlings(frame: Frame | undefined, plants: ScapeDoc["plants"]): Frame | undefined {
@@ -99,6 +108,10 @@ export default function TimelapseView() {
     plants: PLANTS,
     onPlantPicked: setSelectedId,
   })
+  const palette = usePalette(editor, PLANTS)
+  const paletteSetOpen = palette?.setOpen
+  const openPalette = useCallback(() => paletteSetOpen?.(true), [paletteSetOpen])
+  const closePalette = useCallback(() => paletteSetOpen?.(false), [paletteSetOpen])
   const built: BuildResult & { scene?: InstantiatedTemplate } = editor ? editor.built : baseBuilt
   const { input } = built
   const days = input.days
@@ -229,6 +242,7 @@ export default function TimelapseView() {
     const onKey = (e: KeyboardEvent) => {
       if (e.metaKey || e.ctrlKey || e.altKey) return
       const t = e.target as HTMLElement | null
+      if (t?.closest?.("[data-compose-dialog]")) return
       const tag = t?.tagName
       if (tag === "TEXTAREA" || tag === "SELECT" || (tag === "INPUT" && (t as HTMLInputElement).type !== "range")) return
       const onRange = tag === "INPUT"
@@ -285,45 +299,71 @@ export default function TimelapseView() {
           )
           // flag off: exactly the original single child here (adding sibling slots would shift React useId values)
           if (!editor) return hero
+          const controlBar = (
+            <ControlBar
+              day={day}
+              days={days}
+              available={available}
+              playing={playing}
+              computing={computing}
+              total={total}
+              events={events}
+              onDay={seek}
+              onTogglePlay={togglePlay}
+            />
+          )
+          const region = (
+            <div ref={editRegionRef} data-testid="editor-region">
+              <EditorToolbar
+                doc={editor.viewDoc}
+                selected={editor.state.selected}
+                canUndo={editor.canUndo}
+                canRedo={editor.canRedo}
+                simulating={computing}
+                byId={BY_ID}
+                onUndo={editor.undo}
+                onRedo={editor.redo}
+                onDelete={editor.removeSelected}
+                onCopy={editor.copyLink}
+                onAdd={editor.addPlant}
+                onSelect={editor.select}
+                onAddHardscape={editor.addHardscape}
+                onResize={editor.resizeSelected}
+                onWoodStyle={editor.setWoodStyle}
+                onAttach={editor.attach}
+                onDetach={editor.detachSelected}
+                onLeanSide={editor.setLeanSide}
+                onCompose={palette ? openPalette : undefined}
+              />
+              <div className="px-0 pt-6" data-testid="timeline-dock">
+                {/* compose flag off: the dock holds exactly the ControlBar, as before */}
+                {palette ? (
+                  <>
+                    <ComposeNotes notice={palette.notice} onUndo={palette.undo} onTryAnother={palette.tryAnother} onDismiss={palette.dismiss} holding={computing} />
+                    {controlBar}
+                  </>
+                ) : (
+                  controlBar
+                )}
+              </div>
+            </div>
+          )
+          if (!palette || !ComposeDialog) {
+            return (
+              <>
+                {hero}
+                <style dangerouslySetInnerHTML={{ __html: EDITOR_CSS }} />
+                {region}
+              </>
+            )
+          }
           return (
             <>
               {hero}
               <style dangerouslySetInnerHTML={{ __html: EDITOR_CSS }} />
-              <div ref={editRegionRef} data-testid="editor-region">
-                <EditorToolbar
-                  doc={editor.viewDoc}
-                  selected={editor.state.selected}
-                  canUndo={editor.canUndo}
-                  canRedo={editor.canRedo}
-                  simulating={computing}
-                  byId={BY_ID}
-                  onUndo={editor.undo}
-                  onRedo={editor.redo}
-                  onDelete={editor.removeSelected}
-                  onCopy={editor.copyLink}
-                  onAdd={editor.addPlant}
-                  onSelect={editor.select}
-                  onAddHardscape={editor.addHardscape}
-                  onResize={editor.resizeSelected}
-                  onWoodStyle={editor.setWoodStyle}
-                  onAttach={editor.attach}
-                  onDetach={editor.detachSelected}
-                  onLeanSide={editor.setLeanSide}
-                />
-                <div className="px-0 pt-6" data-testid="timeline-dock">
-                  <ControlBar
-                    day={day}
-                    days={days}
-                    available={available}
-                    playing={playing}
-                    computing={computing}
-                    total={total}
-                    events={events}
-                    onDay={seek}
-                    onTogglePlay={togglePlay}
-                  />
-                </div>
-              </div>
+              {region}
+              <style dangerouslySetInnerHTML={{ __html: COMPOSE_NOTES_CSS }} />
+              <ComposeDialog open={palette.open} index={palette.index} onClose={closePalette} onSubmit={palette.submit} />
             </>
           )
         })()}

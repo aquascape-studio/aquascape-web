@@ -15,4 +15,6 @@ export const flags = {
   styleTemplates: parseFlag(process.env.NEXT_PUBLIC_FF_STYLE_TEMPLATES),
   /** /studio/sim drag editor (lib/editor contract 1.1.0); requires stylizedTank */
   dragEditor: parseFlag(process.env.NEXT_PUBLIC_FF_DRAG_EDITOR),
+  /** ⌘K one-sentence scape (lib/compose contract 1.0.0); requires dragEditor + stylizedTank */
+  commandPalette: parseFlag(process.env.NEXT_PUBLIC_FF_COMMAND_PALETTE),
 } as const

@@ -28,7 +28,7 @@
  *    ≈1 species per 10 cm of a 60 cm tank.
  */
 import type { HardscapeVisual, StoneRole } from "@aquascape-studio/render"
-import { anchors, surfaceY } from "../editor/surface"
+import { ANCHORS_PER_HOST, anchors, surfaceY } from "../editor/surface"
 import type { PlantPlacement, TankDims } from "../sim/vendor/sim-core/contract"
 import type { InstantiatedTemplate, ScapeTemplate, TemplateHardscape, TemplatePlantGroup } from "./contract"
 
@@ -309,13 +309,13 @@ export function scaledCounts(groups: readonly TemplatePlantGroup[], tank: TankDi
   return counts
 }
 
-/** anchors offered per host piece to its epiphyte groups */
-export const TEMPLATE_ANCHORS = 12
+/** anchors offered per host piece to its epiphyte groups (editor 1.2.2: shared with the editor) */
+export { ANCHORS_PER_HOST } from "../editor/surface"
 
 /**
  * Template → sim placements + render hardscape for a concrete tank. Pure and
  * deterministic for (t, tank, seed). Epiphyte groups (`onHardscape`) are
- * seated on anchors(host, 12): each group takes the free anchors nearest to
+ * seated on anchors(host, ANCHORS_PER_HOST = 12): each group takes the free anchors nearest to
  * its (u, v, ru, rv) ellipse, and its placements are listed in `attach`.
  */
 export function instantiate(t: ScapeTemplate, tank: TankDims, seed = 0): InstantiatedTemplate {
@@ -374,7 +374,7 @@ export function instantiate(t: ScapeTemplate, tank: TankDims, seed = 0): Instant
     let seats: { x: number; z: number; y: number }[] = []
     if (host) {
       if (!hostAnchors.has(host.id)) {
-        hostAnchors.set(host.id, anchors(host, TEMPLATE_ANCHORS))
+        hostAnchors.set(host.id, anchors(host, ANCHORS_PER_HOST))
         usedAnchors.set(host.id, new Set())
       }
       const list = hostAnchors.get(host.id)!

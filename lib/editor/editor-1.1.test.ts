@@ -3,7 +3,7 @@
  * setWoodStyle, previewBase, needsResim, clampHardscapeXZ, woodStyle links.
  */
 import { describe, expect, it } from "vitest"
-import { anchors, surfaceY } from "./surface"
+import { ANCHORS_PER_HOST, anchors, surfaceY } from "./surface"
 import type { EditTarget, HardscapeVisual } from "@aquascape-studio/render"
 import * as render from "@aquascape-studio/render"
 import type { EditOp, EditorAction, EditorState, ScapeDoc } from "./contract"
@@ -88,24 +88,23 @@ describe("clampHardscapeXZ (render 1.3.0 export, re-exported by lib/editor)", ()
   it("is render's own export — the local copy is gone (1.2.0)", () => {
     expect(clampHardscapeXZ).toBe(render.clampHardscapeXZ)
   })
-  // parity test from 1.1.0, re-enabled: render's clamp vs the reference formula of the 1.3.0 contract
-  it("agrees with the render 1.3.0 reference semantics", () => {
-    const reference = (p: HardscapeVisual, x: number, z: number) => {
-      const e = footprintHalfExtents(p)
-      const axis = (v: number, half: number, ext: number) => {
-        const max = half - 1 - ext
-        return max > 0 ? Math.min(max, Math.max(-max, v)) : 0
-      }
-      return { x: axis(x, TANK.widthCm / 2, e.x), z: axis(z, TANK.depthCm / 2, e.z) }
-    }
+  // render 1.4.1 (editor 1.2.2): the clamp keeps the REAL above-bed extent (render hardscapeExtent) ≥ 1 cm
+  // inside the glass — was the footprint ellipse in 1.3.0; an axis wider than the interior is centred
+  it("keeps render 1.4.1's real extent ≥ 1 cm inside the glass (1.2.2 semantics)", () => {
     for (let i = 0; i < 200; i++) {
-      const p: HardscapeVisual = { id: "p", kind: "stone", seed: 1, rotationY: (i * 0.37) % 6.28 - 3.14, sizeCm: [4 + (i % 40), 5, 3 + (i % 25)], x: 0, z: 0 }
+      const p: HardscapeVisual = { id: "p", kind: i % 3 === 0 ? "wood" : "stone", seed: 1 + i, rotationY: (i * 0.37) % 6.28 - 3.14, sizeCm: [4 + (i % 40), 5, 3 + (i % 25)], x: 0, z: 0 }
+      if (p.kind === "wood") p.woodStyle = (["branchy", "root", "log"] as const)[i % 3]
       const x = ((i * 13) % 90) - 45
       const z = ((i * 7) % 40) - 20
       const a = clampHardscapeXZ(p, TANK, x, z)
-      const b = reference(p, x, z)
-      expect(a.x).toBeCloseTo(b.x, 6)
-      expect(a.z).toBeCloseTo(b.z, 6)
+      const e = render.hardscapeExtent({ ...p, x: a.x, z: a.z })
+      const inside = (c: number, lo: number, hi: number, half: number) => {
+        if (hi - lo > 2 * half - 2) return // wider than the interior: centred on that axis
+        expect(c + lo).toBeGreaterThanOrEqual(-half + 1 - 0.05)
+        expect(c + hi).toBeLessThanOrEqual(half - 1 + 0.05)
+      }
+      inside(a.x, e.minX, e.maxX, TANK.widthCm / 2)
+      inside(a.z, e.minZ, e.maxZ, TANK.depthCm / 2)
     }
   })
 })
@@ -158,8 +157,14 @@ describe("previewBase (1.1.0)", () => {
 describe("hardscape clamping in move / preview / rotate", () => {
   it("move and preview clamp the whole footprint", () => {
     const s0 = initEditor(fixture())
-    expect(piece(apply(s0, { type: "move", target: H("rock"), x: -99, z: 99 }), "rock")).toMatchObject({ x: -24, z: 11 })
-    expect(piece(run(s0, { type: "preview", target: H("rock"), x: 99, z: -99 }), "rock")).toMatchObject({ x: 24, z: -11 })
+    // 1.2.2: the same position render 1.4.1 clampHardscapeXZ gives (real extent, not the ellipse)
+    const rock = piece(s0, "rock")
+    expect(piece(apply(s0, { type: "move", target: H("rock"), x: -99, z: 99 }), "rock")).toMatchObject(clampHardscapeXZ(rock, TANK, -99, 99))
+    expect(piece(run(s0, { type: "preview", target: H("rock"), x: 99, z: -99 }), "rock")).toMatchObject(clampHardscapeXZ(rock, TANK, 99, -99))
+    const far = clampHardscapeXZ(rock, TANK, -99, 99)
+    const e = render.hardscapeExtent({ ...rock, ...far })
+    expect(far.x + e.minX).toBeGreaterThanOrEqual(-TANK.widthCm / 2 + 1 - 0.05)
+    expect(far.z + e.maxZ).toBeLessThanOrEqual(TANK.depthCm / 2 - 1 + 0.05)
   })
   it("rotate re-clamps (rotation changes the extent) and carried epiphytes follow the shift", () => {
     // a long log against the left glass: rotating it 90° frees x but needs room on z
@@ -402,7 +407,7 @@ describe("setWoodStyle (1.1.0)", () => {
     const s0 = apply(initEditor(fixture()), { type: "attachPlant", speciesId: "anubias-barteri-nana", hardscapeId: "wood" })
     const s1 = apply(s0, { type: "setWoodStyle", id: "wood", woodStyle: "log" })
     const w = piece(s1, "wood")
-    const list = anchors(w, 8)
+    const list = anchors(w, ANCHORS_PER_HOST)
     const seats = attachedTo(s1.doc, "wood").map((id) => plant(s1, id))
     expect(seats).toHaveLength(2)
     for (const p of seats) expect(list.some((a) => a.x === p.x && a.z === p.z && Math.abs(a.y - p.y) < 0.1)).toBe(true)

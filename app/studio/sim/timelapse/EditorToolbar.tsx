@@ -155,6 +155,39 @@ export interface EditorToolbarProps {
   onDetach: () => void
   /** 1.2.0 — lean of the selected root wood */
   onLeanSide: (side: LeanSide) => void
+  /**
+   * compose 1.0.0 — open the ⌘K "Describe a scape" dialog. Only passed when
+   * `flags.commandPalette` is on; undefined renders nothing (flag-off DOM unchanged).
+   */
+  onCompose?: (() => void) | undefined
+}
+
+/** compose 1.0.0: the "⌘K Describe a scape" pill at the end of the toolbar (icon only on phones) */
+function ComposePill({ onClick, shortcut }: { onClick: () => void; shortcut: string }) {
+  return (
+    <>
+      <span className="mx-0.5 h-6 w-px sm:mx-1" style={{ background: c("hairline") }} aria-hidden="true" />
+      <button
+        type="button"
+        className="tl-ebtn inline-flex min-h-11 min-w-11 items-center justify-center gap-2 whitespace-nowrap rounded-full px-2.5 text-[14px] font-medium sm:pl-2 sm:pr-3.5"
+        style={{ color: c("text") }}
+        onClick={onClick}
+        aria-label="Describe a scape"
+        aria-keyshortcuts="Meta+K Control+K"
+        aria-haspopup="dialog"
+        title={`Describe a scape (${shortcut})`}
+        data-testid="compose-open"
+      >
+        <span className="hidden rounded-full px-2 py-0.5 text-[12px] font-semibold sm:inline" style={{ background: c("segTrack"), color: c("ink2") }} aria-hidden="true">
+          {shortcut}
+        </span>
+        <svg className="sm:hidden" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false" style={{ color: c("accent") }}>
+          <path d="M12 3.5l1.9 5.2 5.1 1.8-5.1 1.8L12 17.5l-1.9-5.2L5 10.5l5.1-1.8L12 3.5zM18.5 15.5l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8.8-2z" fill="currentColor" />
+        </svg>
+        <span className="hidden sm:inline" aria-hidden="true">Describe a scape</span>
+      </button>
+    </>
+  )
 }
 
 /** "Oyaishi", "Suteishi 1", "Suteishi 2" … (numbered only when a label repeats) */
@@ -175,7 +208,7 @@ function hardscapeChips(doc: ScapeDoc): { id: string; label: string; hint: strin
 
 export default function EditorToolbar({
   doc, selected, canUndo, canRedo, simulating, byId, onUndo, onRedo, onDelete, onCopy, onAdd, onSelect, onAddHardscape, onResize, onWoodStyle,
-  onAttach, onDetach, onLeanSide,
+  onAttach, onDetach, onLeanSide, onCompose,
 }: EditorToolbarProps) {
   const [copied, flashCopied] = useFlag(2000)
   const [copyFailed, flashFailed] = useFlag(2500)
@@ -312,10 +345,12 @@ export default function EditorToolbar({
           }}
         >
           <Svg>{copied ? Icon.check : Icon.link}</Svg>
-          <span aria-live="polite">
+          {/* compose flag: on phones the label becomes screen-reader only, so the ⌘K pill fits the capsule */}
+          <span aria-live="polite" className={onCompose ? "max-sm:sr-only" : undefined}>
             {copied ? "Copied" : copyFailed ? "URL updated" : "Copy link"}
           </span>
         </button>
+        {onCompose && <ComposePill onClick={onCompose} shortcut={isMac ? "⌘K" : "Ctrl K"} />}
       </div>
 
       {/* driftwood style (wood selected) */}

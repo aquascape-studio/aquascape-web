@@ -19,7 +19,33 @@
 import type { HardscapeVisual, EditTarget, WoodStyle, LeanSide } from "@aquascape-studio/render"
 import type { PlantPlacement, TankDims } from "../sim/vendor/sim-core/contract"
 
-export const EDITOR_CONTRACT_VERSION = "1.2.1" as const
+export const EDITOR_CONTRACT_VERSION = "1.2.2" as const
+
+/*
+ * 1.2.2 (2026-11-18, 11-17 r2 objections; requires render ≥ 1.4.1):
+ *  - Lean side is frozen: addHardscape (wood "root") and setWoodStyle → "root"
+ *    store leanSide = resolveLeanSide(h) (render 1.4.1) at that moment, so
+ *    dragging root wood across the centre never flips it. "auto" is only
+ *    chosen explicitly via setLeanSide (and is then re-frozen on the next
+ *    committed move: move / commitPreview of a piece with leanSide "auto"
+ *    stores the side it resolved to BEFORE the move). Template pieces keep
+ *    their explicit sides.
+ *  - setWoodStyle away from "root" removes leanSide; switching back to "root"
+ *    freezes a new one (as above). Documented, tested.
+ *  - migrateAttach only attaches plants whose species passes canAttach; other
+ *    lifted plants (y > 0, not attachable) are dropped to y = 0 at the same
+ *    (x, z) unless that spot is in a stone footprint (margin 0.5), in which
+ *    case they move to the piece's front edge + 2 cm (detachPlant rule).
+ *  - ANCHORS_PER_HOST = 12 for both editor and templates (was 8 / 12); every
+ *    "hardscapeAnchors(h, 8)" above now reads hardscapeAnchors(h, 12). Existing
+ *    attached plants are not re-seated by this change.
+ *  - Glass clamp of hardscape uses render 1.4.1 clampHardscapeXZ (real
+ *    extent); nothing to change in web beyond bumping the render dependency,
+ *    but the web glass-clamp tests must use the new semantics.
+ *  - Compose (lib/compose contract 1.0.0) applies its doc with EditOp
+ *    "replace"; "replace" must run migrateAttach and the invariants like a
+ *    decoded link (one history step, needsResim true when plants changed).
+ */
 
 /*
  * 1.2.1 (2026-11-17 r2, orchestrator, at integration with render 1.4.0):

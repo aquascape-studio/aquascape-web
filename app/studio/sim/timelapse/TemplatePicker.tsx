@@ -41,6 +41,12 @@ export const PICKER_CSS = `
 .tl-root .tl-cap:hover:not([aria-checked="true"]) { background: rgba(0,0,0,0.05); }
 /* sticky bar: sits below the 52 px frosted nav (never under it); focus never lands under nav + bar */
 html:has(.tl-tplsticky) { scroll-padding-top: 132px; }
+/* phones: the gap above the stuck bar is page-white and the bar nearly opaque, so the guides row
+   (and anything else) scrolling under it never shows through or looks stacked on the bar */
+@media (max-width: 639.98px) {
+  .tl-root .tl-tplsticky { background: linear-gradient(to bottom, ${c("bg")} 0, ${c("bg")} 8px, rgba(255,255,255,0) 100%); }
+  .tl-root .tl-tplsticky .tl-bar { background: rgba(255,255,255,0.94); }
+}
 `
 
 interface BarProps {

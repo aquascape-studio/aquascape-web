@@ -7,6 +7,7 @@
  * pauses while the line is hovered or focused.
  */
 import { useEffect, useRef, useState } from "react"
+import { conditionsLabel } from "@/lib/editor"
 import { getTemplate } from "@/lib/templates"
 import { c } from "./tokens"
 import { NOTES_MS, type ComposeNotice } from "./useCommandPalette"
@@ -59,7 +60,10 @@ export default function ComposeNotes({ notice, onUndo, onTryAnother, onDismiss, 
 
   if (!notice) return <div role="status" aria-live="polite" className="tl-sr" />
   const name = getTemplate(notice.result.templateId)?.name ?? "Scape"
-  const detail = notice.lines.length ? notice.lines.join(" · ") : "Everything understood."
+  const lines = notice.lines.length ? notice.lines.join(" · ") : "Everything understood."
+  // compose 1.1.0: what the sim now runs with, e.g. "Low light · No CO2" (not one of the ≤ 4 notes)
+  const cond = notice.result.doc.conditions
+  const detail = cond ? `${conditionsLabel(cond)} · ${lines}` : lines
   return (
     <div
       role="status"

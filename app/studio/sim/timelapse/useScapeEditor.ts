@@ -20,6 +20,7 @@ import {
   committedDoc,
   decodeScape,
   editorReducer,
+  effectiveConditions,
   encodeScape,
   findHardscapeSpot,
   findFreeSpot,
@@ -30,6 +31,7 @@ import {
   type EditorAction,
   type EditorState,
   type ScapeDoc,
+  type TankConditions,
 } from "@/lib/editor"
 import { buildDocInput, type DocBuild } from "@/lib/editor/buildDocInput"
 import type { BotanyRecord } from "@/lib/sim/buildInput"
@@ -70,6 +72,10 @@ export interface ScapeEditor {
   setLeanSide: (side: LeanSide) => void
   /** editor 1.2.2 "replace" (one undo step) — the ⌘K one-sentence scape applies its doc with it */
   replace: (doc: ScapeDoc) => void
+  /** 1.3.0: the light level / CO2 the committed doc runs with (doc → template → URL → default) */
+  conditions: TankConditions
+  /** 1.3.0: change light and / or CO2 (one undo step; the sim re-runs, cancelling the in-flight run) */
+  setConditions: (c: Partial<TankConditions>) => void
   select: (t: EditTarget | null) => void
   onMove: (e: EditMoveEvent) => void
   copyLink: () => Promise<boolean>
@@ -165,8 +171,8 @@ export function useScapeEditor({ seedDoc, initialScape, baseQuery, plants, onPla
   const committed = committedDoc(state)
   // The sim runs `simDoc`: the committed doc as of the last edit that needs a re-run (contract 1.1.0
   // needsResim — tank / plants / bed). Hardscape-only edits keep the previous simDoc, so neither the
-  // sim input nor the sim key changes. A different templateId changes light / CO₂ (buildDocInput),
-  // so it re-runs as well (part of needsResim since 1.2.0).
+  // sim input nor the sim key changes. A different templateId changes light / CO2 (buildDocInput),
+  // so it re-runs as well (part of needsResim since 1.2.0), as do new conditions (1.3.0).
   const simDocRef = useRef(committed)
   const simGenRef = useRef(0)
   if (committed !== simDocRef.current) {
@@ -275,6 +281,19 @@ export function useScapeEditor({ seedDoc, initialScape, baseQuery, plants, onPla
     },
     [dispatch, flushNudge],
   )
+  const baseParamsRef = useRef(baseQuery)
+  baseParamsRef.current = baseQuery
+  const setConditions = useCallback(
+    (c: Partial<TankConditions>) => {
+      if (dragRef.current) return
+      flushNudge()
+      // start from what the page shows (URL params included), so changing one field keeps the other
+      const cur = effectiveConditions(committedDoc(stateRef.current), new URLSearchParams(baseParamsRef.current))
+      dispatch({ type: "apply", op: { type: "setConditions", light: c.light ?? cur.light, co2: c.co2 ?? cur.co2 } })
+    },
+    [dispatch, flushNudge],
+  )
+  const conditions = useMemo(() => effectiveConditions(committed, new URLSearchParams(baseQuery)), [committed, baseQuery])
   const select = useCallback(
     (t: EditTarget | null) => {
       if (t === null && dragRef.current) return
@@ -421,6 +440,8 @@ export function useScapeEditor({ seedDoc, initialScape, baseQuery, plants, onPla
     detachSelected,
     setLeanSide,
     replace,
+    conditions,
+    setConditions,
     select,
     onMove,
     copyLink,

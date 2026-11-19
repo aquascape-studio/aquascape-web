@@ -8,12 +8,15 @@
  * tie-on / select / add chip rows below (chips wrap; nothing scrolls sideways).
  * 1.2.0: a selected piece offers a "Tie on" row of attachable mosses and
  * epiphytes; a selected attached plant swaps the size pills for "Untie".
+ * 1.3.0: a "Conditions" row under the capsule — segmented "Light: Low /
+ * Medium / High" and a "CO2" toggle pill — sets the light level / CO2 the
+ * simulation runs with (scrolls sideways inside itself on narrow phones).
  */
 import { useEffect, useId, useMemo, useState, type ReactNode } from "react"
 import type { EditTarget, LeanSide, StoneRole, WoodStyle } from "@aquascape-studio/render"
-import type { ScapeDoc } from "@/lib/editor"
-import { LEAN_SIDES, MAX_HARDSCAPE_PIECES, MAX_PLANTS, RESIZE_DOWN, RESIZE_UP, WOOD_STYLES, attachableSpeciesIds, attachedTo, hostOf } from "@/lib/editor"
-import { speciesName, type BotanyRecord } from "@/lib/sim/buildInput"
+import type { ScapeDoc, TankConditions } from "@/lib/editor"
+import { LIGHT_LEVELS, LEAN_SIDES, MAX_HARDSCAPE_PIECES, MAX_PLANTS, RESIZE_DOWN, RESIZE_UP, WOOD_STYLES, attachableSpeciesIds, attachedTo, hostOf } from "@/lib/editor"
+import { CO2_PPM, LIGHT_PAR, speciesName, type BotanyRecord } from "@/lib/sim/buildInput"
 import { REGULATED_CAPTION, isRegulated, regulatedJurisdictions } from "@/lib/sim/regulated"
 import { c } from "./tokens"
 import { useFlag } from "./useScapeEditor"
@@ -34,6 +37,12 @@ export const EDITOR_CSS = `
 .tl-root .tl-chip:disabled { cursor: default; opacity: 0.38; }
 .tl-root .tl-seg { transition: background-color 150ms ease, color 150ms ease, box-shadow 150ms ease; }
 .tl-root .tl-seg:hover:not([aria-checked="true"]) { background: rgba(0,0,0,0.05); }
+.tl-root .tl-cond { scrollbar-width: none; overscroll-behavior-x: contain; }
+.tl-root .tl-cond::-webkit-scrollbar { display: none; }
+.tl-root .tl-co2 { transition: background-color 150ms ease, color 150ms ease; }
+.tl-root .tl-co2:hover:not([aria-pressed="true"]) { background: rgba(0,0,0,0.05); }
+.tl-root .tl-co2[aria-pressed="true"]:hover { background: ${c("accentHover")} !important; }
+.tl-root .tl-co2:focus-visible { outline: 2px solid ${c("accent")}; outline-offset: 2px; }
 .tl-root .tl-sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 /* floating timeline: hidden while the editor (with the docked timeline) is on screen */
 .tl-root .tl-float { transition: opacity 200ms ease, transform 200ms ease, visibility 0s linear 0s; }
@@ -42,7 +51,7 @@ export const EDITOR_CSS = `
 .tl-root .tl-pulse { animation: tl-pulse 1.2s ease-in-out infinite; }
 .tl-root .tl-chip:focus-visible, .tl-root .tl-seg:focus-visible, .tl-root .tl-ebtn:focus-visible, .tl-root .tl-eprimary:focus-visible { outline: 2px solid ${c("accent")}; outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) {
-  .tl-root .tl-ebtn, .tl-root .tl-eprimary, .tl-root .tl-chip, .tl-root .tl-seg, .tl-root .tl-float { transition: none !important; }
+  .tl-root .tl-ebtn, .tl-root .tl-eprimary, .tl-root .tl-chip, .tl-root .tl-seg, .tl-root .tl-co2, .tl-root .tl-float { transition: none !important; }
   .tl-root .tl-pulse { animation: none; }
 }
 `
@@ -160,6 +169,69 @@ export interface EditorToolbarProps {
    * `flags.commandPalette` is on; undefined renders nothing (flag-off DOM unchanged).
    */
   onCompose?: (() => void) | undefined
+  /** 1.3.0 — the light level / CO2 the sim runs with (effective: doc → template → URL → default) */
+  conditions: TankConditions
+  /** 1.3.0 — change light and / or CO2 (re-runs the sim) */
+  onConditions: (c: Partial<TankConditions>) => void
+}
+
+const lightHint = (l: TankConditions["light"]) => `${l} light — ${LIGHT_PAR[l]} PAR at the water surface`
+
+/** 1.3.0: "Conditions" — Light segmented control + CO2 toggle in one frosted pill row */
+function ConditionsRow({ conditions, onConditions, uid }: { conditions: TankConditions; onConditions: (c: Partial<TankConditions>) => void; uid: string }) {
+  return (
+    <div className="tl-cond -mb-4 -mt-2 flex w-full max-w-full justify-start overflow-x-auto px-1 pb-6 pt-2 sm:justify-center" data-testid="conditions-row">
+      <div role="group" aria-label="Conditions" className="tl-edit mx-auto flex w-max shrink-0 items-center gap-1.5 rounded-full p-1 pl-3.5 sm:pl-4">
+        <span className="hidden whitespace-nowrap text-[12px] font-semibold sm:inline" style={{ color: c("text") }} aria-hidden="true">
+          Conditions
+        </span>
+        <span className="mx-1 hidden h-6 w-px sm:inline-block" style={{ background: c("hairline") }} aria-hidden="true" />
+        <span id={`${uid}-light`} className="whitespace-nowrap text-[12px] font-medium" style={{ color: c("muted") }}>
+          Light
+        </span>
+        <div role="radiogroup" aria-labelledby={`${uid}-light`} className="flex rounded-full p-[3px]" style={{ background: c("segTrack") }}>
+          {LIGHT_LEVELS.map((l) => {
+            const on = conditions.light === l
+            return (
+              <button
+                key={l}
+                type="button"
+                role="radio"
+                aria-checked={on}
+                onClick={() => onConditions({ light: l })}
+                className="tl-seg flex min-h-11 items-center justify-center whitespace-nowrap rounded-full px-3.5 text-[13px] font-medium sm:px-4"
+                style={{
+                  background: on ? c("bg") : "transparent",
+                  color: on ? c("text") : c("ink2"),
+                  boxShadow: on ? "0 1px 3px rgba(0,0,0,0.14), 0 0 0 0.5px rgba(0,0,0,0.06)" : "none",
+                }}
+                title={lightHint(l)}
+                data-testid={`light-${l.toLowerCase()}`}
+              >
+                {l}
+              </button>
+            )
+          })}
+        </div>
+        <button
+          type="button"
+          aria-pressed={conditions.co2}
+          onClick={() => onConditions({ co2: !conditions.co2 })}
+          className="tl-co2 inline-flex min-h-11 min-w-11 items-center justify-center gap-1.5 whitespace-nowrap rounded-full px-4 text-[13px] font-semibold"
+          style={conditions.co2 ? { background: c("accent"), color: c("bg") } : { background: "transparent", color: c("text"), boxShadow: "inset 0 0 0 1px rgba(0,0,0,0.14)" }}
+          title={conditions.co2 ? `CO2 injection on (${CO2_PPM.on} ppm)` : `No CO2 injection (${CO2_PPM.off} ppm)`}
+          data-testid="co2-toggle"
+        >
+          <span
+            className="inline-block h-1.5 w-1.5 rounded-full"
+            style={{ background: conditions.co2 ? c("bg") : c("muted") }}
+            aria-hidden="true"
+          />
+          CO2
+        </button>
+      </div>
+    </div>
+  )
 }
 
 /** compose 1.0.0: the "⌘K Describe a scape" pill at the end of the toolbar (icon only on phones) */
@@ -208,7 +280,7 @@ function hardscapeChips(doc: ScapeDoc): { id: string; label: string; hint: strin
 
 export default function EditorToolbar({
   doc, selected, canUndo, canRedo, simulating, byId, onUndo, onRedo, onDelete, onCopy, onAdd, onSelect, onAddHardscape, onResize, onWoodStyle,
-  onAttach, onDetach, onLeanSide, onCompose,
+  onAttach, onDetach, onLeanSide, onCompose, conditions, onConditions,
 }: EditorToolbarProps) {
   const [copied, flashCopied] = useFlag(2000)
   const [copyFailed, flashFailed] = useFlag(2500)
@@ -352,6 +424,9 @@ export default function EditorToolbar({
         </button>
         {onCompose && <ComposePill onClick={onCompose} shortcut={isMac ? "⌘K" : "Ctrl K"} />}
       </div>
+
+      {/* 1.3.0: tank conditions — what the simulation runs with */}
+      <ConditionsRow conditions={conditions} onConditions={onConditions} uid={uid} />
 
       {/* driftwood style (wood selected) */}
       {selWood && (

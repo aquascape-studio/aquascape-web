@@ -74,7 +74,7 @@ function deepFreeze<T>(o: T): T {
 }
 
 describe("contract", () => {
-  it("is version 1.2.2", () => expect(EDITOR_CONTRACT_VERSION).toBe("1.2.2"))
+  it("is version 1.3.0", () => expect(EDITOR_CONTRACT_VERSION).toBe("1.3.0"))
   it("initEditor starts with empty history and no selection", () => {
     const doc = fixture()
     expect(initEditor(doc)).toEqual({ doc, past: [], future: [], selected: null, previewBase: null })

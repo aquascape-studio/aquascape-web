@@ -1,5 +1,7 @@
 /**
- * composeScape (compose contract 1.0.0): ScapeIntent → a complete ScapeDoc.
+ * composeScape (compose contract 1.1.0): ScapeIntent → a complete ScapeDoc.
+ * 1.1.0: every composed doc carries `conditions` (resolveConditions) — the
+ * light / CO2 the sim runs with — and the species filters use them.
  *
  * Built only from existing pieces — templates instantiate() +
  * docFromTemplate(), and every change after that goes through the editor
@@ -27,6 +29,7 @@ import {
   type EditOp,
   type EditorState,
   type ScapeDoc,
+  type TankConditions,
 } from "../editor"
 import type { TankDims } from "../sim/vendor/sim-core/contract"
 import { TEMPLATES, getTemplate, instantiate, type ScapeTemplate } from "../templates"
@@ -35,6 +38,20 @@ import { presetTank, tankLabel } from "./parse"
 import { hasFeature, isRed, type SpeciesIndex, type SpeciesInfo } from "./species"
 
 export const MAX_NOTES = 4
+/** compose 1.1.0 mismatch note (light "High" without CO2) */
+export const CO2_LIMITED_NOTE = "High light without CO2 — growth will be CO2-limited."
+
+/**
+ * Compose 1.1.0: the conditions a composed doc runs with —
+ * light = intent.light ?? (co2 === false ? "Low" : template.light),
+ * co2 = intent.co2 ?? (light === "High" (stated) ? true : template.co2).
+ */
+export function resolveConditions(intent: Pick<ScapeIntent, "light" | "co2">, template: Pick<ScapeTemplate, "light" | "co2">): TankConditions {
+  return {
+    light: intent.light ?? (intent.co2 === false ? "Low" : template.light),
+    co2: intent.co2 ?? (intent.light === "High" ? true : template.co2),
+  }
+}
 const FEATURES: readonly Feature[] = ["carpet", "moss", "epiphytes", "red", "stems", "crypts", "grass"]
 const ZONES = ["foreground", "midground", "background", "attached"] as const
 type Zone = "foreground" | "midground" | "background"
@@ -283,18 +300,19 @@ function pickSpecies(ctx: Ctx, pred: (c: SpeciesInfo) => boolean, salt: string):
 export function composeScapeImpl(rawIntent: ScapeIntent, index: SpeciesIndex, rawSeed = 0): ComposeResult {
   const intent = cleanIntent(rawIntent)
   const seed = Math.abs(Math.trunc(Number.isFinite(rawSeed) ? rawSeed : 0)) % 0x7fffffff
-  const lowCo2 = intent.co2 === false
-  const lowLight = intent.light === "Low" || (intent.co2 === false && intent.light === null)
-  const ctx: Ctx = { index, intent, seed, lowCo2, lowLight, avoidSpecies: new Set(intent.avoidSpecies) }
   const notes: { p: number; text: string }[] = []
   const note = (p: number, text: string) => notes.push({ p, text })
   const substitutions: Substitution[] = []
   const nameOf = (id: string) => index.byId.get(id)?.name ?? id
 
-  // 1. template + tank
+  // 1. template + tank + conditions (1.1.0: the filters follow the resolved conditions)
   const template = chooseTemplate(intent, seed)
+  const conditions = resolveConditions(intent, template)
+  const ctx: Ctx = { index, intent, seed, lowCo2: !conditions.co2, lowLight: conditions.light === "Low", avoidSpecies: new Set(intent.avoidSpecies) }
   const tank: TankDims = intent.tank ?? presetTank(DEFAULT_PRESET)!
   if (!intent.tank) note(0, `Tank size not given — using ${TANK_PRESETS[DEFAULT_PRESET]!.label} (${tankLabel(tank)}).`)
+  // after the missing-tank note, before everything else
+  if (conditions.light === "High" && !conditions.co2) note(0.5, CO2_LIMITED_NOTE)
   let st = initEditor(docFromTemplate(instantiate(template, tank, seed), tank, template.id))
 
   // 2. hardscape override
@@ -419,8 +437,8 @@ export function composeScapeImpl(rawIntent: ScapeIntent, index: SpeciesIndex, ra
     note(4, `Didn't understand: ${intent.unknown.slice(0, 6).map((w) => `“${w}”`).join(", ")}.`)
   }
 
-  // 6. the "replace" invariants (sanitizeDoc → migrateAttach); keep the template id
-  const finalDoc = sanitizeDoc({ ...st.doc, templateId: template.id }) ?? st.doc
+  // 6. the "replace" invariants (sanitizeDoc → migrateAttach); keep the template id; 1.1.0 conditions
+  const finalDoc = sanitizeDoc({ ...st.doc, templateId: template.id, conditions }) ?? { ...st.doc, conditions }
   return {
     doc: finalDoc,
     templateId: template.id,

@@ -18,8 +18,42 @@
  */
 import type { HardscapeVisual, EditTarget, WoodStyle, LeanSide } from "@aquascape-studio/render"
 import type { PlantPlacement, TankDims } from "../sim/vendor/sim-core/contract"
+import type { LightLevel } from "../templates/contract"
 
-export const EDITOR_CONTRACT_VERSION = "1.2.2" as const
+export const EDITOR_CONTRACT_VERSION = "1.3.0" as const
+
+/*
+ * 1.3.0 (2026-11-19, additive — tank conditions drive the time-lapse):
+ *  - ScapeDoc.conditions (optional): { light: LightLevel; co2: boolean }.
+ *    The light level / CO2 the simulation runs with. Absent → resolved as
+ *    before (template light / co2 when the doc has a known templateId, else
+ *    the URL `light` / `co2` params, else Medium / no CO2).
+ *  - export function effectiveConditions(doc, params): TankConditions —
+ *    the resolution order above, in one place. buildDocInput MUST use it
+ *    (doc.conditions wins over template and URL). The sim mapping is
+ *    unchanged: lib/sim/buildInput LIGHT_PAR (surface PAR Low 100 / Medium
+ *    200 / High 320) and CO2_PPM (on 25 / off 5).
+ *  - EditOp "setConditions" { light?, co2? }: sets doc.conditions to
+ *    { ...effectiveConditions(doc, NO_PARAMS), ...given }. No-op (same state
+ *    reference, no history) when the result equals the current
+ *    doc.conditions. One history step; undo restores the previous value
+ *    (including "absent").
+ *  - needsResim is also true when conditions differ (compare the stored
+ *    field; absent vs present counts as different).
+ *  - encodeScape / decodeScape carry conditions compactly (e.g. "c":"L0" =
+ *    Low, no CO2; "H1" = High, CO2). Links without it still decode (field
+ *    absent). Unknown / malformed value → decodeScape returns null.
+ *    ScapeDoc.v stays 1; the 30-plant 2000-char budget still holds.
+ *  - "replace" (compose, templates) keeps the incoming doc's conditions as
+ *    given. Picking a template from the template bar sets conditions to the
+ *    template's { light, co2 } (so the bar visibly drives the sim).
+ *  - UI (dragEditor flag only, see app/studio/sim): a "Conditions" row in the
+ *    editor toolbar — segmented "Light: Low / Medium / High" and a "CO2"
+ *    pill toggle (aria-pressed), same frosted pill styling, touch targets
+ *    ≥ 44 px, keyboard reachable. Changing it re-runs the sim (cancel the
+ *    in-flight one). The ControlBar shows the effective conditions as a
+ *    small grey label ("Low light · No CO2").
+ */
 
 /*
  * 1.2.2 (2026-11-18, 11-17 r2 objections; requires render ≥ 1.4.1):
@@ -163,6 +197,14 @@ export interface ScapeDoc {
   plants: PlantPlacement[]
   /** 1.2.0 — epiphytes tied onto hardscape: plantId → hardscapeId */
   attach?: Record<string, string> | undefined
+  /** 1.3.0 — light level / CO2 the simulation runs with (absent → template / URL / default) */
+  conditions?: TankConditions | undefined
+}
+
+/** 1.3.0 */
+export interface TankConditions {
+  light: LightLevel
+  co2: boolean
 }
 
 export type EditOp =
@@ -185,6 +227,8 @@ export type EditOp =
   | { type: "detachPlant"; id: string }
   /** 1.2.0 — root wood only */
   | { type: "setLeanSide"; id: string; leanSide: LeanSide }
+  /** 1.3.0 — change the light level and/or CO2 the sim runs with */
+  | { type: "setConditions"; light?: LightLevel | undefined; co2?: boolean | undefined }
 
 export interface EditorState {
   doc: ScapeDoc
@@ -238,6 +282,7 @@ export type EditorAction =
  *   export function clampHardscapeXZ(h, tank, x, z): { x: number; z: number }   (1.1.0, render 1.3.0 semantics)
  *   export function canAttach(speciesId: string): boolean   (1.2.0)
  *   export function migrateAttach(doc: ScapeDoc): ScapeDoc   (1.2.0; idempotent, used by decodeScape / docFromTemplate)
+ *   export function effectiveConditions(doc: ScapeDoc, params?: { get(k: string): string | null }): TankConditions   (1.3.0)
  *   export function decodeScape(s: string): ScapeDoc | null
  *     — null on any malformed / unknown-version / unknown-species input;
  *       never throws. Round-trip encode→decode is stable to the rounding.

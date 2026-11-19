@@ -35,7 +35,42 @@ import type { WoodStyle } from "@aquascape-studio/render"
 import type { ScapeStyle, Composition, LightLevel } from "../templates/contract"
 import type { ScapeDoc } from "../editor/contract"
 
-export const COMPOSE_CONTRACT_VERSION = "1.0.0" as const
+export const COMPOSE_CONTRACT_VERSION = "1.1.0" as const
+
+/*
+ * 1.1.0 (2026-11-19) — the sentence drives the simulation, not only the
+ * species choice. Requires editor contract ≥ 1.3.0 (ScapeDoc.conditions).
+ *
+ * Research (2026-11-19): community PAR bands are rough and disagree —
+ * Aquarium Co-Op: low 10–20, medium 20–35, high 40–50+ PAR
+ * (https://aquariumcoop.com/blogs/aquarium/par-for-planted-tanks); r/Aquariums
+ * wiki at the substrate: low < 30, medium 31–60, medium-high 61–80, high
+ * 81–120 (https://reddit.birdcat.cafe/r/Aquariums/wiki/low_tech_planted_guide).
+ * Low-tech tanks sit at ~3 ppm CO2 (0–1 ppm while lights are on); injected
+ * tanks target ~30 ppm (https://www.2hraquarist.com/blogs/beginners-planted-tank-101/do-you-need-co2-planted-aquarium).
+ * The sim's CO2_PPM (off 5 / on 25) and LIGHT_PAR stay unchanged in 1.1.0.
+ *
+ * Rules (normative, tested):
+ *  - composeScape sets result.doc.conditions = {
+ *      light: intent.light ?? (intent.co2 === false ? "Low" : template.light),
+ *      co2:   intent.co2   ?? (intent.light === "High" ? true : template.co2),
+ *    } where template is the chosen template. Always present on a composed doc.
+ *    (Same "low tech ⇒ Low light" default as the 1.0.0 substitution rule, so
+ *    the species filter and the sim agree.)
+ *  - Substitution filters use result.doc.conditions: co2 === false → the
+ *    "needs CO2" rule; light === "Low" → the "needs high light" rule. (1.0.0
+ *    used the intent; this makes an unstated value follow the template, e.g.
+ *    "dutch streets" alone keeps the Dutch template's High light + CO2.)
+ *  - Mismatch note (counts towards the 4 notes, after missing-tank):
+ *    light "High" && co2 false → "High light without CO2 — growth will be
+ *    CO2-limited."
+ *  - summarizeIntent ends with the resolved conditions, e.g.
+ *    "Iwagumi · 60 × 30 × 32 cm · Low light · No CO2" (replaces the 1.0.0
+ *    "low tech" / "CO₂" / "x light" tail). Labels: "Low light" | "Medium
+ *    light" | "High light"; "CO2" | "No CO2" (plain "CO2" in UI copy).
+ *  - "Try another" (seed + 1) keeps the same conditions unless the template
+ *    changes and the value was unstated (it then follows the new template).
+ */
 
 /** Tank presets, cm (W × D × H water column = glass height − 4 cm, min 20). */
 export const TANK_PRESETS: Readonly<Record<string, { label: string; glass: [number, number, number] }>> = {
@@ -174,8 +209,7 @@ export interface ComposeResult {
  *    "stems" ensure one group of that growthForm. Explicit `species` are
  *    added as one group each (attached if canAttach and a host exists)
  *    within the 60-plant cap.
- *  - SimInput-facing extras (light level, co2) are returned via the doc's
- *    existing fields only; v1 does not change sim parameters.
+ *  - SimInput-facing extras: superseded in 1.1.0 — see doc.conditions above.
  *  - notes: max 4, most useful first (missing tank, dropped groups,
  *    unattachable moss, unknown words "Didn't understand: …").
  */

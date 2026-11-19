@@ -18,9 +18,15 @@ interface Props {
   events: Map<number, SimEvent[]>
   onDay: (d: number) => void
   onTogglePlay: () => void
+  /**
+   * editor 1.3.0 (dragEditor flag only): the effective conditions, e.g.
+   * "Low light · No CO2", shown as a small grey label under the day readout.
+   * Undefined renders exactly the pre-1.3.0 markup.
+   */
+  conditions?: string | undefined
 }
 
-export default function ControlBar({ day, days, available, playing, computing, total, events, onDay, onTogglePlay }: Props) {
+export default function ControlBar({ day, days, available, playing, computing, total, events, onDay, onTogglePlay, conditions }: Props) {
   const pct = (day / days) * 100
   const max = Math.max(1, ...total)
   const W = 400
@@ -54,11 +60,16 @@ export default function ControlBar({ day, days, available, playing, computing, t
         )}
       </button>
 
-      <div className="w-[92px] shrink-0 whitespace-nowrap leading-tight" aria-live="polite">
+      <div className={conditions === undefined ? "w-[92px] shrink-0 whitespace-nowrap leading-tight" : "min-w-[92px] shrink-0 whitespace-nowrap leading-tight"} aria-live="polite">
         <p className="text-[15px] font-semibold tracking-tight tl-num">Day {day}</p>
         <p className="text-[11px] tl-num" style={{ color: c("muted") }}>
           {computing ? `Computing… ${available}/${days}` : `of ${days}`}
         </p>
+        {conditions !== undefined && (
+          <p className="text-[11px]" style={{ color: c("muted") }} data-testid="conditions-label">
+            {conditions}
+          </p>
+        )}
       </div>
 
       <div className="relative min-w-0 flex-1" style={{ ["--pct" as string]: `${pct}%` } as CSSProperties}>

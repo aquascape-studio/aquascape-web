@@ -21,6 +21,8 @@
  *  - dragEditor: GROWTH_TIMELAPSE + STYLIZED_TANK + STYLE_TEMPLATES on
  *  - commandPalette (compose 1.0.0): GROWTH_TIMELAPSE + STYLIZED_TANK +
  *    STYLE_TEMPLATES + DRAG_EDITOR on, COMMAND_PALETTE off
+ *  - editor 1.3.0 conditions (2026-11-19): GROWTH_TIMELAPSE + STYLIZED_TANK on,
+ *    STYLE_TEMPLATES / DRAG_EDITOR / COMMAND_PALETTE off (baseline origin/main)
  */
 const { chromium } = require("playwright")
 

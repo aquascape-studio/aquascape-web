@@ -1,5 +1,5 @@
 /**
- * Drag editor — implementation of contract v1.2.2
+ * Drag editor — implementation of contract v1.3.0
  * (lib/editor/contract.ts, orchestrator-owned).
  *
  * A pure document model + reducer. Positions are sim-core cm (origin centre
@@ -20,17 +20,22 @@
  * migrateAttach only attaches canAttach species and drops other lifted
  * plants onto the bed; ANCHORS_PER_HOST = 12 is shared with the templates;
  * "replace" sanitises the incoming doc (sanitizeDoc) before migrating it.
+ *
+ * 1.3.0: `ScapeDoc.conditions` (light level / CO2 the sim runs with) —
+ * effectiveConditions() resolves it (doc → template → URL → Medium / no CO2),
+ * "setConditions" edits it, needsResim / encodeScape / decodeScape carry it.
  */
 import type { EditTarget, HardscapeVisual, LeanSide, StoneRole, WoodStyle } from "@aquascape-studio/render"
 import { clampHardscapeXZ as renderClampHardscapeXZ, resolveLeanSide } from "@aquascape-studio/render"
 import plantsJson from "../sim/vendor/plants.json"
 import type { PlantPlacement, TankDims } from "../sim/vendor/sim-core/contract"
-import type { InstantiatedTemplate } from "../templates/contract"
-import type { EditOp, EditorAction, EditorState, ScapeDoc } from "./contract"
+import { getTemplate } from "../templates"
+import type { InstantiatedTemplate, LightLevel } from "../templates/contract"
+import type { EditOp, EditorAction, EditorState, ScapeDoc, TankConditions } from "./contract"
 import { footprintContains, footprintHalfExtents } from "./footprint"
 import { ANCHORS_PER_HOST, anchors, surfaceY, type SurfaceAnchor } from "./surface"
 
-export type { EditOp, EditorAction, EditorState, ScapeDoc } from "./contract"
+export type { EditOp, EditorAction, EditorState, ScapeDoc, TankConditions } from "./contract"
 export { EDITOR_CONTRACT_VERSION } from "./contract"
 export { footprintContains, footprintDistance, footprintHalfExtents } from "./footprint"
 export { ANCHORS_PER_HOST } from "./surface"
@@ -101,6 +106,57 @@ export function attachableSpeciesIds(): string[] {
   return BOTANY.filter((p) => ATTACHABLE.has(p.id)).map((p) => p.id)
 }
 
+// ---------------------------------------------------------------------------
+// 1.3.0 — tank conditions
+
+export type ParamSource = { get(key: string): string | null }
+/** no URL params: effectiveConditions falls back to the template, then Medium / no CO2 */
+export const NO_PARAMS: ParamSource = { get: () => null }
+export const LIGHT_LEVELS: readonly LightLevel[] = ["Low", "Medium", "High"]
+export const DEFAULT_CONDITIONS: Readonly<TankConditions> = { light: "Medium", co2: false }
+
+/** true for a well-formed { light: "Low" | "Medium" | "High", co2: boolean } */
+export function isConditions(v: unknown): v is TankConditions {
+  if (!v || typeof v !== "object") return false
+  const o = v as Record<string, unknown>
+  return (LIGHT_LEVELS as readonly unknown[]).includes(o.light) && typeof o.co2 === "boolean"
+}
+
+/** both absent, or both present with the same light and co2 */
+export function sameConditions(a: TankConditions | undefined, b: TankConditions | undefined): boolean {
+  if (a === b) return true
+  if (!a || !b) return false
+  return a.light === b.light && a.co2 === b.co2
+}
+
+/**
+ * 1.3.0: the light level / CO2 the sim runs with — doc.conditions, else the
+ * doc's (known) template's { light, co2 }, else the URL `light` / `co2`
+ * params (parsed exactly as lib/sim/buildInput does: "Low" | "High", anything
+ * else Medium; co2 only for "true"), else Medium / no CO2.
+ */
+export function effectiveConditions(doc: Pick<ScapeDoc, "conditions" | "templateId">, params: ParamSource = NO_PARAMS): TankConditions {
+  if (isConditions(doc.conditions)) return { light: doc.conditions.light, co2: doc.conditions.co2 }
+  const t = doc.templateId !== undefined ? getTemplate(doc.templateId) : undefined
+  if (t) return { light: t.light, co2: t.co2 }
+  const raw = params.get("light")
+  return { light: raw === "Low" || raw === "High" ? raw : "Medium", co2: params.get("co2") === "true" }
+}
+
+/** "Low light · No CO2" */
+export function conditionsLabel(c: TankConditions): string {
+  return `${c.light} light · ${c.co2 ? "CO2" : "No CO2"}`
+}
+
+function setConditions(doc: ScapeDoc, light: LightLevel | undefined, co2: boolean | undefined): ScapeDoc | null {
+  if (light !== undefined && !LIGHT_LEVELS.includes(light)) return null
+  if (co2 !== undefined && typeof co2 !== "boolean") return null
+  const base = effectiveConditions(doc, NO_PARAMS)
+  const next: TankConditions = { light: light ?? base.light, co2: co2 ?? base.co2 }
+  if (sameConditions(doc.conditions, next)) return null
+  return { ...doc, conditions: next }
+}
+
 export function initEditor(doc: ScapeDoc): EditorState {
   return { doc, past: [], future: [], selected: null, previewBase: null }
 }
@@ -116,10 +172,10 @@ export function committedDoc(s: EditorState): ScapeDoc {
 }
 
 /**
- * Contract 1.1.0 / 1.2.0: the sim re-runs only when the tank, the plants (any
- * field), the bed or the templateId changed. Hardscape-only edits (move /
- * rotate / resize / add / setWoodStyle with no epiphyte carried) do not —
- * growth ignores hardscape.
+ * Contract 1.1.0 / 1.2.0 / 1.3.0: the sim re-runs only when the tank, the
+ * plants (any field), the bed, the templateId or the stored conditions
+ * changed. Hardscape-only edits (move / rotate / resize / add / setWoodStyle
+ * with no epiphyte carried) do not — growth ignores hardscape.
  */
 export function needsResim(prev: ScapeDoc, next: ScapeDoc): boolean {
   if (prev === next) return false
@@ -128,7 +184,7 @@ export function needsResim(prev: ScapeDoc, next: ScapeDoc): boolean {
     (prev.tank.widthCm === next.tank.widthCm && prev.tank.depthCm === next.tank.depthCm && prev.tank.heightCm === next.tank.heightCm)
   const bedSame = prev.bed === next.bed || (prev.bed.frontCm === next.bed.frontCm && prev.bed.backCm === next.bed.backCm)
   const plantsSame = prev.plants === next.plants || JSON.stringify(prev.plants) === JSON.stringify(next.plants)
-  return !(tankSame && bedSame && plantsSame && prev.templateId === next.templateId)
+  return !(tankSame && bedSame && plantsSame && prev.templateId === next.templateId && sameConditions(prev.conditions, next.conditions))
 }
 
 export function canUndo(s: EditorState): boolean {
@@ -829,8 +885,11 @@ export function sanitizeDoc(doc: ScapeDoc): ScapeDoc | null {
     plants.push(x === p.x && z === p.z && y === p.y && portions === p.portions ? p : { ...p, x, z, y, portions })
   }
   const same = <T,>(a: readonly T[], b: readonly T[]) => a.length === b.length && a.every((v, i) => v === b[i])
-  if (doc.tank === t && same(hardscape, doc.hardscape ?? []) && same(plants, doc.plants ?? [])) return migrateAttach(doc)
+  // 1.3.0: well-formed conditions are kept as given; malformed ones are dropped
+  const condOk = doc.conditions === undefined || isConditions(doc.conditions)
+  if (condOk && doc.tank === t && same(hardscape, doc.hardscape ?? []) && same(plants, doc.plants ?? [])) return migrateAttach(doc)
   const out: ScapeDoc = { ...doc, tank, hardscape, plants }
+  if (!condOk) delete out.conditions
   if (doc.attach !== undefined) out.attach = Object.fromEntries(Object.entries(doc.attach).filter(([pid, hid]) => ids.has(pid) && hsIds.has(hid)))
   return migrateAttach(out)
 }
@@ -859,6 +918,8 @@ function applyOp(doc: ScapeDoc, op: EditOp): ScapeDoc | null {
       return detachPlant(doc, op.id)
     case "setLeanSide":
       return setLeanSide(doc, op.id, op.leanSide)
+    case "setConditions":
+      return setConditions(doc, op.light, op.co2)
     default:
       return null
   }
@@ -971,6 +1032,10 @@ export function docFromTemplate(inst: InstantiatedTemplate, tank: TankDims, temp
 //   attach:    9th top-level entry since 1.2.0, only when some plant is attached: flat
 //              [plantIndex, hardscapeIndex, …] (indices into plants[] / hardscape[]).
 //              Links without it (1.0 / 1.1) are migrated on decode (migrateAttach).
+//   conditions: last top-level entry since 1.3.0, only when doc.conditions is set: a string
+//              "<L|M|H><0|1>" (light Low / Medium / High, CO2 off / on), e.g. "L0", "H1".
+//              It follows attach when both are present ([…, plants, attach, "H1"]) and
+//              sits in attach's place otherwise ([…, plants, "L0"]). Anything else → null.
 //   plants:    flat, 5 numbers / strings per plant:
 //              speciesIndex, id, x·10, z·10, y·10·100 + portions
 //              (1.2.0: y is stored as 0 for attached plants — decode re-seats them on the host surface)
@@ -1049,8 +1114,20 @@ export function encodeScape(doc: ScapeDoc): string {
     hs,
     plants,
     ...(attachFlat.length ? [attachFlat] : []),
+    ...(isConditions(doc.conditions) ? [encodeConditions(doc.conditions)] : []),
   ])
   return toBase64Url(json)
+}
+
+/** 1.3.0 compact conditions: "L0" = Low, no CO2 … "H1" = High, CO2 */
+export function encodeConditions(c: TankConditions): string {
+  return `${c.light[0]}${c.co2 ? 1 : 0}`
+}
+
+/** inverse of encodeConditions; null for anything else */
+export function decodeConditions(s: unknown): TankConditions | null {
+  if (typeof s !== "string" || !/^[LMH][01]$/.test(s)) return null
+  return { light: LIGHT_LEVELS.find((l) => l[0] === s[0])!, co2: s[1] === "1" }
 }
 
 const isInt = (v: unknown): v is number => typeof v === "number" && Number.isInteger(v)
@@ -1065,8 +1142,20 @@ export function decodeScape(s: string): ScapeDoc | null {
   try {
     check(typeof s === "string" && s.length > 0 && s.length <= MAX_ENCODED_LENGTH)
     const raw: unknown = JSON.parse(fromBase64Url(s))
-    check(Array.isArray(raw) && (raw.length === 8 || raw.length === 9) && raw[0] === 1)
-    const [, tankRaw, tplRaw, bedRaw, focalRaw, speciesRaw, hsRaw, plantsRaw, attachRaw] = raw as unknown[]
+    check(Array.isArray(raw) && raw.length >= 8 && raw.length <= 10 && raw[0] === 1)
+    const [, tankRaw, tplRaw, bedRaw, focalRaw, speciesRaw, hsRaw, plantsRaw] = raw as unknown[]
+    // 1.3.0: a trailing string is the conditions entry; an array in slot 8 is the attach map
+    const tail = (raw as unknown[]).slice(8)
+    const condRaw = tail.length > 0 && typeof tail[tail.length - 1] === "string" ? tail.pop() : undefined
+    check(tail.length <= 1)
+    const attachRaw = tail[0]
+    const hasAttach = tail.length === 1
+    let conditions: TankConditions | undefined
+    if (condRaw !== undefined) {
+      const c = decodeConditions(condRaw)
+      check(c)
+      conditions = c
+    }
 
     check(Array.isArray(tankRaw) && tankRaw.length === 3 && tankRaw.every(isInt))
     const [W, D, H] = (tankRaw as number[]).map((v) => v / 10) as [number, number, number]
@@ -1168,7 +1257,8 @@ export function decodeScape(s: string): ScapeDoc | null {
     const doc: ScapeDoc = { v: 1, tank, bed: { frontCm: bf, backCm: bb }, hardscape, plants }
     if (typeof tplRaw === "string") doc.templateId = tplRaw
     if (focalPoint) doc.focalPoint = focalPoint
-    if (raw.length === 9) {
+    if (conditions) doc.conditions = conditions
+    if (hasAttach) {
       // 1.2.0 attach: [plantIndex, hardscapeIndex, …]
       check(Array.isArray(attachRaw) && attachRaw.length % 2 === 0 && attachRaw.every(isInt))
       const flatA = attachRaw as number[]

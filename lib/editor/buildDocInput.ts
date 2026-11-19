@@ -1,15 +1,17 @@
 /**
  * ScapeDoc → /studio/sim BuildResult (drag editor). Mirrors
- * buildTemplateInput(): tank and plants come from the doc; light / CO₂ from
- * the doc's template when it has a known one, otherwise from the URL params
- * exactly as buildInput() reads them.
+ * buildTemplateInput(): tank and plants come from the doc; light / CO2 from
+ * effectiveConditions() (editor 1.3.0): doc.conditions, else the doc's known
+ * template, else the URL params exactly as buildInput() reads them. The sim
+ * mapping (LIGHT_PAR / CO2_PPM) is buildInput's, unchanged.
  */
 import type { HardscapeVisual } from "@aquascape-studio/render"
 import { buildInput, hashSeed, type BotanyRecord, type BuildResult } from "../sim/buildInput"
 import type { SimInput, TankDims } from "../sim/vendor/sim-core/contract"
 import { getTemplate, type ScapeTemplate } from "../templates"
+import type { InstantiatedTemplate } from "../templates/contract"
 import type { ScapeDoc } from "./contract"
-import { migrateAttach } from "./index"
+import { docFromTemplate, effectiveConditions, migrateAttach } from "./index"
 
 type ParamSource = { get(key: string): string | null }
 
@@ -41,6 +43,15 @@ export function docFromInput(input: Pick<SimInput, "tank" | "plants">, hardscape
   })
 }
 
+/**
+ * Editor 1.3.0: the doc a pick in the template bar starts from — the
+ * template's layout with conditions set to the template's { light, co2 }, so
+ * the bar visibly drives the sim (and overrides conditions edited before).
+ */
+export function docFromTemplatePick(inst: InstantiatedTemplate, tank: TankDims, template: Pick<ScapeTemplate, "id" | "light" | "co2">): ScapeDoc {
+  return { ...docFromTemplate(inst, tank, template.id), conditions: { light: template.light, co2: template.co2 } }
+}
+
 export function buildDocInput(doc: ScapeDoc, params: ParamSource, plants: readonly BotanyRecord[]): DocBuild {
   const template = doc.templateId !== undefined ? getTemplate(doc.templateId) : undefined
   const qty: Record<string, number> = {}
@@ -52,15 +63,9 @@ export function buildDocInput(doc: ScapeDoc, params: ParamSource, plants: readon
   p.set("h", String(doc.tank.heightCm))
   const name = params.get("name") ?? (template ? template.name : null)
   if (name !== null) p.set("name", name)
-  if (template) {
-    p.set("light", template.light)
-    if (template.co2) p.set("co2", "true")
-  } else {
-    const light = params.get("light")
-    if (light !== null) p.set("light", light)
-    const co2 = params.get("co2")
-    if (co2 !== null) p.set("co2", co2)
-  }
+  const cond = effectiveConditions(doc, params)
+  p.set("light", cond.light)
+  if (cond.co2) p.set("co2", "true")
   // an empty doc still needs a valid plants param (buildInput falls back to its defaults otherwise)
   p.set("plants", JSON.stringify(qty))
 

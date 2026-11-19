@@ -218,9 +218,9 @@ function collect(text: string, lc: string, index: SpeciesIndex): Candidate[] {
   each(re("co[2₂](?:\\s+injection|\\s+injected)?|pressuri[sz]ed(?:\\s+co[2₂])?|injected\\s+co[2₂]|high[\\s-]*tech"), (m) => ({
     ...at(m),
     kind: "co2",
-    label: /tech/.test(m[0]) ? "High tech" : "CO₂",
+    label: /tech/.test(m[0]) ? "High tech" : "CO2",
     apply: (i) => first(i, "co2", true),
-    negate: { label: "No CO₂", apply: (i) => first(i, "co2", false) },
+    negate: { label: "No CO2", apply: (i) => first(i, "co2", false) },
   }))
   each(re("low[\\s-]*tech|easy|beginners?(?:[\\s-]+friendly)?"), (m) => {
     const easy = /easy|beginner/.test(m[0])

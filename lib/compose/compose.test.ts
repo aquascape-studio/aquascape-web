@@ -518,7 +518,7 @@ describe("EXAMPLE_PROMPTS", () => {
     }
   })
   it("summary line of the first example", () => {
-    expect(summarizeIntent(parse(EXAMPLE_PROMPTS[0]!))).toBe("Iwagumi · Sanzon · 60 × 30 × 32 cm · low tech")
+    expect(summarizeIntent(parse(EXAMPLE_PROMPTS[0]!))).toBe("Iwagumi · Sanzon · 60 × 30 × 32 cm · Low light · No CO2")
   })
 })
 

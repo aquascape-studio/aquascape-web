@@ -13,8 +13,8 @@ import { parseGuidesParam, parseTemplateParam, type GuideMode, type Instantiated
 import { buildTemplateInput } from "@/lib/templates/buildTemplateInput"
 import { useGrowthSim } from "@/lib/sim/useGrowthSim"
 import type { Frame, PlantFrame } from "@/lib/sim/vendor/sim-core/contract"
-import { docFromTemplate, type ScapeDoc } from "@/lib/editor"
-import { docFromInput } from "@/lib/editor/buildDocInput"
+import { conditionsLabel, type ScapeDoc } from "@/lib/editor"
+import { docFromInput, docFromTemplatePick } from "@/lib/editor/buildDocInput"
 import { eventsByDay, fmtG, lowLightFraction, speciesMeta, speciesSeries, totalSeries, type SpeciesMeta } from "./derive"
 import { EVENT_LABEL, EVENT_ORDER, FACTOR_LABEL, LIGHT_LABEL } from "./labels"
 import { c } from "./tokens"
@@ -97,7 +97,8 @@ export default function TimelapseView() {
       !EDITOR
         ? null
         : baseBuilt.scene && template
-          ? docFromTemplate(baseBuilt.scene, baseBuilt.input.tank, template.id)
+          ? // editor 1.3.0: a template pick also sets the conditions to the template's light / CO2
+            docFromTemplatePick(baseBuilt.scene, baseBuilt.input.tank, template)
           : docFromInput(baseBuilt.input, defaultHardscape(baseBuilt.input.tank)),
     [baseBuilt, template],
   )
@@ -310,6 +311,7 @@ export default function TimelapseView() {
               events={events}
               onDay={seek}
               onTogglePlay={togglePlay}
+              conditions={conditionsLabel(editor.conditions)}
             />
           )
           const region = (
@@ -334,6 +336,8 @@ export default function TimelapseView() {
                 onDetach={editor.detachSelected}
                 onLeanSide={editor.setLeanSide}
                 onCompose={palette ? openPalette : undefined}
+                conditions={editor.conditions}
+                onConditions={editor.setConditions}
               />
               <div className="px-0 pt-6" data-testid="timeline-dock">
                 {/* compose flag off: the dock holds exactly the ControlBar, as before */}
@@ -545,6 +549,7 @@ export default function TimelapseView() {
           events={events}
           onDay={seek}
           onTogglePlay={togglePlay}
+          conditions={editor ? conditionsLabel(editor.conditions) : undefined}
         />
       </div>
     </main>

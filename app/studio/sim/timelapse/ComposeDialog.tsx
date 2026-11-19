@@ -47,8 +47,12 @@ export const COMPOSE_DIALOG_CSS = `
 @keyframes tl-cmdk-in { from { opacity: 0; transform: scale(0.98) translateY(-4px) } to { opacity: 1; transform: none } }
 @keyframes tl-cmdk-up { from { transform: translateY(24px); opacity: 0 } to { transform: none; opacity: 1 } }
 @media (max-width: 639.98px) {
+  /* phones: the sheet covers the editor chips behind it — a darker scrim and an opaque sheet,
+     so nothing (e.g. the "Add" chips) bleeds through the frosted glass */
+  .tl-cmdk-scrim { background: rgba(0,0,0,0.32); }
   .tl-cmdk-wrap { align-items: flex-end; padding: 0; }
   .tl-cmdk {
+    background: ${c("bg")}; -webkit-backdrop-filter: none; backdrop-filter: none;
     width: 100%; max-height: 88vh; border-radius: 28px 28px 0 0;
     padding-bottom: env(safe-area-inset-bottom);
     animation-name: tl-cmdk-up;
@@ -274,7 +278,7 @@ export default function ComposeDialog({ open, index, onClose, onSubmit, shortcut
                   </li>
                 )}
               </ul>
-              <p id={`${uid}-summary`} className="mt-3 truncate text-[14px] font-medium tl-num" style={{ color: c("muted") }} data-testid="compose-summary">
+              <p id={`${uid}-summary`} className="mt-3 text-[14px] leading-snug sm:truncate font-medium tl-num" style={{ color: c("muted") }} data-testid="compose-summary">
                 {intent ? summary : " "}
               </p>
               {intent && intent.unknown.length > 0 && (

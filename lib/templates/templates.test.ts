@@ -217,7 +217,7 @@ describe("contract 1.0.1 / 1.0.2", () => {
   })
 
   it("is version 1.1.0 and the Iwagumi template uses the iwagumi composition", () => {
-    expect(TEMPLATE_CONTRACT_VERSION).toBe("1.1.0")
+    expect(TEMPLATE_CONTRACT_VERSION).toBe("1.2.0")
     expect(getTemplate("iwagumi-sanzon")!.composition).toBe("iwagumi")
     for (const t of TEMPLATES) if (t.style === "iwagumi") expect(t.composition).toBe("iwagumi")
     for (const t of TEMPLATES) if (t.style !== "iwagumi") expect(t.composition).not.toBe("iwagumi")

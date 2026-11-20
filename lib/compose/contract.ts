@@ -35,9 +35,15 @@ import type { WoodStyle } from "@aquascape-studio/render"
 import type { ScapeStyle, Composition, LightLevel } from "../templates/contract"
 import type { ScapeDoc } from "../editor/contract"
 
-export const COMPOSE_CONTRACT_VERSION = "1.1.0" as const
+export const COMPOSE_CONTRACT_VERSION = "1.2.0" as const
 
 /*
+ * 1.2.0 (2026-11-20) — "low tech" / "no CO2" picks the new "nature-lowtech"
+ *   template (see Template choice) instead of a CO2 template with
+ *   substitutions; conditions resolve exactly as in 1.1.0 (so "nature, low
+ *   tech" → Low light · No CO2, "nature, high light, no co2" → High · No CO2
+ *   with the CO2-limited note). Iwagumi / Dutch requests are unchanged.
+ *
  * 1.1.0 (2026-11-19) — the sentence drives the simulation, not only the
  * species choice. Requires editor contract ≥ 1.3.0 (ScapeDoc.conditions).
  *
@@ -176,7 +182,11 @@ export interface ComposeResult {
  *  - Pure, deterministic in (intent, seed); never throws; always returns a
  *    valid ScapeDoc that passes the editor invariants (decodeScape(
  *    encodeScape(doc)) round-trips; ≤ 60 plants; attach map valid).
- *  - Template choice: exact (style, composition) match → style match → by
+ *  - Template choice (1.2.0 rule first): if intent.co2 === false (stated,
+ *    incl. "low tech") AND intent.style is "nature" or unstated AND
+ *    intent.composition is unstated AND intent.hardscape is not "none" or
+ *    "stone" → "nature-lowtech" (templates ≥ 1.2.0). Otherwise:
+ *    exact (style, composition) match → style match → by
  *    hardscape ("stone" → iwagumi-sanzon, "wood"/"both" → nature-triangle,
  *    "none" → dutch-streets) → "nature-triangle". `seed` picks among equally
  *    good matches (seed mod n).

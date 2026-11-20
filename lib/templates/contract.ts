@@ -1,5 +1,5 @@
 /**
- * Style templates — contract v1.0.2.
+ * Style templates — contract v1.2.0.
  *
  * OWNER: orchestrator only. Sub-agents MUST NOT edit this file; report
  * disagreements in the PR instead.
@@ -29,7 +29,24 @@ import type { CompositionGuide, StoneRole, WoodStyle, LeanSide } from "@aquascap
 import type { HardscapeVisual } from "@aquascape-studio/render"
 import type { PlantPlacement, TankDims } from "../sim/vendor/sim-core/contract"
 
-export const TEMPLATE_CONTRACT_VERSION = "1.1.0" as const
+export const TEMPLATE_CONTRACT_VERSION = "1.2.0" as const
+
+/*
+ * 1.2.0 (2026-11-20 — a low-tech template; aquascape-sim#8 follow-up):
+ *  - New required template "nature-lowtech", name "Nature · Low tech":
+ *    style "nature", composition "triangle", light "Low", co2 false,
+ *    guide "thirds". One root driftwood focal piece (same 1.1.0 wood rules)
+ *    plus ≤ 2 stones.
+ *  - Every species it uses must grow without injected CO2 and in low light:
+ *    botany envelope.co2.min ≤ 5, envelope.light.min ≤ 40, difficulty ≤ 2,
+ *    and no `regulated` entries (tested).
+ *  - Planting: ≥ 3 epiphyte groups onHardscape (≥ 1 moss, ≥ 2 of Anubias /
+ *    Bucephalandra / Java fern), ≥ 2 Cryptocoryne groups in the mid/foreground,
+ *    ≥ 1 easy background stem or rosette group (e.g. Hygrophila, Vallisneria);
+ *    no carpet plant that needs CO2. Dense enough that the day-45 frontal view
+ *    is not sparse (same "never sparse" visual rule as the other templates).
+ *  - All 1.1.0 rules (regulated, attach, tank scaling, ≤ 60 placements) apply.
+ */
 
 /*
  * 1.1.0 (2026-11-17 r2 — epiphytes, 11-16 follow-ups):
@@ -150,7 +167,9 @@ export interface InstantiatedTemplate {
  *     — at least: "iwagumi-sanzon" (Iwagumi, 3+ stones, carpet only),
  *       "nature-triangle" (Nature, wood + stones, triangle),
  *       "nature-concave" (Nature, two masses + open centre),
- *       "dutch-streets" (Dutch, stems in diagonal streets, no hardscape).
+ *       "dutch-streets" (Dutch, stems in diagonal streets, no hardscape),
+ *       "nature-lowtech" (1.2.0: Nature, Low light, no CO2, epiphytes +
+ *       Cryptocoryne on root wood).
  *     Every speciesId must exist in the vendored botany plants.json.
  *
  *   export function getTemplate(id: string): ScapeTemplate | undefined

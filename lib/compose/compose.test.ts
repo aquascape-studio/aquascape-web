@@ -577,6 +577,8 @@ describe("property: random sentences from the vocabulary", () => {
   it("templates are all reachable", () => {
     const seen = new Set<string>()
     for (const t of ["iwagumi", "nature", "dutch"]) for (const s of [0, 1]) seen.add(compose(t, s).templateId)
+    // 1.2.0: the low-tech template is reached only through a stated "no CO2" / "low tech"
+    seen.add(compose("low tech", 0).templateId)
     expect([...seen].sort()).toEqual(TEMPLATES.map((t) => t.id).sort())
   })
 })

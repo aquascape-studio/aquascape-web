@@ -1,5 +1,5 @@
 /**
- * Style templates — implementation of contract v1.1.0
+ * Style templates — implementation of contract v1.2.0
  * (lib/templates/contract.ts, orchestrator-owned).
  *
  * 1.0.1: iwagumi composition; group angle applied in cm space; group counts
@@ -10,6 +10,8 @@
  * piece and ≥ 2 epiphyte groups (moss + Anubias / Bucephalandra / Java fern)
  * seated on anchors() of their host (lib/editor/surface.ts, the render 1.4.0
  * hardscapeAnchors stand-in); instantiate() returns `attach`.
+ * 1.2.0: "nature-lowtech" — Low light, no CO2; only species with botany
+ * co2.min ≤ 5, light.min ≤ 40, difficulty ≤ 2 (tested).
  *
  * Layout rules per style (sources listed in contract.ts):
  *  - Iwagumi sanzon: Oyaishi on the left third, clearly the largest and
@@ -22,6 +24,9 @@
  *  - Nature concave: two masses at the left and right edges (a wide root
  *    driftwood leaning left, a smaller one leaning right), low open centre
  *    that pulls the eye into depth.
+ *  - Nature low tech: the triangle on one centred root wood, dressed with
+ *    moss / Java fern / Anubias / Bucephalandra; crypts either side and in
+ *    front; a tall easy back wall (Vallisneria, Hygrophila, Balansae crypt).
  *  - Dutch streets: no hardscape; single-species stem groups in thin
  *    diagonal bands front → back, neighbouring streets alternate red / green
  *    and fine / broad leaves, terraced from low front to tall back,
@@ -150,6 +155,51 @@ export const TEMPLATES: readonly ScapeTemplate[] = [
       { speciesId: "cryptocoryne-parva", u: 0.7, v: 0.8, ru: 0.08, rv: 0.08, count: 3, portions: 1 },
       { speciesId: "eleocharis-parvula", u: 0.5, v: 0.66, ru: 0.22, rv: 0.12, count: 8, portions: 2 },
       { speciesId: "micranthemum-tweediei-monte-carlo", u: 0.5, v: 0.86, ru: 0.3, rv: 0.08, count: 8, portions: 2 },
+    ],
+  },
+  {
+    // 1.2.0: the low-tech Nature template — every species grows without injected CO2 in low light
+    // (botany envelope.co2.min ≤ 5, envelope.light.min ≤ 40, difficulty ≤ 2, unregulated).
+    // Slow growers, so density comes from many placements and layered heights rather than growth:
+    // a tall rosette / stem back wall, epiphytes dressing the wood, a band of crypts in front of it
+    // and a low crypt / dwarf-sagittaria lawn in the foreground (no CO2-hungry carpet).
+    id: "nature-lowtech",
+    style: "nature",
+    composition: "triangle",
+    name: "Nature · Low tech",
+    blurb: "Root wood dressed in moss, fern and Anubias over a bed of crypts — low light, no CO2.",
+    light: "Low",
+    co2: false,
+    guide: "thirds",
+    focal: { u: 0.36, h: 0.5 },
+    bed: { front: 0.05, back: 0.25 },
+    hardscape: [
+      // focal piece: root driftwood centred in front of the back wall, trunk leaning to the left third
+      { id: "wood-main", kind: "wood", woodStyle: "root", leanSide: "left", u: 0.44, v: 0.5, wFrac: 0.5, hFrac: 0.6, dFrac: 0.26, rotationY: 0.1, seed: 801 },
+      { id: "stone-a", kind: "stone", role: "fukuishi", u: 0.16, v: 0.72, wFrac: 0.11, hFrac: 0.18, dFrac: 0.2, rotationY: 0.35, seed: 809, buriedFrac: 0.22 },
+      { id: "stone-b", kind: "stone", role: "soeishi", u: 0.72, v: 0.76, wFrac: 0.08, hFrac: 0.11, dFrac: 0.16, rotationY: -0.5, seed: 811, buriedFrac: 0.28 },
+    ],
+    groups: [
+      // back wall, left → right: tallest on the left (the peak of the triangle), lighter greens to the right
+      { speciesId: "vallisneria-spiralis", u: 0.1, v: 0.12, ru: 0.09, rv: 0.08, count: 5, portions: 2 },
+      { speciesId: "hygrophila-corymbosa-siamensis-53b", u: 0.3, v: 0.12, ru: 0.09, rv: 0.07, count: 4, portions: 2 },
+      { speciesId: "cryptocoryne-balansae", u: 0.53, v: 0.13, ru: 0.08, rv: 0.07, count: 3, portions: 2 },
+      { speciesId: "ludwigia-palustris", u: 0.72, v: 0.14, ru: 0.07, rv: 0.07, count: 3, portions: 2 },
+      { speciesId: "hygrophila-difformis", u: 0.9, v: 0.15, ru: 0.08, rv: 0.08, count: 3, portions: 2 },
+      // epiphytes tied onto the hardscape: moss up the trunk, Java fern at the root flare,
+      // Anubias and Bucephalandra on the stones' shoulders
+      { speciesId: "taxiphyllum-barbieri", u: 0.3, v: 0.48, ru: 0.1, rv: 0.06, count: 3, portions: 1, onHardscape: "wood-main" },
+      { speciesId: "microsorum-pteropus", u: 0.58, v: 0.5, ru: 0.08, rv: 0.06, count: 2, portions: 1, onHardscape: "wood-main" },
+      { speciesId: "anubias-barteri-nana", u: 0.16, v: 0.72, ru: 0.04, rv: 0.04, count: 2, portions: 1, onHardscape: "stone-a" },
+      { speciesId: "bucephalandra-sp-mini", u: 0.72, v: 0.76, ru: 0.03, rv: 0.03, count: 1, portions: 1, onHardscape: "stone-b" },
+      // midground crypts either side of the wood (brown left, green right for contrast)
+      { speciesId: "cryptocoryne-wendtii", u: 0.12, v: 0.44, ru: 0.09, rv: 0.08, count: 3, portions: 2 },
+      { speciesId: "cryptocoryne-wendtii-green-gecko", u: 0.84, v: 0.44, ru: 0.1, rv: 0.09, count: 4, portions: 2 },
+      // foreground: a low-tech carpet (Marsilea needs no CO2), low crypts and a dwarf-sagittaria lawn
+      { speciesId: "marsilea-hirsuta", u: 0.5, v: 0.9, ru: 0.3, rv: 0.06, count: 7, portions: 2 },
+      { speciesId: "cryptocoryne-lutea", u: 0.88, v: 0.8, ru: 0.09, rv: 0.1, count: 4, portions: 2 },
+      { speciesId: "cryptocoryne-beckettii", u: 0.26, v: 0.9, ru: 0.14, rv: 0.06, count: 4, portions: 2 },
+      { speciesId: "sagittaria-subulata", u: 0.5, v: 0.78, ru: 0.34, rv: 0.07, count: 7, portions: 2 },
     ],
   },
   {

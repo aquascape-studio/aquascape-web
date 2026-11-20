@@ -1,5 +1,5 @@
 /**
- * One-sentence scape — implementation of compose contract v1.1.0
+ * One-sentence scape — implementation of compose contract v1.2.0
  * (lib/compose/contract.ts, orchestrator-owned).
  *
  *   const index = buildSpeciesIndex(plantsJson)
@@ -19,7 +19,7 @@ export { COMPOSE_CONTRACT_VERSION, DEFAULT_PRESET, TANK_PRESETS } from "./contra
 export type { ComposeResult, Feature, IntentSpan, ScapeIntent, SpanKind, Substitution } from "./contract"
 export { buildSpeciesIndex, hasFeature, isRed, type SpeciesIndex, type SpeciesInfo } from "./species"
 export { parseIntent, clampTank, presetTank, tankLabel, waterHeight, MAX_TEXT, STOP_WORDS } from "./parse"
-export { chooseTemplate, resolveConditions, CO2_LIMITED_NOTE, MAX_NOTES } from "./compose"
+export { chooseTemplate, resolveConditions, CO2_LIMITED_NOTE, MAX_NOTES, LOWTECH_TEMPLATE_ID } from "./compose"
 
 /** 4–6 prompts shown when the input is empty; each parses with no unknown words */
 export const EXAMPLE_PROMPTS: readonly string[] = [

@@ -1,5 +1,5 @@
 /**
- * composeScape (compose contract 1.1.0): ScapeIntent → a complete ScapeDoc.
+ * composeScape (compose contract 1.2.0): ScapeIntent → a complete ScapeDoc.
  * 1.1.0: every composed doc carries `conditions` (resolveConditions) — the
  * light / CO2 the sim runs with — and the species filters use them.
  *
@@ -93,22 +93,45 @@ function cleanIntent(raw: ScapeIntent): ScapeIntent {
 // ---------------------------------------------------------------------------
 // template choice
 
+/** compose 1.2.0: the template a stated "no CO2" / "low tech" picks */
+export const LOWTECH_TEMPLATE_ID = "nature-lowtech"
+
 /**
- * Contract: exact (style, composition) match → style match → by hardscape
- * ("stone" → iwagumi-sanzon, "wood"/"both" → nature-triangle, "none" →
- * dutch-streets) → "nature-triangle". A stated composition without a style
- * matches on composition alone. `seed` picks among equally good matches.
+ * Contract 1.2.0 rule first: co2 === false (stated, incl. "low tech") with
+ * style "nature" or unstated, composition unstated and hardscape not "none" /
+ * "stone" → "nature-lowtech". Otherwise exact (style, composition) match →
+ * style match → by hardscape ("stone" → iwagumi-sanzon, "wood"/"both" →
+ * nature-triangle, "none" → dutch-streets) → "nature-triangle". A stated
+ * composition without a style matches on composition alone. `seed` picks
+ * among equally good matches.
+ *
+ * The low-tech template only comes from the 1.2.0 rule: it is left out of
+ * the generic tiers, so "nature", "nature triangle" or "nature with CO2" keep
+ * choosing among the CO2 templates exactly as in 1.1.0 (seed rotation
+ * included).
  */
-export function chooseTemplate(intent: Pick<ScapeIntent, "style" | "composition" | "hardscape">, seed = 0): ScapeTemplate {
+export function chooseTemplate(intent: Pick<ScapeIntent, "style" | "composition" | "hardscape"> & Partial<Pick<ScapeIntent, "co2">>, seed = 0): ScapeTemplate {
+  const lowtech = getTemplate(LOWTECH_TEMPLATE_ID)
+  if (
+    lowtech &&
+    intent.co2 === false &&
+    (intent.style === null || intent.style === undefined || intent.style === "nature") &&
+    !intent.composition &&
+    intent.hardscape !== "none" &&
+    intent.hardscape !== "stone"
+  ) {
+    return lowtech
+  }
   const s = Math.abs(Math.trunc(Number.isFinite(seed) ? seed : 0))
+  const pool = TEMPLATES.filter((t) => t.id !== LOWTECH_TEMPLATE_ID)
   const tiers: ScapeTemplate[][] = []
   if (intent.style || intent.composition) {
-    tiers.push(TEMPLATES.filter((t) => (!intent.style || t.style === intent.style) && (!intent.composition || t.composition === intent.composition)))
+    tiers.push(pool.filter((t) => (!intent.style || t.style === intent.style) && (!intent.composition || t.composition === intent.composition)))
   }
-  if (intent.style) tiers.push(TEMPLATES.filter((t) => t.style === intent.style))
+  if (intent.style) tiers.push(pool.filter((t) => t.style === intent.style))
   const byHs = { stone: "iwagumi-sanzon", wood: "nature-triangle", both: "nature-triangle", none: "dutch-streets" } as const
   if (intent.hardscape) tiers.push([getTemplate(byHs[intent.hardscape])!].filter(Boolean))
-  tiers.push([getTemplate("nature-triangle") ?? TEMPLATES[0]!])
+  tiers.push([getTemplate("nature-triangle") ?? pool[0]!])
   const pick = tiers.find((t) => t.length > 0)!
   return pick[s % pick.length]!
 }

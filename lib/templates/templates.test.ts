@@ -27,11 +27,11 @@ const TANKS = [
   { widthCm: 60, depthCm: 30, heightCm: 36 },
   { widthCm: 90, depthCm: 45, heightCm: 45 },
 ]
-const REQUIRED = ["iwagumi-sanzon", "nature-triangle", "nature-concave", "dutch-streets"]
+const REQUIRED = ["iwagumi-sanzon", "nature-triangle", "nature-concave", "dutch-streets", "nature-lowtech"]
 const EPS = 0.011 // r2 rounding
 
 describe("TEMPLATES", () => {
-  it("contains the four required templates with unique ids", () => {
+  it("contains the five required templates with unique ids", () => {
     const ids = TEMPLATES.map((t) => t.id)
     for (const id of REQUIRED) expect(ids).toContain(id)
     expect(new Set(ids).size).toBe(ids.length)
@@ -45,7 +45,8 @@ describe("TEMPLATES", () => {
 
   it("has English names and short one-sentence blurbs", () => {
     for (const t of TEMPLATES) {
-      expect(t.name).toMatch(/^[A-Z][a-z]+ · [A-Z][a-z]+$/)
+      // 1.2.0: the composition part may be two words ("Nature · Low tech")
+      expect(t.name).toMatch(/^[A-Z][a-z]+ · [A-Z][a-z]+( [a-z]+)?$/)
       expect(t.blurb.length).toBeGreaterThan(0)
       expect(t.blurb.length).toBeLessThanOrEqual(110)
       expect(t.blurb.endsWith(".")).toBe(true)
@@ -490,5 +491,108 @@ describe("contract 1.1.0 — epiphytes on hardscape", () => {
     const stone = hardscapeFor({ ...tri.hardscape.find((h) => h.kind === "stone")!, woodStyle: "root", leanSide: "left" }, TANKS[1]!)
     expect(stone.woodStyle).toBeUndefined()
     expect(stone.leanSide).toBeUndefined()
+  })
+})
+
+describe("contract 1.2.0 — nature-lowtech", () => {
+  type Rec = BotanyRecord & { regulated?: unknown[]; difficulty: number; envelope: { co2: { min: number }; light: { min: number } } }
+  const rec = (id: string) => BY_ID.get(id) as Rec
+  const t = getTemplate("nature-lowtech")!
+  const ELIGIBLE = PLANTS.filter((p) => {
+    const r = p as Rec
+    return r.envelope.co2.min <= 5 && r.envelope.light.min <= 40 && r.difficulty <= 2 && (r.regulated ?? []).length === 0
+  })
+
+  it("exists with the required metadata", () => {
+    expect(t).toBeDefined()
+    expect(t.style).toBe("nature")
+    expect(t.composition).toBe("triangle")
+    expect(t.name).toBe("Nature · Low tech")
+    expect(t.light).toBe("Low")
+    expect(t.co2).toBe(false)
+    expect(t.guide).toBe("thirds")
+  })
+
+  it("uses only species that grow without CO2 in low light (co2.min ≤ 5, light.min ≤ 40, difficulty ≤ 2, unregulated)", () => {
+    expect(ELIGIBLE.length).toBeGreaterThanOrEqual(60) // ~73 in botany 0.8
+    for (const g of t.groups) {
+      const r = rec(g.speciesId)
+      expect(r, g.speciesId).toBeDefined()
+      expect(r.envelope.co2.min, g.speciesId).toBeLessThanOrEqual(5)
+      expect(r.envelope.light.min, g.speciesId).toBeLessThanOrEqual(40)
+      expect(r.difficulty, g.speciesId).toBeLessThanOrEqual(2)
+      expect(r.regulated ?? [], g.speciesId).toHaveLength(0)
+    }
+  })
+
+  it("has one root driftwood focal piece (1.1.0 wood rules) plus ≤ 2 stones", () => {
+    const woods = t.hardscape.filter((h) => h.kind === "wood")
+    expect(woods).toHaveLength(1)
+    const w = woods[0]!
+    expect(w.woodStyle).toBe("root")
+    expect(w.wFrac).toBeGreaterThanOrEqual(0.45)
+    expect(w.v).toBeGreaterThanOrEqual(0.45)
+    expect(Math.abs(w.u - 0.5)).toBeLessThanOrEqual(0.1) // centred in front of the background
+    expect(t.hardscape.filter((h) => h.kind === "stone").length).toBeLessThanOrEqual(2)
+    // the background groups sit behind the wood
+    const bg = t.groups.filter((g) => !g.onHardscape && g.v < 0.3)
+    expect(bg.length).toBeGreaterThan(0)
+    for (const g of bg) expect(g.v, g.speciesId).toBeLessThan(w.v)
+  })
+
+  it("has ≥ 3 epiphyte groups on hardscape: ≥ 1 moss, ≥ 2 Anubias / Bucephalandra / Java fern", () => {
+    const epi = t.groups.filter((g) => g.onHardscape)
+    expect(epi.length).toBeGreaterThanOrEqual(3)
+    expect(epi.filter((g) => rec(g.speciesId).growthForm === "moss").length).toBeGreaterThanOrEqual(1)
+    expect(epi.filter((g) => /^(anubias|bucephalandra|microsorum)-/.test(g.speciesId)).length).toBeGreaterThanOrEqual(2)
+    for (const g of epi) expect(canAttach(g.speciesId), g.speciesId).toBe(true)
+  })
+
+  it("has ≥ 2 Cryptocoryne groups in the mid / foreground", () => {
+    const crypts = t.groups.filter((g) => g.speciesId.startsWith("cryptocoryne-") && !g.onHardscape && g.v >= 0.35)
+    expect(crypts.length).toBeGreaterThanOrEqual(2)
+    for (const g of crypts) expect((rec(g.speciesId).placement ?? []).some((z) => z === "midground" || z === "foreground"), g.speciesId).toBe(true)
+  })
+
+  it("has ≥ 1 easy background stem / rosette group", () => {
+    const bg = t.groups.filter(
+      (g) => !g.onHardscape && (rec(g.speciesId).placement ?? []).includes("background") && /^(stem|rosette)$/.test(rec(g.speciesId).growthForm),
+    )
+    expect(bg.length).toBeGreaterThanOrEqual(1)
+    expect(bg.some((g) => /^(hygrophila|vallisneria|echinodorus)-/.test(g.speciesId) && rec(g.speciesId).difficulty <= 1)).toBe(true)
+  })
+
+  it("has no carpet plant that needs CO2", () => {
+    for (const g of t.groups) {
+      const r = rec(g.speciesId)
+      if (r.growthForm === "carpeting") expect(r.envelope.co2.min, g.speciesId).toBeLessThanOrEqual(5)
+    }
+  })
+
+  it("is dense: many placements on every tank, all within the budget", () => {
+    for (const tank of TANKS) {
+      const out = instantiate(t, tank)
+      expect(out.plants.length).toBeLessThanOrEqual(MAX_PLACEMENTS)
+      // ≥ 0.75 placements per 100 cm² of footprint (capped by the 60 budget on big tanks)
+      expect(out.plants.length, `${tank.widthCm}`).toBeGreaterThanOrEqual(Math.min(55, Math.floor((0.75 * tank.widthCm * tank.depthCm) / 100)))
+    }
+    // layered: back, mid and front thirds of the depth are all planted
+    const out = instantiate(t, TANKS[1]!)
+    const D = TANKS[1]!.depthCm
+    for (const [lo, hi] of [[0, 1 / 3], [1 / 3, 2 / 3], [2 / 3, 1]]) {
+      const n = out.plants.filter((p) => p.z / D + 0.5 >= lo! && p.z / D + 0.5 < hi!).length
+      expect(n, `${lo}–${hi}`).toBeGreaterThanOrEqual(8)
+    }
+  })
+
+  it("picking it sets the conditions to Low light · No CO2 (editor 1.3.0)", async () => {
+    const { docFromTemplatePick } = await import("../editor/buildDocInput")
+    const tank = TANKS[1]!
+    const doc = docFromTemplatePick(instantiate(t, tank), tank, t)
+    expect(doc.templateId).toBe("nature-lowtech")
+    expect(doc.conditions).toEqual({ light: "Low", co2: false })
+    const b = buildTemplateInput(t, new URLSearchParams(""), PLANTS)
+    expect(b.light).toBe("Low")
+    expect(b.co2).toBe(false)
   })
 })

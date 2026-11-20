@@ -180,7 +180,13 @@ const lightHint = (l: TankConditions["light"]) => `${l} light — ${LIGHT_PAR[l]
 /** 1.3.0: "Conditions" — Light segmented control + CO2 toggle in one frosted pill row */
 function ConditionsRow({ conditions, onConditions, uid }: { conditions: TankConditions; onConditions: (c: Partial<TankConditions>) => void; uid: string }) {
   return (
-    <div className="tl-cond -mb-4 -mt-2 flex w-full max-w-full justify-start overflow-x-auto px-1 pb-6 pt-2 sm:justify-center" data-testid="conditions-row">
+    // < 640 px the editor column sits inside two 16 px paddings (page + column), which left the pill
+    // 296 px and pushed the CO2 pill past the edge (11-20 phone fix): the row steps out of the column
+    // padding to the page's 16 px gutter and the segments tighten, so the whole pill fits at 360 px
+    <div
+      className="tl-cond -mx-4 -mb-4 -mt-2 flex w-[calc(100%+2rem)] max-w-[calc(100%+2rem)] justify-center overflow-x-auto pb-6 pt-2 sm:mx-0 sm:w-full sm:max-w-full sm:px-1"
+      data-testid="conditions-row"
+    >
       <div role="group" aria-label="Conditions" className="tl-edit mx-auto flex w-max shrink-0 items-center gap-1.5 rounded-full p-1 pl-3.5 sm:pl-4">
         <span className="hidden whitespace-nowrap text-[12px] font-semibold sm:inline" style={{ color: c("text") }} aria-hidden="true">
           Conditions
@@ -199,7 +205,7 @@ function ConditionsRow({ conditions, onConditions, uid }: { conditions: TankCond
                 role="radio"
                 aria-checked={on}
                 onClick={() => onConditions({ light: l })}
-                className="tl-seg flex min-h-11 items-center justify-center whitespace-nowrap rounded-full px-3.5 text-[13px] font-medium sm:px-4"
+                className="tl-seg flex min-h-11 items-center justify-center whitespace-nowrap rounded-full px-3 text-[13px] font-medium sm:px-4"
                 style={{
                   background: on ? c("bg") : "transparent",
                   color: on ? c("text") : c("ink2"),
@@ -217,7 +223,7 @@ function ConditionsRow({ conditions, onConditions, uid }: { conditions: TankCond
           type="button"
           aria-pressed={conditions.co2}
           onClick={() => onConditions({ co2: !conditions.co2 })}
-          className="tl-co2 inline-flex min-h-11 min-w-11 items-center justify-center gap-1.5 whitespace-nowrap rounded-full px-4 text-[13px] font-semibold"
+          className="tl-co2 inline-flex min-h-11 min-w-11 items-center justify-center gap-1.5 whitespace-nowrap rounded-full px-3.5 text-[13px] font-semibold sm:px-4"
           style={conditions.co2 ? { background: c("accent"), color: c("bg") } : { background: "transparent", color: c("text"), boxShadow: "inset 0 0 0 1px rgba(0,0,0,0.14)" }}
           title={conditions.co2 ? `CO2 injection on (${CO2_PPM.on} ppm)` : `No CO2 injection (${CO2_PPM.off} ppm)`}
           data-testid="co2-toggle"
@@ -238,7 +244,7 @@ function ConditionsRow({ conditions, onConditions, uid }: { conditions: TankCond
 function ComposePill({ onClick, shortcut }: { onClick: () => void; shortcut: string }) {
   return (
     <>
-      <span className="mx-0.5 h-6 w-px sm:mx-1" style={{ background: c("hairline") }} aria-hidden="true" />
+      <span className="h-6 w-px sm:mx-1" style={{ background: c("hairline") }} aria-hidden="true" />
       <button
         type="button"
         className="tl-ebtn inline-flex min-h-11 min-w-11 items-center justify-center gap-2 whitespace-nowrap rounded-full px-2.5 text-[14px] font-medium sm:pl-2 sm:pr-3.5"
@@ -329,7 +335,7 @@ export default function EditorToolbar({
         )}
       </p>
 
-      <div role="toolbar" aria-label="Edit" className="tl-edit flex items-center gap-0.5 rounded-full p-1">
+      <div role="toolbar" aria-label="Edit" className="tl-edit flex items-center gap-0 rounded-full p-1 sm:gap-0.5">
         <button
           type="button"
           className="tl-ebtn inline-flex min-h-11 min-w-11 items-center justify-center gap-1.5 rounded-full px-2.5 text-[14px] font-medium sm:px-3"
@@ -366,7 +372,7 @@ export default function EditorToolbar({
           <Svg>{Icon.trash}</Svg>
           <span className="hidden sm:inline" aria-hidden="true">Delete</span>
         </button>
-        <span className="mx-0.5 h-6 w-px sm:mx-1" style={{ background: c("hairline") }} aria-hidden="true" />
+        <span className="h-6 w-px sm:mx-1" style={{ background: c("hairline") }} aria-hidden="true" />
         {selAttached ? (
           <button
             type="button"
@@ -407,10 +413,10 @@ export default function EditorToolbar({
         </button>
           </>
         )}
-        <span className="mx-0.5 h-6 w-px sm:mx-1" style={{ background: c("hairline") }} aria-hidden="true" />
+        <span className="h-6 w-px sm:mx-1" style={{ background: c("hairline") }} aria-hidden="true" />
         <button
           type="button"
-          className="tl-eprimary inline-flex min-h-11 items-center justify-center gap-1.5 whitespace-nowrap rounded-full px-3.5 text-[14px] font-semibold sm:px-4"
+          className="tl-eprimary inline-flex min-h-11 items-center justify-center gap-1.5 whitespace-nowrap rounded-full px-3 text-[14px] font-semibold sm:px-4"
           style={{ background: c("accent"), color: c("bg") }}
           onClick={() => {
             void onCopy().then((ok) => (ok ? flashCopied() : flashFailed()))

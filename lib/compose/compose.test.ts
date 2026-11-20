@@ -80,7 +80,7 @@ const needsCo2 = (id: string) => sp(id).co2Min >= 10 || sp(id).difficulty >= 4
 const needsHighLight = (id: string) => sp(id).lightMin > 40
 
 describe("contract", () => {
-  it("is version 1.1.0", () => expect(COMPOSE_CONTRACT_VERSION).toBe("1.1.0"))
+  it("is version 1.1.0", () => expect(COMPOSE_CONTRACT_VERSION).toBe("1.2.0"))
 })
 
 describe("buildSpeciesIndex", () => {

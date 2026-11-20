@@ -29,7 +29,7 @@ const sp = (id: string) => INDEX.byId.get(id)!
 const needsCo2 = (id: string) => sp(id).co2Min >= 10 || sp(id).difficulty >= 4
 const needsHighLight = (id: string) => sp(id).lightMin > 40
 
-it("is version 1.1.0", () => expect(COMPOSE_CONTRACT_VERSION).toBe("1.1.0"))
+it("is version 1.1.0", () => expect(COMPOSE_CONTRACT_VERSION).toBe("1.2.0"))
 
 describe("resolveConditions (table)", () => {
   const LOWTPL = { light: "Low", co2: false } as const

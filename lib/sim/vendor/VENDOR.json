@@ -1,11 +1,11 @@
 {
-  "syncedAt": "2026-11-20T10:00:26.133Z",
+  "syncedAt": "2026-11-21T10:15:27.098Z",
   "script": "scripts/sync-sim-core.sh",
   "simCore": {
     "repo": "aquascape-studio/aquascape-sim",
     "path": "ts/src",
     "ref": "origin/main",
-    "commit": "4c458063dd7ddb6825ff00dac0fb1836b7401b8d",
+    "commit": "9fbfc3581f146b4ea78a3f2dc532133c88a61c50",
     "dirty": false,
     "placeholder": false,
     "files": [

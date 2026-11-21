@@ -25,6 +25,14 @@ export interface ComposeNotice {
   lines: string[]
 }
 
+/** the page reacts to compose / undo (template pill selection) — the doc itself is the editor's */
+export interface PaletteHooks {
+  /** a compose (or "try another") was applied: `templateId` is the template the doc was built from */
+  onComposed?: (templateId: string) => void
+  /** "Undo" on the notes line: the compose was reverted */
+  onUndone?: () => void
+}
+
 export interface CommandPalette {
   index: SpeciesIndex
   open: boolean
@@ -50,7 +58,7 @@ export function substitutionLines(result: ComposeResult, nameOf: (id: string) =>
   })
 }
 
-export function useCommandPalette(editor: ScapeEditor | null, plants: readonly BotanyRecord[]): CommandPalette {
+export function useCommandPalette(editor: ScapeEditor | null, plants: readonly BotanyRecord[], hooks?: PaletteHooks): CommandPalette {
   const index = useMemo(() => buildSpeciesIndex(plants), [plants])
   const [open, setOpenState] = useState(false)
   const [notice, setNotice] = useState<ComposeNotice | null>(null)
@@ -58,6 +66,8 @@ export function useCommandPalette(editor: ScapeEditor | null, plants: readonly B
   const editorRef = useRef(editor)
   editorRef.current = editor
   const keyRef = useRef(0)
+  const hooksRef = useRef(hooks)
+  hooksRef.current = hooks
 
   const setOpen = useCallback((v: boolean) => setOpenState(v), [])
 
@@ -79,6 +89,7 @@ export function useCommandPalette(editor: ScapeEditor | null, plants: readonly B
       if (replacePrevious && last.current && ed.committed === last.current.doc) ed.undo()
       ed.replace(result.doc)
       last.current = { intent, seed, doc: result.doc }
+      hooksRef.current?.onComposed?.(result.templateId)
       show(result)
     },
     [index, show],
@@ -97,6 +108,7 @@ export function useCommandPalette(editor: ScapeEditor | null, plants: readonly B
   }, [apply])
   const undo = useCallback(() => {
     editorRef.current?.undo()
+    hooksRef.current?.onUndone?.()
     last.current = null
     setNotice(null)
   }, [])

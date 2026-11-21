@@ -29,9 +29,13 @@ import type { CompositionGuide, StoneRole, WoodStyle, LeanSide } from "@aquascap
 import type { HardscapeVisual } from "@aquascape-studio/render"
 import type { PlantPlacement, TankDims } from "../sim/vendor/sim-core/contract"
 
-export const TEMPLATE_CONTRACT_VERSION = "1.2.0" as const
+export const TEMPLATE_CONTRACT_VERSION = "1.2.1" as const
 
 /*
+ * 1.2.1 (2026-11-21, docs only): `name` is "<Style> · <Composition or
+ *   variant>" — the second part may be a variant such as "Low tech", not only
+ *   an Iwagumi composition. After a ⌘K compose the UI selects the template
+ *   pill for ComposeResult.templateId (web#33).
  * 1.2.0 (2026-11-20 — a low-tech template; aquascape-sim#8 follow-up):
  *  - New required template "nature-lowtech", name "Nature · Low tech":
  *    style "nature", composition "triangle", light "Low", co2 false,
@@ -131,7 +135,7 @@ export interface ScapeTemplate {
   id: string
   style: ScapeStyle
   composition: Composition
-  /** display name, "<Style> · <Composition>", e.g. "Iwagumi · Sanzon" */
+  /** display name, "<Style> · <Composition or variant>", e.g. "Iwagumi · Sanzon", "Nature · Low tech" (1.2.1) */
   name: string
   /** one short English sentence */
   blurb: string

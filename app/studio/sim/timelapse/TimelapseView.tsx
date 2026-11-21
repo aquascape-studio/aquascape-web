@@ -9,7 +9,7 @@ import plantsJson from "@/lib/sim/vendor/plants.json"
 import vendorInfo from "@/lib/sim/vendor/VENDOR.json"
 import { buildInput, type BotanyRecord, type BuildResult } from "@/lib/sim/buildInput"
 import { defaultHardscape } from "@/lib/sim/toFrontal"
-import { parseGuidesParam, parseTemplateParam, type GuideMode, type InstantiatedTemplate } from "@/lib/templates"
+import { getTemplate, parseGuidesParam, parseTemplateParam, type GuideMode, type InstantiatedTemplate } from "@/lib/templates"
 import { buildTemplateInput } from "@/lib/templates/buildTemplateInput"
 import { useGrowthSim } from "@/lib/sim/useGrowthSim"
 import type { Frame, PlantFrame } from "@/lib/sim/vendor/sim-core/contract"
@@ -25,7 +25,8 @@ import ControlBar from "./ControlBar"
 import { PICKER_CSS, TemplateBar, TemplateNote } from "./TemplatePicker"
 import { useScapeEditor, type ScapeEditor } from "./useScapeEditor"
 import EditorToolbar, { EDITOR_CSS } from "./EditorToolbar"
-import { useCommandPalette, type CommandPalette } from "./useCommandPalette"
+import { useCommandPalette, type CommandPalette, type PaletteHooks } from "./useCommandPalette"
+import { composeTpl, initTplSelection, pickTpl, undoComposeTpl, withTplParam, type TplSelection } from "./tplSelection"
 import ComposeNotes, { COMPOSE_NOTES_CSS } from "./ComposeNotes"
 
 const PLANTS = plantsJson as unknown as BotanyRecord[]
@@ -51,7 +52,7 @@ const COMPOSE = EDITOR && flags.commandPalette
 /** the dialog's chunk is only requested when the flag is on */
 const ComposeDialog = COMPOSE ? dynamic(() => import("./ComposeDialog"), { ssr: false }) : null
 /** constant per build (hook order never changes); flag off → nothing runs */
-const usePalette: (e: ScapeEditor | null, plants: readonly BotanyRecord[]) => CommandPalette | null = COMPOSE ? useCommandPalette : () => null
+const usePalette: (e: ScapeEditor | null, plants: readonly BotanyRecord[], hooks?: PaletteHooks) => CommandPalette | null = COMPOSE ? useCommandPalette : () => null
 
 /** Plants added in the editor have no frame until the sim re-runs: show them as small seedlings meanwhile. */
 function withSeedlings(frame: Frame | undefined, plants: ScapeDoc["plants"]): Frame | undefined {
@@ -76,16 +77,29 @@ function clampDay(raw: string | null, days: number): number {
 export default function TimelapseView() {
   const sp = useSearchParams()
   const router = useRouter()
+  // style templates (flag): `shown` is the highlighted pill, `seed` the template the doc is built from.
+  // They differ only after a ⌘K compose, so selecting the composed template never re-instantiates it.
+  const [tplSel, setTplSel] = useState<TplSelection>(() =>
+    initTplSelection(flags.styleTemplates ? (parseTemplateParam(sp.get("tpl"))?.id ?? null) : null),
+  )
+  const tplSeedRef = useRef(tplSel.seed)
+  tplSeedRef.current = tplSel.seed
   const baseQuery = useMemo(() => {
     const p = new URLSearchParams(sp.toString())
+    // ?tpl= follows the seed template, not the pill: the URL may already show the composed pill
+    if (flags.styleTemplates) {
+      if (tplSel.seed) p.set("tpl", tplSel.seed)
+      else p.delete("tpl")
+    }
     p.delete("day")
     // guides are view-only — changing them must not re-run the simulation
     if (flags.styleTemplates) p.delete("guides")
     // the edited doc is state; ?scape= is only its share-link mirror
     if (EDITOR) p.delete("scape")
     return p.toString()
-  }, [sp])
+  }, [sp, tplSel.seed])
   const template = flags.styleTemplates ? parseTemplateParam(new URLSearchParams(baseQuery).get("tpl")) : undefined
+  const shownTemplate = flags.styleTemplates ? (tplSel.shown ? getTemplate(tplSel.shown) : undefined) : undefined
   const baseBuilt: BuildResult & { scene?: InstantiatedTemplate } = useMemo(
     () => (template ? buildTemplateInput(template, new URLSearchParams(baseQuery), PLANTS) : buildInput(new URLSearchParams(baseQuery), PLANTS)),
     [baseQuery, template],
@@ -109,7 +123,26 @@ export default function TimelapseView() {
     plants: PLANTS,
     onPlantPicked: setSelectedId,
   })
-  const palette = usePalette(editor, PLANTS)
+  // ⌘K compose: highlight the composed template (URL ?tpl= too) without touching the seed / the composed doc
+  const writeTplUrl = useCallback((id: string | null) => {
+    const url = new URL(window.location.href)
+    url.search = withTplParam(url.searchParams, id).toString()
+    window.history.replaceState(window.history.state, "", url)
+  }, [])
+  const onComposed = useCallback(
+    (templateId: string) => {
+      if (!flags.styleTemplates || !getTemplate(templateId)) return
+      setTplSel((s) => composeTpl(s, templateId))
+      writeTplUrl(templateId)
+    },
+    [writeTplUrl],
+  )
+  const onComposeUndone = useCallback(() => {
+    if (!flags.styleTemplates) return
+    setTplSel(undoComposeTpl)
+    writeTplUrl(tplSeedRef.current)
+  }, [writeTplUrl])
+  const palette = usePalette(editor, PLANTS, { onComposed, onUndone: onComposeUndone })
   const paletteSetOpen = palette?.setOpen
   const openPalette = useCallback(() => paletteSetOpen?.(true), [paletteSetOpen])
   const closePalette = useCallback(() => paletteSetOpen?.(false), [paletteSetOpen])
@@ -145,6 +178,7 @@ export default function TimelapseView() {
   const [guides, setGuides] = useState<GuideMode>(() => (flags.styleTemplates ? parseGuidesParam(sp.get("guides")) : "none"))
   const pickTemplate = useCallback(
     (id: string | null) => {
+      setTplSel((s) => pickTpl(s, id))
       const url = new URL(window.location.href)
       if (id) url.searchParams.set("tpl", id)
       else url.searchParams.delete("tpl")
@@ -190,13 +224,13 @@ export default function TimelapseView() {
     [editSelected, editSelect, editMove],
   )
   const tplBar = flags.styleTemplates ? (
-    <TemplateBar selected={template} onPick={pickTemplate} guides={guides} onGuides={changeGuides} showGuides={!!FrontalHero} sticky={!!FrontalHero} />
+    <TemplateBar selected={shownTemplate} onPick={pickTemplate} guides={guides} onGuides={changeGuides} showGuides={!!FrontalHero} sticky={!!FrontalHero} />
   ) : null
   // editor: the timeline docks under the editor while the editor is on screen, and floats only once it is
   // scrolled away — so the floating bar never covers the editor's chip rows (11-15 issue)
   const editRegionRef = useRef<HTMLDivElement | null>(null)
   const editorOnScreen = useOnScreen(editor ? editRegionRef : null)
-  const tplNote = flags.styleTemplates ? <TemplateNote selected={template} onPick={pickTemplate} /> : null
+  const tplNote = flags.styleTemplates ? <TemplateNote selected={shownTemplate} onPick={pickTemplate} /> : null
 
   // playback
   const dayRef = useRef(day)
